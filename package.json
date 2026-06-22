@@ -41,7 +41,7 @@
     "lefthook"
   ],
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,md,yml,yaml}": "biome format --write",
+    "*.{js,jsx,ts,tsx,json,jsonc,md}": "biome format --write",
     "*.{js,jsx,ts,tsx,json,jsonc}": "biome lint",
     "*.{ts,tsx}": "bun run test:related"
   }
