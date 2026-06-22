@@ -2,11 +2,12 @@
 
 - [ ] 1.1 Replace the placeholder package metadata with Bun-first ESM scripts for `dev`, `build`, `test`, `test:related`, `typecheck`, `format`, `format:check`, `lint`, `check`, `generate:index`, `verify:index`, `ci`, and `openspec`.
 - [ ] 1.2 Add TypeScript strict configuration with `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` enabled.
-- [ ] 1.3 Add devenv files that provide Bun, Zig, Fallow, and project support tools, plus `.envrc` for direnv activation.
+- [ ] 1.3 Add devenv files that provide Bun, Zig, Fallow, Worktrunk, and project support tools, plus `.envrc` for direnv activation.
 - [ ] 1.4 Add Biome configuration and scripts for formatting and linting.
 - [ ] 1.5 Add Fallow configuration or documented zero-config invocation and include it in `check` or `ci` as the project quality gate.
-- [ ] 1.6 Add minimal test/build placeholders so the standard script contract can run before product code exists.
-- [ ] 1.7 Verify the slice with `devenv test` where feasible and `bun run check`.
+- [ ] 1.6 Add Worktrunk project configuration in `.config/wt.toml` for shared worktree workflow behavior without duplicating Lefthook Git hook responsibilities.
+- [ ] 1.7 Add minimal test/build placeholders so the standard script contract can run before product code exists.
+- [ ] 1.8 Verify the slice with `devenv test` where feasible, `wt status`, and `bun run check`.
 
 ## 2. Bootable App Skeleton
 

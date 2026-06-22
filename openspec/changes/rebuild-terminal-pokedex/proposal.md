@@ -11,7 +11,7 @@ The archived Pokédex CLI is useful as product reference, but its implementation
 - Add runtime PokeSprite fetch/cache for terminal-rendered Sprites, including Shiny Sprite toggling.
 - Add forms-aware Detail using PokeAPI varieties for Pokémon Form identity and PokeSprite metadata for Sprite mapping.
 - Add Form Carryover for regional/form-family variants across direct evolution relationships sourced from cached PokeAPI evolution chains.
-- Add reproducible project tooling with devenv, Bun, Zig, Biome, Fallow, TypeScript, Lefthook, commitlint, Dependabot, GitHub Actions, and release-please.
+- Add reproducible project tooling with devenv, Bun, Zig, Biome, Fallow, Worktrunk, TypeScript, Lefthook, commitlint, Dependabot, GitHub Actions, and release-please.
 - Target Linux compiled binary releases through GitHub Releases rather than npm publication for the MVP.
 
 ## Capabilities
@@ -34,5 +34,5 @@ None.
 - Replaces the existing archived implementation model rather than refactoring it in place.
 - Adds a Bun/TypeScript/OpenTUI React application structure and generated data workflow.
 - Adds external runtime integrations with PokeAPI and PokeSprite, both mediated by user-cache storage.
-- Adds development and release tooling: devenv/Nix, Bun lockfile, Biome, TypeScript, Fallow, Lefthook, commitlint, GitHub Actions, Dependabot, and release-please.
+- Adds development and release tooling: devenv/Nix, Bun lockfile, Biome, TypeScript, Fallow, Worktrunk, Lefthook, commitlint, GitHub Actions, Dependabot, and release-please.
 - Produces Linux compiled binary release artifacts for MVP distribution.

@@ -5,7 +5,7 @@ The project SHALL use `devenv.sh` with Nix to provide the local and CI toolchain
 
 #### Scenario: Local environment provides required tools
 - **WHEN** a developer enters the devenv environment
-- **THEN** Bun, Zig, Fallow, and project support tools are available
+- **THEN** Bun, Zig, Fallow, Worktrunk, and project support tools are available
 
 #### Scenario: CI uses devenv shell
 - **WHEN** GitHub Actions runs project checks
@@ -21,6 +21,17 @@ The project SHALL expose standard package scripts for development, validation, g
 #### Scenario: Typecheck is separate from Bun build
 - **WHEN** validation runs
 - **THEN** TypeScript type checking is performed with `tsc --noEmit` rather than relying on Bun build
+
+### Requirement: Worktrunk project workflow
+The project SHALL include checked-in Worktrunk project configuration for shared worktree workflow behavior.
+
+#### Scenario: Worktrunk project config exists
+- **WHEN** the repository tooling baseline is installed
+- **THEN** `.config/wt.toml` defines project-level Worktrunk behavior for this repository
+
+#### Scenario: Worktrunk does not replace Git hooks
+- **WHEN** local commit or push validation is configured
+- **THEN** Lefthook remains responsible for Git hook checks while Worktrunk remains responsible for worktree workflow behavior
 
 ### Requirement: Local hooks
 The project SHALL use Lefthook for local Git hooks.
