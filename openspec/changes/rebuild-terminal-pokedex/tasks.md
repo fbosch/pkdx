@@ -83,8 +83,8 @@
 
 ## 11. CI And Release Workflow
 
-- [ ] 11.1 Add Lefthook configuration for pre-commit format/lint/related-test, pre-push typecheck plus changed-scope Fallow audit, and commit-msg commitlint.
-- [ ] 11.2 Add commitlint conventional configuration.
+- [x] 11.1 Add Lefthook configuration for lint-staged pre-commit format/lint/related-test, pre-push typecheck plus changed-scope Fallow audit, and commit-msg commitlint.
+- [x] 11.2 Add commitlint conventional configuration.
 - [ ] 11.3 Add grouped Dependabot configuration for package and GitHub Actions updates.
 - [ ] 11.4 Add GitHub Actions CI that runs through `devenv shell`, uses frozen `bun.lock`, runs deterministic checks, verifies generated index freshness, and smoke-tests the Linux compiled binary without live PokeAPI or PokeSprite dependencies.
 - [ ] 11.5 Add release-please configuration and release workflow that publishes GitHub Releases with Linux compiled binary artifacts.

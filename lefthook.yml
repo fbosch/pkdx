@@ -1,0 +1,30 @@
+pre-commit:
+  commands:
+    lint-staged:
+      run: bun run lint-staged
+
+pre-push:
+  commands:
+    typecheck:
+      glob:
+        - "*.{ts,tsx}"
+        - "package.json"
+        - "bun.lock"
+        - "tsconfig.json"
+      run: bun run typecheck
+    fallow-audit:
+      glob:
+        - "*.{js,jsx,ts,tsx,mjs,mts,cjs,cts}"
+        - "package.json"
+        - "bun.lock"
+        - "tsconfig.json"
+        - ".fallowrc.json"
+        - ".fallowrc.jsonc"
+        - "fallow.toml"
+        - ".fallow.toml"
+      run: bun run fallow:audit
+
+commit-msg:
+  commands:
+    commitlint:
+      run: bun run commitlint -- --edit {1}
