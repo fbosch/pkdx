@@ -1,0 +1,4 @@
+# Worktrunk owns worktree lifecycle setup for this project.
+# Git commit/push validation belongs to Lefthook and is configured separately.
+
+pre-start = "bun install --frozen-lockfile"

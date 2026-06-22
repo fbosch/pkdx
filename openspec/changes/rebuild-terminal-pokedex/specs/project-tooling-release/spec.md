@@ -5,7 +5,7 @@ The project SHALL use `devenv.sh` with Nix to provide the local and CI toolchain
 
 #### Scenario: Local environment provides required tools
 - **WHEN** a developer enters the devenv environment
-- **THEN** Bun, Zig, Fallow, Worktrunk, and project support tools are available
+- **THEN** Bun, Zig, Fallow, and project support tools are available
 
 #### Scenario: CI uses devenv shell
 - **WHEN** GitHub Actions runs project checks
@@ -24,6 +24,8 @@ The project SHALL expose standard package scripts for development, validation, g
 
 ### Requirement: Worktrunk project workflow
 The project SHALL include checked-in Worktrunk project configuration for shared worktree workflow behavior.
+
+Worktrunk SHALL be provided by the host machine rather than built through the project devenv environment.
 
 #### Scenario: Worktrunk project config exists
 - **WHEN** the repository tooling baseline is installed

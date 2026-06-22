@@ -64,7 +64,7 @@ Species navigation remains National Dex based. Form Carryover applies only when 
 
 ### Tooling And Release
 
-`devenv.sh` with Nix provides Bun, Zig, Fallow, Worktrunk, and support tools. `package.json` scripts remain the canonical project commands. Biome handles formatting/linting, TypeScript handles type checking, Bun test handles tests, Fallow provides deterministic codebase intelligence, Worktrunk manages the project worktree workflow through checked-in `.config/wt.toml`, Lefthook runs local Git hooks, commitlint enforces Conventional Commits, Dependabot groups dependency updates, and release-please creates GitHub Releases with Linux binary artifacts.
+`devenv.sh` with Nix provides Bun, Zig, Fallow, and support tools. `package.json` scripts remain the canonical project commands. Biome handles formatting/linting, TypeScript handles type checking, Bun test handles tests, Fallow provides deterministic codebase intelligence, Worktrunk manages the project worktree workflow through checked-in `.config/wt.toml` and is expected on the host PATH, Lefthook runs local Git hooks, commitlint enforces Conventional Commits, Dependabot groups dependency updates, and release-please creates GitHub Releases with Linux binary artifacts.
 
 CI runs through `devenv shell` with frozen `bun.lock`, deterministic tests, generated-index freshness checks, and compiled-binary smoke checks. Normal CI does not depend on live external network services.
 
