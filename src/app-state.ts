@@ -24,6 +24,7 @@ export type DetailState = {
 export type AppKey = {
   name: string;
   ctrl?: boolean;
+  shift?: boolean;
   sequence?: string;
 };
 
@@ -33,8 +34,8 @@ const searchKeyHandlers: Record<string, SearchKeyHandler> = {
   backspace: (state) => updateSearchQuery(state, state.query.slice(0, -1)),
   down: (state) => moveSearchSelection(state, 1),
   enter: openSelectedSpecies,
-  j: (state) => moveSearchSelection(state, 1),
-  k: (state) => moveSearchSelection(state, -1),
+  J: (state) => moveSearchSelection(state, 1),
+  K: (state) => moveSearchSelection(state, -1),
   return: openSelectedSpecies,
   up: (state) => moveSearchSelection(state, -1),
 };
@@ -87,13 +88,21 @@ function applyDetailKey(state: DetailState, key: AppKey): AppState {
 }
 
 function applySearchKey(state: SearchState, key: AppKey): AppState {
-  const handler = searchKeyHandlers[key.name];
+  const handler = searchKeyHandlers[searchKeyName(key)];
 
   if (handler !== undefined) {
     return handler(state);
   }
 
   return applySearchTextInput(state, key);
+}
+
+function searchKeyName(key: AppKey): string {
+  if (key.shift === true && key.name.length === 1) {
+    return key.name.toUpperCase();
+  }
+
+  return key.name;
 }
 
 function applySearchTextInput(state: SearchState, key: AppKey): SearchState {

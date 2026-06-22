@@ -42,9 +42,12 @@ test("ambiguous launch arguments open prefilled Search", () => {
   });
 });
 
-test("Search selection moves with j and k", () => {
-  const selected = applyAppKey(createInitialAppState(), { name: "j" });
-  const reset = applyAppKey(selected, { name: "k" });
+test("Search selection moves with Shift-J and Shift-K", () => {
+  const selected = applyAppKey(createInitialAppState(), {
+    name: "j",
+    shift: true,
+  });
+  const reset = applyAppKey(selected, { name: "k", shift: true });
 
   expect(selected).toMatchObject({
     screen: "search",
@@ -52,6 +55,19 @@ test("Search selection moves with j and k", () => {
   });
   expect(reset).toMatchObject({
     screen: "search",
+    selectedIndex: 0,
+  });
+});
+
+test("lowercase Vim keys remain Search input", () => {
+  const next = applyAppKey(createInitialAppState(), {
+    name: "j",
+    sequence: "j",
+  });
+
+  expect(next).toMatchObject({
+    screen: "search",
+    query: "j",
     selectedIndex: 0,
   });
 });
