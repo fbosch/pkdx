@@ -15,6 +15,7 @@
     "format:check": "biome format .",
     "lint": "biome lint .",
     "fallow": "fallow --summary",
+    "fallow:audit": "fallow audit --quiet",
     "check": "bun run format:check && bun run lint && bun run typecheck && bun test && bun run verify:index && bun run build && bun run fallow",
     "generate:index": "bun run scripts/generate-index.ts",
     "verify:index": "bun run scripts/verify-index.ts",

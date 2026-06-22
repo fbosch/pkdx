@@ -1,6 +1,6 @@
 ## 1. Tooling Baseline
 
-- [x] 1.1 Replace the placeholder package metadata with Bun-first ESM scripts for `dev`, `build`, `test`, `test:related`, `typecheck`, `format`, `format:check`, `lint`, `check`, `generate:index`, `verify:index`, `ci`, and `openspec`.
+- [x] 1.1 Replace the placeholder package metadata with Bun-first ESM scripts for `dev`, `build`, `test`, `test:related`, `typecheck`, `format`, `format:check`, `lint`, `fallow`, `fallow:audit`, `check`, `generate:index`, `verify:index`, `ci`, and `openspec`.
 - [x] 1.2 Add TypeScript strict configuration with `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` enabled.
 - [x] 1.3 Add devenv files that provide Bun, Zig, Fallow, and project support tools, plus `.envrc` for direnv activation.
 - [x] 1.4 Add Biome configuration and scripts for formatting and linting.
@@ -83,7 +83,7 @@
 
 ## 11. CI And Release Workflow
 
-- [ ] 11.1 Add Lefthook configuration for pre-commit format/lint/related-test, pre-push typecheck, and commit-msg commitlint.
+- [ ] 11.1 Add Lefthook configuration for pre-commit format/lint/related-test, pre-push typecheck plus changed-scope Fallow audit, and commit-msg commitlint.
 - [ ] 11.2 Add commitlint conventional configuration.
 - [ ] 11.3 Add grouped Dependabot configuration for package and GitHub Actions updates.
 - [ ] 11.4 Add GitHub Actions CI that runs through `devenv shell`, uses frozen `bun.lock`, runs deterministic checks, verifies generated index freshness, and smoke-tests the Linux compiled binary without live PokeAPI or PokeSprite dependencies.

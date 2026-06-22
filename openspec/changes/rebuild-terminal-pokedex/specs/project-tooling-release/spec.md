@@ -46,6 +46,11 @@ The project SHALL use Lefthook for local Git hooks.
 - **WHEN** a push is attempted
 - **THEN** Lefthook runs the typecheck script
 
+#### Scenario: Pre-push runs changed-scope Fallow audit
+- **WHEN** a push is attempted with relevant JavaScript, TypeScript, or project tooling changes
+- **THEN** Lefthook runs the Fallow audit script against the changed scope
+- **AND** the full-project Fallow summary remains part of the `check` script
+
 #### Scenario: Commit message is conventional
 - **WHEN** a commit message is created
 - **THEN** commitlint validates it against Conventional Commits
