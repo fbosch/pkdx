@@ -33,6 +33,8 @@ import {
 } from "./components";
 import { colors, textStyles } from "./design-tokens";
 
+const detailLoadingGraceMs = 120;
+
 type AppProps = {
   initialQuery?: string;
   onExit: () => void;
@@ -181,6 +183,10 @@ function DetailView({
     ...pokemonDetailQueryOptions(state.species, queryClient),
     enabled: state.status !== "error",
   });
+  const showColdLoadingSkeleton = useDelayedVisibility(
+    state.detail === undefined && state.status === "loading",
+    state.species.slug,
+  );
 
   useEffect(() => {
     if (detail.data !== undefined && state.status !== "ready") {
@@ -229,35 +235,11 @@ function DetailView({
   }
 
   if (state.status === "loading") {
-    return (
-      <DetailScreen>
-        <PokedexCard>
-          <DetailCardTitle
-            left={`Loading #${state.species.dexNumbers[1] ?? state.species.dexNumbers[0]} ${state.species.name}...`}
-            right="Detail"
-          />
-          <box
-            style={{
-              alignItems: "center",
-              height: 10,
-              justifyContent: "center",
-            }}
-          >
-            <text fg={colors.muted} attributes={textStyles.muted}>
-              Preparing Detail data...
-            </text>
-          </box>
-        </PokedexCard>
-        <InstructionFooter>
-          <KeyHints
-            hints={[
-              { key: "/", action: "search" },
-              { key: "q/esc", action: "exit" },
-            ]}
-          />
-        </InstructionFooter>
-      </DetailScreen>
-    );
+    if (!showColdLoadingSkeleton) {
+      return <DetailScreen>{null}</DetailScreen>;
+    }
+
+    return <DetailLoadingSkeleton species={state.species} />;
   }
 
   return (
@@ -285,6 +267,192 @@ function DetailView({
       </InstructionFooter>
     </DetailScreen>
   );
+}
+
+function useDelayedVisibility(active: boolean, key: string): boolean {
+  const [visibleKey, setVisibleKey] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (!active) {
+      setVisibleKey(undefined);
+      return;
+    }
+
+    setVisibleKey(undefined);
+    const timeout = setTimeout(() => {
+      setVisibleKey(key);
+    }, detailLoadingGraceMs);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [active, key]);
+
+  return visibleKey === key;
+}
+
+export function DetailLoadingSkeleton({
+  species,
+}: {
+  species: DetailState["species"];
+}) {
+  const dexNumber = (species.dexNumbers[1] ?? species.dexNumbers[0] ?? 0)
+    .toString()
+    .padStart(3, "0");
+  const title = `#${dexNumber} ${species.name}`;
+
+  return (
+    <DetailScreen>
+      <PokedexCard>
+        <DetailCardTitle
+          left={
+            <span>
+              <span fg={colors.muted}>#{dexNumber}</span>
+              <span> {species.name}</span>
+            </span>
+          }
+          leftWidth={title.length}
+          right={<span fg={colors.muted}>Loading</span>}
+          rightWidth={7}
+        />
+        <text fg={colors.muted} attributes={textStyles.muted}>
+          <SkeletonLine width={22} />
+        </text>
+        <box style={{ alignItems: "flex-start", flexDirection: "row", gap: 1 }}>
+          <box
+            border
+            borderColor={colors.panelSecondary}
+            borderStyle="rounded"
+            style={{
+              alignItems: "center",
+              flexDirection: "column",
+              height: 16,
+              justifyContent: "center",
+              paddingX: 1,
+              width: 30,
+            }}
+          >
+            <box
+              style={{
+                alignItems: "center",
+                flexDirection: "column",
+                gap: 1,
+                height: 13,
+                justifyContent: "center",
+                width: 18,
+              }}
+            >
+              <SkeletonText width={10} />
+              <SkeletonText width={16} />
+              <SkeletonText width={12} />
+            </box>
+          </box>
+          <box style={{ flexDirection: "column", width: 65 }}>
+            <box
+              border
+              borderColor={colors.panelSecondary}
+              borderStyle="rounded"
+              style={{
+                flexDirection: "column",
+                minHeight: 7,
+                paddingX: 1,
+                width: 65,
+              }}
+            >
+              <SkeletonText width={58} />
+              <SkeletonText width={52} />
+              <SkeletonText width={44} />
+            </box>
+            <box
+              border
+              borderColor={colors.panelSecondary}
+              borderStyle="rounded"
+              style={{ flexDirection: "column", paddingX: 1, width: 65 }}
+            >
+              {(
+                [
+                  ["Species", 20],
+                  ["Egg Group", 18],
+                  ["Gender", 24],
+                  ["Height", 10],
+                  ["Weight", 12],
+                  ["Ability", 22],
+                ] satisfies [string, number][]
+              ).map(([label, width]) => (
+                <SkeletonFactRow key={label} label={label} width={width} />
+              ))}
+            </box>
+          </box>
+        </box>
+        <box style={{ flexDirection: "row", gap: 1 }}>
+          <box
+            border
+            borderColor={colors.panelSecondary}
+            borderStyle="rounded"
+            style={{ flexDirection: "column", paddingX: 1, width: 45 }}
+          >
+            <text attributes={textStyles.active}>Stats</text>
+            {[
+              "HP",
+              "Attack",
+              "Defense",
+              "Sp. Attack",
+              "Sp. Defense",
+              "Speed",
+            ].map((label) => (
+              <text key={label} fg={colors.muted} attributes={textStyles.muted}>
+                <span>{label.padEnd(11)}</span>
+                <span> </span>
+                <SkeletonLine width={20} />
+              </text>
+            ))}
+          </box>
+          <box
+            border
+            borderColor={colors.panelSecondary}
+            borderStyle="rounded"
+            style={{ flexDirection: "column", paddingX: 1, width: 50 }}
+          >
+            <text attributes={textStyles.active}>Damage Taken</text>
+            <SkeletonText width={38} />
+            <SkeletonText width={28} />
+            <text> </text>
+            <SkeletonText width={34} />
+            <SkeletonText width={24} />
+          </box>
+        </box>
+      </PokedexCard>
+      <InstructionFooter>
+        <KeyHints
+          hints={[
+            { key: "/", action: "search" },
+            { key: "q/esc", action: "exit" },
+          ]}
+        />
+      </InstructionFooter>
+    </DetailScreen>
+  );
+}
+
+function SkeletonFactRow({ label, width }: { label: string; width: number }) {
+  return (
+    <text fg={colors.muted} attributes={textStyles.muted}>
+      <span>{label.padEnd(11)}</span>
+      <SkeletonLine width={width} />
+    </text>
+  );
+}
+
+function SkeletonText({ width }: { width: number }) {
+  return (
+    <text fg={colors.muted} attributes={textStyles.muted}>
+      <SkeletonLine width={width} />
+    </text>
+  );
+}
+
+function SkeletonLine({ width }: { width: number }) {
+  return <span>{"░".repeat(width)}</span>;
 }
 
 type LoadedDetailViewProps = {
@@ -327,6 +495,8 @@ function LoadedDetailView({
             {loadingSpecies.dexNumbers[1] ?? loadingSpecies.dexNumbers[0]}{" "}
             {loadingSpecies.name}...
           </text>
+        ) : errorMessage === undefined ? (
+          <text> </text>
         ) : null}
         {errorMessage !== undefined ? (
           <text fg={colors.muted} attributes={textStyles.muted}>

@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { isValidElement } from "react";
-import { DamageTakenPanel } from "../src/ui/app";
+import { findExactSpecies } from "../src/search";
+import { DamageTakenPanel, DetailLoadingSkeleton } from "../src/ui/app";
 
 test("renders Damage Taken panel with matchup entries", () => {
   const element = DamageTakenPanel({
@@ -24,4 +25,17 @@ test("renders Damage Taken panel with matchup entries", () => {
   }
 
   expect(element.type).toBe("box");
+});
+
+test("renders full-size Detail loading skeleton", () => {
+  const pikachu = findExactSpecies("pikachu");
+
+  if (pikachu === undefined) {
+    throw new Error("Missing Pikachu species fixture");
+  }
+
+  const element = DetailLoadingSkeleton({ species: pikachu });
+
+  expect(element).toBeDefined();
+  expect(isValidElement(element)).toBe(true);
 });
