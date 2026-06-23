@@ -46,6 +46,14 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
         url: "https://pokeapi.co/api/v2/ability/31/",
       },
     ],
+    damageTaken: {
+      resistances: [
+        { multiplier: 0.5, type: "Electric" },
+        { multiplier: 0.5, type: "Flying" },
+        { multiplier: 0.5, type: "Steel" },
+      ],
+      weaknesses: [{ multiplier: 2, type: "Ground" }],
+    },
     dexNumber: 25,
     flavorText:
       "When several of these POKéMON gather, their electricity can build and cause lightning storms.",

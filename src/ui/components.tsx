@@ -159,11 +159,23 @@ export function TypeLabels({ types }: { types: string[] }) {
       {types.map((type, index) => (
         <span key={type}>
           {index > 0 ? <span fg={colors.muted}> / </span> : null}
-          <span bg={typeColor(type)} fg={typeTextColor(type)}>
-            {` ${type} `}
-          </span>
+          <TypeTag type={type} />
         </span>
       ))}
+    </span>
+  );
+}
+
+export function TypeTag({
+  short = false,
+  type,
+}: {
+  short?: boolean;
+  type: string;
+}) {
+  return (
+    <span bg={typeColor(type)} fg={typeTextColor(type)}>
+      {` ${short ? shortTypeLabel(type) : type} `}
     </span>
   );
 }
@@ -285,4 +297,29 @@ function typeTextColor(type: string) {
   return lightTextTypes.has(type)
     ? colors.typeTagTextLight
     : colors.typeTagTextDark;
+}
+
+function shortTypeLabel(type: string): string {
+  const labels: Record<string, string> = {
+    Bug: "BUG",
+    Dark: "DAR",
+    Dragon: "DRA",
+    Electric: "ELE",
+    Fairy: "FAI",
+    Fighting: "FIG",
+    Fire: "FIR",
+    Flying: "FLY",
+    Ghost: "GHO",
+    Grass: "GRA",
+    Ground: "GRO",
+    Ice: "ICE",
+    Normal: "NOR",
+    Poison: "POI",
+    Psychic: "PSY",
+    Rock: "ROC",
+    Steel: "STE",
+    Water: "WAT",
+  };
+
+  return labels[type] ?? type.slice(0, 3).toUpperCase();
 }

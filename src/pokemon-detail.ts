@@ -13,11 +13,13 @@ import {
 } from "./pokeapi/schema";
 import { queryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
+import { calculateDamageTaken, type DamageTaken } from "./type-matchups";
 
 type ResourceQueryClient = Pick<QueryClient, "fetchQuery">;
 
 export type PokemonDetail = {
   abilities: PokemonAbility[];
+  damageTaken: DamageTaken;
   dexNumber: number;
   flavorText: string;
   heightMeters: number;
@@ -134,6 +136,10 @@ export function buildDefaultPokemonDetail(
   speciesResource: PokeApiPokemonSpecies,
   pokemonResource: PokeApiPokemon,
 ): PokemonDetail {
+  const types = pokemonResource.types
+    .toSorted((left, right) => left.slot - right.slot)
+    .map((entry) => formatResourceName(entry.type.name));
+
   return {
     abilities: pokemonResource.abilities
       .toSorted((left, right) => left.slot - right.slot)
@@ -143,6 +149,7 @@ export function buildDefaultPokemonDetail(
         url: entry.ability.url,
       })),
     dexNumber: species.dexNumber,
+    damageTaken: calculateDamageTaken(types),
     flavorText: selectFlavorText(speciesResource),
     heightMeters: pokemonResource.height / 10,
     name: getEnglishSpeciesName(speciesResource) ?? species.name,
@@ -154,9 +161,7 @@ export function buildDefaultPokemonDetail(
       base: entry.base_stat,
       name: formatStatName(entry.stat.name),
     })),
-    types: pokemonResource.types
-      .toSorted((left, right) => left.slot - right.slot)
-      .map((entry) => formatResourceName(entry.type.name)),
+    types,
     weightKilograms: pokemonResource.weight / 10,
   };
 }

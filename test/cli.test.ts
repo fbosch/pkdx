@@ -27,6 +27,14 @@ const pikachuDetail: PokemonDetail = {
       url: "https://pokeapi.co/api/v2/ability/9/",
     },
   ],
+  damageTaken: {
+    resistances: [
+      { multiplier: 0.5, type: "Electric" },
+      { multiplier: 0.5, type: "Flying" },
+      { multiplier: 0.5, type: "Steel" },
+    ],
+    weaknesses: [{ multiplier: 2, type: "Ground" }],
+  },
   dexNumber: 25,
   flavorText: "Mouse Pokemon.",
   heightMeters: 0.4,

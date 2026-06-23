@@ -17,7 +17,7 @@
     "lint": "biome lint .",
     "fallow": "fallow --summary",
     "fallow:audit": "fallow audit --quiet",
-    "bench": "bun run test/benchmarks/pokeapi-validation.ts",
+    "bench": "bun run scripts/run-benchmarks.ts",
     "commitlint": "commitlint",
     "lint-staged": "lint-staged",
     "hooks:install": "lefthook install",
