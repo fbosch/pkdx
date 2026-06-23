@@ -11,6 +11,7 @@ test.each([
   { query: "001", slug: "bulbasaur" },
   { query: "nidoran female", slug: "nidoran-f" },
   { query: "mr mime", slug: "mr-mime" },
+  { query: "pecharunt", slug: "pecharunt" },
 ])("ranks $slug for $query", ({ query, slug }) => {
   expect(searchSpecies(query)[0]?.slug).toBe(slug);
 });
@@ -18,6 +19,7 @@ test.each([
 test("exact species matching excludes fuzzy aliases", () => {
   expect(findExactSpecies("pikachu")?.slug).toBe("pikachu");
   expect(findExactSpecies("025")?.slug).toBe("pikachu");
+  expect(findExactSpecies("1025")?.slug).toBe("pecharunt");
   expect(findExactSpecies("pika")).toBeUndefined();
 });
 

@@ -103,12 +103,12 @@ test("ambiguous launch arguments open prefilled Search", () => {
   });
 });
 
-test("Search selection moves with Shift-J and Shift-K", () => {
+test("Search selection moves with Ctrl-J and Ctrl-K", () => {
   const selected = applyAppKey(createInitialAppState("nidoran"), {
     name: "j",
-    shift: true,
+    ctrl: true,
   });
-  const reset = applyAppKey(selected, { name: "k", shift: true });
+  const reset = applyAppKey(selected, { name: "k", ctrl: true });
 
   expect(selected).toMatchObject({
     screen: "search",
@@ -124,12 +124,26 @@ test("Search selection moves with Shift-J and Shift-K", () => {
 test("Search selection waits for enough query input", () => {
   const selected = applyAppKey(createInitialAppState("pi"), {
     name: "j",
-    shift: true,
+    ctrl: true,
   });
 
   expect(selected).toMatchObject({
     screen: "search",
     query: "pi",
+    selectedIndex: 0,
+  });
+});
+
+test("shifted Vim keys remain Search input", () => {
+  const next = applyAppKey(createInitialAppState(), {
+    name: "j",
+    sequence: "J",
+    shift: true,
+  });
+
+  expect(next).toMatchObject({
+    screen: "search",
+    query: "J",
     selectedIndex: 0,
   });
 });

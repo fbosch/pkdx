@@ -7,11 +7,193 @@
     "dexNumbers": ["1", "001"]
   },
   {
+    "dexNumber": 2,
+    "name": "Ivysaur",
+    "slug": "ivysaur",
+    "aliases": [],
+    "dexNumbers": ["2", "002"]
+  },
+  {
+    "dexNumber": 3,
+    "name": "Venusaur",
+    "slug": "venusaur",
+    "aliases": [],
+    "dexNumbers": ["3", "003"]
+  },
+  {
+    "dexNumber": 4,
+    "name": "Charmander",
+    "slug": "charmander",
+    "aliases": [],
+    "dexNumbers": ["4", "004"]
+  },
+  {
+    "dexNumber": 5,
+    "name": "Charmeleon",
+    "slug": "charmeleon",
+    "aliases": [],
+    "dexNumbers": ["5", "005"]
+  },
+  {
+    "dexNumber": 6,
+    "name": "Charizard",
+    "slug": "charizard",
+    "aliases": [],
+    "dexNumbers": ["6", "006"]
+  },
+  {
+    "dexNumber": 7,
+    "name": "Squirtle",
+    "slug": "squirtle",
+    "aliases": [],
+    "dexNumbers": ["7", "007"]
+  },
+  {
+    "dexNumber": 8,
+    "name": "Wartortle",
+    "slug": "wartortle",
+    "aliases": [],
+    "dexNumbers": ["8", "008"]
+  },
+  {
+    "dexNumber": 9,
+    "name": "Blastoise",
+    "slug": "blastoise",
+    "aliases": [],
+    "dexNumbers": ["9", "009"]
+  },
+  {
+    "dexNumber": 10,
+    "name": "Caterpie",
+    "slug": "caterpie",
+    "aliases": [],
+    "dexNumbers": ["10", "010"]
+  },
+  {
+    "dexNumber": 11,
+    "name": "Metapod",
+    "slug": "metapod",
+    "aliases": [],
+    "dexNumbers": ["11", "011"]
+  },
+  {
+    "dexNumber": 12,
+    "name": "Butterfree",
+    "slug": "butterfree",
+    "aliases": [],
+    "dexNumbers": ["12", "012"]
+  },
+  {
+    "dexNumber": 13,
+    "name": "Weedle",
+    "slug": "weedle",
+    "aliases": [],
+    "dexNumbers": ["13", "013"]
+  },
+  {
+    "dexNumber": 14,
+    "name": "Kakuna",
+    "slug": "kakuna",
+    "aliases": [],
+    "dexNumbers": ["14", "014"]
+  },
+  {
+    "dexNumber": 15,
+    "name": "Beedrill",
+    "slug": "beedrill",
+    "aliases": [],
+    "dexNumbers": ["15", "015"]
+  },
+  {
+    "dexNumber": 16,
+    "name": "Pidgey",
+    "slug": "pidgey",
+    "aliases": [],
+    "dexNumbers": ["16", "016"]
+  },
+  {
+    "dexNumber": 17,
+    "name": "Pidgeotto",
+    "slug": "pidgeotto",
+    "aliases": [],
+    "dexNumbers": ["17", "017"]
+  },
+  {
+    "dexNumber": 18,
+    "name": "Pidgeot",
+    "slug": "pidgeot",
+    "aliases": [],
+    "dexNumbers": ["18", "018"]
+  },
+  {
+    "dexNumber": 19,
+    "name": "Rattata",
+    "slug": "rattata",
+    "aliases": [],
+    "dexNumbers": ["19", "019"]
+  },
+  {
+    "dexNumber": 20,
+    "name": "Raticate",
+    "slug": "raticate",
+    "aliases": [],
+    "dexNumbers": ["20", "020"]
+  },
+  {
+    "dexNumber": 21,
+    "name": "Spearow",
+    "slug": "spearow",
+    "aliases": [],
+    "dexNumbers": ["21", "021"]
+  },
+  {
+    "dexNumber": 22,
+    "name": "Fearow",
+    "slug": "fearow",
+    "aliases": [],
+    "dexNumbers": ["22", "022"]
+  },
+  {
+    "dexNumber": 23,
+    "name": "Ekans",
+    "slug": "ekans",
+    "aliases": [],
+    "dexNumbers": ["23", "023"]
+  },
+  {
+    "dexNumber": 24,
+    "name": "Arbok",
+    "slug": "arbok",
+    "aliases": [],
+    "dexNumbers": ["24", "024"]
+  },
+  {
     "dexNumber": 25,
     "name": "Pikachu",
     "slug": "pikachu",
     "aliases": ["pika", "025", "25"],
     "dexNumbers": ["25", "025"]
+  },
+  {
+    "dexNumber": 26,
+    "name": "Raichu",
+    "slug": "raichu",
+    "aliases": [],
+    "dexNumbers": ["26", "026"]
+  },
+  {
+    "dexNumber": 27,
+    "name": "Sandshrew",
+    "slug": "sandshrew",
+    "aliases": [],
+    "dexNumbers": ["27", "027"]
+  },
+  {
+    "dexNumber": 28,
+    "name": "Sandslash",
+    "slug": "sandslash",
+    "aliases": [],
+    "dexNumbers": ["28", "028"]
   },
   {
     "dexNumber": 29,
@@ -21,11 +203,648 @@
     "dexNumbers": ["29", "029"]
   },
   {
+    "dexNumber": 30,
+    "name": "Nidorina",
+    "slug": "nidorina",
+    "aliases": [],
+    "dexNumbers": ["30", "030"]
+  },
+  {
+    "dexNumber": 31,
+    "name": "Nidoqueen",
+    "slug": "nidoqueen",
+    "aliases": [],
+    "dexNumbers": ["31", "031"]
+  },
+  {
     "dexNumber": 32,
     "name": "Nidoran♂",
     "slug": "nidoran-m",
     "aliases": ["nidoran male", "nidoran m", "nidoran♂"],
     "dexNumbers": ["32", "032"]
+  },
+  {
+    "dexNumber": 33,
+    "name": "Nidorino",
+    "slug": "nidorino",
+    "aliases": [],
+    "dexNumbers": ["33", "033"]
+  },
+  {
+    "dexNumber": 34,
+    "name": "Nidoking",
+    "slug": "nidoking",
+    "aliases": [],
+    "dexNumbers": ["34", "034"]
+  },
+  {
+    "dexNumber": 35,
+    "name": "Clefairy",
+    "slug": "clefairy",
+    "aliases": [],
+    "dexNumbers": ["35", "035"]
+  },
+  {
+    "dexNumber": 36,
+    "name": "Clefable",
+    "slug": "clefable",
+    "aliases": [],
+    "dexNumbers": ["36", "036"]
+  },
+  {
+    "dexNumber": 37,
+    "name": "Vulpix",
+    "slug": "vulpix",
+    "aliases": [],
+    "dexNumbers": ["37", "037"]
+  },
+  {
+    "dexNumber": 38,
+    "name": "Ninetales",
+    "slug": "ninetales",
+    "aliases": [],
+    "dexNumbers": ["38", "038"]
+  },
+  {
+    "dexNumber": 39,
+    "name": "Jigglypuff",
+    "slug": "jigglypuff",
+    "aliases": [],
+    "dexNumbers": ["39", "039"]
+  },
+  {
+    "dexNumber": 40,
+    "name": "Wigglytuff",
+    "slug": "wigglytuff",
+    "aliases": [],
+    "dexNumbers": ["40", "040"]
+  },
+  {
+    "dexNumber": 41,
+    "name": "Zubat",
+    "slug": "zubat",
+    "aliases": [],
+    "dexNumbers": ["41", "041"]
+  },
+  {
+    "dexNumber": 42,
+    "name": "Golbat",
+    "slug": "golbat",
+    "aliases": [],
+    "dexNumbers": ["42", "042"]
+  },
+  {
+    "dexNumber": 43,
+    "name": "Oddish",
+    "slug": "oddish",
+    "aliases": [],
+    "dexNumbers": ["43", "043"]
+  },
+  {
+    "dexNumber": 44,
+    "name": "Gloom",
+    "slug": "gloom",
+    "aliases": [],
+    "dexNumbers": ["44", "044"]
+  },
+  {
+    "dexNumber": 45,
+    "name": "Vileplume",
+    "slug": "vileplume",
+    "aliases": [],
+    "dexNumbers": ["45", "045"]
+  },
+  {
+    "dexNumber": 46,
+    "name": "Paras",
+    "slug": "paras",
+    "aliases": [],
+    "dexNumbers": ["46", "046"]
+  },
+  {
+    "dexNumber": 47,
+    "name": "Parasect",
+    "slug": "parasect",
+    "aliases": [],
+    "dexNumbers": ["47", "047"]
+  },
+  {
+    "dexNumber": 48,
+    "name": "Venonat",
+    "slug": "venonat",
+    "aliases": [],
+    "dexNumbers": ["48", "048"]
+  },
+  {
+    "dexNumber": 49,
+    "name": "Venomoth",
+    "slug": "venomoth",
+    "aliases": [],
+    "dexNumbers": ["49", "049"]
+  },
+  {
+    "dexNumber": 50,
+    "name": "Diglett",
+    "slug": "diglett",
+    "aliases": [],
+    "dexNumbers": ["50", "050"]
+  },
+  {
+    "dexNumber": 51,
+    "name": "Dugtrio",
+    "slug": "dugtrio",
+    "aliases": [],
+    "dexNumbers": ["51", "051"]
+  },
+  {
+    "dexNumber": 52,
+    "name": "Meowth",
+    "slug": "meowth",
+    "aliases": [],
+    "dexNumbers": ["52", "052"]
+  },
+  {
+    "dexNumber": 53,
+    "name": "Persian",
+    "slug": "persian",
+    "aliases": [],
+    "dexNumbers": ["53", "053"]
+  },
+  {
+    "dexNumber": 54,
+    "name": "Psyduck",
+    "slug": "psyduck",
+    "aliases": [],
+    "dexNumbers": ["54", "054"]
+  },
+  {
+    "dexNumber": 55,
+    "name": "Golduck",
+    "slug": "golduck",
+    "aliases": [],
+    "dexNumbers": ["55", "055"]
+  },
+  {
+    "dexNumber": 56,
+    "name": "Mankey",
+    "slug": "mankey",
+    "aliases": [],
+    "dexNumbers": ["56", "056"]
+  },
+  {
+    "dexNumber": 57,
+    "name": "Primeape",
+    "slug": "primeape",
+    "aliases": [],
+    "dexNumbers": ["57", "057"]
+  },
+  {
+    "dexNumber": 58,
+    "name": "Growlithe",
+    "slug": "growlithe",
+    "aliases": [],
+    "dexNumbers": ["58", "058"]
+  },
+  {
+    "dexNumber": 59,
+    "name": "Arcanine",
+    "slug": "arcanine",
+    "aliases": [],
+    "dexNumbers": ["59", "059"]
+  },
+  {
+    "dexNumber": 60,
+    "name": "Poliwag",
+    "slug": "poliwag",
+    "aliases": [],
+    "dexNumbers": ["60", "060"]
+  },
+  {
+    "dexNumber": 61,
+    "name": "Poliwhirl",
+    "slug": "poliwhirl",
+    "aliases": [],
+    "dexNumbers": ["61", "061"]
+  },
+  {
+    "dexNumber": 62,
+    "name": "Poliwrath",
+    "slug": "poliwrath",
+    "aliases": [],
+    "dexNumbers": ["62", "062"]
+  },
+  {
+    "dexNumber": 63,
+    "name": "Abra",
+    "slug": "abra",
+    "aliases": [],
+    "dexNumbers": ["63", "063"]
+  },
+  {
+    "dexNumber": 64,
+    "name": "Kadabra",
+    "slug": "kadabra",
+    "aliases": [],
+    "dexNumbers": ["64", "064"]
+  },
+  {
+    "dexNumber": 65,
+    "name": "Alakazam",
+    "slug": "alakazam",
+    "aliases": [],
+    "dexNumbers": ["65", "065"]
+  },
+  {
+    "dexNumber": 66,
+    "name": "Machop",
+    "slug": "machop",
+    "aliases": [],
+    "dexNumbers": ["66", "066"]
+  },
+  {
+    "dexNumber": 67,
+    "name": "Machoke",
+    "slug": "machoke",
+    "aliases": [],
+    "dexNumbers": ["67", "067"]
+  },
+  {
+    "dexNumber": 68,
+    "name": "Machamp",
+    "slug": "machamp",
+    "aliases": [],
+    "dexNumbers": ["68", "068"]
+  },
+  {
+    "dexNumber": 69,
+    "name": "Bellsprout",
+    "slug": "bellsprout",
+    "aliases": [],
+    "dexNumbers": ["69", "069"]
+  },
+  {
+    "dexNumber": 70,
+    "name": "Weepinbell",
+    "slug": "weepinbell",
+    "aliases": [],
+    "dexNumbers": ["70", "070"]
+  },
+  {
+    "dexNumber": 71,
+    "name": "Victreebel",
+    "slug": "victreebel",
+    "aliases": [],
+    "dexNumbers": ["71", "071"]
+  },
+  {
+    "dexNumber": 72,
+    "name": "Tentacool",
+    "slug": "tentacool",
+    "aliases": [],
+    "dexNumbers": ["72", "072"]
+  },
+  {
+    "dexNumber": 73,
+    "name": "Tentacruel",
+    "slug": "tentacruel",
+    "aliases": [],
+    "dexNumbers": ["73", "073"]
+  },
+  {
+    "dexNumber": 74,
+    "name": "Geodude",
+    "slug": "geodude",
+    "aliases": [],
+    "dexNumbers": ["74", "074"]
+  },
+  {
+    "dexNumber": 75,
+    "name": "Graveler",
+    "slug": "graveler",
+    "aliases": [],
+    "dexNumbers": ["75", "075"]
+  },
+  {
+    "dexNumber": 76,
+    "name": "Golem",
+    "slug": "golem",
+    "aliases": [],
+    "dexNumbers": ["76", "076"]
+  },
+  {
+    "dexNumber": 77,
+    "name": "Ponyta",
+    "slug": "ponyta",
+    "aliases": [],
+    "dexNumbers": ["77", "077"]
+  },
+  {
+    "dexNumber": 78,
+    "name": "Rapidash",
+    "slug": "rapidash",
+    "aliases": [],
+    "dexNumbers": ["78", "078"]
+  },
+  {
+    "dexNumber": 79,
+    "name": "Slowpoke",
+    "slug": "slowpoke",
+    "aliases": [],
+    "dexNumbers": ["79", "079"]
+  },
+  {
+    "dexNumber": 80,
+    "name": "Slowbro",
+    "slug": "slowbro",
+    "aliases": [],
+    "dexNumbers": ["80", "080"]
+  },
+  {
+    "dexNumber": 81,
+    "name": "Magnemite",
+    "slug": "magnemite",
+    "aliases": [],
+    "dexNumbers": ["81", "081"]
+  },
+  {
+    "dexNumber": 82,
+    "name": "Magneton",
+    "slug": "magneton",
+    "aliases": [],
+    "dexNumbers": ["82", "082"]
+  },
+  {
+    "dexNumber": 83,
+    "name": "Farfetch’d",
+    "slug": "farfetchd",
+    "aliases": [],
+    "dexNumbers": ["83", "083"]
+  },
+  {
+    "dexNumber": 84,
+    "name": "Doduo",
+    "slug": "doduo",
+    "aliases": [],
+    "dexNumbers": ["84", "084"]
+  },
+  {
+    "dexNumber": 85,
+    "name": "Dodrio",
+    "slug": "dodrio",
+    "aliases": [],
+    "dexNumbers": ["85", "085"]
+  },
+  {
+    "dexNumber": 86,
+    "name": "Seel",
+    "slug": "seel",
+    "aliases": [],
+    "dexNumbers": ["86", "086"]
+  },
+  {
+    "dexNumber": 87,
+    "name": "Dewgong",
+    "slug": "dewgong",
+    "aliases": [],
+    "dexNumbers": ["87", "087"]
+  },
+  {
+    "dexNumber": 88,
+    "name": "Grimer",
+    "slug": "grimer",
+    "aliases": [],
+    "dexNumbers": ["88", "088"]
+  },
+  {
+    "dexNumber": 89,
+    "name": "Muk",
+    "slug": "muk",
+    "aliases": [],
+    "dexNumbers": ["89", "089"]
+  },
+  {
+    "dexNumber": 90,
+    "name": "Shellder",
+    "slug": "shellder",
+    "aliases": [],
+    "dexNumbers": ["90", "090"]
+  },
+  {
+    "dexNumber": 91,
+    "name": "Cloyster",
+    "slug": "cloyster",
+    "aliases": [],
+    "dexNumbers": ["91", "091"]
+  },
+  {
+    "dexNumber": 92,
+    "name": "Gastly",
+    "slug": "gastly",
+    "aliases": [],
+    "dexNumbers": ["92", "092"]
+  },
+  {
+    "dexNumber": 93,
+    "name": "Haunter",
+    "slug": "haunter",
+    "aliases": [],
+    "dexNumbers": ["93", "093"]
+  },
+  {
+    "dexNumber": 94,
+    "name": "Gengar",
+    "slug": "gengar",
+    "aliases": [],
+    "dexNumbers": ["94", "094"]
+  },
+  {
+    "dexNumber": 95,
+    "name": "Onix",
+    "slug": "onix",
+    "aliases": [],
+    "dexNumbers": ["95", "095"]
+  },
+  {
+    "dexNumber": 96,
+    "name": "Drowzee",
+    "slug": "drowzee",
+    "aliases": [],
+    "dexNumbers": ["96", "096"]
+  },
+  {
+    "dexNumber": 97,
+    "name": "Hypno",
+    "slug": "hypno",
+    "aliases": [],
+    "dexNumbers": ["97", "097"]
+  },
+  {
+    "dexNumber": 98,
+    "name": "Krabby",
+    "slug": "krabby",
+    "aliases": [],
+    "dexNumbers": ["98", "098"]
+  },
+  {
+    "dexNumber": 99,
+    "name": "Kingler",
+    "slug": "kingler",
+    "aliases": [],
+    "dexNumbers": ["99", "099"]
+  },
+  {
+    "dexNumber": 100,
+    "name": "Voltorb",
+    "slug": "voltorb",
+    "aliases": [],
+    "dexNumbers": ["100"]
+  },
+  {
+    "dexNumber": 101,
+    "name": "Electrode",
+    "slug": "electrode",
+    "aliases": [],
+    "dexNumbers": ["101"]
+  },
+  {
+    "dexNumber": 102,
+    "name": "Exeggcute",
+    "slug": "exeggcute",
+    "aliases": [],
+    "dexNumbers": ["102"]
+  },
+  {
+    "dexNumber": 103,
+    "name": "Exeggutor",
+    "slug": "exeggutor",
+    "aliases": [],
+    "dexNumbers": ["103"]
+  },
+  {
+    "dexNumber": 104,
+    "name": "Cubone",
+    "slug": "cubone",
+    "aliases": [],
+    "dexNumbers": ["104"]
+  },
+  {
+    "dexNumber": 105,
+    "name": "Marowak",
+    "slug": "marowak",
+    "aliases": [],
+    "dexNumbers": ["105"]
+  },
+  {
+    "dexNumber": 106,
+    "name": "Hitmonlee",
+    "slug": "hitmonlee",
+    "aliases": [],
+    "dexNumbers": ["106"]
+  },
+  {
+    "dexNumber": 107,
+    "name": "Hitmonchan",
+    "slug": "hitmonchan",
+    "aliases": [],
+    "dexNumbers": ["107"]
+  },
+  {
+    "dexNumber": 108,
+    "name": "Lickitung",
+    "slug": "lickitung",
+    "aliases": [],
+    "dexNumbers": ["108"]
+  },
+  {
+    "dexNumber": 109,
+    "name": "Koffing",
+    "slug": "koffing",
+    "aliases": [],
+    "dexNumbers": ["109"]
+  },
+  {
+    "dexNumber": 110,
+    "name": "Weezing",
+    "slug": "weezing",
+    "aliases": [],
+    "dexNumbers": ["110"]
+  },
+  {
+    "dexNumber": 111,
+    "name": "Rhyhorn",
+    "slug": "rhyhorn",
+    "aliases": [],
+    "dexNumbers": ["111"]
+  },
+  {
+    "dexNumber": 112,
+    "name": "Rhydon",
+    "slug": "rhydon",
+    "aliases": [],
+    "dexNumbers": ["112"]
+  },
+  {
+    "dexNumber": 113,
+    "name": "Chansey",
+    "slug": "chansey",
+    "aliases": [],
+    "dexNumbers": ["113"]
+  },
+  {
+    "dexNumber": 114,
+    "name": "Tangela",
+    "slug": "tangela",
+    "aliases": [],
+    "dexNumbers": ["114"]
+  },
+  {
+    "dexNumber": 115,
+    "name": "Kangaskhan",
+    "slug": "kangaskhan",
+    "aliases": [],
+    "dexNumbers": ["115"]
+  },
+  {
+    "dexNumber": 116,
+    "name": "Horsea",
+    "slug": "horsea",
+    "aliases": [],
+    "dexNumbers": ["116"]
+  },
+  {
+    "dexNumber": 117,
+    "name": "Seadra",
+    "slug": "seadra",
+    "aliases": [],
+    "dexNumbers": ["117"]
+  },
+  {
+    "dexNumber": 118,
+    "name": "Goldeen",
+    "slug": "goldeen",
+    "aliases": [],
+    "dexNumbers": ["118"]
+  },
+  {
+    "dexNumber": 119,
+    "name": "Seaking",
+    "slug": "seaking",
+    "aliases": [],
+    "dexNumbers": ["119"]
+  },
+  {
+    "dexNumber": 120,
+    "name": "Staryu",
+    "slug": "staryu",
+    "aliases": [],
+    "dexNumbers": ["120"]
+  },
+  {
+    "dexNumber": 121,
+    "name": "Starmie",
+    "slug": "starmie",
+    "aliases": [],
+    "dexNumbers": ["121"]
   },
   {
     "dexNumber": 122,
@@ -35,6 +854,76 @@
     "dexNumbers": ["122"]
   },
   {
+    "dexNumber": 123,
+    "name": "Scyther",
+    "slug": "scyther",
+    "aliases": [],
+    "dexNumbers": ["123"]
+  },
+  {
+    "dexNumber": 124,
+    "name": "Jynx",
+    "slug": "jynx",
+    "aliases": [],
+    "dexNumbers": ["124"]
+  },
+  {
+    "dexNumber": 125,
+    "name": "Electabuzz",
+    "slug": "electabuzz",
+    "aliases": [],
+    "dexNumbers": ["125"]
+  },
+  {
+    "dexNumber": 126,
+    "name": "Magmar",
+    "slug": "magmar",
+    "aliases": [],
+    "dexNumbers": ["126"]
+  },
+  {
+    "dexNumber": 127,
+    "name": "Pinsir",
+    "slug": "pinsir",
+    "aliases": [],
+    "dexNumbers": ["127"]
+  },
+  {
+    "dexNumber": 128,
+    "name": "Tauros",
+    "slug": "tauros",
+    "aliases": [],
+    "dexNumbers": ["128"]
+  },
+  {
+    "dexNumber": 129,
+    "name": "Magikarp",
+    "slug": "magikarp",
+    "aliases": [],
+    "dexNumbers": ["129"]
+  },
+  {
+    "dexNumber": 130,
+    "name": "Gyarados",
+    "slug": "gyarados",
+    "aliases": [],
+    "dexNumbers": ["130"]
+  },
+  {
+    "dexNumber": 131,
+    "name": "Lapras",
+    "slug": "lapras",
+    "aliases": [],
+    "dexNumbers": ["131"]
+  },
+  {
+    "dexNumber": 132,
+    "name": "Ditto",
+    "slug": "ditto",
+    "aliases": [],
+    "dexNumbers": ["132"]
+  },
+  {
     "dexNumber": 133,
     "name": "Eevee",
     "slug": "eevee",
@@ -42,10 +931,6247 @@
     "dexNumbers": ["133"]
   },
   {
+    "dexNumber": 134,
+    "name": "Vaporeon",
+    "slug": "vaporeon",
+    "aliases": [],
+    "dexNumbers": ["134"]
+  },
+  {
+    "dexNumber": 135,
+    "name": "Jolteon",
+    "slug": "jolteon",
+    "aliases": [],
+    "dexNumbers": ["135"]
+  },
+  {
+    "dexNumber": 136,
+    "name": "Flareon",
+    "slug": "flareon",
+    "aliases": [],
+    "dexNumbers": ["136"]
+  },
+  {
+    "dexNumber": 137,
+    "name": "Porygon",
+    "slug": "porygon",
+    "aliases": [],
+    "dexNumbers": ["137"]
+  },
+  {
+    "dexNumber": 138,
+    "name": "Omanyte",
+    "slug": "omanyte",
+    "aliases": [],
+    "dexNumbers": ["138"]
+  },
+  {
+    "dexNumber": 139,
+    "name": "Omastar",
+    "slug": "omastar",
+    "aliases": [],
+    "dexNumbers": ["139"]
+  },
+  {
+    "dexNumber": 140,
+    "name": "Kabuto",
+    "slug": "kabuto",
+    "aliases": [],
+    "dexNumbers": ["140"]
+  },
+  {
+    "dexNumber": 141,
+    "name": "Kabutops",
+    "slug": "kabutops",
+    "aliases": [],
+    "dexNumbers": ["141"]
+  },
+  {
+    "dexNumber": 142,
+    "name": "Aerodactyl",
+    "slug": "aerodactyl",
+    "aliases": [],
+    "dexNumbers": ["142"]
+  },
+  {
+    "dexNumber": 143,
+    "name": "Snorlax",
+    "slug": "snorlax",
+    "aliases": [],
+    "dexNumbers": ["143"]
+  },
+  {
+    "dexNumber": 144,
+    "name": "Articuno",
+    "slug": "articuno",
+    "aliases": [],
+    "dexNumbers": ["144"]
+  },
+  {
+    "dexNumber": 145,
+    "name": "Zapdos",
+    "slug": "zapdos",
+    "aliases": [],
+    "dexNumbers": ["145"]
+  },
+  {
+    "dexNumber": 146,
+    "name": "Moltres",
+    "slug": "moltres",
+    "aliases": [],
+    "dexNumbers": ["146"]
+  },
+  {
+    "dexNumber": 147,
+    "name": "Dratini",
+    "slug": "dratini",
+    "aliases": [],
+    "dexNumbers": ["147"]
+  },
+  {
+    "dexNumber": 148,
+    "name": "Dragonair",
+    "slug": "dragonair",
+    "aliases": [],
+    "dexNumbers": ["148"]
+  },
+  {
+    "dexNumber": 149,
+    "name": "Dragonite",
+    "slug": "dragonite",
+    "aliases": [],
+    "dexNumbers": ["149"]
+  },
+  {
     "dexNumber": 150,
     "name": "Mewtwo",
     "slug": "mewtwo",
     "aliases": ["150"],
     "dexNumbers": ["150"]
+  },
+  {
+    "dexNumber": 151,
+    "name": "Mew",
+    "slug": "mew",
+    "aliases": [],
+    "dexNumbers": ["151"]
+  },
+  {
+    "dexNumber": 152,
+    "name": "Chikorita",
+    "slug": "chikorita",
+    "aliases": [],
+    "dexNumbers": ["152"]
+  },
+  {
+    "dexNumber": 153,
+    "name": "Bayleef",
+    "slug": "bayleef",
+    "aliases": [],
+    "dexNumbers": ["153"]
+  },
+  {
+    "dexNumber": 154,
+    "name": "Meganium",
+    "slug": "meganium",
+    "aliases": [],
+    "dexNumbers": ["154"]
+  },
+  {
+    "dexNumber": 155,
+    "name": "Cyndaquil",
+    "slug": "cyndaquil",
+    "aliases": [],
+    "dexNumbers": ["155"]
+  },
+  {
+    "dexNumber": 156,
+    "name": "Quilava",
+    "slug": "quilava",
+    "aliases": [],
+    "dexNumbers": ["156"]
+  },
+  {
+    "dexNumber": 157,
+    "name": "Typhlosion",
+    "slug": "typhlosion",
+    "aliases": [],
+    "dexNumbers": ["157"]
+  },
+  {
+    "dexNumber": 158,
+    "name": "Totodile",
+    "slug": "totodile",
+    "aliases": [],
+    "dexNumbers": ["158"]
+  },
+  {
+    "dexNumber": 159,
+    "name": "Croconaw",
+    "slug": "croconaw",
+    "aliases": [],
+    "dexNumbers": ["159"]
+  },
+  {
+    "dexNumber": 160,
+    "name": "Feraligatr",
+    "slug": "feraligatr",
+    "aliases": [],
+    "dexNumbers": ["160"]
+  },
+  {
+    "dexNumber": 161,
+    "name": "Sentret",
+    "slug": "sentret",
+    "aliases": [],
+    "dexNumbers": ["161"]
+  },
+  {
+    "dexNumber": 162,
+    "name": "Furret",
+    "slug": "furret",
+    "aliases": [],
+    "dexNumbers": ["162"]
+  },
+  {
+    "dexNumber": 163,
+    "name": "Hoothoot",
+    "slug": "hoothoot",
+    "aliases": [],
+    "dexNumbers": ["163"]
+  },
+  {
+    "dexNumber": 164,
+    "name": "Noctowl",
+    "slug": "noctowl",
+    "aliases": [],
+    "dexNumbers": ["164"]
+  },
+  {
+    "dexNumber": 165,
+    "name": "Ledyba",
+    "slug": "ledyba",
+    "aliases": [],
+    "dexNumbers": ["165"]
+  },
+  {
+    "dexNumber": 166,
+    "name": "Ledian",
+    "slug": "ledian",
+    "aliases": [],
+    "dexNumbers": ["166"]
+  },
+  {
+    "dexNumber": 167,
+    "name": "Spinarak",
+    "slug": "spinarak",
+    "aliases": [],
+    "dexNumbers": ["167"]
+  },
+  {
+    "dexNumber": 168,
+    "name": "Ariados",
+    "slug": "ariados",
+    "aliases": [],
+    "dexNumbers": ["168"]
+  },
+  {
+    "dexNumber": 169,
+    "name": "Crobat",
+    "slug": "crobat",
+    "aliases": [],
+    "dexNumbers": ["169"]
+  },
+  {
+    "dexNumber": 170,
+    "name": "Chinchou",
+    "slug": "chinchou",
+    "aliases": [],
+    "dexNumbers": ["170"]
+  },
+  {
+    "dexNumber": 171,
+    "name": "Lanturn",
+    "slug": "lanturn",
+    "aliases": [],
+    "dexNumbers": ["171"]
+  },
+  {
+    "dexNumber": 172,
+    "name": "Pichu",
+    "slug": "pichu",
+    "aliases": [],
+    "dexNumbers": ["172"]
+  },
+  {
+    "dexNumber": 173,
+    "name": "Cleffa",
+    "slug": "cleffa",
+    "aliases": [],
+    "dexNumbers": ["173"]
+  },
+  {
+    "dexNumber": 174,
+    "name": "Igglybuff",
+    "slug": "igglybuff",
+    "aliases": [],
+    "dexNumbers": ["174"]
+  },
+  {
+    "dexNumber": 175,
+    "name": "Togepi",
+    "slug": "togepi",
+    "aliases": [],
+    "dexNumbers": ["175"]
+  },
+  {
+    "dexNumber": 176,
+    "name": "Togetic",
+    "slug": "togetic",
+    "aliases": [],
+    "dexNumbers": ["176"]
+  },
+  {
+    "dexNumber": 177,
+    "name": "Natu",
+    "slug": "natu",
+    "aliases": [],
+    "dexNumbers": ["177"]
+  },
+  {
+    "dexNumber": 178,
+    "name": "Xatu",
+    "slug": "xatu",
+    "aliases": [],
+    "dexNumbers": ["178"]
+  },
+  {
+    "dexNumber": 179,
+    "name": "Mareep",
+    "slug": "mareep",
+    "aliases": [],
+    "dexNumbers": ["179"]
+  },
+  {
+    "dexNumber": 180,
+    "name": "Flaaffy",
+    "slug": "flaaffy",
+    "aliases": [],
+    "dexNumbers": ["180"]
+  },
+  {
+    "dexNumber": 181,
+    "name": "Ampharos",
+    "slug": "ampharos",
+    "aliases": [],
+    "dexNumbers": ["181"]
+  },
+  {
+    "dexNumber": 182,
+    "name": "Bellossom",
+    "slug": "bellossom",
+    "aliases": [],
+    "dexNumbers": ["182"]
+  },
+  {
+    "dexNumber": 183,
+    "name": "Marill",
+    "slug": "marill",
+    "aliases": [],
+    "dexNumbers": ["183"]
+  },
+  {
+    "dexNumber": 184,
+    "name": "Azumarill",
+    "slug": "azumarill",
+    "aliases": [],
+    "dexNumbers": ["184"]
+  },
+  {
+    "dexNumber": 185,
+    "name": "Sudowoodo",
+    "slug": "sudowoodo",
+    "aliases": [],
+    "dexNumbers": ["185"]
+  },
+  {
+    "dexNumber": 186,
+    "name": "Politoed",
+    "slug": "politoed",
+    "aliases": [],
+    "dexNumbers": ["186"]
+  },
+  {
+    "dexNumber": 187,
+    "name": "Hoppip",
+    "slug": "hoppip",
+    "aliases": [],
+    "dexNumbers": ["187"]
+  },
+  {
+    "dexNumber": 188,
+    "name": "Skiploom",
+    "slug": "skiploom",
+    "aliases": [],
+    "dexNumbers": ["188"]
+  },
+  {
+    "dexNumber": 189,
+    "name": "Jumpluff",
+    "slug": "jumpluff",
+    "aliases": [],
+    "dexNumbers": ["189"]
+  },
+  {
+    "dexNumber": 190,
+    "name": "Aipom",
+    "slug": "aipom",
+    "aliases": [],
+    "dexNumbers": ["190"]
+  },
+  {
+    "dexNumber": 191,
+    "name": "Sunkern",
+    "slug": "sunkern",
+    "aliases": [],
+    "dexNumbers": ["191"]
+  },
+  {
+    "dexNumber": 192,
+    "name": "Sunflora",
+    "slug": "sunflora",
+    "aliases": [],
+    "dexNumbers": ["192"]
+  },
+  {
+    "dexNumber": 193,
+    "name": "Yanma",
+    "slug": "yanma",
+    "aliases": [],
+    "dexNumbers": ["193"]
+  },
+  {
+    "dexNumber": 194,
+    "name": "Wooper",
+    "slug": "wooper",
+    "aliases": [],
+    "dexNumbers": ["194"]
+  },
+  {
+    "dexNumber": 195,
+    "name": "Quagsire",
+    "slug": "quagsire",
+    "aliases": [],
+    "dexNumbers": ["195"]
+  },
+  {
+    "dexNumber": 196,
+    "name": "Espeon",
+    "slug": "espeon",
+    "aliases": [],
+    "dexNumbers": ["196"]
+  },
+  {
+    "dexNumber": 197,
+    "name": "Umbreon",
+    "slug": "umbreon",
+    "aliases": [],
+    "dexNumbers": ["197"]
+  },
+  {
+    "dexNumber": 198,
+    "name": "Murkrow",
+    "slug": "murkrow",
+    "aliases": [],
+    "dexNumbers": ["198"]
+  },
+  {
+    "dexNumber": 199,
+    "name": "Slowking",
+    "slug": "slowking",
+    "aliases": [],
+    "dexNumbers": ["199"]
+  },
+  {
+    "dexNumber": 200,
+    "name": "Misdreavus",
+    "slug": "misdreavus",
+    "aliases": [],
+    "dexNumbers": ["200"]
+  },
+  {
+    "dexNumber": 201,
+    "name": "Unown",
+    "slug": "unown",
+    "aliases": [],
+    "dexNumbers": ["201"]
+  },
+  {
+    "dexNumber": 202,
+    "name": "Wobbuffet",
+    "slug": "wobbuffet",
+    "aliases": [],
+    "dexNumbers": ["202"]
+  },
+  {
+    "dexNumber": 203,
+    "name": "Girafarig",
+    "slug": "girafarig",
+    "aliases": [],
+    "dexNumbers": ["203"]
+  },
+  {
+    "dexNumber": 204,
+    "name": "Pineco",
+    "slug": "pineco",
+    "aliases": [],
+    "dexNumbers": ["204"]
+  },
+  {
+    "dexNumber": 205,
+    "name": "Forretress",
+    "slug": "forretress",
+    "aliases": [],
+    "dexNumbers": ["205"]
+  },
+  {
+    "dexNumber": 206,
+    "name": "Dunsparce",
+    "slug": "dunsparce",
+    "aliases": [],
+    "dexNumbers": ["206"]
+  },
+  {
+    "dexNumber": 207,
+    "name": "Gligar",
+    "slug": "gligar",
+    "aliases": [],
+    "dexNumbers": ["207"]
+  },
+  {
+    "dexNumber": 208,
+    "name": "Steelix",
+    "slug": "steelix",
+    "aliases": [],
+    "dexNumbers": ["208"]
+  },
+  {
+    "dexNumber": 209,
+    "name": "Snubbull",
+    "slug": "snubbull",
+    "aliases": [],
+    "dexNumbers": ["209"]
+  },
+  {
+    "dexNumber": 210,
+    "name": "Granbull",
+    "slug": "granbull",
+    "aliases": [],
+    "dexNumbers": ["210"]
+  },
+  {
+    "dexNumber": 211,
+    "name": "Qwilfish",
+    "slug": "qwilfish",
+    "aliases": [],
+    "dexNumbers": ["211"]
+  },
+  {
+    "dexNumber": 212,
+    "name": "Scizor",
+    "slug": "scizor",
+    "aliases": [],
+    "dexNumbers": ["212"]
+  },
+  {
+    "dexNumber": 213,
+    "name": "Shuckle",
+    "slug": "shuckle",
+    "aliases": [],
+    "dexNumbers": ["213"]
+  },
+  {
+    "dexNumber": 214,
+    "name": "Heracross",
+    "slug": "heracross",
+    "aliases": [],
+    "dexNumbers": ["214"]
+  },
+  {
+    "dexNumber": 215,
+    "name": "Sneasel",
+    "slug": "sneasel",
+    "aliases": [],
+    "dexNumbers": ["215"]
+  },
+  {
+    "dexNumber": 216,
+    "name": "Teddiursa",
+    "slug": "teddiursa",
+    "aliases": [],
+    "dexNumbers": ["216"]
+  },
+  {
+    "dexNumber": 217,
+    "name": "Ursaring",
+    "slug": "ursaring",
+    "aliases": [],
+    "dexNumbers": ["217"]
+  },
+  {
+    "dexNumber": 218,
+    "name": "Slugma",
+    "slug": "slugma",
+    "aliases": [],
+    "dexNumbers": ["218"]
+  },
+  {
+    "dexNumber": 219,
+    "name": "Magcargo",
+    "slug": "magcargo",
+    "aliases": [],
+    "dexNumbers": ["219"]
+  },
+  {
+    "dexNumber": 220,
+    "name": "Swinub",
+    "slug": "swinub",
+    "aliases": [],
+    "dexNumbers": ["220"]
+  },
+  {
+    "dexNumber": 221,
+    "name": "Piloswine",
+    "slug": "piloswine",
+    "aliases": [],
+    "dexNumbers": ["221"]
+  },
+  {
+    "dexNumber": 222,
+    "name": "Corsola",
+    "slug": "corsola",
+    "aliases": [],
+    "dexNumbers": ["222"]
+  },
+  {
+    "dexNumber": 223,
+    "name": "Remoraid",
+    "slug": "remoraid",
+    "aliases": [],
+    "dexNumbers": ["223"]
+  },
+  {
+    "dexNumber": 224,
+    "name": "Octillery",
+    "slug": "octillery",
+    "aliases": [],
+    "dexNumbers": ["224"]
+  },
+  {
+    "dexNumber": 225,
+    "name": "Delibird",
+    "slug": "delibird",
+    "aliases": [],
+    "dexNumbers": ["225"]
+  },
+  {
+    "dexNumber": 226,
+    "name": "Mantine",
+    "slug": "mantine",
+    "aliases": [],
+    "dexNumbers": ["226"]
+  },
+  {
+    "dexNumber": 227,
+    "name": "Skarmory",
+    "slug": "skarmory",
+    "aliases": [],
+    "dexNumbers": ["227"]
+  },
+  {
+    "dexNumber": 228,
+    "name": "Houndour",
+    "slug": "houndour",
+    "aliases": [],
+    "dexNumbers": ["228"]
+  },
+  {
+    "dexNumber": 229,
+    "name": "Houndoom",
+    "slug": "houndoom",
+    "aliases": [],
+    "dexNumbers": ["229"]
+  },
+  {
+    "dexNumber": 230,
+    "name": "Kingdra",
+    "slug": "kingdra",
+    "aliases": [],
+    "dexNumbers": ["230"]
+  },
+  {
+    "dexNumber": 231,
+    "name": "Phanpy",
+    "slug": "phanpy",
+    "aliases": [],
+    "dexNumbers": ["231"]
+  },
+  {
+    "dexNumber": 232,
+    "name": "Donphan",
+    "slug": "donphan",
+    "aliases": [],
+    "dexNumbers": ["232"]
+  },
+  {
+    "dexNumber": 233,
+    "name": "Porygon2",
+    "slug": "porygon2",
+    "aliases": [],
+    "dexNumbers": ["233"]
+  },
+  {
+    "dexNumber": 234,
+    "name": "Stantler",
+    "slug": "stantler",
+    "aliases": [],
+    "dexNumbers": ["234"]
+  },
+  {
+    "dexNumber": 235,
+    "name": "Smeargle",
+    "slug": "smeargle",
+    "aliases": [],
+    "dexNumbers": ["235"]
+  },
+  {
+    "dexNumber": 236,
+    "name": "Tyrogue",
+    "slug": "tyrogue",
+    "aliases": [],
+    "dexNumbers": ["236"]
+  },
+  {
+    "dexNumber": 237,
+    "name": "Hitmontop",
+    "slug": "hitmontop",
+    "aliases": [],
+    "dexNumbers": ["237"]
+  },
+  {
+    "dexNumber": 238,
+    "name": "Smoochum",
+    "slug": "smoochum",
+    "aliases": [],
+    "dexNumbers": ["238"]
+  },
+  {
+    "dexNumber": 239,
+    "name": "Elekid",
+    "slug": "elekid",
+    "aliases": [],
+    "dexNumbers": ["239"]
+  },
+  {
+    "dexNumber": 240,
+    "name": "Magby",
+    "slug": "magby",
+    "aliases": [],
+    "dexNumbers": ["240"]
+  },
+  {
+    "dexNumber": 241,
+    "name": "Miltank",
+    "slug": "miltank",
+    "aliases": [],
+    "dexNumbers": ["241"]
+  },
+  {
+    "dexNumber": 242,
+    "name": "Blissey",
+    "slug": "blissey",
+    "aliases": [],
+    "dexNumbers": ["242"]
+  },
+  {
+    "dexNumber": 243,
+    "name": "Raikou",
+    "slug": "raikou",
+    "aliases": [],
+    "dexNumbers": ["243"]
+  },
+  {
+    "dexNumber": 244,
+    "name": "Entei",
+    "slug": "entei",
+    "aliases": [],
+    "dexNumbers": ["244"]
+  },
+  {
+    "dexNumber": 245,
+    "name": "Suicune",
+    "slug": "suicune",
+    "aliases": [],
+    "dexNumbers": ["245"]
+  },
+  {
+    "dexNumber": 246,
+    "name": "Larvitar",
+    "slug": "larvitar",
+    "aliases": [],
+    "dexNumbers": ["246"]
+  },
+  {
+    "dexNumber": 247,
+    "name": "Pupitar",
+    "slug": "pupitar",
+    "aliases": [],
+    "dexNumbers": ["247"]
+  },
+  {
+    "dexNumber": 248,
+    "name": "Tyranitar",
+    "slug": "tyranitar",
+    "aliases": [],
+    "dexNumbers": ["248"]
+  },
+  {
+    "dexNumber": 249,
+    "name": "Lugia",
+    "slug": "lugia",
+    "aliases": [],
+    "dexNumbers": ["249"]
+  },
+  {
+    "dexNumber": 250,
+    "name": "Ho-Oh",
+    "slug": "ho-oh",
+    "aliases": [],
+    "dexNumbers": ["250"]
+  },
+  {
+    "dexNumber": 251,
+    "name": "Celebi",
+    "slug": "celebi",
+    "aliases": [],
+    "dexNumbers": ["251"]
+  },
+  {
+    "dexNumber": 252,
+    "name": "Treecko",
+    "slug": "treecko",
+    "aliases": [],
+    "dexNumbers": ["252"]
+  },
+  {
+    "dexNumber": 253,
+    "name": "Grovyle",
+    "slug": "grovyle",
+    "aliases": [],
+    "dexNumbers": ["253"]
+  },
+  {
+    "dexNumber": 254,
+    "name": "Sceptile",
+    "slug": "sceptile",
+    "aliases": [],
+    "dexNumbers": ["254"]
+  },
+  {
+    "dexNumber": 255,
+    "name": "Torchic",
+    "slug": "torchic",
+    "aliases": [],
+    "dexNumbers": ["255"]
+  },
+  {
+    "dexNumber": 256,
+    "name": "Combusken",
+    "slug": "combusken",
+    "aliases": [],
+    "dexNumbers": ["256"]
+  },
+  {
+    "dexNumber": 257,
+    "name": "Blaziken",
+    "slug": "blaziken",
+    "aliases": [],
+    "dexNumbers": ["257"]
+  },
+  {
+    "dexNumber": 258,
+    "name": "Mudkip",
+    "slug": "mudkip",
+    "aliases": [],
+    "dexNumbers": ["258"]
+  },
+  {
+    "dexNumber": 259,
+    "name": "Marshtomp",
+    "slug": "marshtomp",
+    "aliases": [],
+    "dexNumbers": ["259"]
+  },
+  {
+    "dexNumber": 260,
+    "name": "Swampert",
+    "slug": "swampert",
+    "aliases": [],
+    "dexNumbers": ["260"]
+  },
+  {
+    "dexNumber": 261,
+    "name": "Poochyena",
+    "slug": "poochyena",
+    "aliases": [],
+    "dexNumbers": ["261"]
+  },
+  {
+    "dexNumber": 262,
+    "name": "Mightyena",
+    "slug": "mightyena",
+    "aliases": [],
+    "dexNumbers": ["262"]
+  },
+  {
+    "dexNumber": 263,
+    "name": "Zigzagoon",
+    "slug": "zigzagoon",
+    "aliases": [],
+    "dexNumbers": ["263"]
+  },
+  {
+    "dexNumber": 264,
+    "name": "Linoone",
+    "slug": "linoone",
+    "aliases": [],
+    "dexNumbers": ["264"]
+  },
+  {
+    "dexNumber": 265,
+    "name": "Wurmple",
+    "slug": "wurmple",
+    "aliases": [],
+    "dexNumbers": ["265"]
+  },
+  {
+    "dexNumber": 266,
+    "name": "Silcoon",
+    "slug": "silcoon",
+    "aliases": [],
+    "dexNumbers": ["266"]
+  },
+  {
+    "dexNumber": 267,
+    "name": "Beautifly",
+    "slug": "beautifly",
+    "aliases": [],
+    "dexNumbers": ["267"]
+  },
+  {
+    "dexNumber": 268,
+    "name": "Cascoon",
+    "slug": "cascoon",
+    "aliases": [],
+    "dexNumbers": ["268"]
+  },
+  {
+    "dexNumber": 269,
+    "name": "Dustox",
+    "slug": "dustox",
+    "aliases": [],
+    "dexNumbers": ["269"]
+  },
+  {
+    "dexNumber": 270,
+    "name": "Lotad",
+    "slug": "lotad",
+    "aliases": [],
+    "dexNumbers": ["270"]
+  },
+  {
+    "dexNumber": 271,
+    "name": "Lombre",
+    "slug": "lombre",
+    "aliases": [],
+    "dexNumbers": ["271"]
+  },
+  {
+    "dexNumber": 272,
+    "name": "Ludicolo",
+    "slug": "ludicolo",
+    "aliases": [],
+    "dexNumbers": ["272"]
+  },
+  {
+    "dexNumber": 273,
+    "name": "Seedot",
+    "slug": "seedot",
+    "aliases": [],
+    "dexNumbers": ["273"]
+  },
+  {
+    "dexNumber": 274,
+    "name": "Nuzleaf",
+    "slug": "nuzleaf",
+    "aliases": [],
+    "dexNumbers": ["274"]
+  },
+  {
+    "dexNumber": 275,
+    "name": "Shiftry",
+    "slug": "shiftry",
+    "aliases": [],
+    "dexNumbers": ["275"]
+  },
+  {
+    "dexNumber": 276,
+    "name": "Taillow",
+    "slug": "taillow",
+    "aliases": [],
+    "dexNumbers": ["276"]
+  },
+  {
+    "dexNumber": 277,
+    "name": "Swellow",
+    "slug": "swellow",
+    "aliases": [],
+    "dexNumbers": ["277"]
+  },
+  {
+    "dexNumber": 278,
+    "name": "Wingull",
+    "slug": "wingull",
+    "aliases": [],
+    "dexNumbers": ["278"]
+  },
+  {
+    "dexNumber": 279,
+    "name": "Pelipper",
+    "slug": "pelipper",
+    "aliases": [],
+    "dexNumbers": ["279"]
+  },
+  {
+    "dexNumber": 280,
+    "name": "Ralts",
+    "slug": "ralts",
+    "aliases": [],
+    "dexNumbers": ["280"]
+  },
+  {
+    "dexNumber": 281,
+    "name": "Kirlia",
+    "slug": "kirlia",
+    "aliases": [],
+    "dexNumbers": ["281"]
+  },
+  {
+    "dexNumber": 282,
+    "name": "Gardevoir",
+    "slug": "gardevoir",
+    "aliases": [],
+    "dexNumbers": ["282"]
+  },
+  {
+    "dexNumber": 283,
+    "name": "Surskit",
+    "slug": "surskit",
+    "aliases": [],
+    "dexNumbers": ["283"]
+  },
+  {
+    "dexNumber": 284,
+    "name": "Masquerain",
+    "slug": "masquerain",
+    "aliases": [],
+    "dexNumbers": ["284"]
+  },
+  {
+    "dexNumber": 285,
+    "name": "Shroomish",
+    "slug": "shroomish",
+    "aliases": [],
+    "dexNumbers": ["285"]
+  },
+  {
+    "dexNumber": 286,
+    "name": "Breloom",
+    "slug": "breloom",
+    "aliases": [],
+    "dexNumbers": ["286"]
+  },
+  {
+    "dexNumber": 287,
+    "name": "Slakoth",
+    "slug": "slakoth",
+    "aliases": [],
+    "dexNumbers": ["287"]
+  },
+  {
+    "dexNumber": 288,
+    "name": "Vigoroth",
+    "slug": "vigoroth",
+    "aliases": [],
+    "dexNumbers": ["288"]
+  },
+  {
+    "dexNumber": 289,
+    "name": "Slaking",
+    "slug": "slaking",
+    "aliases": [],
+    "dexNumbers": ["289"]
+  },
+  {
+    "dexNumber": 290,
+    "name": "Nincada",
+    "slug": "nincada",
+    "aliases": [],
+    "dexNumbers": ["290"]
+  },
+  {
+    "dexNumber": 291,
+    "name": "Ninjask",
+    "slug": "ninjask",
+    "aliases": [],
+    "dexNumbers": ["291"]
+  },
+  {
+    "dexNumber": 292,
+    "name": "Shedinja",
+    "slug": "shedinja",
+    "aliases": [],
+    "dexNumbers": ["292"]
+  },
+  {
+    "dexNumber": 293,
+    "name": "Whismur",
+    "slug": "whismur",
+    "aliases": [],
+    "dexNumbers": ["293"]
+  },
+  {
+    "dexNumber": 294,
+    "name": "Loudred",
+    "slug": "loudred",
+    "aliases": [],
+    "dexNumbers": ["294"]
+  },
+  {
+    "dexNumber": 295,
+    "name": "Exploud",
+    "slug": "exploud",
+    "aliases": [],
+    "dexNumbers": ["295"]
+  },
+  {
+    "dexNumber": 296,
+    "name": "Makuhita",
+    "slug": "makuhita",
+    "aliases": [],
+    "dexNumbers": ["296"]
+  },
+  {
+    "dexNumber": 297,
+    "name": "Hariyama",
+    "slug": "hariyama",
+    "aliases": [],
+    "dexNumbers": ["297"]
+  },
+  {
+    "dexNumber": 298,
+    "name": "Azurill",
+    "slug": "azurill",
+    "aliases": [],
+    "dexNumbers": ["298"]
+  },
+  {
+    "dexNumber": 299,
+    "name": "Nosepass",
+    "slug": "nosepass",
+    "aliases": [],
+    "dexNumbers": ["299"]
+  },
+  {
+    "dexNumber": 300,
+    "name": "Skitty",
+    "slug": "skitty",
+    "aliases": [],
+    "dexNumbers": ["300"]
+  },
+  {
+    "dexNumber": 301,
+    "name": "Delcatty",
+    "slug": "delcatty",
+    "aliases": [],
+    "dexNumbers": ["301"]
+  },
+  {
+    "dexNumber": 302,
+    "name": "Sableye",
+    "slug": "sableye",
+    "aliases": [],
+    "dexNumbers": ["302"]
+  },
+  {
+    "dexNumber": 303,
+    "name": "Mawile",
+    "slug": "mawile",
+    "aliases": [],
+    "dexNumbers": ["303"]
+  },
+  {
+    "dexNumber": 304,
+    "name": "Aron",
+    "slug": "aron",
+    "aliases": [],
+    "dexNumbers": ["304"]
+  },
+  {
+    "dexNumber": 305,
+    "name": "Lairon",
+    "slug": "lairon",
+    "aliases": [],
+    "dexNumbers": ["305"]
+  },
+  {
+    "dexNumber": 306,
+    "name": "Aggron",
+    "slug": "aggron",
+    "aliases": [],
+    "dexNumbers": ["306"]
+  },
+  {
+    "dexNumber": 307,
+    "name": "Meditite",
+    "slug": "meditite",
+    "aliases": [],
+    "dexNumbers": ["307"]
+  },
+  {
+    "dexNumber": 308,
+    "name": "Medicham",
+    "slug": "medicham",
+    "aliases": [],
+    "dexNumbers": ["308"]
+  },
+  {
+    "dexNumber": 309,
+    "name": "Electrike",
+    "slug": "electrike",
+    "aliases": [],
+    "dexNumbers": ["309"]
+  },
+  {
+    "dexNumber": 310,
+    "name": "Manectric",
+    "slug": "manectric",
+    "aliases": [],
+    "dexNumbers": ["310"]
+  },
+  {
+    "dexNumber": 311,
+    "name": "Plusle",
+    "slug": "plusle",
+    "aliases": [],
+    "dexNumbers": ["311"]
+  },
+  {
+    "dexNumber": 312,
+    "name": "Minun",
+    "slug": "minun",
+    "aliases": [],
+    "dexNumbers": ["312"]
+  },
+  {
+    "dexNumber": 313,
+    "name": "Volbeat",
+    "slug": "volbeat",
+    "aliases": [],
+    "dexNumbers": ["313"]
+  },
+  {
+    "dexNumber": 314,
+    "name": "Illumise",
+    "slug": "illumise",
+    "aliases": [],
+    "dexNumbers": ["314"]
+  },
+  {
+    "dexNumber": 315,
+    "name": "Roselia",
+    "slug": "roselia",
+    "aliases": [],
+    "dexNumbers": ["315"]
+  },
+  {
+    "dexNumber": 316,
+    "name": "Gulpin",
+    "slug": "gulpin",
+    "aliases": [],
+    "dexNumbers": ["316"]
+  },
+  {
+    "dexNumber": 317,
+    "name": "Swalot",
+    "slug": "swalot",
+    "aliases": [],
+    "dexNumbers": ["317"]
+  },
+  {
+    "dexNumber": 318,
+    "name": "Carvanha",
+    "slug": "carvanha",
+    "aliases": [],
+    "dexNumbers": ["318"]
+  },
+  {
+    "dexNumber": 319,
+    "name": "Sharpedo",
+    "slug": "sharpedo",
+    "aliases": [],
+    "dexNumbers": ["319"]
+  },
+  {
+    "dexNumber": 320,
+    "name": "Wailmer",
+    "slug": "wailmer",
+    "aliases": [],
+    "dexNumbers": ["320"]
+  },
+  {
+    "dexNumber": 321,
+    "name": "Wailord",
+    "slug": "wailord",
+    "aliases": [],
+    "dexNumbers": ["321"]
+  },
+  {
+    "dexNumber": 322,
+    "name": "Numel",
+    "slug": "numel",
+    "aliases": [],
+    "dexNumbers": ["322"]
+  },
+  {
+    "dexNumber": 323,
+    "name": "Camerupt",
+    "slug": "camerupt",
+    "aliases": [],
+    "dexNumbers": ["323"]
+  },
+  {
+    "dexNumber": 324,
+    "name": "Torkoal",
+    "slug": "torkoal",
+    "aliases": [],
+    "dexNumbers": ["324"]
+  },
+  {
+    "dexNumber": 325,
+    "name": "Spoink",
+    "slug": "spoink",
+    "aliases": [],
+    "dexNumbers": ["325"]
+  },
+  {
+    "dexNumber": 326,
+    "name": "Grumpig",
+    "slug": "grumpig",
+    "aliases": [],
+    "dexNumbers": ["326"]
+  },
+  {
+    "dexNumber": 327,
+    "name": "Spinda",
+    "slug": "spinda",
+    "aliases": [],
+    "dexNumbers": ["327"]
+  },
+  {
+    "dexNumber": 328,
+    "name": "Trapinch",
+    "slug": "trapinch",
+    "aliases": [],
+    "dexNumbers": ["328"]
+  },
+  {
+    "dexNumber": 329,
+    "name": "Vibrava",
+    "slug": "vibrava",
+    "aliases": [],
+    "dexNumbers": ["329"]
+  },
+  {
+    "dexNumber": 330,
+    "name": "Flygon",
+    "slug": "flygon",
+    "aliases": [],
+    "dexNumbers": ["330"]
+  },
+  {
+    "dexNumber": 331,
+    "name": "Cacnea",
+    "slug": "cacnea",
+    "aliases": [],
+    "dexNumbers": ["331"]
+  },
+  {
+    "dexNumber": 332,
+    "name": "Cacturne",
+    "slug": "cacturne",
+    "aliases": [],
+    "dexNumbers": ["332"]
+  },
+  {
+    "dexNumber": 333,
+    "name": "Swablu",
+    "slug": "swablu",
+    "aliases": [],
+    "dexNumbers": ["333"]
+  },
+  {
+    "dexNumber": 334,
+    "name": "Altaria",
+    "slug": "altaria",
+    "aliases": [],
+    "dexNumbers": ["334"]
+  },
+  {
+    "dexNumber": 335,
+    "name": "Zangoose",
+    "slug": "zangoose",
+    "aliases": [],
+    "dexNumbers": ["335"]
+  },
+  {
+    "dexNumber": 336,
+    "name": "Seviper",
+    "slug": "seviper",
+    "aliases": [],
+    "dexNumbers": ["336"]
+  },
+  {
+    "dexNumber": 337,
+    "name": "Lunatone",
+    "slug": "lunatone",
+    "aliases": [],
+    "dexNumbers": ["337"]
+  },
+  {
+    "dexNumber": 338,
+    "name": "Solrock",
+    "slug": "solrock",
+    "aliases": [],
+    "dexNumbers": ["338"]
+  },
+  {
+    "dexNumber": 339,
+    "name": "Barboach",
+    "slug": "barboach",
+    "aliases": [],
+    "dexNumbers": ["339"]
+  },
+  {
+    "dexNumber": 340,
+    "name": "Whiscash",
+    "slug": "whiscash",
+    "aliases": [],
+    "dexNumbers": ["340"]
+  },
+  {
+    "dexNumber": 341,
+    "name": "Corphish",
+    "slug": "corphish",
+    "aliases": [],
+    "dexNumbers": ["341"]
+  },
+  {
+    "dexNumber": 342,
+    "name": "Crawdaunt",
+    "slug": "crawdaunt",
+    "aliases": [],
+    "dexNumbers": ["342"]
+  },
+  {
+    "dexNumber": 343,
+    "name": "Baltoy",
+    "slug": "baltoy",
+    "aliases": [],
+    "dexNumbers": ["343"]
+  },
+  {
+    "dexNumber": 344,
+    "name": "Claydol",
+    "slug": "claydol",
+    "aliases": [],
+    "dexNumbers": ["344"]
+  },
+  {
+    "dexNumber": 345,
+    "name": "Lileep",
+    "slug": "lileep",
+    "aliases": [],
+    "dexNumbers": ["345"]
+  },
+  {
+    "dexNumber": 346,
+    "name": "Cradily",
+    "slug": "cradily",
+    "aliases": [],
+    "dexNumbers": ["346"]
+  },
+  {
+    "dexNumber": 347,
+    "name": "Anorith",
+    "slug": "anorith",
+    "aliases": [],
+    "dexNumbers": ["347"]
+  },
+  {
+    "dexNumber": 348,
+    "name": "Armaldo",
+    "slug": "armaldo",
+    "aliases": [],
+    "dexNumbers": ["348"]
+  },
+  {
+    "dexNumber": 349,
+    "name": "Feebas",
+    "slug": "feebas",
+    "aliases": [],
+    "dexNumbers": ["349"]
+  },
+  {
+    "dexNumber": 350,
+    "name": "Milotic",
+    "slug": "milotic",
+    "aliases": [],
+    "dexNumbers": ["350"]
+  },
+  {
+    "dexNumber": 351,
+    "name": "Castform",
+    "slug": "castform",
+    "aliases": [],
+    "dexNumbers": ["351"]
+  },
+  {
+    "dexNumber": 352,
+    "name": "Kecleon",
+    "slug": "kecleon",
+    "aliases": [],
+    "dexNumbers": ["352"]
+  },
+  {
+    "dexNumber": 353,
+    "name": "Shuppet",
+    "slug": "shuppet",
+    "aliases": [],
+    "dexNumbers": ["353"]
+  },
+  {
+    "dexNumber": 354,
+    "name": "Banette",
+    "slug": "banette",
+    "aliases": [],
+    "dexNumbers": ["354"]
+  },
+  {
+    "dexNumber": 355,
+    "name": "Duskull",
+    "slug": "duskull",
+    "aliases": [],
+    "dexNumbers": ["355"]
+  },
+  {
+    "dexNumber": 356,
+    "name": "Dusclops",
+    "slug": "dusclops",
+    "aliases": [],
+    "dexNumbers": ["356"]
+  },
+  {
+    "dexNumber": 357,
+    "name": "Tropius",
+    "slug": "tropius",
+    "aliases": [],
+    "dexNumbers": ["357"]
+  },
+  {
+    "dexNumber": 358,
+    "name": "Chimecho",
+    "slug": "chimecho",
+    "aliases": [],
+    "dexNumbers": ["358"]
+  },
+  {
+    "dexNumber": 359,
+    "name": "Absol",
+    "slug": "absol",
+    "aliases": [],
+    "dexNumbers": ["359"]
+  },
+  {
+    "dexNumber": 360,
+    "name": "Wynaut",
+    "slug": "wynaut",
+    "aliases": [],
+    "dexNumbers": ["360"]
+  },
+  {
+    "dexNumber": 361,
+    "name": "Snorunt",
+    "slug": "snorunt",
+    "aliases": [],
+    "dexNumbers": ["361"]
+  },
+  {
+    "dexNumber": 362,
+    "name": "Glalie",
+    "slug": "glalie",
+    "aliases": [],
+    "dexNumbers": ["362"]
+  },
+  {
+    "dexNumber": 363,
+    "name": "Spheal",
+    "slug": "spheal",
+    "aliases": [],
+    "dexNumbers": ["363"]
+  },
+  {
+    "dexNumber": 364,
+    "name": "Sealeo",
+    "slug": "sealeo",
+    "aliases": [],
+    "dexNumbers": ["364"]
+  },
+  {
+    "dexNumber": 365,
+    "name": "Walrein",
+    "slug": "walrein",
+    "aliases": [],
+    "dexNumbers": ["365"]
+  },
+  {
+    "dexNumber": 366,
+    "name": "Clamperl",
+    "slug": "clamperl",
+    "aliases": [],
+    "dexNumbers": ["366"]
+  },
+  {
+    "dexNumber": 367,
+    "name": "Huntail",
+    "slug": "huntail",
+    "aliases": [],
+    "dexNumbers": ["367"]
+  },
+  {
+    "dexNumber": 368,
+    "name": "Gorebyss",
+    "slug": "gorebyss",
+    "aliases": [],
+    "dexNumbers": ["368"]
+  },
+  {
+    "dexNumber": 369,
+    "name": "Relicanth",
+    "slug": "relicanth",
+    "aliases": [],
+    "dexNumbers": ["369"]
+  },
+  {
+    "dexNumber": 370,
+    "name": "Luvdisc",
+    "slug": "luvdisc",
+    "aliases": [],
+    "dexNumbers": ["370"]
+  },
+  {
+    "dexNumber": 371,
+    "name": "Bagon",
+    "slug": "bagon",
+    "aliases": [],
+    "dexNumbers": ["371"]
+  },
+  {
+    "dexNumber": 372,
+    "name": "Shelgon",
+    "slug": "shelgon",
+    "aliases": [],
+    "dexNumbers": ["372"]
+  },
+  {
+    "dexNumber": 373,
+    "name": "Salamence",
+    "slug": "salamence",
+    "aliases": [],
+    "dexNumbers": ["373"]
+  },
+  {
+    "dexNumber": 374,
+    "name": "Beldum",
+    "slug": "beldum",
+    "aliases": [],
+    "dexNumbers": ["374"]
+  },
+  {
+    "dexNumber": 375,
+    "name": "Metang",
+    "slug": "metang",
+    "aliases": [],
+    "dexNumbers": ["375"]
+  },
+  {
+    "dexNumber": 376,
+    "name": "Metagross",
+    "slug": "metagross",
+    "aliases": [],
+    "dexNumbers": ["376"]
+  },
+  {
+    "dexNumber": 377,
+    "name": "Regirock",
+    "slug": "regirock",
+    "aliases": [],
+    "dexNumbers": ["377"]
+  },
+  {
+    "dexNumber": 378,
+    "name": "Regice",
+    "slug": "regice",
+    "aliases": [],
+    "dexNumbers": ["378"]
+  },
+  {
+    "dexNumber": 379,
+    "name": "Registeel",
+    "slug": "registeel",
+    "aliases": [],
+    "dexNumbers": ["379"]
+  },
+  {
+    "dexNumber": 380,
+    "name": "Latias",
+    "slug": "latias",
+    "aliases": [],
+    "dexNumbers": ["380"]
+  },
+  {
+    "dexNumber": 381,
+    "name": "Latios",
+    "slug": "latios",
+    "aliases": [],
+    "dexNumbers": ["381"]
+  },
+  {
+    "dexNumber": 382,
+    "name": "Kyogre",
+    "slug": "kyogre",
+    "aliases": [],
+    "dexNumbers": ["382"]
+  },
+  {
+    "dexNumber": 383,
+    "name": "Groudon",
+    "slug": "groudon",
+    "aliases": [],
+    "dexNumbers": ["383"]
+  },
+  {
+    "dexNumber": 384,
+    "name": "Rayquaza",
+    "slug": "rayquaza",
+    "aliases": [],
+    "dexNumbers": ["384"]
+  },
+  {
+    "dexNumber": 385,
+    "name": "Jirachi",
+    "slug": "jirachi",
+    "aliases": [],
+    "dexNumbers": ["385"]
+  },
+  {
+    "dexNumber": 386,
+    "name": "Deoxys",
+    "slug": "deoxys",
+    "aliases": [],
+    "dexNumbers": ["386"]
+  },
+  {
+    "dexNumber": 387,
+    "name": "Turtwig",
+    "slug": "turtwig",
+    "aliases": [],
+    "dexNumbers": ["387"]
+  },
+  {
+    "dexNumber": 388,
+    "name": "Grotle",
+    "slug": "grotle",
+    "aliases": [],
+    "dexNumbers": ["388"]
+  },
+  {
+    "dexNumber": 389,
+    "name": "Torterra",
+    "slug": "torterra",
+    "aliases": [],
+    "dexNumbers": ["389"]
+  },
+  {
+    "dexNumber": 390,
+    "name": "Chimchar",
+    "slug": "chimchar",
+    "aliases": [],
+    "dexNumbers": ["390"]
+  },
+  {
+    "dexNumber": 391,
+    "name": "Monferno",
+    "slug": "monferno",
+    "aliases": [],
+    "dexNumbers": ["391"]
+  },
+  {
+    "dexNumber": 392,
+    "name": "Infernape",
+    "slug": "infernape",
+    "aliases": [],
+    "dexNumbers": ["392"]
+  },
+  {
+    "dexNumber": 393,
+    "name": "Piplup",
+    "slug": "piplup",
+    "aliases": [],
+    "dexNumbers": ["393"]
+  },
+  {
+    "dexNumber": 394,
+    "name": "Prinplup",
+    "slug": "prinplup",
+    "aliases": [],
+    "dexNumbers": ["394"]
+  },
+  {
+    "dexNumber": 395,
+    "name": "Empoleon",
+    "slug": "empoleon",
+    "aliases": [],
+    "dexNumbers": ["395"]
+  },
+  {
+    "dexNumber": 396,
+    "name": "Starly",
+    "slug": "starly",
+    "aliases": [],
+    "dexNumbers": ["396"]
+  },
+  {
+    "dexNumber": 397,
+    "name": "Staravia",
+    "slug": "staravia",
+    "aliases": [],
+    "dexNumbers": ["397"]
+  },
+  {
+    "dexNumber": 398,
+    "name": "Staraptor",
+    "slug": "staraptor",
+    "aliases": [],
+    "dexNumbers": ["398"]
+  },
+  {
+    "dexNumber": 399,
+    "name": "Bidoof",
+    "slug": "bidoof",
+    "aliases": [],
+    "dexNumbers": ["399"]
+  },
+  {
+    "dexNumber": 400,
+    "name": "Bibarel",
+    "slug": "bibarel",
+    "aliases": [],
+    "dexNumbers": ["400"]
+  },
+  {
+    "dexNumber": 401,
+    "name": "Kricketot",
+    "slug": "kricketot",
+    "aliases": [],
+    "dexNumbers": ["401"]
+  },
+  {
+    "dexNumber": 402,
+    "name": "Kricketune",
+    "slug": "kricketune",
+    "aliases": [],
+    "dexNumbers": ["402"]
+  },
+  {
+    "dexNumber": 403,
+    "name": "Shinx",
+    "slug": "shinx",
+    "aliases": [],
+    "dexNumbers": ["403"]
+  },
+  {
+    "dexNumber": 404,
+    "name": "Luxio",
+    "slug": "luxio",
+    "aliases": [],
+    "dexNumbers": ["404"]
+  },
+  {
+    "dexNumber": 405,
+    "name": "Luxray",
+    "slug": "luxray",
+    "aliases": [],
+    "dexNumbers": ["405"]
+  },
+  {
+    "dexNumber": 406,
+    "name": "Budew",
+    "slug": "budew",
+    "aliases": [],
+    "dexNumbers": ["406"]
+  },
+  {
+    "dexNumber": 407,
+    "name": "Roserade",
+    "slug": "roserade",
+    "aliases": [],
+    "dexNumbers": ["407"]
+  },
+  {
+    "dexNumber": 408,
+    "name": "Cranidos",
+    "slug": "cranidos",
+    "aliases": [],
+    "dexNumbers": ["408"]
+  },
+  {
+    "dexNumber": 409,
+    "name": "Rampardos",
+    "slug": "rampardos",
+    "aliases": [],
+    "dexNumbers": ["409"]
+  },
+  {
+    "dexNumber": 410,
+    "name": "Shieldon",
+    "slug": "shieldon",
+    "aliases": [],
+    "dexNumbers": ["410"]
+  },
+  {
+    "dexNumber": 411,
+    "name": "Bastiodon",
+    "slug": "bastiodon",
+    "aliases": [],
+    "dexNumbers": ["411"]
+  },
+  {
+    "dexNumber": 412,
+    "name": "Burmy",
+    "slug": "burmy",
+    "aliases": [],
+    "dexNumbers": ["412"]
+  },
+  {
+    "dexNumber": 413,
+    "name": "Wormadam",
+    "slug": "wormadam",
+    "aliases": [],
+    "dexNumbers": ["413"]
+  },
+  {
+    "dexNumber": 414,
+    "name": "Mothim",
+    "slug": "mothim",
+    "aliases": [],
+    "dexNumbers": ["414"]
+  },
+  {
+    "dexNumber": 415,
+    "name": "Combee",
+    "slug": "combee",
+    "aliases": [],
+    "dexNumbers": ["415"]
+  },
+  {
+    "dexNumber": 416,
+    "name": "Vespiquen",
+    "slug": "vespiquen",
+    "aliases": [],
+    "dexNumbers": ["416"]
+  },
+  {
+    "dexNumber": 417,
+    "name": "Pachirisu",
+    "slug": "pachirisu",
+    "aliases": [],
+    "dexNumbers": ["417"]
+  },
+  {
+    "dexNumber": 418,
+    "name": "Buizel",
+    "slug": "buizel",
+    "aliases": [],
+    "dexNumbers": ["418"]
+  },
+  {
+    "dexNumber": 419,
+    "name": "Floatzel",
+    "slug": "floatzel",
+    "aliases": [],
+    "dexNumbers": ["419"]
+  },
+  {
+    "dexNumber": 420,
+    "name": "Cherubi",
+    "slug": "cherubi",
+    "aliases": [],
+    "dexNumbers": ["420"]
+  },
+  {
+    "dexNumber": 421,
+    "name": "Cherrim",
+    "slug": "cherrim",
+    "aliases": [],
+    "dexNumbers": ["421"]
+  },
+  {
+    "dexNumber": 422,
+    "name": "Shellos",
+    "slug": "shellos",
+    "aliases": [],
+    "dexNumbers": ["422"]
+  },
+  {
+    "dexNumber": 423,
+    "name": "Gastrodon",
+    "slug": "gastrodon",
+    "aliases": [],
+    "dexNumbers": ["423"]
+  },
+  {
+    "dexNumber": 424,
+    "name": "Ambipom",
+    "slug": "ambipom",
+    "aliases": [],
+    "dexNumbers": ["424"]
+  },
+  {
+    "dexNumber": 425,
+    "name": "Drifloon",
+    "slug": "drifloon",
+    "aliases": [],
+    "dexNumbers": ["425"]
+  },
+  {
+    "dexNumber": 426,
+    "name": "Drifblim",
+    "slug": "drifblim",
+    "aliases": [],
+    "dexNumbers": ["426"]
+  },
+  {
+    "dexNumber": 427,
+    "name": "Buneary",
+    "slug": "buneary",
+    "aliases": [],
+    "dexNumbers": ["427"]
+  },
+  {
+    "dexNumber": 428,
+    "name": "Lopunny",
+    "slug": "lopunny",
+    "aliases": [],
+    "dexNumbers": ["428"]
+  },
+  {
+    "dexNumber": 429,
+    "name": "Mismagius",
+    "slug": "mismagius",
+    "aliases": [],
+    "dexNumbers": ["429"]
+  },
+  {
+    "dexNumber": 430,
+    "name": "Honchkrow",
+    "slug": "honchkrow",
+    "aliases": [],
+    "dexNumbers": ["430"]
+  },
+  {
+    "dexNumber": 431,
+    "name": "Glameow",
+    "slug": "glameow",
+    "aliases": [],
+    "dexNumbers": ["431"]
+  },
+  {
+    "dexNumber": 432,
+    "name": "Purugly",
+    "slug": "purugly",
+    "aliases": [],
+    "dexNumbers": ["432"]
+  },
+  {
+    "dexNumber": 433,
+    "name": "Chingling",
+    "slug": "chingling",
+    "aliases": [],
+    "dexNumbers": ["433"]
+  },
+  {
+    "dexNumber": 434,
+    "name": "Stunky",
+    "slug": "stunky",
+    "aliases": [],
+    "dexNumbers": ["434"]
+  },
+  {
+    "dexNumber": 435,
+    "name": "Skuntank",
+    "slug": "skuntank",
+    "aliases": [],
+    "dexNumbers": ["435"]
+  },
+  {
+    "dexNumber": 436,
+    "name": "Bronzor",
+    "slug": "bronzor",
+    "aliases": [],
+    "dexNumbers": ["436"]
+  },
+  {
+    "dexNumber": 437,
+    "name": "Bronzong",
+    "slug": "bronzong",
+    "aliases": [],
+    "dexNumbers": ["437"]
+  },
+  {
+    "dexNumber": 438,
+    "name": "Bonsly",
+    "slug": "bonsly",
+    "aliases": [],
+    "dexNumbers": ["438"]
+  },
+  {
+    "dexNumber": 439,
+    "name": "Mime Jr.",
+    "slug": "mime-jr",
+    "aliases": [],
+    "dexNumbers": ["439"]
+  },
+  {
+    "dexNumber": 440,
+    "name": "Happiny",
+    "slug": "happiny",
+    "aliases": [],
+    "dexNumbers": ["440"]
+  },
+  {
+    "dexNumber": 441,
+    "name": "Chatot",
+    "slug": "chatot",
+    "aliases": [],
+    "dexNumbers": ["441"]
+  },
+  {
+    "dexNumber": 442,
+    "name": "Spiritomb",
+    "slug": "spiritomb",
+    "aliases": [],
+    "dexNumbers": ["442"]
+  },
+  {
+    "dexNumber": 443,
+    "name": "Gible",
+    "slug": "gible",
+    "aliases": [],
+    "dexNumbers": ["443"]
+  },
+  {
+    "dexNumber": 444,
+    "name": "Gabite",
+    "slug": "gabite",
+    "aliases": [],
+    "dexNumbers": ["444"]
+  },
+  {
+    "dexNumber": 445,
+    "name": "Garchomp",
+    "slug": "garchomp",
+    "aliases": [],
+    "dexNumbers": ["445"]
+  },
+  {
+    "dexNumber": 446,
+    "name": "Munchlax",
+    "slug": "munchlax",
+    "aliases": [],
+    "dexNumbers": ["446"]
+  },
+  {
+    "dexNumber": 447,
+    "name": "Riolu",
+    "slug": "riolu",
+    "aliases": [],
+    "dexNumbers": ["447"]
+  },
+  {
+    "dexNumber": 448,
+    "name": "Lucario",
+    "slug": "lucario",
+    "aliases": [],
+    "dexNumbers": ["448"]
+  },
+  {
+    "dexNumber": 449,
+    "name": "Hippopotas",
+    "slug": "hippopotas",
+    "aliases": [],
+    "dexNumbers": ["449"]
+  },
+  {
+    "dexNumber": 450,
+    "name": "Hippowdon",
+    "slug": "hippowdon",
+    "aliases": [],
+    "dexNumbers": ["450"]
+  },
+  {
+    "dexNumber": 451,
+    "name": "Skorupi",
+    "slug": "skorupi",
+    "aliases": [],
+    "dexNumbers": ["451"]
+  },
+  {
+    "dexNumber": 452,
+    "name": "Drapion",
+    "slug": "drapion",
+    "aliases": [],
+    "dexNumbers": ["452"]
+  },
+  {
+    "dexNumber": 453,
+    "name": "Croagunk",
+    "slug": "croagunk",
+    "aliases": [],
+    "dexNumbers": ["453"]
+  },
+  {
+    "dexNumber": 454,
+    "name": "Toxicroak",
+    "slug": "toxicroak",
+    "aliases": [],
+    "dexNumbers": ["454"]
+  },
+  {
+    "dexNumber": 455,
+    "name": "Carnivine",
+    "slug": "carnivine",
+    "aliases": [],
+    "dexNumbers": ["455"]
+  },
+  {
+    "dexNumber": 456,
+    "name": "Finneon",
+    "slug": "finneon",
+    "aliases": [],
+    "dexNumbers": ["456"]
+  },
+  {
+    "dexNumber": 457,
+    "name": "Lumineon",
+    "slug": "lumineon",
+    "aliases": [],
+    "dexNumbers": ["457"]
+  },
+  {
+    "dexNumber": 458,
+    "name": "Mantyke",
+    "slug": "mantyke",
+    "aliases": [],
+    "dexNumbers": ["458"]
+  },
+  {
+    "dexNumber": 459,
+    "name": "Snover",
+    "slug": "snover",
+    "aliases": [],
+    "dexNumbers": ["459"]
+  },
+  {
+    "dexNumber": 460,
+    "name": "Abomasnow",
+    "slug": "abomasnow",
+    "aliases": [],
+    "dexNumbers": ["460"]
+  },
+  {
+    "dexNumber": 461,
+    "name": "Weavile",
+    "slug": "weavile",
+    "aliases": [],
+    "dexNumbers": ["461"]
+  },
+  {
+    "dexNumber": 462,
+    "name": "Magnezone",
+    "slug": "magnezone",
+    "aliases": [],
+    "dexNumbers": ["462"]
+  },
+  {
+    "dexNumber": 463,
+    "name": "Lickilicky",
+    "slug": "lickilicky",
+    "aliases": [],
+    "dexNumbers": ["463"]
+  },
+  {
+    "dexNumber": 464,
+    "name": "Rhyperior",
+    "slug": "rhyperior",
+    "aliases": [],
+    "dexNumbers": ["464"]
+  },
+  {
+    "dexNumber": 465,
+    "name": "Tangrowth",
+    "slug": "tangrowth",
+    "aliases": [],
+    "dexNumbers": ["465"]
+  },
+  {
+    "dexNumber": 466,
+    "name": "Electivire",
+    "slug": "electivire",
+    "aliases": [],
+    "dexNumbers": ["466"]
+  },
+  {
+    "dexNumber": 467,
+    "name": "Magmortar",
+    "slug": "magmortar",
+    "aliases": [],
+    "dexNumbers": ["467"]
+  },
+  {
+    "dexNumber": 468,
+    "name": "Togekiss",
+    "slug": "togekiss",
+    "aliases": [],
+    "dexNumbers": ["468"]
+  },
+  {
+    "dexNumber": 469,
+    "name": "Yanmega",
+    "slug": "yanmega",
+    "aliases": [],
+    "dexNumbers": ["469"]
+  },
+  {
+    "dexNumber": 470,
+    "name": "Leafeon",
+    "slug": "leafeon",
+    "aliases": [],
+    "dexNumbers": ["470"]
+  },
+  {
+    "dexNumber": 471,
+    "name": "Glaceon",
+    "slug": "glaceon",
+    "aliases": [],
+    "dexNumbers": ["471"]
+  },
+  {
+    "dexNumber": 472,
+    "name": "Gliscor",
+    "slug": "gliscor",
+    "aliases": [],
+    "dexNumbers": ["472"]
+  },
+  {
+    "dexNumber": 473,
+    "name": "Mamoswine",
+    "slug": "mamoswine",
+    "aliases": [],
+    "dexNumbers": ["473"]
+  },
+  {
+    "dexNumber": 474,
+    "name": "Porygon-Z",
+    "slug": "porygon-z",
+    "aliases": [],
+    "dexNumbers": ["474"]
+  },
+  {
+    "dexNumber": 475,
+    "name": "Gallade",
+    "slug": "gallade",
+    "aliases": [],
+    "dexNumbers": ["475"]
+  },
+  {
+    "dexNumber": 476,
+    "name": "Probopass",
+    "slug": "probopass",
+    "aliases": [],
+    "dexNumbers": ["476"]
+  },
+  {
+    "dexNumber": 477,
+    "name": "Dusknoir",
+    "slug": "dusknoir",
+    "aliases": [],
+    "dexNumbers": ["477"]
+  },
+  {
+    "dexNumber": 478,
+    "name": "Froslass",
+    "slug": "froslass",
+    "aliases": [],
+    "dexNumbers": ["478"]
+  },
+  {
+    "dexNumber": 479,
+    "name": "Rotom",
+    "slug": "rotom",
+    "aliases": [],
+    "dexNumbers": ["479"]
+  },
+  {
+    "dexNumber": 480,
+    "name": "Uxie",
+    "slug": "uxie",
+    "aliases": [],
+    "dexNumbers": ["480"]
+  },
+  {
+    "dexNumber": 481,
+    "name": "Mesprit",
+    "slug": "mesprit",
+    "aliases": [],
+    "dexNumbers": ["481"]
+  },
+  {
+    "dexNumber": 482,
+    "name": "Azelf",
+    "slug": "azelf",
+    "aliases": [],
+    "dexNumbers": ["482"]
+  },
+  {
+    "dexNumber": 483,
+    "name": "Dialga",
+    "slug": "dialga",
+    "aliases": [],
+    "dexNumbers": ["483"]
+  },
+  {
+    "dexNumber": 484,
+    "name": "Palkia",
+    "slug": "palkia",
+    "aliases": [],
+    "dexNumbers": ["484"]
+  },
+  {
+    "dexNumber": 485,
+    "name": "Heatran",
+    "slug": "heatran",
+    "aliases": [],
+    "dexNumbers": ["485"]
+  },
+  {
+    "dexNumber": 486,
+    "name": "Regigigas",
+    "slug": "regigigas",
+    "aliases": [],
+    "dexNumbers": ["486"]
+  },
+  {
+    "dexNumber": 487,
+    "name": "Giratina",
+    "slug": "giratina",
+    "aliases": [],
+    "dexNumbers": ["487"]
+  },
+  {
+    "dexNumber": 488,
+    "name": "Cresselia",
+    "slug": "cresselia",
+    "aliases": [],
+    "dexNumbers": ["488"]
+  },
+  {
+    "dexNumber": 489,
+    "name": "Phione",
+    "slug": "phione",
+    "aliases": [],
+    "dexNumbers": ["489"]
+  },
+  {
+    "dexNumber": 490,
+    "name": "Manaphy",
+    "slug": "manaphy",
+    "aliases": [],
+    "dexNumbers": ["490"]
+  },
+  {
+    "dexNumber": 491,
+    "name": "Darkrai",
+    "slug": "darkrai",
+    "aliases": [],
+    "dexNumbers": ["491"]
+  },
+  {
+    "dexNumber": 492,
+    "name": "Shaymin",
+    "slug": "shaymin",
+    "aliases": [],
+    "dexNumbers": ["492"]
+  },
+  {
+    "dexNumber": 493,
+    "name": "Arceus",
+    "slug": "arceus",
+    "aliases": [],
+    "dexNumbers": ["493"]
+  },
+  {
+    "dexNumber": 494,
+    "name": "Victini",
+    "slug": "victini",
+    "aliases": [],
+    "dexNumbers": ["494"]
+  },
+  {
+    "dexNumber": 495,
+    "name": "Snivy",
+    "slug": "snivy",
+    "aliases": [],
+    "dexNumbers": ["495"]
+  },
+  {
+    "dexNumber": 496,
+    "name": "Servine",
+    "slug": "servine",
+    "aliases": [],
+    "dexNumbers": ["496"]
+  },
+  {
+    "dexNumber": 497,
+    "name": "Serperior",
+    "slug": "serperior",
+    "aliases": [],
+    "dexNumbers": ["497"]
+  },
+  {
+    "dexNumber": 498,
+    "name": "Tepig",
+    "slug": "tepig",
+    "aliases": [],
+    "dexNumbers": ["498"]
+  },
+  {
+    "dexNumber": 499,
+    "name": "Pignite",
+    "slug": "pignite",
+    "aliases": [],
+    "dexNumbers": ["499"]
+  },
+  {
+    "dexNumber": 500,
+    "name": "Emboar",
+    "slug": "emboar",
+    "aliases": [],
+    "dexNumbers": ["500"]
+  },
+  {
+    "dexNumber": 501,
+    "name": "Oshawott",
+    "slug": "oshawott",
+    "aliases": [],
+    "dexNumbers": ["501"]
+  },
+  {
+    "dexNumber": 502,
+    "name": "Dewott",
+    "slug": "dewott",
+    "aliases": [],
+    "dexNumbers": ["502"]
+  },
+  {
+    "dexNumber": 503,
+    "name": "Samurott",
+    "slug": "samurott",
+    "aliases": [],
+    "dexNumbers": ["503"]
+  },
+  {
+    "dexNumber": 504,
+    "name": "Patrat",
+    "slug": "patrat",
+    "aliases": [],
+    "dexNumbers": ["504"]
+  },
+  {
+    "dexNumber": 505,
+    "name": "Watchog",
+    "slug": "watchog",
+    "aliases": [],
+    "dexNumbers": ["505"]
+  },
+  {
+    "dexNumber": 506,
+    "name": "Lillipup",
+    "slug": "lillipup",
+    "aliases": [],
+    "dexNumbers": ["506"]
+  },
+  {
+    "dexNumber": 507,
+    "name": "Herdier",
+    "slug": "herdier",
+    "aliases": [],
+    "dexNumbers": ["507"]
+  },
+  {
+    "dexNumber": 508,
+    "name": "Stoutland",
+    "slug": "stoutland",
+    "aliases": [],
+    "dexNumbers": ["508"]
+  },
+  {
+    "dexNumber": 509,
+    "name": "Purrloin",
+    "slug": "purrloin",
+    "aliases": [],
+    "dexNumbers": ["509"]
+  },
+  {
+    "dexNumber": 510,
+    "name": "Liepard",
+    "slug": "liepard",
+    "aliases": [],
+    "dexNumbers": ["510"]
+  },
+  {
+    "dexNumber": 511,
+    "name": "Pansage",
+    "slug": "pansage",
+    "aliases": [],
+    "dexNumbers": ["511"]
+  },
+  {
+    "dexNumber": 512,
+    "name": "Simisage",
+    "slug": "simisage",
+    "aliases": [],
+    "dexNumbers": ["512"]
+  },
+  {
+    "dexNumber": 513,
+    "name": "Pansear",
+    "slug": "pansear",
+    "aliases": [],
+    "dexNumbers": ["513"]
+  },
+  {
+    "dexNumber": 514,
+    "name": "Simisear",
+    "slug": "simisear",
+    "aliases": [],
+    "dexNumbers": ["514"]
+  },
+  {
+    "dexNumber": 515,
+    "name": "Panpour",
+    "slug": "panpour",
+    "aliases": [],
+    "dexNumbers": ["515"]
+  },
+  {
+    "dexNumber": 516,
+    "name": "Simipour",
+    "slug": "simipour",
+    "aliases": [],
+    "dexNumbers": ["516"]
+  },
+  {
+    "dexNumber": 517,
+    "name": "Munna",
+    "slug": "munna",
+    "aliases": [],
+    "dexNumbers": ["517"]
+  },
+  {
+    "dexNumber": 518,
+    "name": "Musharna",
+    "slug": "musharna",
+    "aliases": [],
+    "dexNumbers": ["518"]
+  },
+  {
+    "dexNumber": 519,
+    "name": "Pidove",
+    "slug": "pidove",
+    "aliases": [],
+    "dexNumbers": ["519"]
+  },
+  {
+    "dexNumber": 520,
+    "name": "Tranquill",
+    "slug": "tranquill",
+    "aliases": [],
+    "dexNumbers": ["520"]
+  },
+  {
+    "dexNumber": 521,
+    "name": "Unfezant",
+    "slug": "unfezant",
+    "aliases": [],
+    "dexNumbers": ["521"]
+  },
+  {
+    "dexNumber": 522,
+    "name": "Blitzle",
+    "slug": "blitzle",
+    "aliases": [],
+    "dexNumbers": ["522"]
+  },
+  {
+    "dexNumber": 523,
+    "name": "Zebstrika",
+    "slug": "zebstrika",
+    "aliases": [],
+    "dexNumbers": ["523"]
+  },
+  {
+    "dexNumber": 524,
+    "name": "Roggenrola",
+    "slug": "roggenrola",
+    "aliases": [],
+    "dexNumbers": ["524"]
+  },
+  {
+    "dexNumber": 525,
+    "name": "Boldore",
+    "slug": "boldore",
+    "aliases": [],
+    "dexNumbers": ["525"]
+  },
+  {
+    "dexNumber": 526,
+    "name": "Gigalith",
+    "slug": "gigalith",
+    "aliases": [],
+    "dexNumbers": ["526"]
+  },
+  {
+    "dexNumber": 527,
+    "name": "Woobat",
+    "slug": "woobat",
+    "aliases": [],
+    "dexNumbers": ["527"]
+  },
+  {
+    "dexNumber": 528,
+    "name": "Swoobat",
+    "slug": "swoobat",
+    "aliases": [],
+    "dexNumbers": ["528"]
+  },
+  {
+    "dexNumber": 529,
+    "name": "Drilbur",
+    "slug": "drilbur",
+    "aliases": [],
+    "dexNumbers": ["529"]
+  },
+  {
+    "dexNumber": 530,
+    "name": "Excadrill",
+    "slug": "excadrill",
+    "aliases": [],
+    "dexNumbers": ["530"]
+  },
+  {
+    "dexNumber": 531,
+    "name": "Audino",
+    "slug": "audino",
+    "aliases": [],
+    "dexNumbers": ["531"]
+  },
+  {
+    "dexNumber": 532,
+    "name": "Timburr",
+    "slug": "timburr",
+    "aliases": [],
+    "dexNumbers": ["532"]
+  },
+  {
+    "dexNumber": 533,
+    "name": "Gurdurr",
+    "slug": "gurdurr",
+    "aliases": [],
+    "dexNumbers": ["533"]
+  },
+  {
+    "dexNumber": 534,
+    "name": "Conkeldurr",
+    "slug": "conkeldurr",
+    "aliases": [],
+    "dexNumbers": ["534"]
+  },
+  {
+    "dexNumber": 535,
+    "name": "Tympole",
+    "slug": "tympole",
+    "aliases": [],
+    "dexNumbers": ["535"]
+  },
+  {
+    "dexNumber": 536,
+    "name": "Palpitoad",
+    "slug": "palpitoad",
+    "aliases": [],
+    "dexNumbers": ["536"]
+  },
+  {
+    "dexNumber": 537,
+    "name": "Seismitoad",
+    "slug": "seismitoad",
+    "aliases": [],
+    "dexNumbers": ["537"]
+  },
+  {
+    "dexNumber": 538,
+    "name": "Throh",
+    "slug": "throh",
+    "aliases": [],
+    "dexNumbers": ["538"]
+  },
+  {
+    "dexNumber": 539,
+    "name": "Sawk",
+    "slug": "sawk",
+    "aliases": [],
+    "dexNumbers": ["539"]
+  },
+  {
+    "dexNumber": 540,
+    "name": "Sewaddle",
+    "slug": "sewaddle",
+    "aliases": [],
+    "dexNumbers": ["540"]
+  },
+  {
+    "dexNumber": 541,
+    "name": "Swadloon",
+    "slug": "swadloon",
+    "aliases": [],
+    "dexNumbers": ["541"]
+  },
+  {
+    "dexNumber": 542,
+    "name": "Leavanny",
+    "slug": "leavanny",
+    "aliases": [],
+    "dexNumbers": ["542"]
+  },
+  {
+    "dexNumber": 543,
+    "name": "Venipede",
+    "slug": "venipede",
+    "aliases": [],
+    "dexNumbers": ["543"]
+  },
+  {
+    "dexNumber": 544,
+    "name": "Whirlipede",
+    "slug": "whirlipede",
+    "aliases": [],
+    "dexNumbers": ["544"]
+  },
+  {
+    "dexNumber": 545,
+    "name": "Scolipede",
+    "slug": "scolipede",
+    "aliases": [],
+    "dexNumbers": ["545"]
+  },
+  {
+    "dexNumber": 546,
+    "name": "Cottonee",
+    "slug": "cottonee",
+    "aliases": [],
+    "dexNumbers": ["546"]
+  },
+  {
+    "dexNumber": 547,
+    "name": "Whimsicott",
+    "slug": "whimsicott",
+    "aliases": [],
+    "dexNumbers": ["547"]
+  },
+  {
+    "dexNumber": 548,
+    "name": "Petilil",
+    "slug": "petilil",
+    "aliases": [],
+    "dexNumbers": ["548"]
+  },
+  {
+    "dexNumber": 549,
+    "name": "Lilligant",
+    "slug": "lilligant",
+    "aliases": [],
+    "dexNumbers": ["549"]
+  },
+  {
+    "dexNumber": 550,
+    "name": "Basculin",
+    "slug": "basculin",
+    "aliases": [],
+    "dexNumbers": ["550"]
+  },
+  {
+    "dexNumber": 551,
+    "name": "Sandile",
+    "slug": "sandile",
+    "aliases": [],
+    "dexNumbers": ["551"]
+  },
+  {
+    "dexNumber": 552,
+    "name": "Krokorok",
+    "slug": "krokorok",
+    "aliases": [],
+    "dexNumbers": ["552"]
+  },
+  {
+    "dexNumber": 553,
+    "name": "Krookodile",
+    "slug": "krookodile",
+    "aliases": [],
+    "dexNumbers": ["553"]
+  },
+  {
+    "dexNumber": 554,
+    "name": "Darumaka",
+    "slug": "darumaka",
+    "aliases": [],
+    "dexNumbers": ["554"]
+  },
+  {
+    "dexNumber": 555,
+    "name": "Darmanitan",
+    "slug": "darmanitan",
+    "aliases": [],
+    "dexNumbers": ["555"]
+  },
+  {
+    "dexNumber": 556,
+    "name": "Maractus",
+    "slug": "maractus",
+    "aliases": [],
+    "dexNumbers": ["556"]
+  },
+  {
+    "dexNumber": 557,
+    "name": "Dwebble",
+    "slug": "dwebble",
+    "aliases": [],
+    "dexNumbers": ["557"]
+  },
+  {
+    "dexNumber": 558,
+    "name": "Crustle",
+    "slug": "crustle",
+    "aliases": [],
+    "dexNumbers": ["558"]
+  },
+  {
+    "dexNumber": 559,
+    "name": "Scraggy",
+    "slug": "scraggy",
+    "aliases": [],
+    "dexNumbers": ["559"]
+  },
+  {
+    "dexNumber": 560,
+    "name": "Scrafty",
+    "slug": "scrafty",
+    "aliases": [],
+    "dexNumbers": ["560"]
+  },
+  {
+    "dexNumber": 561,
+    "name": "Sigilyph",
+    "slug": "sigilyph",
+    "aliases": [],
+    "dexNumbers": ["561"]
+  },
+  {
+    "dexNumber": 562,
+    "name": "Yamask",
+    "slug": "yamask",
+    "aliases": [],
+    "dexNumbers": ["562"]
+  },
+  {
+    "dexNumber": 563,
+    "name": "Cofagrigus",
+    "slug": "cofagrigus",
+    "aliases": [],
+    "dexNumbers": ["563"]
+  },
+  {
+    "dexNumber": 564,
+    "name": "Tirtouga",
+    "slug": "tirtouga",
+    "aliases": [],
+    "dexNumbers": ["564"]
+  },
+  {
+    "dexNumber": 565,
+    "name": "Carracosta",
+    "slug": "carracosta",
+    "aliases": [],
+    "dexNumbers": ["565"]
+  },
+  {
+    "dexNumber": 566,
+    "name": "Archen",
+    "slug": "archen",
+    "aliases": [],
+    "dexNumbers": ["566"]
+  },
+  {
+    "dexNumber": 567,
+    "name": "Archeops",
+    "slug": "archeops",
+    "aliases": [],
+    "dexNumbers": ["567"]
+  },
+  {
+    "dexNumber": 568,
+    "name": "Trubbish",
+    "slug": "trubbish",
+    "aliases": [],
+    "dexNumbers": ["568"]
+  },
+  {
+    "dexNumber": 569,
+    "name": "Garbodor",
+    "slug": "garbodor",
+    "aliases": [],
+    "dexNumbers": ["569"]
+  },
+  {
+    "dexNumber": 570,
+    "name": "Zorua",
+    "slug": "zorua",
+    "aliases": [],
+    "dexNumbers": ["570"]
+  },
+  {
+    "dexNumber": 571,
+    "name": "Zoroark",
+    "slug": "zoroark",
+    "aliases": [],
+    "dexNumbers": ["571"]
+  },
+  {
+    "dexNumber": 572,
+    "name": "Minccino",
+    "slug": "minccino",
+    "aliases": [],
+    "dexNumbers": ["572"]
+  },
+  {
+    "dexNumber": 573,
+    "name": "Cinccino",
+    "slug": "cinccino",
+    "aliases": [],
+    "dexNumbers": ["573"]
+  },
+  {
+    "dexNumber": 574,
+    "name": "Gothita",
+    "slug": "gothita",
+    "aliases": [],
+    "dexNumbers": ["574"]
+  },
+  {
+    "dexNumber": 575,
+    "name": "Gothorita",
+    "slug": "gothorita",
+    "aliases": [],
+    "dexNumbers": ["575"]
+  },
+  {
+    "dexNumber": 576,
+    "name": "Gothitelle",
+    "slug": "gothitelle",
+    "aliases": [],
+    "dexNumbers": ["576"]
+  },
+  {
+    "dexNumber": 577,
+    "name": "Solosis",
+    "slug": "solosis",
+    "aliases": [],
+    "dexNumbers": ["577"]
+  },
+  {
+    "dexNumber": 578,
+    "name": "Duosion",
+    "slug": "duosion",
+    "aliases": [],
+    "dexNumbers": ["578"]
+  },
+  {
+    "dexNumber": 579,
+    "name": "Reuniclus",
+    "slug": "reuniclus",
+    "aliases": [],
+    "dexNumbers": ["579"]
+  },
+  {
+    "dexNumber": 580,
+    "name": "Ducklett",
+    "slug": "ducklett",
+    "aliases": [],
+    "dexNumbers": ["580"]
+  },
+  {
+    "dexNumber": 581,
+    "name": "Swanna",
+    "slug": "swanna",
+    "aliases": [],
+    "dexNumbers": ["581"]
+  },
+  {
+    "dexNumber": 582,
+    "name": "Vanillite",
+    "slug": "vanillite",
+    "aliases": [],
+    "dexNumbers": ["582"]
+  },
+  {
+    "dexNumber": 583,
+    "name": "Vanillish",
+    "slug": "vanillish",
+    "aliases": [],
+    "dexNumbers": ["583"]
+  },
+  {
+    "dexNumber": 584,
+    "name": "Vanilluxe",
+    "slug": "vanilluxe",
+    "aliases": [],
+    "dexNumbers": ["584"]
+  },
+  {
+    "dexNumber": 585,
+    "name": "Deerling",
+    "slug": "deerling",
+    "aliases": [],
+    "dexNumbers": ["585"]
+  },
+  {
+    "dexNumber": 586,
+    "name": "Sawsbuck",
+    "slug": "sawsbuck",
+    "aliases": [],
+    "dexNumbers": ["586"]
+  },
+  {
+    "dexNumber": 587,
+    "name": "Emolga",
+    "slug": "emolga",
+    "aliases": [],
+    "dexNumbers": ["587"]
+  },
+  {
+    "dexNumber": 588,
+    "name": "Karrablast",
+    "slug": "karrablast",
+    "aliases": [],
+    "dexNumbers": ["588"]
+  },
+  {
+    "dexNumber": 589,
+    "name": "Escavalier",
+    "slug": "escavalier",
+    "aliases": [],
+    "dexNumbers": ["589"]
+  },
+  {
+    "dexNumber": 590,
+    "name": "Foongus",
+    "slug": "foongus",
+    "aliases": [],
+    "dexNumbers": ["590"]
+  },
+  {
+    "dexNumber": 591,
+    "name": "Amoonguss",
+    "slug": "amoonguss",
+    "aliases": [],
+    "dexNumbers": ["591"]
+  },
+  {
+    "dexNumber": 592,
+    "name": "Frillish",
+    "slug": "frillish",
+    "aliases": [],
+    "dexNumbers": ["592"]
+  },
+  {
+    "dexNumber": 593,
+    "name": "Jellicent",
+    "slug": "jellicent",
+    "aliases": [],
+    "dexNumbers": ["593"]
+  },
+  {
+    "dexNumber": 594,
+    "name": "Alomomola",
+    "slug": "alomomola",
+    "aliases": [],
+    "dexNumbers": ["594"]
+  },
+  {
+    "dexNumber": 595,
+    "name": "Joltik",
+    "slug": "joltik",
+    "aliases": [],
+    "dexNumbers": ["595"]
+  },
+  {
+    "dexNumber": 596,
+    "name": "Galvantula",
+    "slug": "galvantula",
+    "aliases": [],
+    "dexNumbers": ["596"]
+  },
+  {
+    "dexNumber": 597,
+    "name": "Ferroseed",
+    "slug": "ferroseed",
+    "aliases": [],
+    "dexNumbers": ["597"]
+  },
+  {
+    "dexNumber": 598,
+    "name": "Ferrothorn",
+    "slug": "ferrothorn",
+    "aliases": [],
+    "dexNumbers": ["598"]
+  },
+  {
+    "dexNumber": 599,
+    "name": "Klink",
+    "slug": "klink",
+    "aliases": [],
+    "dexNumbers": ["599"]
+  },
+  {
+    "dexNumber": 600,
+    "name": "Klang",
+    "slug": "klang",
+    "aliases": [],
+    "dexNumbers": ["600"]
+  },
+  {
+    "dexNumber": 601,
+    "name": "Klinklang",
+    "slug": "klinklang",
+    "aliases": [],
+    "dexNumbers": ["601"]
+  },
+  {
+    "dexNumber": 602,
+    "name": "Tynamo",
+    "slug": "tynamo",
+    "aliases": [],
+    "dexNumbers": ["602"]
+  },
+  {
+    "dexNumber": 603,
+    "name": "Eelektrik",
+    "slug": "eelektrik",
+    "aliases": [],
+    "dexNumbers": ["603"]
+  },
+  {
+    "dexNumber": 604,
+    "name": "Eelektross",
+    "slug": "eelektross",
+    "aliases": [],
+    "dexNumbers": ["604"]
+  },
+  {
+    "dexNumber": 605,
+    "name": "Elgyem",
+    "slug": "elgyem",
+    "aliases": [],
+    "dexNumbers": ["605"]
+  },
+  {
+    "dexNumber": 606,
+    "name": "Beheeyem",
+    "slug": "beheeyem",
+    "aliases": [],
+    "dexNumbers": ["606"]
+  },
+  {
+    "dexNumber": 607,
+    "name": "Litwick",
+    "slug": "litwick",
+    "aliases": [],
+    "dexNumbers": ["607"]
+  },
+  {
+    "dexNumber": 608,
+    "name": "Lampent",
+    "slug": "lampent",
+    "aliases": [],
+    "dexNumbers": ["608"]
+  },
+  {
+    "dexNumber": 609,
+    "name": "Chandelure",
+    "slug": "chandelure",
+    "aliases": [],
+    "dexNumbers": ["609"]
+  },
+  {
+    "dexNumber": 610,
+    "name": "Axew",
+    "slug": "axew",
+    "aliases": [],
+    "dexNumbers": ["610"]
+  },
+  {
+    "dexNumber": 611,
+    "name": "Fraxure",
+    "slug": "fraxure",
+    "aliases": [],
+    "dexNumbers": ["611"]
+  },
+  {
+    "dexNumber": 612,
+    "name": "Haxorus",
+    "slug": "haxorus",
+    "aliases": [],
+    "dexNumbers": ["612"]
+  },
+  {
+    "dexNumber": 613,
+    "name": "Cubchoo",
+    "slug": "cubchoo",
+    "aliases": [],
+    "dexNumbers": ["613"]
+  },
+  {
+    "dexNumber": 614,
+    "name": "Beartic",
+    "slug": "beartic",
+    "aliases": [],
+    "dexNumbers": ["614"]
+  },
+  {
+    "dexNumber": 615,
+    "name": "Cryogonal",
+    "slug": "cryogonal",
+    "aliases": [],
+    "dexNumbers": ["615"]
+  },
+  {
+    "dexNumber": 616,
+    "name": "Shelmet",
+    "slug": "shelmet",
+    "aliases": [],
+    "dexNumbers": ["616"]
+  },
+  {
+    "dexNumber": 617,
+    "name": "Accelgor",
+    "slug": "accelgor",
+    "aliases": [],
+    "dexNumbers": ["617"]
+  },
+  {
+    "dexNumber": 618,
+    "name": "Stunfisk",
+    "slug": "stunfisk",
+    "aliases": [],
+    "dexNumbers": ["618"]
+  },
+  {
+    "dexNumber": 619,
+    "name": "Mienfoo",
+    "slug": "mienfoo",
+    "aliases": [],
+    "dexNumbers": ["619"]
+  },
+  {
+    "dexNumber": 620,
+    "name": "Mienshao",
+    "slug": "mienshao",
+    "aliases": [],
+    "dexNumbers": ["620"]
+  },
+  {
+    "dexNumber": 621,
+    "name": "Druddigon",
+    "slug": "druddigon",
+    "aliases": [],
+    "dexNumbers": ["621"]
+  },
+  {
+    "dexNumber": 622,
+    "name": "Golett",
+    "slug": "golett",
+    "aliases": [],
+    "dexNumbers": ["622"]
+  },
+  {
+    "dexNumber": 623,
+    "name": "Golurk",
+    "slug": "golurk",
+    "aliases": [],
+    "dexNumbers": ["623"]
+  },
+  {
+    "dexNumber": 624,
+    "name": "Pawniard",
+    "slug": "pawniard",
+    "aliases": [],
+    "dexNumbers": ["624"]
+  },
+  {
+    "dexNumber": 625,
+    "name": "Bisharp",
+    "slug": "bisharp",
+    "aliases": [],
+    "dexNumbers": ["625"]
+  },
+  {
+    "dexNumber": 626,
+    "name": "Bouffalant",
+    "slug": "bouffalant",
+    "aliases": [],
+    "dexNumbers": ["626"]
+  },
+  {
+    "dexNumber": 627,
+    "name": "Rufflet",
+    "slug": "rufflet",
+    "aliases": [],
+    "dexNumbers": ["627"]
+  },
+  {
+    "dexNumber": 628,
+    "name": "Braviary",
+    "slug": "braviary",
+    "aliases": [],
+    "dexNumbers": ["628"]
+  },
+  {
+    "dexNumber": 629,
+    "name": "Vullaby",
+    "slug": "vullaby",
+    "aliases": [],
+    "dexNumbers": ["629"]
+  },
+  {
+    "dexNumber": 630,
+    "name": "Mandibuzz",
+    "slug": "mandibuzz",
+    "aliases": [],
+    "dexNumbers": ["630"]
+  },
+  {
+    "dexNumber": 631,
+    "name": "Heatmor",
+    "slug": "heatmor",
+    "aliases": [],
+    "dexNumbers": ["631"]
+  },
+  {
+    "dexNumber": 632,
+    "name": "Durant",
+    "slug": "durant",
+    "aliases": [],
+    "dexNumbers": ["632"]
+  },
+  {
+    "dexNumber": 633,
+    "name": "Deino",
+    "slug": "deino",
+    "aliases": [],
+    "dexNumbers": ["633"]
+  },
+  {
+    "dexNumber": 634,
+    "name": "Zweilous",
+    "slug": "zweilous",
+    "aliases": [],
+    "dexNumbers": ["634"]
+  },
+  {
+    "dexNumber": 635,
+    "name": "Hydreigon",
+    "slug": "hydreigon",
+    "aliases": [],
+    "dexNumbers": ["635"]
+  },
+  {
+    "dexNumber": 636,
+    "name": "Larvesta",
+    "slug": "larvesta",
+    "aliases": [],
+    "dexNumbers": ["636"]
+  },
+  {
+    "dexNumber": 637,
+    "name": "Volcarona",
+    "slug": "volcarona",
+    "aliases": [],
+    "dexNumbers": ["637"]
+  },
+  {
+    "dexNumber": 638,
+    "name": "Cobalion",
+    "slug": "cobalion",
+    "aliases": [],
+    "dexNumbers": ["638"]
+  },
+  {
+    "dexNumber": 639,
+    "name": "Terrakion",
+    "slug": "terrakion",
+    "aliases": [],
+    "dexNumbers": ["639"]
+  },
+  {
+    "dexNumber": 640,
+    "name": "Virizion",
+    "slug": "virizion",
+    "aliases": [],
+    "dexNumbers": ["640"]
+  },
+  {
+    "dexNumber": 641,
+    "name": "Tornadus",
+    "slug": "tornadus",
+    "aliases": [],
+    "dexNumbers": ["641"]
+  },
+  {
+    "dexNumber": 642,
+    "name": "Thundurus",
+    "slug": "thundurus",
+    "aliases": [],
+    "dexNumbers": ["642"]
+  },
+  {
+    "dexNumber": 643,
+    "name": "Reshiram",
+    "slug": "reshiram",
+    "aliases": [],
+    "dexNumbers": ["643"]
+  },
+  {
+    "dexNumber": 644,
+    "name": "Zekrom",
+    "slug": "zekrom",
+    "aliases": [],
+    "dexNumbers": ["644"]
+  },
+  {
+    "dexNumber": 645,
+    "name": "Landorus",
+    "slug": "landorus",
+    "aliases": [],
+    "dexNumbers": ["645"]
+  },
+  {
+    "dexNumber": 646,
+    "name": "Kyurem",
+    "slug": "kyurem",
+    "aliases": [],
+    "dexNumbers": ["646"]
+  },
+  {
+    "dexNumber": 647,
+    "name": "Keldeo",
+    "slug": "keldeo",
+    "aliases": [],
+    "dexNumbers": ["647"]
+  },
+  {
+    "dexNumber": 648,
+    "name": "Meloetta",
+    "slug": "meloetta",
+    "aliases": [],
+    "dexNumbers": ["648"]
+  },
+  {
+    "dexNumber": 649,
+    "name": "Genesect",
+    "slug": "genesect",
+    "aliases": [],
+    "dexNumbers": ["649"]
+  },
+  {
+    "dexNumber": 650,
+    "name": "Chespin",
+    "slug": "chespin",
+    "aliases": [],
+    "dexNumbers": ["650"]
+  },
+  {
+    "dexNumber": 651,
+    "name": "Quilladin",
+    "slug": "quilladin",
+    "aliases": [],
+    "dexNumbers": ["651"]
+  },
+  {
+    "dexNumber": 652,
+    "name": "Chesnaught",
+    "slug": "chesnaught",
+    "aliases": [],
+    "dexNumbers": ["652"]
+  },
+  {
+    "dexNumber": 653,
+    "name": "Fennekin",
+    "slug": "fennekin",
+    "aliases": [],
+    "dexNumbers": ["653"]
+  },
+  {
+    "dexNumber": 654,
+    "name": "Braixen",
+    "slug": "braixen",
+    "aliases": [],
+    "dexNumbers": ["654"]
+  },
+  {
+    "dexNumber": 655,
+    "name": "Delphox",
+    "slug": "delphox",
+    "aliases": [],
+    "dexNumbers": ["655"]
+  },
+  {
+    "dexNumber": 656,
+    "name": "Froakie",
+    "slug": "froakie",
+    "aliases": [],
+    "dexNumbers": ["656"]
+  },
+  {
+    "dexNumber": 657,
+    "name": "Frogadier",
+    "slug": "frogadier",
+    "aliases": [],
+    "dexNumbers": ["657"]
+  },
+  {
+    "dexNumber": 658,
+    "name": "Greninja",
+    "slug": "greninja",
+    "aliases": [],
+    "dexNumbers": ["658"]
+  },
+  {
+    "dexNumber": 659,
+    "name": "Bunnelby",
+    "slug": "bunnelby",
+    "aliases": [],
+    "dexNumbers": ["659"]
+  },
+  {
+    "dexNumber": 660,
+    "name": "Diggersby",
+    "slug": "diggersby",
+    "aliases": [],
+    "dexNumbers": ["660"]
+  },
+  {
+    "dexNumber": 661,
+    "name": "Fletchling",
+    "slug": "fletchling",
+    "aliases": [],
+    "dexNumbers": ["661"]
+  },
+  {
+    "dexNumber": 662,
+    "name": "Fletchinder",
+    "slug": "fletchinder",
+    "aliases": [],
+    "dexNumbers": ["662"]
+  },
+  {
+    "dexNumber": 663,
+    "name": "Talonflame",
+    "slug": "talonflame",
+    "aliases": [],
+    "dexNumbers": ["663"]
+  },
+  {
+    "dexNumber": 664,
+    "name": "Scatterbug",
+    "slug": "scatterbug",
+    "aliases": [],
+    "dexNumbers": ["664"]
+  },
+  {
+    "dexNumber": 665,
+    "name": "Spewpa",
+    "slug": "spewpa",
+    "aliases": [],
+    "dexNumbers": ["665"]
+  },
+  {
+    "dexNumber": 666,
+    "name": "Vivillon",
+    "slug": "vivillon",
+    "aliases": [],
+    "dexNumbers": ["666"]
+  },
+  {
+    "dexNumber": 667,
+    "name": "Litleo",
+    "slug": "litleo",
+    "aliases": [],
+    "dexNumbers": ["667"]
+  },
+  {
+    "dexNumber": 668,
+    "name": "Pyroar",
+    "slug": "pyroar",
+    "aliases": [],
+    "dexNumbers": ["668"]
+  },
+  {
+    "dexNumber": 669,
+    "name": "Flabébé",
+    "slug": "flabebe",
+    "aliases": [],
+    "dexNumbers": ["669"]
+  },
+  {
+    "dexNumber": 670,
+    "name": "Floette",
+    "slug": "floette",
+    "aliases": [],
+    "dexNumbers": ["670"]
+  },
+  {
+    "dexNumber": 671,
+    "name": "Florges",
+    "slug": "florges",
+    "aliases": [],
+    "dexNumbers": ["671"]
+  },
+  {
+    "dexNumber": 672,
+    "name": "Skiddo",
+    "slug": "skiddo",
+    "aliases": [],
+    "dexNumbers": ["672"]
+  },
+  {
+    "dexNumber": 673,
+    "name": "Gogoat",
+    "slug": "gogoat",
+    "aliases": [],
+    "dexNumbers": ["673"]
+  },
+  {
+    "dexNumber": 674,
+    "name": "Pancham",
+    "slug": "pancham",
+    "aliases": [],
+    "dexNumbers": ["674"]
+  },
+  {
+    "dexNumber": 675,
+    "name": "Pangoro",
+    "slug": "pangoro",
+    "aliases": [],
+    "dexNumbers": ["675"]
+  },
+  {
+    "dexNumber": 676,
+    "name": "Furfrou",
+    "slug": "furfrou",
+    "aliases": [],
+    "dexNumbers": ["676"]
+  },
+  {
+    "dexNumber": 677,
+    "name": "Espurr",
+    "slug": "espurr",
+    "aliases": [],
+    "dexNumbers": ["677"]
+  },
+  {
+    "dexNumber": 678,
+    "name": "Meowstic",
+    "slug": "meowstic",
+    "aliases": [],
+    "dexNumbers": ["678"]
+  },
+  {
+    "dexNumber": 679,
+    "name": "Honedge",
+    "slug": "honedge",
+    "aliases": [],
+    "dexNumbers": ["679"]
+  },
+  {
+    "dexNumber": 680,
+    "name": "Doublade",
+    "slug": "doublade",
+    "aliases": [],
+    "dexNumbers": ["680"]
+  },
+  {
+    "dexNumber": 681,
+    "name": "Aegislash",
+    "slug": "aegislash",
+    "aliases": [],
+    "dexNumbers": ["681"]
+  },
+  {
+    "dexNumber": 682,
+    "name": "Spritzee",
+    "slug": "spritzee",
+    "aliases": [],
+    "dexNumbers": ["682"]
+  },
+  {
+    "dexNumber": 683,
+    "name": "Aromatisse",
+    "slug": "aromatisse",
+    "aliases": [],
+    "dexNumbers": ["683"]
+  },
+  {
+    "dexNumber": 684,
+    "name": "Swirlix",
+    "slug": "swirlix",
+    "aliases": [],
+    "dexNumbers": ["684"]
+  },
+  {
+    "dexNumber": 685,
+    "name": "Slurpuff",
+    "slug": "slurpuff",
+    "aliases": [],
+    "dexNumbers": ["685"]
+  },
+  {
+    "dexNumber": 686,
+    "name": "Inkay",
+    "slug": "inkay",
+    "aliases": [],
+    "dexNumbers": ["686"]
+  },
+  {
+    "dexNumber": 687,
+    "name": "Malamar",
+    "slug": "malamar",
+    "aliases": [],
+    "dexNumbers": ["687"]
+  },
+  {
+    "dexNumber": 688,
+    "name": "Binacle",
+    "slug": "binacle",
+    "aliases": [],
+    "dexNumbers": ["688"]
+  },
+  {
+    "dexNumber": 689,
+    "name": "Barbaracle",
+    "slug": "barbaracle",
+    "aliases": [],
+    "dexNumbers": ["689"]
+  },
+  {
+    "dexNumber": 690,
+    "name": "Skrelp",
+    "slug": "skrelp",
+    "aliases": [],
+    "dexNumbers": ["690"]
+  },
+  {
+    "dexNumber": 691,
+    "name": "Dragalge",
+    "slug": "dragalge",
+    "aliases": [],
+    "dexNumbers": ["691"]
+  },
+  {
+    "dexNumber": 692,
+    "name": "Clauncher",
+    "slug": "clauncher",
+    "aliases": [],
+    "dexNumbers": ["692"]
+  },
+  {
+    "dexNumber": 693,
+    "name": "Clawitzer",
+    "slug": "clawitzer",
+    "aliases": [],
+    "dexNumbers": ["693"]
+  },
+  {
+    "dexNumber": 694,
+    "name": "Helioptile",
+    "slug": "helioptile",
+    "aliases": [],
+    "dexNumbers": ["694"]
+  },
+  {
+    "dexNumber": 695,
+    "name": "Heliolisk",
+    "slug": "heliolisk",
+    "aliases": [],
+    "dexNumbers": ["695"]
+  },
+  {
+    "dexNumber": 696,
+    "name": "Tyrunt",
+    "slug": "tyrunt",
+    "aliases": [],
+    "dexNumbers": ["696"]
+  },
+  {
+    "dexNumber": 697,
+    "name": "Tyrantrum",
+    "slug": "tyrantrum",
+    "aliases": [],
+    "dexNumbers": ["697"]
+  },
+  {
+    "dexNumber": 698,
+    "name": "Amaura",
+    "slug": "amaura",
+    "aliases": [],
+    "dexNumbers": ["698"]
+  },
+  {
+    "dexNumber": 699,
+    "name": "Aurorus",
+    "slug": "aurorus",
+    "aliases": [],
+    "dexNumbers": ["699"]
+  },
+  {
+    "dexNumber": 700,
+    "name": "Sylveon",
+    "slug": "sylveon",
+    "aliases": [],
+    "dexNumbers": ["700"]
+  },
+  {
+    "dexNumber": 701,
+    "name": "Hawlucha",
+    "slug": "hawlucha",
+    "aliases": [],
+    "dexNumbers": ["701"]
+  },
+  {
+    "dexNumber": 702,
+    "name": "Dedenne",
+    "slug": "dedenne",
+    "aliases": [],
+    "dexNumbers": ["702"]
+  },
+  {
+    "dexNumber": 703,
+    "name": "Carbink",
+    "slug": "carbink",
+    "aliases": [],
+    "dexNumbers": ["703"]
+  },
+  {
+    "dexNumber": 704,
+    "name": "Goomy",
+    "slug": "goomy",
+    "aliases": [],
+    "dexNumbers": ["704"]
+  },
+  {
+    "dexNumber": 705,
+    "name": "Sliggoo",
+    "slug": "sliggoo",
+    "aliases": [],
+    "dexNumbers": ["705"]
+  },
+  {
+    "dexNumber": 706,
+    "name": "Goodra",
+    "slug": "goodra",
+    "aliases": [],
+    "dexNumbers": ["706"]
+  },
+  {
+    "dexNumber": 707,
+    "name": "Klefki",
+    "slug": "klefki",
+    "aliases": [],
+    "dexNumbers": ["707"]
+  },
+  {
+    "dexNumber": 708,
+    "name": "Phantump",
+    "slug": "phantump",
+    "aliases": [],
+    "dexNumbers": ["708"]
+  },
+  {
+    "dexNumber": 709,
+    "name": "Trevenant",
+    "slug": "trevenant",
+    "aliases": [],
+    "dexNumbers": ["709"]
+  },
+  {
+    "dexNumber": 710,
+    "name": "Pumpkaboo",
+    "slug": "pumpkaboo",
+    "aliases": [],
+    "dexNumbers": ["710"]
+  },
+  {
+    "dexNumber": 711,
+    "name": "Gourgeist",
+    "slug": "gourgeist",
+    "aliases": [],
+    "dexNumbers": ["711"]
+  },
+  {
+    "dexNumber": 712,
+    "name": "Bergmite",
+    "slug": "bergmite",
+    "aliases": [],
+    "dexNumbers": ["712"]
+  },
+  {
+    "dexNumber": 713,
+    "name": "Avalugg",
+    "slug": "avalugg",
+    "aliases": [],
+    "dexNumbers": ["713"]
+  },
+  {
+    "dexNumber": 714,
+    "name": "Noibat",
+    "slug": "noibat",
+    "aliases": [],
+    "dexNumbers": ["714"]
+  },
+  {
+    "dexNumber": 715,
+    "name": "Noivern",
+    "slug": "noivern",
+    "aliases": [],
+    "dexNumbers": ["715"]
+  },
+  {
+    "dexNumber": 716,
+    "name": "Xerneas",
+    "slug": "xerneas",
+    "aliases": [],
+    "dexNumbers": ["716"]
+  },
+  {
+    "dexNumber": 717,
+    "name": "Yveltal",
+    "slug": "yveltal",
+    "aliases": [],
+    "dexNumbers": ["717"]
+  },
+  {
+    "dexNumber": 718,
+    "name": "Zygarde",
+    "slug": "zygarde",
+    "aliases": [],
+    "dexNumbers": ["718"]
+  },
+  {
+    "dexNumber": 719,
+    "name": "Diancie",
+    "slug": "diancie",
+    "aliases": [],
+    "dexNumbers": ["719"]
+  },
+  {
+    "dexNumber": 720,
+    "name": "Hoopa",
+    "slug": "hoopa",
+    "aliases": [],
+    "dexNumbers": ["720"]
+  },
+  {
+    "dexNumber": 721,
+    "name": "Volcanion",
+    "slug": "volcanion",
+    "aliases": [],
+    "dexNumbers": ["721"]
+  },
+  {
+    "dexNumber": 722,
+    "name": "Rowlet",
+    "slug": "rowlet",
+    "aliases": [],
+    "dexNumbers": ["722"]
+  },
+  {
+    "dexNumber": 723,
+    "name": "Dartrix",
+    "slug": "dartrix",
+    "aliases": [],
+    "dexNumbers": ["723"]
+  },
+  {
+    "dexNumber": 724,
+    "name": "Decidueye",
+    "slug": "decidueye",
+    "aliases": [],
+    "dexNumbers": ["724"]
+  },
+  {
+    "dexNumber": 725,
+    "name": "Litten",
+    "slug": "litten",
+    "aliases": [],
+    "dexNumbers": ["725"]
+  },
+  {
+    "dexNumber": 726,
+    "name": "Torracat",
+    "slug": "torracat",
+    "aliases": [],
+    "dexNumbers": ["726"]
+  },
+  {
+    "dexNumber": 727,
+    "name": "Incineroar",
+    "slug": "incineroar",
+    "aliases": [],
+    "dexNumbers": ["727"]
+  },
+  {
+    "dexNumber": 728,
+    "name": "Popplio",
+    "slug": "popplio",
+    "aliases": [],
+    "dexNumbers": ["728"]
+  },
+  {
+    "dexNumber": 729,
+    "name": "Brionne",
+    "slug": "brionne",
+    "aliases": [],
+    "dexNumbers": ["729"]
+  },
+  {
+    "dexNumber": 730,
+    "name": "Primarina",
+    "slug": "primarina",
+    "aliases": [],
+    "dexNumbers": ["730"]
+  },
+  {
+    "dexNumber": 731,
+    "name": "Pikipek",
+    "slug": "pikipek",
+    "aliases": [],
+    "dexNumbers": ["731"]
+  },
+  {
+    "dexNumber": 732,
+    "name": "Trumbeak",
+    "slug": "trumbeak",
+    "aliases": [],
+    "dexNumbers": ["732"]
+  },
+  {
+    "dexNumber": 733,
+    "name": "Toucannon",
+    "slug": "toucannon",
+    "aliases": [],
+    "dexNumbers": ["733"]
+  },
+  {
+    "dexNumber": 734,
+    "name": "Yungoos",
+    "slug": "yungoos",
+    "aliases": [],
+    "dexNumbers": ["734"]
+  },
+  {
+    "dexNumber": 735,
+    "name": "Gumshoos",
+    "slug": "gumshoos",
+    "aliases": [],
+    "dexNumbers": ["735"]
+  },
+  {
+    "dexNumber": 736,
+    "name": "Grubbin",
+    "slug": "grubbin",
+    "aliases": [],
+    "dexNumbers": ["736"]
+  },
+  {
+    "dexNumber": 737,
+    "name": "Charjabug",
+    "slug": "charjabug",
+    "aliases": [],
+    "dexNumbers": ["737"]
+  },
+  {
+    "dexNumber": 738,
+    "name": "Vikavolt",
+    "slug": "vikavolt",
+    "aliases": [],
+    "dexNumbers": ["738"]
+  },
+  {
+    "dexNumber": 739,
+    "name": "Crabrawler",
+    "slug": "crabrawler",
+    "aliases": [],
+    "dexNumbers": ["739"]
+  },
+  {
+    "dexNumber": 740,
+    "name": "Crabominable",
+    "slug": "crabominable",
+    "aliases": [],
+    "dexNumbers": ["740"]
+  },
+  {
+    "dexNumber": 741,
+    "name": "Oricorio",
+    "slug": "oricorio",
+    "aliases": [],
+    "dexNumbers": ["741"]
+  },
+  {
+    "dexNumber": 742,
+    "name": "Cutiefly",
+    "slug": "cutiefly",
+    "aliases": [],
+    "dexNumbers": ["742"]
+  },
+  {
+    "dexNumber": 743,
+    "name": "Ribombee",
+    "slug": "ribombee",
+    "aliases": [],
+    "dexNumbers": ["743"]
+  },
+  {
+    "dexNumber": 744,
+    "name": "Rockruff",
+    "slug": "rockruff",
+    "aliases": [],
+    "dexNumbers": ["744"]
+  },
+  {
+    "dexNumber": 745,
+    "name": "Lycanroc",
+    "slug": "lycanroc",
+    "aliases": [],
+    "dexNumbers": ["745"]
+  },
+  {
+    "dexNumber": 746,
+    "name": "Wishiwashi",
+    "slug": "wishiwashi",
+    "aliases": [],
+    "dexNumbers": ["746"]
+  },
+  {
+    "dexNumber": 747,
+    "name": "Mareanie",
+    "slug": "mareanie",
+    "aliases": [],
+    "dexNumbers": ["747"]
+  },
+  {
+    "dexNumber": 748,
+    "name": "Toxapex",
+    "slug": "toxapex",
+    "aliases": [],
+    "dexNumbers": ["748"]
+  },
+  {
+    "dexNumber": 749,
+    "name": "Mudbray",
+    "slug": "mudbray",
+    "aliases": [],
+    "dexNumbers": ["749"]
+  },
+  {
+    "dexNumber": 750,
+    "name": "Mudsdale",
+    "slug": "mudsdale",
+    "aliases": [],
+    "dexNumbers": ["750"]
+  },
+  {
+    "dexNumber": 751,
+    "name": "Dewpider",
+    "slug": "dewpider",
+    "aliases": [],
+    "dexNumbers": ["751"]
+  },
+  {
+    "dexNumber": 752,
+    "name": "Araquanid",
+    "slug": "araquanid",
+    "aliases": [],
+    "dexNumbers": ["752"]
+  },
+  {
+    "dexNumber": 753,
+    "name": "Fomantis",
+    "slug": "fomantis",
+    "aliases": [],
+    "dexNumbers": ["753"]
+  },
+  {
+    "dexNumber": 754,
+    "name": "Lurantis",
+    "slug": "lurantis",
+    "aliases": [],
+    "dexNumbers": ["754"]
+  },
+  {
+    "dexNumber": 755,
+    "name": "Morelull",
+    "slug": "morelull",
+    "aliases": [],
+    "dexNumbers": ["755"]
+  },
+  {
+    "dexNumber": 756,
+    "name": "Shiinotic",
+    "slug": "shiinotic",
+    "aliases": [],
+    "dexNumbers": ["756"]
+  },
+  {
+    "dexNumber": 757,
+    "name": "Salandit",
+    "slug": "salandit",
+    "aliases": [],
+    "dexNumbers": ["757"]
+  },
+  {
+    "dexNumber": 758,
+    "name": "Salazzle",
+    "slug": "salazzle",
+    "aliases": [],
+    "dexNumbers": ["758"]
+  },
+  {
+    "dexNumber": 759,
+    "name": "Stufful",
+    "slug": "stufful",
+    "aliases": [],
+    "dexNumbers": ["759"]
+  },
+  {
+    "dexNumber": 760,
+    "name": "Bewear",
+    "slug": "bewear",
+    "aliases": [],
+    "dexNumbers": ["760"]
+  },
+  {
+    "dexNumber": 761,
+    "name": "Bounsweet",
+    "slug": "bounsweet",
+    "aliases": [],
+    "dexNumbers": ["761"]
+  },
+  {
+    "dexNumber": 762,
+    "name": "Steenee",
+    "slug": "steenee",
+    "aliases": [],
+    "dexNumbers": ["762"]
+  },
+  {
+    "dexNumber": 763,
+    "name": "Tsareena",
+    "slug": "tsareena",
+    "aliases": [],
+    "dexNumbers": ["763"]
+  },
+  {
+    "dexNumber": 764,
+    "name": "Comfey",
+    "slug": "comfey",
+    "aliases": [],
+    "dexNumbers": ["764"]
+  },
+  {
+    "dexNumber": 765,
+    "name": "Oranguru",
+    "slug": "oranguru",
+    "aliases": [],
+    "dexNumbers": ["765"]
+  },
+  {
+    "dexNumber": 766,
+    "name": "Passimian",
+    "slug": "passimian",
+    "aliases": [],
+    "dexNumbers": ["766"]
+  },
+  {
+    "dexNumber": 767,
+    "name": "Wimpod",
+    "slug": "wimpod",
+    "aliases": [],
+    "dexNumbers": ["767"]
+  },
+  {
+    "dexNumber": 768,
+    "name": "Golisopod",
+    "slug": "golisopod",
+    "aliases": [],
+    "dexNumbers": ["768"]
+  },
+  {
+    "dexNumber": 769,
+    "name": "Sandygast",
+    "slug": "sandygast",
+    "aliases": [],
+    "dexNumbers": ["769"]
+  },
+  {
+    "dexNumber": 770,
+    "name": "Palossand",
+    "slug": "palossand",
+    "aliases": [],
+    "dexNumbers": ["770"]
+  },
+  {
+    "dexNumber": 771,
+    "name": "Pyukumuku",
+    "slug": "pyukumuku",
+    "aliases": [],
+    "dexNumbers": ["771"]
+  },
+  {
+    "dexNumber": 772,
+    "name": "Type: Null",
+    "slug": "type-null",
+    "aliases": [],
+    "dexNumbers": ["772"]
+  },
+  {
+    "dexNumber": 773,
+    "name": "Silvally",
+    "slug": "silvally",
+    "aliases": [],
+    "dexNumbers": ["773"]
+  },
+  {
+    "dexNumber": 774,
+    "name": "Minior",
+    "slug": "minior",
+    "aliases": [],
+    "dexNumbers": ["774"]
+  },
+  {
+    "dexNumber": 775,
+    "name": "Komala",
+    "slug": "komala",
+    "aliases": [],
+    "dexNumbers": ["775"]
+  },
+  {
+    "dexNumber": 776,
+    "name": "Turtonator",
+    "slug": "turtonator",
+    "aliases": [],
+    "dexNumbers": ["776"]
+  },
+  {
+    "dexNumber": 777,
+    "name": "Togedemaru",
+    "slug": "togedemaru",
+    "aliases": [],
+    "dexNumbers": ["777"]
+  },
+  {
+    "dexNumber": 778,
+    "name": "Mimikyu",
+    "slug": "mimikyu",
+    "aliases": [],
+    "dexNumbers": ["778"]
+  },
+  {
+    "dexNumber": 779,
+    "name": "Bruxish",
+    "slug": "bruxish",
+    "aliases": [],
+    "dexNumbers": ["779"]
+  },
+  {
+    "dexNumber": 780,
+    "name": "Drampa",
+    "slug": "drampa",
+    "aliases": [],
+    "dexNumbers": ["780"]
+  },
+  {
+    "dexNumber": 781,
+    "name": "Dhelmise",
+    "slug": "dhelmise",
+    "aliases": [],
+    "dexNumbers": ["781"]
+  },
+  {
+    "dexNumber": 782,
+    "name": "Jangmo-o",
+    "slug": "jangmo-o",
+    "aliases": [],
+    "dexNumbers": ["782"]
+  },
+  {
+    "dexNumber": 783,
+    "name": "Hakamo-o",
+    "slug": "hakamo-o",
+    "aliases": [],
+    "dexNumbers": ["783"]
+  },
+  {
+    "dexNumber": 784,
+    "name": "Kommo-o",
+    "slug": "kommo-o",
+    "aliases": [],
+    "dexNumbers": ["784"]
+  },
+  {
+    "dexNumber": 785,
+    "name": "Tapu Koko",
+    "slug": "tapu-koko",
+    "aliases": [],
+    "dexNumbers": ["785"]
+  },
+  {
+    "dexNumber": 786,
+    "name": "Tapu Lele",
+    "slug": "tapu-lele",
+    "aliases": [],
+    "dexNumbers": ["786"]
+  },
+  {
+    "dexNumber": 787,
+    "name": "Tapu Bulu",
+    "slug": "tapu-bulu",
+    "aliases": [],
+    "dexNumbers": ["787"]
+  },
+  {
+    "dexNumber": 788,
+    "name": "Tapu Fini",
+    "slug": "tapu-fini",
+    "aliases": [],
+    "dexNumbers": ["788"]
+  },
+  {
+    "dexNumber": 789,
+    "name": "Cosmog",
+    "slug": "cosmog",
+    "aliases": [],
+    "dexNumbers": ["789"]
+  },
+  {
+    "dexNumber": 790,
+    "name": "Cosmoem",
+    "slug": "cosmoem",
+    "aliases": [],
+    "dexNumbers": ["790"]
+  },
+  {
+    "dexNumber": 791,
+    "name": "Solgaleo",
+    "slug": "solgaleo",
+    "aliases": [],
+    "dexNumbers": ["791"]
+  },
+  {
+    "dexNumber": 792,
+    "name": "Lunala",
+    "slug": "lunala",
+    "aliases": [],
+    "dexNumbers": ["792"]
+  },
+  {
+    "dexNumber": 793,
+    "name": "Nihilego",
+    "slug": "nihilego",
+    "aliases": [],
+    "dexNumbers": ["793"]
+  },
+  {
+    "dexNumber": 794,
+    "name": "Buzzwole",
+    "slug": "buzzwole",
+    "aliases": [],
+    "dexNumbers": ["794"]
+  },
+  {
+    "dexNumber": 795,
+    "name": "Pheromosa",
+    "slug": "pheromosa",
+    "aliases": [],
+    "dexNumbers": ["795"]
+  },
+  {
+    "dexNumber": 796,
+    "name": "Xurkitree",
+    "slug": "xurkitree",
+    "aliases": [],
+    "dexNumbers": ["796"]
+  },
+  {
+    "dexNumber": 797,
+    "name": "Celesteela",
+    "slug": "celesteela",
+    "aliases": [],
+    "dexNumbers": ["797"]
+  },
+  {
+    "dexNumber": 798,
+    "name": "Kartana",
+    "slug": "kartana",
+    "aliases": [],
+    "dexNumbers": ["798"]
+  },
+  {
+    "dexNumber": 799,
+    "name": "Guzzlord",
+    "slug": "guzzlord",
+    "aliases": [],
+    "dexNumbers": ["799"]
+  },
+  {
+    "dexNumber": 800,
+    "name": "Necrozma",
+    "slug": "necrozma",
+    "aliases": [],
+    "dexNumbers": ["800"]
+  },
+  {
+    "dexNumber": 801,
+    "name": "Magearna",
+    "slug": "magearna",
+    "aliases": [],
+    "dexNumbers": ["801"]
+  },
+  {
+    "dexNumber": 802,
+    "name": "Marshadow",
+    "slug": "marshadow",
+    "aliases": [],
+    "dexNumbers": ["802"]
+  },
+  {
+    "dexNumber": 803,
+    "name": "Poipole",
+    "slug": "poipole",
+    "aliases": [],
+    "dexNumbers": ["803"]
+  },
+  {
+    "dexNumber": 804,
+    "name": "Naganadel",
+    "slug": "naganadel",
+    "aliases": [],
+    "dexNumbers": ["804"]
+  },
+  {
+    "dexNumber": 805,
+    "name": "Stakataka",
+    "slug": "stakataka",
+    "aliases": [],
+    "dexNumbers": ["805"]
+  },
+  {
+    "dexNumber": 806,
+    "name": "Blacephalon",
+    "slug": "blacephalon",
+    "aliases": [],
+    "dexNumbers": ["806"]
+  },
+  {
+    "dexNumber": 807,
+    "name": "Zeraora",
+    "slug": "zeraora",
+    "aliases": [],
+    "dexNumbers": ["807"]
+  },
+  {
+    "dexNumber": 808,
+    "name": "Meltan",
+    "slug": "meltan",
+    "aliases": [],
+    "dexNumbers": ["808"]
+  },
+  {
+    "dexNumber": 809,
+    "name": "Melmetal",
+    "slug": "melmetal",
+    "aliases": [],
+    "dexNumbers": ["809"]
+  },
+  {
+    "dexNumber": 810,
+    "name": "Grookey",
+    "slug": "grookey",
+    "aliases": [],
+    "dexNumbers": ["810"]
+  },
+  {
+    "dexNumber": 811,
+    "name": "Thwackey",
+    "slug": "thwackey",
+    "aliases": [],
+    "dexNumbers": ["811"]
+  },
+  {
+    "dexNumber": 812,
+    "name": "Rillaboom",
+    "slug": "rillaboom",
+    "aliases": [],
+    "dexNumbers": ["812"]
+  },
+  {
+    "dexNumber": 813,
+    "name": "Scorbunny",
+    "slug": "scorbunny",
+    "aliases": [],
+    "dexNumbers": ["813"]
+  },
+  {
+    "dexNumber": 814,
+    "name": "Raboot",
+    "slug": "raboot",
+    "aliases": [],
+    "dexNumbers": ["814"]
+  },
+  {
+    "dexNumber": 815,
+    "name": "Cinderace",
+    "slug": "cinderace",
+    "aliases": [],
+    "dexNumbers": ["815"]
+  },
+  {
+    "dexNumber": 816,
+    "name": "Sobble",
+    "slug": "sobble",
+    "aliases": [],
+    "dexNumbers": ["816"]
+  },
+  {
+    "dexNumber": 817,
+    "name": "Drizzile",
+    "slug": "drizzile",
+    "aliases": [],
+    "dexNumbers": ["817"]
+  },
+  {
+    "dexNumber": 818,
+    "name": "Inteleon",
+    "slug": "inteleon",
+    "aliases": [],
+    "dexNumbers": ["818"]
+  },
+  {
+    "dexNumber": 819,
+    "name": "Skwovet",
+    "slug": "skwovet",
+    "aliases": [],
+    "dexNumbers": ["819"]
+  },
+  {
+    "dexNumber": 820,
+    "name": "Greedent",
+    "slug": "greedent",
+    "aliases": [],
+    "dexNumbers": ["820"]
+  },
+  {
+    "dexNumber": 821,
+    "name": "Rookidee",
+    "slug": "rookidee",
+    "aliases": [],
+    "dexNumbers": ["821"]
+  },
+  {
+    "dexNumber": 822,
+    "name": "Corvisquire",
+    "slug": "corvisquire",
+    "aliases": [],
+    "dexNumbers": ["822"]
+  },
+  {
+    "dexNumber": 823,
+    "name": "Corviknight",
+    "slug": "corviknight",
+    "aliases": [],
+    "dexNumbers": ["823"]
+  },
+  {
+    "dexNumber": 824,
+    "name": "Blipbug",
+    "slug": "blipbug",
+    "aliases": [],
+    "dexNumbers": ["824"]
+  },
+  {
+    "dexNumber": 825,
+    "name": "Dottler",
+    "slug": "dottler",
+    "aliases": [],
+    "dexNumbers": ["825"]
+  },
+  {
+    "dexNumber": 826,
+    "name": "Orbeetle",
+    "slug": "orbeetle",
+    "aliases": [],
+    "dexNumbers": ["826"]
+  },
+  {
+    "dexNumber": 827,
+    "name": "Nickit",
+    "slug": "nickit",
+    "aliases": [],
+    "dexNumbers": ["827"]
+  },
+  {
+    "dexNumber": 828,
+    "name": "Thievul",
+    "slug": "thievul",
+    "aliases": [],
+    "dexNumbers": ["828"]
+  },
+  {
+    "dexNumber": 829,
+    "name": "Gossifleur",
+    "slug": "gossifleur",
+    "aliases": [],
+    "dexNumbers": ["829"]
+  },
+  {
+    "dexNumber": 830,
+    "name": "Eldegoss",
+    "slug": "eldegoss",
+    "aliases": [],
+    "dexNumbers": ["830"]
+  },
+  {
+    "dexNumber": 831,
+    "name": "Wooloo",
+    "slug": "wooloo",
+    "aliases": [],
+    "dexNumbers": ["831"]
+  },
+  {
+    "dexNumber": 832,
+    "name": "Dubwool",
+    "slug": "dubwool",
+    "aliases": [],
+    "dexNumbers": ["832"]
+  },
+  {
+    "dexNumber": 833,
+    "name": "Chewtle",
+    "slug": "chewtle",
+    "aliases": [],
+    "dexNumbers": ["833"]
+  },
+  {
+    "dexNumber": 834,
+    "name": "Drednaw",
+    "slug": "drednaw",
+    "aliases": [],
+    "dexNumbers": ["834"]
+  },
+  {
+    "dexNumber": 835,
+    "name": "Yamper",
+    "slug": "yamper",
+    "aliases": [],
+    "dexNumbers": ["835"]
+  },
+  {
+    "dexNumber": 836,
+    "name": "Boltund",
+    "slug": "boltund",
+    "aliases": [],
+    "dexNumbers": ["836"]
+  },
+  {
+    "dexNumber": 837,
+    "name": "Rolycoly",
+    "slug": "rolycoly",
+    "aliases": [],
+    "dexNumbers": ["837"]
+  },
+  {
+    "dexNumber": 838,
+    "name": "Carkol",
+    "slug": "carkol",
+    "aliases": [],
+    "dexNumbers": ["838"]
+  },
+  {
+    "dexNumber": 839,
+    "name": "Coalossal",
+    "slug": "coalossal",
+    "aliases": [],
+    "dexNumbers": ["839"]
+  },
+  {
+    "dexNumber": 840,
+    "name": "Applin",
+    "slug": "applin",
+    "aliases": [],
+    "dexNumbers": ["840"]
+  },
+  {
+    "dexNumber": 841,
+    "name": "Flapple",
+    "slug": "flapple",
+    "aliases": [],
+    "dexNumbers": ["841"]
+  },
+  {
+    "dexNumber": 842,
+    "name": "Appletun",
+    "slug": "appletun",
+    "aliases": [],
+    "dexNumbers": ["842"]
+  },
+  {
+    "dexNumber": 843,
+    "name": "Silicobra",
+    "slug": "silicobra",
+    "aliases": [],
+    "dexNumbers": ["843"]
+  },
+  {
+    "dexNumber": 844,
+    "name": "Sandaconda",
+    "slug": "sandaconda",
+    "aliases": [],
+    "dexNumbers": ["844"]
+  },
+  {
+    "dexNumber": 845,
+    "name": "Cramorant",
+    "slug": "cramorant",
+    "aliases": [],
+    "dexNumbers": ["845"]
+  },
+  {
+    "dexNumber": 846,
+    "name": "Arrokuda",
+    "slug": "arrokuda",
+    "aliases": [],
+    "dexNumbers": ["846"]
+  },
+  {
+    "dexNumber": 847,
+    "name": "Barraskewda",
+    "slug": "barraskewda",
+    "aliases": [],
+    "dexNumbers": ["847"]
+  },
+  {
+    "dexNumber": 848,
+    "name": "Toxel",
+    "slug": "toxel",
+    "aliases": [],
+    "dexNumbers": ["848"]
+  },
+  {
+    "dexNumber": 849,
+    "name": "Toxtricity",
+    "slug": "toxtricity",
+    "aliases": [],
+    "dexNumbers": ["849"]
+  },
+  {
+    "dexNumber": 850,
+    "name": "Sizzlipede",
+    "slug": "sizzlipede",
+    "aliases": [],
+    "dexNumbers": ["850"]
+  },
+  {
+    "dexNumber": 851,
+    "name": "Centiskorch",
+    "slug": "centiskorch",
+    "aliases": [],
+    "dexNumbers": ["851"]
+  },
+  {
+    "dexNumber": 852,
+    "name": "Clobbopus",
+    "slug": "clobbopus",
+    "aliases": [],
+    "dexNumbers": ["852"]
+  },
+  {
+    "dexNumber": 853,
+    "name": "Grapploct",
+    "slug": "grapploct",
+    "aliases": [],
+    "dexNumbers": ["853"]
+  },
+  {
+    "dexNumber": 854,
+    "name": "Sinistea",
+    "slug": "sinistea",
+    "aliases": [],
+    "dexNumbers": ["854"]
+  },
+  {
+    "dexNumber": 855,
+    "name": "Polteageist",
+    "slug": "polteageist",
+    "aliases": [],
+    "dexNumbers": ["855"]
+  },
+  {
+    "dexNumber": 856,
+    "name": "Hatenna",
+    "slug": "hatenna",
+    "aliases": [],
+    "dexNumbers": ["856"]
+  },
+  {
+    "dexNumber": 857,
+    "name": "Hattrem",
+    "slug": "hattrem",
+    "aliases": [],
+    "dexNumbers": ["857"]
+  },
+  {
+    "dexNumber": 858,
+    "name": "Hatterene",
+    "slug": "hatterene",
+    "aliases": [],
+    "dexNumbers": ["858"]
+  },
+  {
+    "dexNumber": 859,
+    "name": "Impidimp",
+    "slug": "impidimp",
+    "aliases": [],
+    "dexNumbers": ["859"]
+  },
+  {
+    "dexNumber": 860,
+    "name": "Morgrem",
+    "slug": "morgrem",
+    "aliases": [],
+    "dexNumbers": ["860"]
+  },
+  {
+    "dexNumber": 861,
+    "name": "Grimmsnarl",
+    "slug": "grimmsnarl",
+    "aliases": [],
+    "dexNumbers": ["861"]
+  },
+  {
+    "dexNumber": 862,
+    "name": "Obstagoon",
+    "slug": "obstagoon",
+    "aliases": [],
+    "dexNumbers": ["862"]
+  },
+  {
+    "dexNumber": 863,
+    "name": "Perrserker",
+    "slug": "perrserker",
+    "aliases": [],
+    "dexNumbers": ["863"]
+  },
+  {
+    "dexNumber": 864,
+    "name": "Cursola",
+    "slug": "cursola",
+    "aliases": [],
+    "dexNumbers": ["864"]
+  },
+  {
+    "dexNumber": 865,
+    "name": "Sirfetch’d",
+    "slug": "sirfetchd",
+    "aliases": [],
+    "dexNumbers": ["865"]
+  },
+  {
+    "dexNumber": 866,
+    "name": "Mr. Rime",
+    "slug": "mr-rime",
+    "aliases": [],
+    "dexNumbers": ["866"]
+  },
+  {
+    "dexNumber": 867,
+    "name": "Runerigus",
+    "slug": "runerigus",
+    "aliases": [],
+    "dexNumbers": ["867"]
+  },
+  {
+    "dexNumber": 868,
+    "name": "Milcery",
+    "slug": "milcery",
+    "aliases": [],
+    "dexNumbers": ["868"]
+  },
+  {
+    "dexNumber": 869,
+    "name": "Alcremie",
+    "slug": "alcremie",
+    "aliases": [],
+    "dexNumbers": ["869"]
+  },
+  {
+    "dexNumber": 870,
+    "name": "Falinks",
+    "slug": "falinks",
+    "aliases": [],
+    "dexNumbers": ["870"]
+  },
+  {
+    "dexNumber": 871,
+    "name": "Pincurchin",
+    "slug": "pincurchin",
+    "aliases": [],
+    "dexNumbers": ["871"]
+  },
+  {
+    "dexNumber": 872,
+    "name": "Snom",
+    "slug": "snom",
+    "aliases": [],
+    "dexNumbers": ["872"]
+  },
+  {
+    "dexNumber": 873,
+    "name": "Frosmoth",
+    "slug": "frosmoth",
+    "aliases": [],
+    "dexNumbers": ["873"]
+  },
+  {
+    "dexNumber": 874,
+    "name": "Stonjourner",
+    "slug": "stonjourner",
+    "aliases": [],
+    "dexNumbers": ["874"]
+  },
+  {
+    "dexNumber": 875,
+    "name": "Eiscue",
+    "slug": "eiscue",
+    "aliases": [],
+    "dexNumbers": ["875"]
+  },
+  {
+    "dexNumber": 876,
+    "name": "Indeedee",
+    "slug": "indeedee",
+    "aliases": [],
+    "dexNumbers": ["876"]
+  },
+  {
+    "dexNumber": 877,
+    "name": "Morpeko",
+    "slug": "morpeko",
+    "aliases": [],
+    "dexNumbers": ["877"]
+  },
+  {
+    "dexNumber": 878,
+    "name": "Cufant",
+    "slug": "cufant",
+    "aliases": [],
+    "dexNumbers": ["878"]
+  },
+  {
+    "dexNumber": 879,
+    "name": "Copperajah",
+    "slug": "copperajah",
+    "aliases": [],
+    "dexNumbers": ["879"]
+  },
+  {
+    "dexNumber": 880,
+    "name": "Dracozolt",
+    "slug": "dracozolt",
+    "aliases": [],
+    "dexNumbers": ["880"]
+  },
+  {
+    "dexNumber": 881,
+    "name": "Arctozolt",
+    "slug": "arctozolt",
+    "aliases": [],
+    "dexNumbers": ["881"]
+  },
+  {
+    "dexNumber": 882,
+    "name": "Dracovish",
+    "slug": "dracovish",
+    "aliases": [],
+    "dexNumbers": ["882"]
+  },
+  {
+    "dexNumber": 883,
+    "name": "Arctovish",
+    "slug": "arctovish",
+    "aliases": [],
+    "dexNumbers": ["883"]
+  },
+  {
+    "dexNumber": 884,
+    "name": "Duraludon",
+    "slug": "duraludon",
+    "aliases": [],
+    "dexNumbers": ["884"]
+  },
+  {
+    "dexNumber": 885,
+    "name": "Dreepy",
+    "slug": "dreepy",
+    "aliases": [],
+    "dexNumbers": ["885"]
+  },
+  {
+    "dexNumber": 886,
+    "name": "Drakloak",
+    "slug": "drakloak",
+    "aliases": [],
+    "dexNumbers": ["886"]
+  },
+  {
+    "dexNumber": 887,
+    "name": "Dragapult",
+    "slug": "dragapult",
+    "aliases": [],
+    "dexNumbers": ["887"]
+  },
+  {
+    "dexNumber": 888,
+    "name": "Zacian",
+    "slug": "zacian",
+    "aliases": [],
+    "dexNumbers": ["888"]
+  },
+  {
+    "dexNumber": 889,
+    "name": "Zamazenta",
+    "slug": "zamazenta",
+    "aliases": [],
+    "dexNumbers": ["889"]
+  },
+  {
+    "dexNumber": 890,
+    "name": "Eternatus",
+    "slug": "eternatus",
+    "aliases": [],
+    "dexNumbers": ["890"]
+  },
+  {
+    "dexNumber": 891,
+    "name": "Kubfu",
+    "slug": "kubfu",
+    "aliases": [],
+    "dexNumbers": ["891"]
+  },
+  {
+    "dexNumber": 892,
+    "name": "Urshifu",
+    "slug": "urshifu",
+    "aliases": [],
+    "dexNumbers": ["892"]
+  },
+  {
+    "dexNumber": 893,
+    "name": "Zarude",
+    "slug": "zarude",
+    "aliases": [],
+    "dexNumbers": ["893"]
+  },
+  {
+    "dexNumber": 894,
+    "name": "Regieleki",
+    "slug": "regieleki",
+    "aliases": [],
+    "dexNumbers": ["894"]
+  },
+  {
+    "dexNumber": 895,
+    "name": "Regidrago",
+    "slug": "regidrago",
+    "aliases": [],
+    "dexNumbers": ["895"]
+  },
+  {
+    "dexNumber": 896,
+    "name": "Glastrier",
+    "slug": "glastrier",
+    "aliases": [],
+    "dexNumbers": ["896"]
+  },
+  {
+    "dexNumber": 897,
+    "name": "Spectrier",
+    "slug": "spectrier",
+    "aliases": [],
+    "dexNumbers": ["897"]
+  },
+  {
+    "dexNumber": 898,
+    "name": "Calyrex",
+    "slug": "calyrex",
+    "aliases": [],
+    "dexNumbers": ["898"]
+  },
+  {
+    "dexNumber": 899,
+    "name": "Wyrdeer",
+    "slug": "wyrdeer",
+    "aliases": [],
+    "dexNumbers": ["899"]
+  },
+  {
+    "dexNumber": 900,
+    "name": "Kleavor",
+    "slug": "kleavor",
+    "aliases": [],
+    "dexNumbers": ["900"]
+  },
+  {
+    "dexNumber": 901,
+    "name": "Ursaluna",
+    "slug": "ursaluna",
+    "aliases": [],
+    "dexNumbers": ["901"]
+  },
+  {
+    "dexNumber": 902,
+    "name": "Basculegion",
+    "slug": "basculegion",
+    "aliases": [],
+    "dexNumbers": ["902"]
+  },
+  {
+    "dexNumber": 903,
+    "name": "Sneasler",
+    "slug": "sneasler",
+    "aliases": [],
+    "dexNumbers": ["903"]
+  },
+  {
+    "dexNumber": 904,
+    "name": "Overqwil",
+    "slug": "overqwil",
+    "aliases": [],
+    "dexNumbers": ["904"]
+  },
+  {
+    "dexNumber": 905,
+    "name": "Enamorus",
+    "slug": "enamorus",
+    "aliases": [],
+    "dexNumbers": ["905"]
+  },
+  {
+    "dexNumber": 906,
+    "name": "Sprigatito",
+    "slug": "sprigatito",
+    "aliases": [],
+    "dexNumbers": ["906"]
+  },
+  {
+    "dexNumber": 907,
+    "name": "Floragato",
+    "slug": "floragato",
+    "aliases": [],
+    "dexNumbers": ["907"]
+  },
+  {
+    "dexNumber": 908,
+    "name": "Meowscarada",
+    "slug": "meowscarada",
+    "aliases": [],
+    "dexNumbers": ["908"]
+  },
+  {
+    "dexNumber": 909,
+    "name": "Fuecoco",
+    "slug": "fuecoco",
+    "aliases": [],
+    "dexNumbers": ["909"]
+  },
+  {
+    "dexNumber": 910,
+    "name": "Crocalor",
+    "slug": "crocalor",
+    "aliases": [],
+    "dexNumbers": ["910"]
+  },
+  {
+    "dexNumber": 911,
+    "name": "Skeledirge",
+    "slug": "skeledirge",
+    "aliases": [],
+    "dexNumbers": ["911"]
+  },
+  {
+    "dexNumber": 912,
+    "name": "Quaxly",
+    "slug": "quaxly",
+    "aliases": [],
+    "dexNumbers": ["912"]
+  },
+  {
+    "dexNumber": 913,
+    "name": "Quaxwell",
+    "slug": "quaxwell",
+    "aliases": [],
+    "dexNumbers": ["913"]
+  },
+  {
+    "dexNumber": 914,
+    "name": "Quaquaval",
+    "slug": "quaquaval",
+    "aliases": [],
+    "dexNumbers": ["914"]
+  },
+  {
+    "dexNumber": 915,
+    "name": "Lechonk",
+    "slug": "lechonk",
+    "aliases": [],
+    "dexNumbers": ["915"]
+  },
+  {
+    "dexNumber": 916,
+    "name": "Oinkologne",
+    "slug": "oinkologne",
+    "aliases": [],
+    "dexNumbers": ["916"]
+  },
+  {
+    "dexNumber": 917,
+    "name": "Tarountula",
+    "slug": "tarountula",
+    "aliases": [],
+    "dexNumbers": ["917"]
+  },
+  {
+    "dexNumber": 918,
+    "name": "Spidops",
+    "slug": "spidops",
+    "aliases": [],
+    "dexNumbers": ["918"]
+  },
+  {
+    "dexNumber": 919,
+    "name": "Nymble",
+    "slug": "nymble",
+    "aliases": [],
+    "dexNumbers": ["919"]
+  },
+  {
+    "dexNumber": 920,
+    "name": "Lokix",
+    "slug": "lokix",
+    "aliases": [],
+    "dexNumbers": ["920"]
+  },
+  {
+    "dexNumber": 921,
+    "name": "Pawmi",
+    "slug": "pawmi",
+    "aliases": [],
+    "dexNumbers": ["921"]
+  },
+  {
+    "dexNumber": 922,
+    "name": "Pawmo",
+    "slug": "pawmo",
+    "aliases": [],
+    "dexNumbers": ["922"]
+  },
+  {
+    "dexNumber": 923,
+    "name": "Pawmot",
+    "slug": "pawmot",
+    "aliases": [],
+    "dexNumbers": ["923"]
+  },
+  {
+    "dexNumber": 924,
+    "name": "Tandemaus",
+    "slug": "tandemaus",
+    "aliases": [],
+    "dexNumbers": ["924"]
+  },
+  {
+    "dexNumber": 925,
+    "name": "Maushold",
+    "slug": "maushold",
+    "aliases": [],
+    "dexNumbers": ["925"]
+  },
+  {
+    "dexNumber": 926,
+    "name": "Fidough",
+    "slug": "fidough",
+    "aliases": [],
+    "dexNumbers": ["926"]
+  },
+  {
+    "dexNumber": 927,
+    "name": "Dachsbun",
+    "slug": "dachsbun",
+    "aliases": [],
+    "dexNumbers": ["927"]
+  },
+  {
+    "dexNumber": 928,
+    "name": "Smoliv",
+    "slug": "smoliv",
+    "aliases": [],
+    "dexNumbers": ["928"]
+  },
+  {
+    "dexNumber": 929,
+    "name": "Dolliv",
+    "slug": "dolliv",
+    "aliases": [],
+    "dexNumbers": ["929"]
+  },
+  {
+    "dexNumber": 930,
+    "name": "Arboliva",
+    "slug": "arboliva",
+    "aliases": [],
+    "dexNumbers": ["930"]
+  },
+  {
+    "dexNumber": 931,
+    "name": "Squawkabilly",
+    "slug": "squawkabilly",
+    "aliases": [],
+    "dexNumbers": ["931"]
+  },
+  {
+    "dexNumber": 932,
+    "name": "Nacli",
+    "slug": "nacli",
+    "aliases": [],
+    "dexNumbers": ["932"]
+  },
+  {
+    "dexNumber": 933,
+    "name": "Naclstack",
+    "slug": "naclstack",
+    "aliases": [],
+    "dexNumbers": ["933"]
+  },
+  {
+    "dexNumber": 934,
+    "name": "Garganacl",
+    "slug": "garganacl",
+    "aliases": [],
+    "dexNumbers": ["934"]
+  },
+  {
+    "dexNumber": 935,
+    "name": "Charcadet",
+    "slug": "charcadet",
+    "aliases": [],
+    "dexNumbers": ["935"]
+  },
+  {
+    "dexNumber": 936,
+    "name": "Armarouge",
+    "slug": "armarouge",
+    "aliases": [],
+    "dexNumbers": ["936"]
+  },
+  {
+    "dexNumber": 937,
+    "name": "Ceruledge",
+    "slug": "ceruledge",
+    "aliases": [],
+    "dexNumbers": ["937"]
+  },
+  {
+    "dexNumber": 938,
+    "name": "Tadbulb",
+    "slug": "tadbulb",
+    "aliases": [],
+    "dexNumbers": ["938"]
+  },
+  {
+    "dexNumber": 939,
+    "name": "Bellibolt",
+    "slug": "bellibolt",
+    "aliases": [],
+    "dexNumbers": ["939"]
+  },
+  {
+    "dexNumber": 940,
+    "name": "Wattrel",
+    "slug": "wattrel",
+    "aliases": [],
+    "dexNumbers": ["940"]
+  },
+  {
+    "dexNumber": 941,
+    "name": "Kilowattrel",
+    "slug": "kilowattrel",
+    "aliases": [],
+    "dexNumbers": ["941"]
+  },
+  {
+    "dexNumber": 942,
+    "name": "Maschiff",
+    "slug": "maschiff",
+    "aliases": [],
+    "dexNumbers": ["942"]
+  },
+  {
+    "dexNumber": 943,
+    "name": "Mabosstiff",
+    "slug": "mabosstiff",
+    "aliases": [],
+    "dexNumbers": ["943"]
+  },
+  {
+    "dexNumber": 944,
+    "name": "Shroodle",
+    "slug": "shroodle",
+    "aliases": [],
+    "dexNumbers": ["944"]
+  },
+  {
+    "dexNumber": 945,
+    "name": "Grafaiai",
+    "slug": "grafaiai",
+    "aliases": [],
+    "dexNumbers": ["945"]
+  },
+  {
+    "dexNumber": 946,
+    "name": "Bramblin",
+    "slug": "bramblin",
+    "aliases": [],
+    "dexNumbers": ["946"]
+  },
+  {
+    "dexNumber": 947,
+    "name": "Brambleghast",
+    "slug": "brambleghast",
+    "aliases": [],
+    "dexNumbers": ["947"]
+  },
+  {
+    "dexNumber": 948,
+    "name": "Toedscool",
+    "slug": "toedscool",
+    "aliases": [],
+    "dexNumbers": ["948"]
+  },
+  {
+    "dexNumber": 949,
+    "name": "Toedscruel",
+    "slug": "toedscruel",
+    "aliases": [],
+    "dexNumbers": ["949"]
+  },
+  {
+    "dexNumber": 950,
+    "name": "Klawf",
+    "slug": "klawf",
+    "aliases": [],
+    "dexNumbers": ["950"]
+  },
+  {
+    "dexNumber": 951,
+    "name": "Capsakid",
+    "slug": "capsakid",
+    "aliases": [],
+    "dexNumbers": ["951"]
+  },
+  {
+    "dexNumber": 952,
+    "name": "Scovillain",
+    "slug": "scovillain",
+    "aliases": [],
+    "dexNumbers": ["952"]
+  },
+  {
+    "dexNumber": 953,
+    "name": "Rellor",
+    "slug": "rellor",
+    "aliases": [],
+    "dexNumbers": ["953"]
+  },
+  {
+    "dexNumber": 954,
+    "name": "Rabsca",
+    "slug": "rabsca",
+    "aliases": [],
+    "dexNumbers": ["954"]
+  },
+  {
+    "dexNumber": 955,
+    "name": "Flittle",
+    "slug": "flittle",
+    "aliases": [],
+    "dexNumbers": ["955"]
+  },
+  {
+    "dexNumber": 956,
+    "name": "Espathra",
+    "slug": "espathra",
+    "aliases": [],
+    "dexNumbers": ["956"]
+  },
+  {
+    "dexNumber": 957,
+    "name": "Tinkatink",
+    "slug": "tinkatink",
+    "aliases": [],
+    "dexNumbers": ["957"]
+  },
+  {
+    "dexNumber": 958,
+    "name": "Tinkatuff",
+    "slug": "tinkatuff",
+    "aliases": [],
+    "dexNumbers": ["958"]
+  },
+  {
+    "dexNumber": 959,
+    "name": "Tinkaton",
+    "slug": "tinkaton",
+    "aliases": [],
+    "dexNumbers": ["959"]
+  },
+  {
+    "dexNumber": 960,
+    "name": "Wiglett",
+    "slug": "wiglett",
+    "aliases": [],
+    "dexNumbers": ["960"]
+  },
+  {
+    "dexNumber": 961,
+    "name": "Wugtrio",
+    "slug": "wugtrio",
+    "aliases": [],
+    "dexNumbers": ["961"]
+  },
+  {
+    "dexNumber": 962,
+    "name": "Bombirdier",
+    "slug": "bombirdier",
+    "aliases": [],
+    "dexNumbers": ["962"]
+  },
+  {
+    "dexNumber": 963,
+    "name": "Finizen",
+    "slug": "finizen",
+    "aliases": [],
+    "dexNumbers": ["963"]
+  },
+  {
+    "dexNumber": 964,
+    "name": "Palafin",
+    "slug": "palafin",
+    "aliases": [],
+    "dexNumbers": ["964"]
+  },
+  {
+    "dexNumber": 965,
+    "name": "Varoom",
+    "slug": "varoom",
+    "aliases": [],
+    "dexNumbers": ["965"]
+  },
+  {
+    "dexNumber": 966,
+    "name": "Revavroom",
+    "slug": "revavroom",
+    "aliases": [],
+    "dexNumbers": ["966"]
+  },
+  {
+    "dexNumber": 967,
+    "name": "Cyclizar",
+    "slug": "cyclizar",
+    "aliases": [],
+    "dexNumbers": ["967"]
+  },
+  {
+    "dexNumber": 968,
+    "name": "Orthworm",
+    "slug": "orthworm",
+    "aliases": [],
+    "dexNumbers": ["968"]
+  },
+  {
+    "dexNumber": 969,
+    "name": "Glimmet",
+    "slug": "glimmet",
+    "aliases": [],
+    "dexNumbers": ["969"]
+  },
+  {
+    "dexNumber": 970,
+    "name": "Glimmora",
+    "slug": "glimmora",
+    "aliases": [],
+    "dexNumbers": ["970"]
+  },
+  {
+    "dexNumber": 971,
+    "name": "Greavard",
+    "slug": "greavard",
+    "aliases": [],
+    "dexNumbers": ["971"]
+  },
+  {
+    "dexNumber": 972,
+    "name": "Houndstone",
+    "slug": "houndstone",
+    "aliases": [],
+    "dexNumbers": ["972"]
+  },
+  {
+    "dexNumber": 973,
+    "name": "Flamigo",
+    "slug": "flamigo",
+    "aliases": [],
+    "dexNumbers": ["973"]
+  },
+  {
+    "dexNumber": 974,
+    "name": "Cetoddle",
+    "slug": "cetoddle",
+    "aliases": [],
+    "dexNumbers": ["974"]
+  },
+  {
+    "dexNumber": 975,
+    "name": "Cetitan",
+    "slug": "cetitan",
+    "aliases": [],
+    "dexNumbers": ["975"]
+  },
+  {
+    "dexNumber": 976,
+    "name": "Veluza",
+    "slug": "veluza",
+    "aliases": [],
+    "dexNumbers": ["976"]
+  },
+  {
+    "dexNumber": 977,
+    "name": "Dondozo",
+    "slug": "dondozo",
+    "aliases": [],
+    "dexNumbers": ["977"]
+  },
+  {
+    "dexNumber": 978,
+    "name": "Tatsugiri",
+    "slug": "tatsugiri",
+    "aliases": [],
+    "dexNumbers": ["978"]
+  },
+  {
+    "dexNumber": 979,
+    "name": "Annihilape",
+    "slug": "annihilape",
+    "aliases": [],
+    "dexNumbers": ["979"]
+  },
+  {
+    "dexNumber": 980,
+    "name": "Clodsire",
+    "slug": "clodsire",
+    "aliases": [],
+    "dexNumbers": ["980"]
+  },
+  {
+    "dexNumber": 981,
+    "name": "Farigiraf",
+    "slug": "farigiraf",
+    "aliases": [],
+    "dexNumbers": ["981"]
+  },
+  {
+    "dexNumber": 982,
+    "name": "Dudunsparce",
+    "slug": "dudunsparce",
+    "aliases": [],
+    "dexNumbers": ["982"]
+  },
+  {
+    "dexNumber": 983,
+    "name": "Kingambit",
+    "slug": "kingambit",
+    "aliases": [],
+    "dexNumbers": ["983"]
+  },
+  {
+    "dexNumber": 984,
+    "name": "Great Tusk",
+    "slug": "great-tusk",
+    "aliases": [],
+    "dexNumbers": ["984"]
+  },
+  {
+    "dexNumber": 985,
+    "name": "Scream Tail",
+    "slug": "scream-tail",
+    "aliases": [],
+    "dexNumbers": ["985"]
+  },
+  {
+    "dexNumber": 986,
+    "name": "Brute Bonnet",
+    "slug": "brute-bonnet",
+    "aliases": [],
+    "dexNumbers": ["986"]
+  },
+  {
+    "dexNumber": 987,
+    "name": "Flutter Mane",
+    "slug": "flutter-mane",
+    "aliases": [],
+    "dexNumbers": ["987"]
+  },
+  {
+    "dexNumber": 988,
+    "name": "Slither Wing",
+    "slug": "slither-wing",
+    "aliases": [],
+    "dexNumbers": ["988"]
+  },
+  {
+    "dexNumber": 989,
+    "name": "Sandy Shocks",
+    "slug": "sandy-shocks",
+    "aliases": [],
+    "dexNumbers": ["989"]
+  },
+  {
+    "dexNumber": 990,
+    "name": "Iron Treads",
+    "slug": "iron-treads",
+    "aliases": [],
+    "dexNumbers": ["990"]
+  },
+  {
+    "dexNumber": 991,
+    "name": "Iron Bundle",
+    "slug": "iron-bundle",
+    "aliases": [],
+    "dexNumbers": ["991"]
+  },
+  {
+    "dexNumber": 992,
+    "name": "Iron Hands",
+    "slug": "iron-hands",
+    "aliases": [],
+    "dexNumbers": ["992"]
+  },
+  {
+    "dexNumber": 993,
+    "name": "Iron Jugulis",
+    "slug": "iron-jugulis",
+    "aliases": [],
+    "dexNumbers": ["993"]
+  },
+  {
+    "dexNumber": 994,
+    "name": "Iron Moth",
+    "slug": "iron-moth",
+    "aliases": [],
+    "dexNumbers": ["994"]
+  },
+  {
+    "dexNumber": 995,
+    "name": "Iron Thorns",
+    "slug": "iron-thorns",
+    "aliases": [],
+    "dexNumbers": ["995"]
+  },
+  {
+    "dexNumber": 996,
+    "name": "Frigibax",
+    "slug": "frigibax",
+    "aliases": [],
+    "dexNumbers": ["996"]
+  },
+  {
+    "dexNumber": 997,
+    "name": "Arctibax",
+    "slug": "arctibax",
+    "aliases": [],
+    "dexNumbers": ["997"]
+  },
+  {
+    "dexNumber": 998,
+    "name": "Baxcalibur",
+    "slug": "baxcalibur",
+    "aliases": [],
+    "dexNumbers": ["998"]
+  },
+  {
+    "dexNumber": 999,
+    "name": "Gimmighoul",
+    "slug": "gimmighoul",
+    "aliases": [],
+    "dexNumbers": ["999"]
+  },
+  {
+    "dexNumber": 1000,
+    "name": "Gholdengo",
+    "slug": "gholdengo",
+    "aliases": [],
+    "dexNumbers": ["1000"]
+  },
+  {
+    "dexNumber": 1001,
+    "name": "Wo-Chien",
+    "slug": "wo-chien",
+    "aliases": [],
+    "dexNumbers": ["1001"]
+  },
+  {
+    "dexNumber": 1002,
+    "name": "Chien-Pao",
+    "slug": "chien-pao",
+    "aliases": [],
+    "dexNumbers": ["1002"]
+  },
+  {
+    "dexNumber": 1003,
+    "name": "Ting-Lu",
+    "slug": "ting-lu",
+    "aliases": [],
+    "dexNumbers": ["1003"]
+  },
+  {
+    "dexNumber": 1004,
+    "name": "Chi-Yu",
+    "slug": "chi-yu",
+    "aliases": [],
+    "dexNumbers": ["1004"]
+  },
+  {
+    "dexNumber": 1005,
+    "name": "Roaring Moon",
+    "slug": "roaring-moon",
+    "aliases": [],
+    "dexNumbers": ["1005"]
+  },
+  {
+    "dexNumber": 1006,
+    "name": "Iron Valiant",
+    "slug": "iron-valiant",
+    "aliases": [],
+    "dexNumbers": ["1006"]
+  },
+  {
+    "dexNumber": 1007,
+    "name": "Koraidon",
+    "slug": "koraidon",
+    "aliases": [],
+    "dexNumbers": ["1007"]
+  },
+  {
+    "dexNumber": 1008,
+    "name": "Miraidon",
+    "slug": "miraidon",
+    "aliases": [],
+    "dexNumbers": ["1008"]
+  },
+  {
+    "dexNumber": 1009,
+    "name": "Walking Wake",
+    "slug": "walking-wake",
+    "aliases": [],
+    "dexNumbers": ["1009"]
+  },
+  {
+    "dexNumber": 1010,
+    "name": "Iron Leaves",
+    "slug": "iron-leaves",
+    "aliases": [],
+    "dexNumbers": ["1010"]
+  },
+  {
+    "dexNumber": 1011,
+    "name": "Dipplin",
+    "slug": "dipplin",
+    "aliases": [],
+    "dexNumbers": ["1011"]
+  },
+  {
+    "dexNumber": 1012,
+    "name": "Poltchageist",
+    "slug": "poltchageist",
+    "aliases": [],
+    "dexNumbers": ["1012"]
+  },
+  {
+    "dexNumber": 1013,
+    "name": "Sinistcha",
+    "slug": "sinistcha",
+    "aliases": [],
+    "dexNumbers": ["1013"]
+  },
+  {
+    "dexNumber": 1014,
+    "name": "Okidogi",
+    "slug": "okidogi",
+    "aliases": [],
+    "dexNumbers": ["1014"]
+  },
+  {
+    "dexNumber": 1015,
+    "name": "Munkidori",
+    "slug": "munkidori",
+    "aliases": [],
+    "dexNumbers": ["1015"]
+  },
+  {
+    "dexNumber": 1016,
+    "name": "Fezandipiti",
+    "slug": "fezandipiti",
+    "aliases": [],
+    "dexNumbers": ["1016"]
+  },
+  {
+    "dexNumber": 1017,
+    "name": "Ogerpon",
+    "slug": "ogerpon",
+    "aliases": [],
+    "dexNumbers": ["1017"]
+  },
+  {
+    "dexNumber": 1018,
+    "name": "Archaludon",
+    "slug": "archaludon",
+    "aliases": [],
+    "dexNumbers": ["1018"]
+  },
+  {
+    "dexNumber": 1019,
+    "name": "Hydrapple",
+    "slug": "hydrapple",
+    "aliases": [],
+    "dexNumbers": ["1019"]
+  },
+  {
+    "dexNumber": 1020,
+    "name": "Gouging Fire",
+    "slug": "gouging-fire",
+    "aliases": [],
+    "dexNumbers": ["1020"]
+  },
+  {
+    "dexNumber": 1021,
+    "name": "Raging Bolt",
+    "slug": "raging-bolt",
+    "aliases": [],
+    "dexNumbers": ["1021"]
+  },
+  {
+    "dexNumber": 1022,
+    "name": "Iron Boulder",
+    "slug": "iron-boulder",
+    "aliases": [],
+    "dexNumbers": ["1022"]
+  },
+  {
+    "dexNumber": 1023,
+    "name": "Iron Crown",
+    "slug": "iron-crown",
+    "aliases": [],
+    "dexNumbers": ["1023"]
+  },
+  {
+    "dexNumber": 1024,
+    "name": "Terapagos",
+    "slug": "terapagos",
+    "aliases": [],
+    "dexNumbers": ["1024"]
+  },
+  {
+    "dexNumber": 1025,
+    "name": "Pecharunt",
+    "slug": "pecharunt",
+    "aliases": [],
+    "dexNumbers": ["1025"]
   }
 ]

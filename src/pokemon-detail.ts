@@ -11,6 +11,7 @@ import {
   parsePokemonResource,
   parsePokemonSpeciesResource,
 } from "./pokeapi/schema";
+import { isPokeSpriteSupportedPokemonForm } from "./pokesprite-supported-forms";
 import { queryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
 import { calculateDamageTaken, type DamageTaken } from "./type-matchups";
@@ -247,7 +248,7 @@ export function buildPokemonForms(
         variety.is_default,
       ),
     }))
-    .filter(isSelectablePokemonForm);
+    .filter((form) => isSelectablePokemonForm(species.slug, form));
 
   if (forms.some((form) => form.isDefault) === false) {
     throw new Error(
@@ -268,8 +269,14 @@ export function buildPokemonForms(
   });
 }
 
-function isSelectablePokemonForm(form: PokemonForm): boolean {
-  return form.isDefault || form.spriteFormKey !== "gmax";
+function isSelectablePokemonForm(
+  speciesSlug: string,
+  form: PokemonForm,
+): boolean {
+  return (
+    form.isDefault ||
+    isPokeSpriteSupportedPokemonForm(speciesSlug, form.spriteFormKey)
+  );
 }
 
 export function buildPokemonAbilityDetail(

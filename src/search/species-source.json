@@ -5,9 +5,139 @@
     "slug": "bulbasaur"
   },
   {
+    "dexNumber": 2,
+    "name": "Ivysaur",
+    "slug": "ivysaur"
+  },
+  {
+    "dexNumber": 3,
+    "name": "Venusaur",
+    "slug": "venusaur"
+  },
+  {
+    "dexNumber": 4,
+    "name": "Charmander",
+    "slug": "charmander"
+  },
+  {
+    "dexNumber": 5,
+    "name": "Charmeleon",
+    "slug": "charmeleon"
+  },
+  {
+    "dexNumber": 6,
+    "name": "Charizard",
+    "slug": "charizard"
+  },
+  {
+    "dexNumber": 7,
+    "name": "Squirtle",
+    "slug": "squirtle"
+  },
+  {
+    "dexNumber": 8,
+    "name": "Wartortle",
+    "slug": "wartortle"
+  },
+  {
+    "dexNumber": 9,
+    "name": "Blastoise",
+    "slug": "blastoise"
+  },
+  {
+    "dexNumber": 10,
+    "name": "Caterpie",
+    "slug": "caterpie"
+  },
+  {
+    "dexNumber": 11,
+    "name": "Metapod",
+    "slug": "metapod"
+  },
+  {
+    "dexNumber": 12,
+    "name": "Butterfree",
+    "slug": "butterfree"
+  },
+  {
+    "dexNumber": 13,
+    "name": "Weedle",
+    "slug": "weedle"
+  },
+  {
+    "dexNumber": 14,
+    "name": "Kakuna",
+    "slug": "kakuna"
+  },
+  {
+    "dexNumber": 15,
+    "name": "Beedrill",
+    "slug": "beedrill"
+  },
+  {
+    "dexNumber": 16,
+    "name": "Pidgey",
+    "slug": "pidgey"
+  },
+  {
+    "dexNumber": 17,
+    "name": "Pidgeotto",
+    "slug": "pidgeotto"
+  },
+  {
+    "dexNumber": 18,
+    "name": "Pidgeot",
+    "slug": "pidgeot"
+  },
+  {
+    "dexNumber": 19,
+    "name": "Rattata",
+    "slug": "rattata"
+  },
+  {
+    "dexNumber": 20,
+    "name": "Raticate",
+    "slug": "raticate"
+  },
+  {
+    "dexNumber": 21,
+    "name": "Spearow",
+    "slug": "spearow"
+  },
+  {
+    "dexNumber": 22,
+    "name": "Fearow",
+    "slug": "fearow"
+  },
+  {
+    "dexNumber": 23,
+    "name": "Ekans",
+    "slug": "ekans"
+  },
+  {
+    "dexNumber": 24,
+    "name": "Arbok",
+    "slug": "arbok"
+  },
+  {
     "dexNumber": 25,
     "name": "Pikachu",
     "slug": "pikachu"
+  },
+  {
+    "dexNumber": 26,
+    "name": "Raichu",
+    "slug": "raichu"
+  },
+  {
+    "dexNumber": 27,
+    "name": "Sandshrew",
+    "slug": "sandshrew"
+  },
+  {
+    "dexNumber": 28,
+    "name": "Sandslash",
+    "slug": "sandslash"
   },
   {
     "dexNumber": 29,
@@ -15,9 +145,464 @@
     "slug": "nidoran-f"
   },
   {
+    "dexNumber": 30,
+    "name": "Nidorina",
+    "slug": "nidorina"
+  },
+  {
+    "dexNumber": 31,
+    "name": "Nidoqueen",
+    "slug": "nidoqueen"
+  },
+  {
     "dexNumber": 32,
     "name": "Nidoran♂",
     "slug": "nidoran-m"
+  },
+  {
+    "dexNumber": 33,
+    "name": "Nidorino",
+    "slug": "nidorino"
+  },
+  {
+    "dexNumber": 34,
+    "name": "Nidoking",
+    "slug": "nidoking"
+  },
+  {
+    "dexNumber": 35,
+    "name": "Clefairy",
+    "slug": "clefairy"
+  },
+  {
+    "dexNumber": 36,
+    "name": "Clefable",
+    "slug": "clefable"
+  },
+  {
+    "dexNumber": 37,
+    "name": "Vulpix",
+    "slug": "vulpix"
+  },
+  {
+    "dexNumber": 38,
+    "name": "Ninetales",
+    "slug": "ninetales"
+  },
+  {
+    "dexNumber": 39,
+    "name": "Jigglypuff",
+    "slug": "jigglypuff"
+  },
+  {
+    "dexNumber": 40,
+    "name": "Wigglytuff",
+    "slug": "wigglytuff"
+  },
+  {
+    "dexNumber": 41,
+    "name": "Zubat",
+    "slug": "zubat"
+  },
+  {
+    "dexNumber": 42,
+    "name": "Golbat",
+    "slug": "golbat"
+  },
+  {
+    "dexNumber": 43,
+    "name": "Oddish",
+    "slug": "oddish"
+  },
+  {
+    "dexNumber": 44,
+    "name": "Gloom",
+    "slug": "gloom"
+  },
+  {
+    "dexNumber": 45,
+    "name": "Vileplume",
+    "slug": "vileplume"
+  },
+  {
+    "dexNumber": 46,
+    "name": "Paras",
+    "slug": "paras"
+  },
+  {
+    "dexNumber": 47,
+    "name": "Parasect",
+    "slug": "parasect"
+  },
+  {
+    "dexNumber": 48,
+    "name": "Venonat",
+    "slug": "venonat"
+  },
+  {
+    "dexNumber": 49,
+    "name": "Venomoth",
+    "slug": "venomoth"
+  },
+  {
+    "dexNumber": 50,
+    "name": "Diglett",
+    "slug": "diglett"
+  },
+  {
+    "dexNumber": 51,
+    "name": "Dugtrio",
+    "slug": "dugtrio"
+  },
+  {
+    "dexNumber": 52,
+    "name": "Meowth",
+    "slug": "meowth"
+  },
+  {
+    "dexNumber": 53,
+    "name": "Persian",
+    "slug": "persian"
+  },
+  {
+    "dexNumber": 54,
+    "name": "Psyduck",
+    "slug": "psyduck"
+  },
+  {
+    "dexNumber": 55,
+    "name": "Golduck",
+    "slug": "golduck"
+  },
+  {
+    "dexNumber": 56,
+    "name": "Mankey",
+    "slug": "mankey"
+  },
+  {
+    "dexNumber": 57,
+    "name": "Primeape",
+    "slug": "primeape"
+  },
+  {
+    "dexNumber": 58,
+    "name": "Growlithe",
+    "slug": "growlithe"
+  },
+  {
+    "dexNumber": 59,
+    "name": "Arcanine",
+    "slug": "arcanine"
+  },
+  {
+    "dexNumber": 60,
+    "name": "Poliwag",
+    "slug": "poliwag"
+  },
+  {
+    "dexNumber": 61,
+    "name": "Poliwhirl",
+    "slug": "poliwhirl"
+  },
+  {
+    "dexNumber": 62,
+    "name": "Poliwrath",
+    "slug": "poliwrath"
+  },
+  {
+    "dexNumber": 63,
+    "name": "Abra",
+    "slug": "abra"
+  },
+  {
+    "dexNumber": 64,
+    "name": "Kadabra",
+    "slug": "kadabra"
+  },
+  {
+    "dexNumber": 65,
+    "name": "Alakazam",
+    "slug": "alakazam"
+  },
+  {
+    "dexNumber": 66,
+    "name": "Machop",
+    "slug": "machop"
+  },
+  {
+    "dexNumber": 67,
+    "name": "Machoke",
+    "slug": "machoke"
+  },
+  {
+    "dexNumber": 68,
+    "name": "Machamp",
+    "slug": "machamp"
+  },
+  {
+    "dexNumber": 69,
+    "name": "Bellsprout",
+    "slug": "bellsprout"
+  },
+  {
+    "dexNumber": 70,
+    "name": "Weepinbell",
+    "slug": "weepinbell"
+  },
+  {
+    "dexNumber": 71,
+    "name": "Victreebel",
+    "slug": "victreebel"
+  },
+  {
+    "dexNumber": 72,
+    "name": "Tentacool",
+    "slug": "tentacool"
+  },
+  {
+    "dexNumber": 73,
+    "name": "Tentacruel",
+    "slug": "tentacruel"
+  },
+  {
+    "dexNumber": 74,
+    "name": "Geodude",
+    "slug": "geodude"
+  },
+  {
+    "dexNumber": 75,
+    "name": "Graveler",
+    "slug": "graveler"
+  },
+  {
+    "dexNumber": 76,
+    "name": "Golem",
+    "slug": "golem"
+  },
+  {
+    "dexNumber": 77,
+    "name": "Ponyta",
+    "slug": "ponyta"
+  },
+  {
+    "dexNumber": 78,
+    "name": "Rapidash",
+    "slug": "rapidash"
+  },
+  {
+    "dexNumber": 79,
+    "name": "Slowpoke",
+    "slug": "slowpoke"
+  },
+  {
+    "dexNumber": 80,
+    "name": "Slowbro",
+    "slug": "slowbro"
+  },
+  {
+    "dexNumber": 81,
+    "name": "Magnemite",
+    "slug": "magnemite"
+  },
+  {
+    "dexNumber": 82,
+    "name": "Magneton",
+    "slug": "magneton"
+  },
+  {
+    "dexNumber": 83,
+    "name": "Farfetch’d",
+    "slug": "farfetchd"
+  },
+  {
+    "dexNumber": 84,
+    "name": "Doduo",
+    "slug": "doduo"
+  },
+  {
+    "dexNumber": 85,
+    "name": "Dodrio",
+    "slug": "dodrio"
+  },
+  {
+    "dexNumber": 86,
+    "name": "Seel",
+    "slug": "seel"
+  },
+  {
+    "dexNumber": 87,
+    "name": "Dewgong",
+    "slug": "dewgong"
+  },
+  {
+    "dexNumber": 88,
+    "name": "Grimer",
+    "slug": "grimer"
+  },
+  {
+    "dexNumber": 89,
+    "name": "Muk",
+    "slug": "muk"
+  },
+  {
+    "dexNumber": 90,
+    "name": "Shellder",
+    "slug": "shellder"
+  },
+  {
+    "dexNumber": 91,
+    "name": "Cloyster",
+    "slug": "cloyster"
+  },
+  {
+    "dexNumber": 92,
+    "name": "Gastly",
+    "slug": "gastly"
+  },
+  {
+    "dexNumber": 93,
+    "name": "Haunter",
+    "slug": "haunter"
+  },
+  {
+    "dexNumber": 94,
+    "name": "Gengar",
+    "slug": "gengar"
+  },
+  {
+    "dexNumber": 95,
+    "name": "Onix",
+    "slug": "onix"
+  },
+  {
+    "dexNumber": 96,
+    "name": "Drowzee",
+    "slug": "drowzee"
+  },
+  {
+    "dexNumber": 97,
+    "name": "Hypno",
+    "slug": "hypno"
+  },
+  {
+    "dexNumber": 98,
+    "name": "Krabby",
+    "slug": "krabby"
+  },
+  {
+    "dexNumber": 99,
+    "name": "Kingler",
+    "slug": "kingler"
+  },
+  {
+    "dexNumber": 100,
+    "name": "Voltorb",
+    "slug": "voltorb"
+  },
+  {
+    "dexNumber": 101,
+    "name": "Electrode",
+    "slug": "electrode"
+  },
+  {
+    "dexNumber": 102,
+    "name": "Exeggcute",
+    "slug": "exeggcute"
+  },
+  {
+    "dexNumber": 103,
+    "name": "Exeggutor",
+    "slug": "exeggutor"
+  },
+  {
+    "dexNumber": 104,
+    "name": "Cubone",
+    "slug": "cubone"
+  },
+  {
+    "dexNumber": 105,
+    "name": "Marowak",
+    "slug": "marowak"
+  },
+  {
+    "dexNumber": 106,
+    "name": "Hitmonlee",
+    "slug": "hitmonlee"
+  },
+  {
+    "dexNumber": 107,
+    "name": "Hitmonchan",
+    "slug": "hitmonchan"
+  },
+  {
+    "dexNumber": 108,
+    "name": "Lickitung",
+    "slug": "lickitung"
+  },
+  {
+    "dexNumber": 109,
+    "name": "Koffing",
+    "slug": "koffing"
+  },
+  {
+    "dexNumber": 110,
+    "name": "Weezing",
+    "slug": "weezing"
+  },
+  {
+    "dexNumber": 111,
+    "name": "Rhyhorn",
+    "slug": "rhyhorn"
+  },
+  {
+    "dexNumber": 112,
+    "name": "Rhydon",
+    "slug": "rhydon"
+  },
+  {
+    "dexNumber": 113,
+    "name": "Chansey",
+    "slug": "chansey"
+  },
+  {
+    "dexNumber": 114,
+    "name": "Tangela",
+    "slug": "tangela"
+  },
+  {
+    "dexNumber": 115,
+    "name": "Kangaskhan",
+    "slug": "kangaskhan"
+  },
+  {
+    "dexNumber": 116,
+    "name": "Horsea",
+    "slug": "horsea"
+  },
+  {
+    "dexNumber": 117,
+    "name": "Seadra",
+    "slug": "seadra"
+  },
+  {
+    "dexNumber": 118,
+    "name": "Goldeen",
+    "slug": "goldeen"
+  },
+  {
+    "dexNumber": 119,
+    "name": "Seaking",
+    "slug": "seaking"
+  },
+  {
+    "dexNumber": 120,
+    "name": "Staryu",
+    "slug": "staryu"
+  },
+  {
+    "dexNumber": 121,
+    "name": "Starmie",
+    "slug": "starmie"
   },
   {
     "dexNumber": 122,
@@ -25,13 +610,4518 @@
     "slug": "mr-mime"
   },
   {
+    "dexNumber": 123,
+    "name": "Scyther",
+    "slug": "scyther"
+  },
+  {
+    "dexNumber": 124,
+    "name": "Jynx",
+    "slug": "jynx"
+  },
+  {
+    "dexNumber": 125,
+    "name": "Electabuzz",
+    "slug": "electabuzz"
+  },
+  {
+    "dexNumber": 126,
+    "name": "Magmar",
+    "slug": "magmar"
+  },
+  {
+    "dexNumber": 127,
+    "name": "Pinsir",
+    "slug": "pinsir"
+  },
+  {
+    "dexNumber": 128,
+    "name": "Tauros",
+    "slug": "tauros"
+  },
+  {
+    "dexNumber": 129,
+    "name": "Magikarp",
+    "slug": "magikarp"
+  },
+  {
+    "dexNumber": 130,
+    "name": "Gyarados",
+    "slug": "gyarados"
+  },
+  {
+    "dexNumber": 131,
+    "name": "Lapras",
+    "slug": "lapras"
+  },
+  {
+    "dexNumber": 132,
+    "name": "Ditto",
+    "slug": "ditto"
+  },
+  {
     "dexNumber": 133,
     "name": "Eevee",
     "slug": "eevee"
   },
   {
+    "dexNumber": 134,
+    "name": "Vaporeon",
+    "slug": "vaporeon"
+  },
+  {
+    "dexNumber": 135,
+    "name": "Jolteon",
+    "slug": "jolteon"
+  },
+  {
+    "dexNumber": 136,
+    "name": "Flareon",
+    "slug": "flareon"
+  },
+  {
+    "dexNumber": 137,
+    "name": "Porygon",
+    "slug": "porygon"
+  },
+  {
+    "dexNumber": 138,
+    "name": "Omanyte",
+    "slug": "omanyte"
+  },
+  {
+    "dexNumber": 139,
+    "name": "Omastar",
+    "slug": "omastar"
+  },
+  {
+    "dexNumber": 140,
+    "name": "Kabuto",
+    "slug": "kabuto"
+  },
+  {
+    "dexNumber": 141,
+    "name": "Kabutops",
+    "slug": "kabutops"
+  },
+  {
+    "dexNumber": 142,
+    "name": "Aerodactyl",
+    "slug": "aerodactyl"
+  },
+  {
+    "dexNumber": 143,
+    "name": "Snorlax",
+    "slug": "snorlax"
+  },
+  {
+    "dexNumber": 144,
+    "name": "Articuno",
+    "slug": "articuno"
+  },
+  {
+    "dexNumber": 145,
+    "name": "Zapdos",
+    "slug": "zapdos"
+  },
+  {
+    "dexNumber": 146,
+    "name": "Moltres",
+    "slug": "moltres"
+  },
+  {
+    "dexNumber": 147,
+    "name": "Dratini",
+    "slug": "dratini"
+  },
+  {
+    "dexNumber": 148,
+    "name": "Dragonair",
+    "slug": "dragonair"
+  },
+  {
+    "dexNumber": 149,
+    "name": "Dragonite",
+    "slug": "dragonite"
+  },
+  {
     "dexNumber": 150,
     "name": "Mewtwo",
     "slug": "mewtwo"
+  },
+  {
+    "dexNumber": 151,
+    "name": "Mew",
+    "slug": "mew"
+  },
+  {
+    "dexNumber": 152,
+    "name": "Chikorita",
+    "slug": "chikorita"
+  },
+  {
+    "dexNumber": 153,
+    "name": "Bayleef",
+    "slug": "bayleef"
+  },
+  {
+    "dexNumber": 154,
+    "name": "Meganium",
+    "slug": "meganium"
+  },
+  {
+    "dexNumber": 155,
+    "name": "Cyndaquil",
+    "slug": "cyndaquil"
+  },
+  {
+    "dexNumber": 156,
+    "name": "Quilava",
+    "slug": "quilava"
+  },
+  {
+    "dexNumber": 157,
+    "name": "Typhlosion",
+    "slug": "typhlosion"
+  },
+  {
+    "dexNumber": 158,
+    "name": "Totodile",
+    "slug": "totodile"
+  },
+  {
+    "dexNumber": 159,
+    "name": "Croconaw",
+    "slug": "croconaw"
+  },
+  {
+    "dexNumber": 160,
+    "name": "Feraligatr",
+    "slug": "feraligatr"
+  },
+  {
+    "dexNumber": 161,
+    "name": "Sentret",
+    "slug": "sentret"
+  },
+  {
+    "dexNumber": 162,
+    "name": "Furret",
+    "slug": "furret"
+  },
+  {
+    "dexNumber": 163,
+    "name": "Hoothoot",
+    "slug": "hoothoot"
+  },
+  {
+    "dexNumber": 164,
+    "name": "Noctowl",
+    "slug": "noctowl"
+  },
+  {
+    "dexNumber": 165,
+    "name": "Ledyba",
+    "slug": "ledyba"
+  },
+  {
+    "dexNumber": 166,
+    "name": "Ledian",
+    "slug": "ledian"
+  },
+  {
+    "dexNumber": 167,
+    "name": "Spinarak",
+    "slug": "spinarak"
+  },
+  {
+    "dexNumber": 168,
+    "name": "Ariados",
+    "slug": "ariados"
+  },
+  {
+    "dexNumber": 169,
+    "name": "Crobat",
+    "slug": "crobat"
+  },
+  {
+    "dexNumber": 170,
+    "name": "Chinchou",
+    "slug": "chinchou"
+  },
+  {
+    "dexNumber": 171,
+    "name": "Lanturn",
+    "slug": "lanturn"
+  },
+  {
+    "dexNumber": 172,
+    "name": "Pichu",
+    "slug": "pichu"
+  },
+  {
+    "dexNumber": 173,
+    "name": "Cleffa",
+    "slug": "cleffa"
+  },
+  {
+    "dexNumber": 174,
+    "name": "Igglybuff",
+    "slug": "igglybuff"
+  },
+  {
+    "dexNumber": 175,
+    "name": "Togepi",
+    "slug": "togepi"
+  },
+  {
+    "dexNumber": 176,
+    "name": "Togetic",
+    "slug": "togetic"
+  },
+  {
+    "dexNumber": 177,
+    "name": "Natu",
+    "slug": "natu"
+  },
+  {
+    "dexNumber": 178,
+    "name": "Xatu",
+    "slug": "xatu"
+  },
+  {
+    "dexNumber": 179,
+    "name": "Mareep",
+    "slug": "mareep"
+  },
+  {
+    "dexNumber": 180,
+    "name": "Flaaffy",
+    "slug": "flaaffy"
+  },
+  {
+    "dexNumber": 181,
+    "name": "Ampharos",
+    "slug": "ampharos"
+  },
+  {
+    "dexNumber": 182,
+    "name": "Bellossom",
+    "slug": "bellossom"
+  },
+  {
+    "dexNumber": 183,
+    "name": "Marill",
+    "slug": "marill"
+  },
+  {
+    "dexNumber": 184,
+    "name": "Azumarill",
+    "slug": "azumarill"
+  },
+  {
+    "dexNumber": 185,
+    "name": "Sudowoodo",
+    "slug": "sudowoodo"
+  },
+  {
+    "dexNumber": 186,
+    "name": "Politoed",
+    "slug": "politoed"
+  },
+  {
+    "dexNumber": 187,
+    "name": "Hoppip",
+    "slug": "hoppip"
+  },
+  {
+    "dexNumber": 188,
+    "name": "Skiploom",
+    "slug": "skiploom"
+  },
+  {
+    "dexNumber": 189,
+    "name": "Jumpluff",
+    "slug": "jumpluff"
+  },
+  {
+    "dexNumber": 190,
+    "name": "Aipom",
+    "slug": "aipom"
+  },
+  {
+    "dexNumber": 191,
+    "name": "Sunkern",
+    "slug": "sunkern"
+  },
+  {
+    "dexNumber": 192,
+    "name": "Sunflora",
+    "slug": "sunflora"
+  },
+  {
+    "dexNumber": 193,
+    "name": "Yanma",
+    "slug": "yanma"
+  },
+  {
+    "dexNumber": 194,
+    "name": "Wooper",
+    "slug": "wooper"
+  },
+  {
+    "dexNumber": 195,
+    "name": "Quagsire",
+    "slug": "quagsire"
+  },
+  {
+    "dexNumber": 196,
+    "name": "Espeon",
+    "slug": "espeon"
+  },
+  {
+    "dexNumber": 197,
+    "name": "Umbreon",
+    "slug": "umbreon"
+  },
+  {
+    "dexNumber": 198,
+    "name": "Murkrow",
+    "slug": "murkrow"
+  },
+  {
+    "dexNumber": 199,
+    "name": "Slowking",
+    "slug": "slowking"
+  },
+  {
+    "dexNumber": 200,
+    "name": "Misdreavus",
+    "slug": "misdreavus"
+  },
+  {
+    "dexNumber": 201,
+    "name": "Unown",
+    "slug": "unown"
+  },
+  {
+    "dexNumber": 202,
+    "name": "Wobbuffet",
+    "slug": "wobbuffet"
+  },
+  {
+    "dexNumber": 203,
+    "name": "Girafarig",
+    "slug": "girafarig"
+  },
+  {
+    "dexNumber": 204,
+    "name": "Pineco",
+    "slug": "pineco"
+  },
+  {
+    "dexNumber": 205,
+    "name": "Forretress",
+    "slug": "forretress"
+  },
+  {
+    "dexNumber": 206,
+    "name": "Dunsparce",
+    "slug": "dunsparce"
+  },
+  {
+    "dexNumber": 207,
+    "name": "Gligar",
+    "slug": "gligar"
+  },
+  {
+    "dexNumber": 208,
+    "name": "Steelix",
+    "slug": "steelix"
+  },
+  {
+    "dexNumber": 209,
+    "name": "Snubbull",
+    "slug": "snubbull"
+  },
+  {
+    "dexNumber": 210,
+    "name": "Granbull",
+    "slug": "granbull"
+  },
+  {
+    "dexNumber": 211,
+    "name": "Qwilfish",
+    "slug": "qwilfish"
+  },
+  {
+    "dexNumber": 212,
+    "name": "Scizor",
+    "slug": "scizor"
+  },
+  {
+    "dexNumber": 213,
+    "name": "Shuckle",
+    "slug": "shuckle"
+  },
+  {
+    "dexNumber": 214,
+    "name": "Heracross",
+    "slug": "heracross"
+  },
+  {
+    "dexNumber": 215,
+    "name": "Sneasel",
+    "slug": "sneasel"
+  },
+  {
+    "dexNumber": 216,
+    "name": "Teddiursa",
+    "slug": "teddiursa"
+  },
+  {
+    "dexNumber": 217,
+    "name": "Ursaring",
+    "slug": "ursaring"
+  },
+  {
+    "dexNumber": 218,
+    "name": "Slugma",
+    "slug": "slugma"
+  },
+  {
+    "dexNumber": 219,
+    "name": "Magcargo",
+    "slug": "magcargo"
+  },
+  {
+    "dexNumber": 220,
+    "name": "Swinub",
+    "slug": "swinub"
+  },
+  {
+    "dexNumber": 221,
+    "name": "Piloswine",
+    "slug": "piloswine"
+  },
+  {
+    "dexNumber": 222,
+    "name": "Corsola",
+    "slug": "corsola"
+  },
+  {
+    "dexNumber": 223,
+    "name": "Remoraid",
+    "slug": "remoraid"
+  },
+  {
+    "dexNumber": 224,
+    "name": "Octillery",
+    "slug": "octillery"
+  },
+  {
+    "dexNumber": 225,
+    "name": "Delibird",
+    "slug": "delibird"
+  },
+  {
+    "dexNumber": 226,
+    "name": "Mantine",
+    "slug": "mantine"
+  },
+  {
+    "dexNumber": 227,
+    "name": "Skarmory",
+    "slug": "skarmory"
+  },
+  {
+    "dexNumber": 228,
+    "name": "Houndour",
+    "slug": "houndour"
+  },
+  {
+    "dexNumber": 229,
+    "name": "Houndoom",
+    "slug": "houndoom"
+  },
+  {
+    "dexNumber": 230,
+    "name": "Kingdra",
+    "slug": "kingdra"
+  },
+  {
+    "dexNumber": 231,
+    "name": "Phanpy",
+    "slug": "phanpy"
+  },
+  {
+    "dexNumber": 232,
+    "name": "Donphan",
+    "slug": "donphan"
+  },
+  {
+    "dexNumber": 233,
+    "name": "Porygon2",
+    "slug": "porygon2"
+  },
+  {
+    "dexNumber": 234,
+    "name": "Stantler",
+    "slug": "stantler"
+  },
+  {
+    "dexNumber": 235,
+    "name": "Smeargle",
+    "slug": "smeargle"
+  },
+  {
+    "dexNumber": 236,
+    "name": "Tyrogue",
+    "slug": "tyrogue"
+  },
+  {
+    "dexNumber": 237,
+    "name": "Hitmontop",
+    "slug": "hitmontop"
+  },
+  {
+    "dexNumber": 238,
+    "name": "Smoochum",
+    "slug": "smoochum"
+  },
+  {
+    "dexNumber": 239,
+    "name": "Elekid",
+    "slug": "elekid"
+  },
+  {
+    "dexNumber": 240,
+    "name": "Magby",
+    "slug": "magby"
+  },
+  {
+    "dexNumber": 241,
+    "name": "Miltank",
+    "slug": "miltank"
+  },
+  {
+    "dexNumber": 242,
+    "name": "Blissey",
+    "slug": "blissey"
+  },
+  {
+    "dexNumber": 243,
+    "name": "Raikou",
+    "slug": "raikou"
+  },
+  {
+    "dexNumber": 244,
+    "name": "Entei",
+    "slug": "entei"
+  },
+  {
+    "dexNumber": 245,
+    "name": "Suicune",
+    "slug": "suicune"
+  },
+  {
+    "dexNumber": 246,
+    "name": "Larvitar",
+    "slug": "larvitar"
+  },
+  {
+    "dexNumber": 247,
+    "name": "Pupitar",
+    "slug": "pupitar"
+  },
+  {
+    "dexNumber": 248,
+    "name": "Tyranitar",
+    "slug": "tyranitar"
+  },
+  {
+    "dexNumber": 249,
+    "name": "Lugia",
+    "slug": "lugia"
+  },
+  {
+    "dexNumber": 250,
+    "name": "Ho-Oh",
+    "slug": "ho-oh"
+  },
+  {
+    "dexNumber": 251,
+    "name": "Celebi",
+    "slug": "celebi"
+  },
+  {
+    "dexNumber": 252,
+    "name": "Treecko",
+    "slug": "treecko"
+  },
+  {
+    "dexNumber": 253,
+    "name": "Grovyle",
+    "slug": "grovyle"
+  },
+  {
+    "dexNumber": 254,
+    "name": "Sceptile",
+    "slug": "sceptile"
+  },
+  {
+    "dexNumber": 255,
+    "name": "Torchic",
+    "slug": "torchic"
+  },
+  {
+    "dexNumber": 256,
+    "name": "Combusken",
+    "slug": "combusken"
+  },
+  {
+    "dexNumber": 257,
+    "name": "Blaziken",
+    "slug": "blaziken"
+  },
+  {
+    "dexNumber": 258,
+    "name": "Mudkip",
+    "slug": "mudkip"
+  },
+  {
+    "dexNumber": 259,
+    "name": "Marshtomp",
+    "slug": "marshtomp"
+  },
+  {
+    "dexNumber": 260,
+    "name": "Swampert",
+    "slug": "swampert"
+  },
+  {
+    "dexNumber": 261,
+    "name": "Poochyena",
+    "slug": "poochyena"
+  },
+  {
+    "dexNumber": 262,
+    "name": "Mightyena",
+    "slug": "mightyena"
+  },
+  {
+    "dexNumber": 263,
+    "name": "Zigzagoon",
+    "slug": "zigzagoon"
+  },
+  {
+    "dexNumber": 264,
+    "name": "Linoone",
+    "slug": "linoone"
+  },
+  {
+    "dexNumber": 265,
+    "name": "Wurmple",
+    "slug": "wurmple"
+  },
+  {
+    "dexNumber": 266,
+    "name": "Silcoon",
+    "slug": "silcoon"
+  },
+  {
+    "dexNumber": 267,
+    "name": "Beautifly",
+    "slug": "beautifly"
+  },
+  {
+    "dexNumber": 268,
+    "name": "Cascoon",
+    "slug": "cascoon"
+  },
+  {
+    "dexNumber": 269,
+    "name": "Dustox",
+    "slug": "dustox"
+  },
+  {
+    "dexNumber": 270,
+    "name": "Lotad",
+    "slug": "lotad"
+  },
+  {
+    "dexNumber": 271,
+    "name": "Lombre",
+    "slug": "lombre"
+  },
+  {
+    "dexNumber": 272,
+    "name": "Ludicolo",
+    "slug": "ludicolo"
+  },
+  {
+    "dexNumber": 273,
+    "name": "Seedot",
+    "slug": "seedot"
+  },
+  {
+    "dexNumber": 274,
+    "name": "Nuzleaf",
+    "slug": "nuzleaf"
+  },
+  {
+    "dexNumber": 275,
+    "name": "Shiftry",
+    "slug": "shiftry"
+  },
+  {
+    "dexNumber": 276,
+    "name": "Taillow",
+    "slug": "taillow"
+  },
+  {
+    "dexNumber": 277,
+    "name": "Swellow",
+    "slug": "swellow"
+  },
+  {
+    "dexNumber": 278,
+    "name": "Wingull",
+    "slug": "wingull"
+  },
+  {
+    "dexNumber": 279,
+    "name": "Pelipper",
+    "slug": "pelipper"
+  },
+  {
+    "dexNumber": 280,
+    "name": "Ralts",
+    "slug": "ralts"
+  },
+  {
+    "dexNumber": 281,
+    "name": "Kirlia",
+    "slug": "kirlia"
+  },
+  {
+    "dexNumber": 282,
+    "name": "Gardevoir",
+    "slug": "gardevoir"
+  },
+  {
+    "dexNumber": 283,
+    "name": "Surskit",
+    "slug": "surskit"
+  },
+  {
+    "dexNumber": 284,
+    "name": "Masquerain",
+    "slug": "masquerain"
+  },
+  {
+    "dexNumber": 285,
+    "name": "Shroomish",
+    "slug": "shroomish"
+  },
+  {
+    "dexNumber": 286,
+    "name": "Breloom",
+    "slug": "breloom"
+  },
+  {
+    "dexNumber": 287,
+    "name": "Slakoth",
+    "slug": "slakoth"
+  },
+  {
+    "dexNumber": 288,
+    "name": "Vigoroth",
+    "slug": "vigoroth"
+  },
+  {
+    "dexNumber": 289,
+    "name": "Slaking",
+    "slug": "slaking"
+  },
+  {
+    "dexNumber": 290,
+    "name": "Nincada",
+    "slug": "nincada"
+  },
+  {
+    "dexNumber": 291,
+    "name": "Ninjask",
+    "slug": "ninjask"
+  },
+  {
+    "dexNumber": 292,
+    "name": "Shedinja",
+    "slug": "shedinja"
+  },
+  {
+    "dexNumber": 293,
+    "name": "Whismur",
+    "slug": "whismur"
+  },
+  {
+    "dexNumber": 294,
+    "name": "Loudred",
+    "slug": "loudred"
+  },
+  {
+    "dexNumber": 295,
+    "name": "Exploud",
+    "slug": "exploud"
+  },
+  {
+    "dexNumber": 296,
+    "name": "Makuhita",
+    "slug": "makuhita"
+  },
+  {
+    "dexNumber": 297,
+    "name": "Hariyama",
+    "slug": "hariyama"
+  },
+  {
+    "dexNumber": 298,
+    "name": "Azurill",
+    "slug": "azurill"
+  },
+  {
+    "dexNumber": 299,
+    "name": "Nosepass",
+    "slug": "nosepass"
+  },
+  {
+    "dexNumber": 300,
+    "name": "Skitty",
+    "slug": "skitty"
+  },
+  {
+    "dexNumber": 301,
+    "name": "Delcatty",
+    "slug": "delcatty"
+  },
+  {
+    "dexNumber": 302,
+    "name": "Sableye",
+    "slug": "sableye"
+  },
+  {
+    "dexNumber": 303,
+    "name": "Mawile",
+    "slug": "mawile"
+  },
+  {
+    "dexNumber": 304,
+    "name": "Aron",
+    "slug": "aron"
+  },
+  {
+    "dexNumber": 305,
+    "name": "Lairon",
+    "slug": "lairon"
+  },
+  {
+    "dexNumber": 306,
+    "name": "Aggron",
+    "slug": "aggron"
+  },
+  {
+    "dexNumber": 307,
+    "name": "Meditite",
+    "slug": "meditite"
+  },
+  {
+    "dexNumber": 308,
+    "name": "Medicham",
+    "slug": "medicham"
+  },
+  {
+    "dexNumber": 309,
+    "name": "Electrike",
+    "slug": "electrike"
+  },
+  {
+    "dexNumber": 310,
+    "name": "Manectric",
+    "slug": "manectric"
+  },
+  {
+    "dexNumber": 311,
+    "name": "Plusle",
+    "slug": "plusle"
+  },
+  {
+    "dexNumber": 312,
+    "name": "Minun",
+    "slug": "minun"
+  },
+  {
+    "dexNumber": 313,
+    "name": "Volbeat",
+    "slug": "volbeat"
+  },
+  {
+    "dexNumber": 314,
+    "name": "Illumise",
+    "slug": "illumise"
+  },
+  {
+    "dexNumber": 315,
+    "name": "Roselia",
+    "slug": "roselia"
+  },
+  {
+    "dexNumber": 316,
+    "name": "Gulpin",
+    "slug": "gulpin"
+  },
+  {
+    "dexNumber": 317,
+    "name": "Swalot",
+    "slug": "swalot"
+  },
+  {
+    "dexNumber": 318,
+    "name": "Carvanha",
+    "slug": "carvanha"
+  },
+  {
+    "dexNumber": 319,
+    "name": "Sharpedo",
+    "slug": "sharpedo"
+  },
+  {
+    "dexNumber": 320,
+    "name": "Wailmer",
+    "slug": "wailmer"
+  },
+  {
+    "dexNumber": 321,
+    "name": "Wailord",
+    "slug": "wailord"
+  },
+  {
+    "dexNumber": 322,
+    "name": "Numel",
+    "slug": "numel"
+  },
+  {
+    "dexNumber": 323,
+    "name": "Camerupt",
+    "slug": "camerupt"
+  },
+  {
+    "dexNumber": 324,
+    "name": "Torkoal",
+    "slug": "torkoal"
+  },
+  {
+    "dexNumber": 325,
+    "name": "Spoink",
+    "slug": "spoink"
+  },
+  {
+    "dexNumber": 326,
+    "name": "Grumpig",
+    "slug": "grumpig"
+  },
+  {
+    "dexNumber": 327,
+    "name": "Spinda",
+    "slug": "spinda"
+  },
+  {
+    "dexNumber": 328,
+    "name": "Trapinch",
+    "slug": "trapinch"
+  },
+  {
+    "dexNumber": 329,
+    "name": "Vibrava",
+    "slug": "vibrava"
+  },
+  {
+    "dexNumber": 330,
+    "name": "Flygon",
+    "slug": "flygon"
+  },
+  {
+    "dexNumber": 331,
+    "name": "Cacnea",
+    "slug": "cacnea"
+  },
+  {
+    "dexNumber": 332,
+    "name": "Cacturne",
+    "slug": "cacturne"
+  },
+  {
+    "dexNumber": 333,
+    "name": "Swablu",
+    "slug": "swablu"
+  },
+  {
+    "dexNumber": 334,
+    "name": "Altaria",
+    "slug": "altaria"
+  },
+  {
+    "dexNumber": 335,
+    "name": "Zangoose",
+    "slug": "zangoose"
+  },
+  {
+    "dexNumber": 336,
+    "name": "Seviper",
+    "slug": "seviper"
+  },
+  {
+    "dexNumber": 337,
+    "name": "Lunatone",
+    "slug": "lunatone"
+  },
+  {
+    "dexNumber": 338,
+    "name": "Solrock",
+    "slug": "solrock"
+  },
+  {
+    "dexNumber": 339,
+    "name": "Barboach",
+    "slug": "barboach"
+  },
+  {
+    "dexNumber": 340,
+    "name": "Whiscash",
+    "slug": "whiscash"
+  },
+  {
+    "dexNumber": 341,
+    "name": "Corphish",
+    "slug": "corphish"
+  },
+  {
+    "dexNumber": 342,
+    "name": "Crawdaunt",
+    "slug": "crawdaunt"
+  },
+  {
+    "dexNumber": 343,
+    "name": "Baltoy",
+    "slug": "baltoy"
+  },
+  {
+    "dexNumber": 344,
+    "name": "Claydol",
+    "slug": "claydol"
+  },
+  {
+    "dexNumber": 345,
+    "name": "Lileep",
+    "slug": "lileep"
+  },
+  {
+    "dexNumber": 346,
+    "name": "Cradily",
+    "slug": "cradily"
+  },
+  {
+    "dexNumber": 347,
+    "name": "Anorith",
+    "slug": "anorith"
+  },
+  {
+    "dexNumber": 348,
+    "name": "Armaldo",
+    "slug": "armaldo"
+  },
+  {
+    "dexNumber": 349,
+    "name": "Feebas",
+    "slug": "feebas"
+  },
+  {
+    "dexNumber": 350,
+    "name": "Milotic",
+    "slug": "milotic"
+  },
+  {
+    "dexNumber": 351,
+    "name": "Castform",
+    "slug": "castform"
+  },
+  {
+    "dexNumber": 352,
+    "name": "Kecleon",
+    "slug": "kecleon"
+  },
+  {
+    "dexNumber": 353,
+    "name": "Shuppet",
+    "slug": "shuppet"
+  },
+  {
+    "dexNumber": 354,
+    "name": "Banette",
+    "slug": "banette"
+  },
+  {
+    "dexNumber": 355,
+    "name": "Duskull",
+    "slug": "duskull"
+  },
+  {
+    "dexNumber": 356,
+    "name": "Dusclops",
+    "slug": "dusclops"
+  },
+  {
+    "dexNumber": 357,
+    "name": "Tropius",
+    "slug": "tropius"
+  },
+  {
+    "dexNumber": 358,
+    "name": "Chimecho",
+    "slug": "chimecho"
+  },
+  {
+    "dexNumber": 359,
+    "name": "Absol",
+    "slug": "absol"
+  },
+  {
+    "dexNumber": 360,
+    "name": "Wynaut",
+    "slug": "wynaut"
+  },
+  {
+    "dexNumber": 361,
+    "name": "Snorunt",
+    "slug": "snorunt"
+  },
+  {
+    "dexNumber": 362,
+    "name": "Glalie",
+    "slug": "glalie"
+  },
+  {
+    "dexNumber": 363,
+    "name": "Spheal",
+    "slug": "spheal"
+  },
+  {
+    "dexNumber": 364,
+    "name": "Sealeo",
+    "slug": "sealeo"
+  },
+  {
+    "dexNumber": 365,
+    "name": "Walrein",
+    "slug": "walrein"
+  },
+  {
+    "dexNumber": 366,
+    "name": "Clamperl",
+    "slug": "clamperl"
+  },
+  {
+    "dexNumber": 367,
+    "name": "Huntail",
+    "slug": "huntail"
+  },
+  {
+    "dexNumber": 368,
+    "name": "Gorebyss",
+    "slug": "gorebyss"
+  },
+  {
+    "dexNumber": 369,
+    "name": "Relicanth",
+    "slug": "relicanth"
+  },
+  {
+    "dexNumber": 370,
+    "name": "Luvdisc",
+    "slug": "luvdisc"
+  },
+  {
+    "dexNumber": 371,
+    "name": "Bagon",
+    "slug": "bagon"
+  },
+  {
+    "dexNumber": 372,
+    "name": "Shelgon",
+    "slug": "shelgon"
+  },
+  {
+    "dexNumber": 373,
+    "name": "Salamence",
+    "slug": "salamence"
+  },
+  {
+    "dexNumber": 374,
+    "name": "Beldum",
+    "slug": "beldum"
+  },
+  {
+    "dexNumber": 375,
+    "name": "Metang",
+    "slug": "metang"
+  },
+  {
+    "dexNumber": 376,
+    "name": "Metagross",
+    "slug": "metagross"
+  },
+  {
+    "dexNumber": 377,
+    "name": "Regirock",
+    "slug": "regirock"
+  },
+  {
+    "dexNumber": 378,
+    "name": "Regice",
+    "slug": "regice"
+  },
+  {
+    "dexNumber": 379,
+    "name": "Registeel",
+    "slug": "registeel"
+  },
+  {
+    "dexNumber": 380,
+    "name": "Latias",
+    "slug": "latias"
+  },
+  {
+    "dexNumber": 381,
+    "name": "Latios",
+    "slug": "latios"
+  },
+  {
+    "dexNumber": 382,
+    "name": "Kyogre",
+    "slug": "kyogre"
+  },
+  {
+    "dexNumber": 383,
+    "name": "Groudon",
+    "slug": "groudon"
+  },
+  {
+    "dexNumber": 384,
+    "name": "Rayquaza",
+    "slug": "rayquaza"
+  },
+  {
+    "dexNumber": 385,
+    "name": "Jirachi",
+    "slug": "jirachi"
+  },
+  {
+    "dexNumber": 386,
+    "name": "Deoxys",
+    "slug": "deoxys"
+  },
+  {
+    "dexNumber": 387,
+    "name": "Turtwig",
+    "slug": "turtwig"
+  },
+  {
+    "dexNumber": 388,
+    "name": "Grotle",
+    "slug": "grotle"
+  },
+  {
+    "dexNumber": 389,
+    "name": "Torterra",
+    "slug": "torterra"
+  },
+  {
+    "dexNumber": 390,
+    "name": "Chimchar",
+    "slug": "chimchar"
+  },
+  {
+    "dexNumber": 391,
+    "name": "Monferno",
+    "slug": "monferno"
+  },
+  {
+    "dexNumber": 392,
+    "name": "Infernape",
+    "slug": "infernape"
+  },
+  {
+    "dexNumber": 393,
+    "name": "Piplup",
+    "slug": "piplup"
+  },
+  {
+    "dexNumber": 394,
+    "name": "Prinplup",
+    "slug": "prinplup"
+  },
+  {
+    "dexNumber": 395,
+    "name": "Empoleon",
+    "slug": "empoleon"
+  },
+  {
+    "dexNumber": 396,
+    "name": "Starly",
+    "slug": "starly"
+  },
+  {
+    "dexNumber": 397,
+    "name": "Staravia",
+    "slug": "staravia"
+  },
+  {
+    "dexNumber": 398,
+    "name": "Staraptor",
+    "slug": "staraptor"
+  },
+  {
+    "dexNumber": 399,
+    "name": "Bidoof",
+    "slug": "bidoof"
+  },
+  {
+    "dexNumber": 400,
+    "name": "Bibarel",
+    "slug": "bibarel"
+  },
+  {
+    "dexNumber": 401,
+    "name": "Kricketot",
+    "slug": "kricketot"
+  },
+  {
+    "dexNumber": 402,
+    "name": "Kricketune",
+    "slug": "kricketune"
+  },
+  {
+    "dexNumber": 403,
+    "name": "Shinx",
+    "slug": "shinx"
+  },
+  {
+    "dexNumber": 404,
+    "name": "Luxio",
+    "slug": "luxio"
+  },
+  {
+    "dexNumber": 405,
+    "name": "Luxray",
+    "slug": "luxray"
+  },
+  {
+    "dexNumber": 406,
+    "name": "Budew",
+    "slug": "budew"
+  },
+  {
+    "dexNumber": 407,
+    "name": "Roserade",
+    "slug": "roserade"
+  },
+  {
+    "dexNumber": 408,
+    "name": "Cranidos",
+    "slug": "cranidos"
+  },
+  {
+    "dexNumber": 409,
+    "name": "Rampardos",
+    "slug": "rampardos"
+  },
+  {
+    "dexNumber": 410,
+    "name": "Shieldon",
+    "slug": "shieldon"
+  },
+  {
+    "dexNumber": 411,
+    "name": "Bastiodon",
+    "slug": "bastiodon"
+  },
+  {
+    "dexNumber": 412,
+    "name": "Burmy",
+    "slug": "burmy"
+  },
+  {
+    "dexNumber": 413,
+    "name": "Wormadam",
+    "slug": "wormadam"
+  },
+  {
+    "dexNumber": 414,
+    "name": "Mothim",
+    "slug": "mothim"
+  },
+  {
+    "dexNumber": 415,
+    "name": "Combee",
+    "slug": "combee"
+  },
+  {
+    "dexNumber": 416,
+    "name": "Vespiquen",
+    "slug": "vespiquen"
+  },
+  {
+    "dexNumber": 417,
+    "name": "Pachirisu",
+    "slug": "pachirisu"
+  },
+  {
+    "dexNumber": 418,
+    "name": "Buizel",
+    "slug": "buizel"
+  },
+  {
+    "dexNumber": 419,
+    "name": "Floatzel",
+    "slug": "floatzel"
+  },
+  {
+    "dexNumber": 420,
+    "name": "Cherubi",
+    "slug": "cherubi"
+  },
+  {
+    "dexNumber": 421,
+    "name": "Cherrim",
+    "slug": "cherrim"
+  },
+  {
+    "dexNumber": 422,
+    "name": "Shellos",
+    "slug": "shellos"
+  },
+  {
+    "dexNumber": 423,
+    "name": "Gastrodon",
+    "slug": "gastrodon"
+  },
+  {
+    "dexNumber": 424,
+    "name": "Ambipom",
+    "slug": "ambipom"
+  },
+  {
+    "dexNumber": 425,
+    "name": "Drifloon",
+    "slug": "drifloon"
+  },
+  {
+    "dexNumber": 426,
+    "name": "Drifblim",
+    "slug": "drifblim"
+  },
+  {
+    "dexNumber": 427,
+    "name": "Buneary",
+    "slug": "buneary"
+  },
+  {
+    "dexNumber": 428,
+    "name": "Lopunny",
+    "slug": "lopunny"
+  },
+  {
+    "dexNumber": 429,
+    "name": "Mismagius",
+    "slug": "mismagius"
+  },
+  {
+    "dexNumber": 430,
+    "name": "Honchkrow",
+    "slug": "honchkrow"
+  },
+  {
+    "dexNumber": 431,
+    "name": "Glameow",
+    "slug": "glameow"
+  },
+  {
+    "dexNumber": 432,
+    "name": "Purugly",
+    "slug": "purugly"
+  },
+  {
+    "dexNumber": 433,
+    "name": "Chingling",
+    "slug": "chingling"
+  },
+  {
+    "dexNumber": 434,
+    "name": "Stunky",
+    "slug": "stunky"
+  },
+  {
+    "dexNumber": 435,
+    "name": "Skuntank",
+    "slug": "skuntank"
+  },
+  {
+    "dexNumber": 436,
+    "name": "Bronzor",
+    "slug": "bronzor"
+  },
+  {
+    "dexNumber": 437,
+    "name": "Bronzong",
+    "slug": "bronzong"
+  },
+  {
+    "dexNumber": 438,
+    "name": "Bonsly",
+    "slug": "bonsly"
+  },
+  {
+    "dexNumber": 439,
+    "name": "Mime Jr.",
+    "slug": "mime-jr"
+  },
+  {
+    "dexNumber": 440,
+    "name": "Happiny",
+    "slug": "happiny"
+  },
+  {
+    "dexNumber": 441,
+    "name": "Chatot",
+    "slug": "chatot"
+  },
+  {
+    "dexNumber": 442,
+    "name": "Spiritomb",
+    "slug": "spiritomb"
+  },
+  {
+    "dexNumber": 443,
+    "name": "Gible",
+    "slug": "gible"
+  },
+  {
+    "dexNumber": 444,
+    "name": "Gabite",
+    "slug": "gabite"
+  },
+  {
+    "dexNumber": 445,
+    "name": "Garchomp",
+    "slug": "garchomp"
+  },
+  {
+    "dexNumber": 446,
+    "name": "Munchlax",
+    "slug": "munchlax"
+  },
+  {
+    "dexNumber": 447,
+    "name": "Riolu",
+    "slug": "riolu"
+  },
+  {
+    "dexNumber": 448,
+    "name": "Lucario",
+    "slug": "lucario"
+  },
+  {
+    "dexNumber": 449,
+    "name": "Hippopotas",
+    "slug": "hippopotas"
+  },
+  {
+    "dexNumber": 450,
+    "name": "Hippowdon",
+    "slug": "hippowdon"
+  },
+  {
+    "dexNumber": 451,
+    "name": "Skorupi",
+    "slug": "skorupi"
+  },
+  {
+    "dexNumber": 452,
+    "name": "Drapion",
+    "slug": "drapion"
+  },
+  {
+    "dexNumber": 453,
+    "name": "Croagunk",
+    "slug": "croagunk"
+  },
+  {
+    "dexNumber": 454,
+    "name": "Toxicroak",
+    "slug": "toxicroak"
+  },
+  {
+    "dexNumber": 455,
+    "name": "Carnivine",
+    "slug": "carnivine"
+  },
+  {
+    "dexNumber": 456,
+    "name": "Finneon",
+    "slug": "finneon"
+  },
+  {
+    "dexNumber": 457,
+    "name": "Lumineon",
+    "slug": "lumineon"
+  },
+  {
+    "dexNumber": 458,
+    "name": "Mantyke",
+    "slug": "mantyke"
+  },
+  {
+    "dexNumber": 459,
+    "name": "Snover",
+    "slug": "snover"
+  },
+  {
+    "dexNumber": 460,
+    "name": "Abomasnow",
+    "slug": "abomasnow"
+  },
+  {
+    "dexNumber": 461,
+    "name": "Weavile",
+    "slug": "weavile"
+  },
+  {
+    "dexNumber": 462,
+    "name": "Magnezone",
+    "slug": "magnezone"
+  },
+  {
+    "dexNumber": 463,
+    "name": "Lickilicky",
+    "slug": "lickilicky"
+  },
+  {
+    "dexNumber": 464,
+    "name": "Rhyperior",
+    "slug": "rhyperior"
+  },
+  {
+    "dexNumber": 465,
+    "name": "Tangrowth",
+    "slug": "tangrowth"
+  },
+  {
+    "dexNumber": 466,
+    "name": "Electivire",
+    "slug": "electivire"
+  },
+  {
+    "dexNumber": 467,
+    "name": "Magmortar",
+    "slug": "magmortar"
+  },
+  {
+    "dexNumber": 468,
+    "name": "Togekiss",
+    "slug": "togekiss"
+  },
+  {
+    "dexNumber": 469,
+    "name": "Yanmega",
+    "slug": "yanmega"
+  },
+  {
+    "dexNumber": 470,
+    "name": "Leafeon",
+    "slug": "leafeon"
+  },
+  {
+    "dexNumber": 471,
+    "name": "Glaceon",
+    "slug": "glaceon"
+  },
+  {
+    "dexNumber": 472,
+    "name": "Gliscor",
+    "slug": "gliscor"
+  },
+  {
+    "dexNumber": 473,
+    "name": "Mamoswine",
+    "slug": "mamoswine"
+  },
+  {
+    "dexNumber": 474,
+    "name": "Porygon-Z",
+    "slug": "porygon-z"
+  },
+  {
+    "dexNumber": 475,
+    "name": "Gallade",
+    "slug": "gallade"
+  },
+  {
+    "dexNumber": 476,
+    "name": "Probopass",
+    "slug": "probopass"
+  },
+  {
+    "dexNumber": 477,
+    "name": "Dusknoir",
+    "slug": "dusknoir"
+  },
+  {
+    "dexNumber": 478,
+    "name": "Froslass",
+    "slug": "froslass"
+  },
+  {
+    "dexNumber": 479,
+    "name": "Rotom",
+    "slug": "rotom"
+  },
+  {
+    "dexNumber": 480,
+    "name": "Uxie",
+    "slug": "uxie"
+  },
+  {
+    "dexNumber": 481,
+    "name": "Mesprit",
+    "slug": "mesprit"
+  },
+  {
+    "dexNumber": 482,
+    "name": "Azelf",
+    "slug": "azelf"
+  },
+  {
+    "dexNumber": 483,
+    "name": "Dialga",
+    "slug": "dialga"
+  },
+  {
+    "dexNumber": 484,
+    "name": "Palkia",
+    "slug": "palkia"
+  },
+  {
+    "dexNumber": 485,
+    "name": "Heatran",
+    "slug": "heatran"
+  },
+  {
+    "dexNumber": 486,
+    "name": "Regigigas",
+    "slug": "regigigas"
+  },
+  {
+    "dexNumber": 487,
+    "name": "Giratina",
+    "slug": "giratina"
+  },
+  {
+    "dexNumber": 488,
+    "name": "Cresselia",
+    "slug": "cresselia"
+  },
+  {
+    "dexNumber": 489,
+    "name": "Phione",
+    "slug": "phione"
+  },
+  {
+    "dexNumber": 490,
+    "name": "Manaphy",
+    "slug": "manaphy"
+  },
+  {
+    "dexNumber": 491,
+    "name": "Darkrai",
+    "slug": "darkrai"
+  },
+  {
+    "dexNumber": 492,
+    "name": "Shaymin",
+    "slug": "shaymin"
+  },
+  {
+    "dexNumber": 493,
+    "name": "Arceus",
+    "slug": "arceus"
+  },
+  {
+    "dexNumber": 494,
+    "name": "Victini",
+    "slug": "victini"
+  },
+  {
+    "dexNumber": 495,
+    "name": "Snivy",
+    "slug": "snivy"
+  },
+  {
+    "dexNumber": 496,
+    "name": "Servine",
+    "slug": "servine"
+  },
+  {
+    "dexNumber": 497,
+    "name": "Serperior",
+    "slug": "serperior"
+  },
+  {
+    "dexNumber": 498,
+    "name": "Tepig",
+    "slug": "tepig"
+  },
+  {
+    "dexNumber": 499,
+    "name": "Pignite",
+    "slug": "pignite"
+  },
+  {
+    "dexNumber": 500,
+    "name": "Emboar",
+    "slug": "emboar"
+  },
+  {
+    "dexNumber": 501,
+    "name": "Oshawott",
+    "slug": "oshawott"
+  },
+  {
+    "dexNumber": 502,
+    "name": "Dewott",
+    "slug": "dewott"
+  },
+  {
+    "dexNumber": 503,
+    "name": "Samurott",
+    "slug": "samurott"
+  },
+  {
+    "dexNumber": 504,
+    "name": "Patrat",
+    "slug": "patrat"
+  },
+  {
+    "dexNumber": 505,
+    "name": "Watchog",
+    "slug": "watchog"
+  },
+  {
+    "dexNumber": 506,
+    "name": "Lillipup",
+    "slug": "lillipup"
+  },
+  {
+    "dexNumber": 507,
+    "name": "Herdier",
+    "slug": "herdier"
+  },
+  {
+    "dexNumber": 508,
+    "name": "Stoutland",
+    "slug": "stoutland"
+  },
+  {
+    "dexNumber": 509,
+    "name": "Purrloin",
+    "slug": "purrloin"
+  },
+  {
+    "dexNumber": 510,
+    "name": "Liepard",
+    "slug": "liepard"
+  },
+  {
+    "dexNumber": 511,
+    "name": "Pansage",
+    "slug": "pansage"
+  },
+  {
+    "dexNumber": 512,
+    "name": "Simisage",
+    "slug": "simisage"
+  },
+  {
+    "dexNumber": 513,
+    "name": "Pansear",
+    "slug": "pansear"
+  },
+  {
+    "dexNumber": 514,
+    "name": "Simisear",
+    "slug": "simisear"
+  },
+  {
+    "dexNumber": 515,
+    "name": "Panpour",
+    "slug": "panpour"
+  },
+  {
+    "dexNumber": 516,
+    "name": "Simipour",
+    "slug": "simipour"
+  },
+  {
+    "dexNumber": 517,
+    "name": "Munna",
+    "slug": "munna"
+  },
+  {
+    "dexNumber": 518,
+    "name": "Musharna",
+    "slug": "musharna"
+  },
+  {
+    "dexNumber": 519,
+    "name": "Pidove",
+    "slug": "pidove"
+  },
+  {
+    "dexNumber": 520,
+    "name": "Tranquill",
+    "slug": "tranquill"
+  },
+  {
+    "dexNumber": 521,
+    "name": "Unfezant",
+    "slug": "unfezant"
+  },
+  {
+    "dexNumber": 522,
+    "name": "Blitzle",
+    "slug": "blitzle"
+  },
+  {
+    "dexNumber": 523,
+    "name": "Zebstrika",
+    "slug": "zebstrika"
+  },
+  {
+    "dexNumber": 524,
+    "name": "Roggenrola",
+    "slug": "roggenrola"
+  },
+  {
+    "dexNumber": 525,
+    "name": "Boldore",
+    "slug": "boldore"
+  },
+  {
+    "dexNumber": 526,
+    "name": "Gigalith",
+    "slug": "gigalith"
+  },
+  {
+    "dexNumber": 527,
+    "name": "Woobat",
+    "slug": "woobat"
+  },
+  {
+    "dexNumber": 528,
+    "name": "Swoobat",
+    "slug": "swoobat"
+  },
+  {
+    "dexNumber": 529,
+    "name": "Drilbur",
+    "slug": "drilbur"
+  },
+  {
+    "dexNumber": 530,
+    "name": "Excadrill",
+    "slug": "excadrill"
+  },
+  {
+    "dexNumber": 531,
+    "name": "Audino",
+    "slug": "audino"
+  },
+  {
+    "dexNumber": 532,
+    "name": "Timburr",
+    "slug": "timburr"
+  },
+  {
+    "dexNumber": 533,
+    "name": "Gurdurr",
+    "slug": "gurdurr"
+  },
+  {
+    "dexNumber": 534,
+    "name": "Conkeldurr",
+    "slug": "conkeldurr"
+  },
+  {
+    "dexNumber": 535,
+    "name": "Tympole",
+    "slug": "tympole"
+  },
+  {
+    "dexNumber": 536,
+    "name": "Palpitoad",
+    "slug": "palpitoad"
+  },
+  {
+    "dexNumber": 537,
+    "name": "Seismitoad",
+    "slug": "seismitoad"
+  },
+  {
+    "dexNumber": 538,
+    "name": "Throh",
+    "slug": "throh"
+  },
+  {
+    "dexNumber": 539,
+    "name": "Sawk",
+    "slug": "sawk"
+  },
+  {
+    "dexNumber": 540,
+    "name": "Sewaddle",
+    "slug": "sewaddle"
+  },
+  {
+    "dexNumber": 541,
+    "name": "Swadloon",
+    "slug": "swadloon"
+  },
+  {
+    "dexNumber": 542,
+    "name": "Leavanny",
+    "slug": "leavanny"
+  },
+  {
+    "dexNumber": 543,
+    "name": "Venipede",
+    "slug": "venipede"
+  },
+  {
+    "dexNumber": 544,
+    "name": "Whirlipede",
+    "slug": "whirlipede"
+  },
+  {
+    "dexNumber": 545,
+    "name": "Scolipede",
+    "slug": "scolipede"
+  },
+  {
+    "dexNumber": 546,
+    "name": "Cottonee",
+    "slug": "cottonee"
+  },
+  {
+    "dexNumber": 547,
+    "name": "Whimsicott",
+    "slug": "whimsicott"
+  },
+  {
+    "dexNumber": 548,
+    "name": "Petilil",
+    "slug": "petilil"
+  },
+  {
+    "dexNumber": 549,
+    "name": "Lilligant",
+    "slug": "lilligant"
+  },
+  {
+    "dexNumber": 550,
+    "name": "Basculin",
+    "slug": "basculin"
+  },
+  {
+    "dexNumber": 551,
+    "name": "Sandile",
+    "slug": "sandile"
+  },
+  {
+    "dexNumber": 552,
+    "name": "Krokorok",
+    "slug": "krokorok"
+  },
+  {
+    "dexNumber": 553,
+    "name": "Krookodile",
+    "slug": "krookodile"
+  },
+  {
+    "dexNumber": 554,
+    "name": "Darumaka",
+    "slug": "darumaka"
+  },
+  {
+    "dexNumber": 555,
+    "name": "Darmanitan",
+    "slug": "darmanitan"
+  },
+  {
+    "dexNumber": 556,
+    "name": "Maractus",
+    "slug": "maractus"
+  },
+  {
+    "dexNumber": 557,
+    "name": "Dwebble",
+    "slug": "dwebble"
+  },
+  {
+    "dexNumber": 558,
+    "name": "Crustle",
+    "slug": "crustle"
+  },
+  {
+    "dexNumber": 559,
+    "name": "Scraggy",
+    "slug": "scraggy"
+  },
+  {
+    "dexNumber": 560,
+    "name": "Scrafty",
+    "slug": "scrafty"
+  },
+  {
+    "dexNumber": 561,
+    "name": "Sigilyph",
+    "slug": "sigilyph"
+  },
+  {
+    "dexNumber": 562,
+    "name": "Yamask",
+    "slug": "yamask"
+  },
+  {
+    "dexNumber": 563,
+    "name": "Cofagrigus",
+    "slug": "cofagrigus"
+  },
+  {
+    "dexNumber": 564,
+    "name": "Tirtouga",
+    "slug": "tirtouga"
+  },
+  {
+    "dexNumber": 565,
+    "name": "Carracosta",
+    "slug": "carracosta"
+  },
+  {
+    "dexNumber": 566,
+    "name": "Archen",
+    "slug": "archen"
+  },
+  {
+    "dexNumber": 567,
+    "name": "Archeops",
+    "slug": "archeops"
+  },
+  {
+    "dexNumber": 568,
+    "name": "Trubbish",
+    "slug": "trubbish"
+  },
+  {
+    "dexNumber": 569,
+    "name": "Garbodor",
+    "slug": "garbodor"
+  },
+  {
+    "dexNumber": 570,
+    "name": "Zorua",
+    "slug": "zorua"
+  },
+  {
+    "dexNumber": 571,
+    "name": "Zoroark",
+    "slug": "zoroark"
+  },
+  {
+    "dexNumber": 572,
+    "name": "Minccino",
+    "slug": "minccino"
+  },
+  {
+    "dexNumber": 573,
+    "name": "Cinccino",
+    "slug": "cinccino"
+  },
+  {
+    "dexNumber": 574,
+    "name": "Gothita",
+    "slug": "gothita"
+  },
+  {
+    "dexNumber": 575,
+    "name": "Gothorita",
+    "slug": "gothorita"
+  },
+  {
+    "dexNumber": 576,
+    "name": "Gothitelle",
+    "slug": "gothitelle"
+  },
+  {
+    "dexNumber": 577,
+    "name": "Solosis",
+    "slug": "solosis"
+  },
+  {
+    "dexNumber": 578,
+    "name": "Duosion",
+    "slug": "duosion"
+  },
+  {
+    "dexNumber": 579,
+    "name": "Reuniclus",
+    "slug": "reuniclus"
+  },
+  {
+    "dexNumber": 580,
+    "name": "Ducklett",
+    "slug": "ducklett"
+  },
+  {
+    "dexNumber": 581,
+    "name": "Swanna",
+    "slug": "swanna"
+  },
+  {
+    "dexNumber": 582,
+    "name": "Vanillite",
+    "slug": "vanillite"
+  },
+  {
+    "dexNumber": 583,
+    "name": "Vanillish",
+    "slug": "vanillish"
+  },
+  {
+    "dexNumber": 584,
+    "name": "Vanilluxe",
+    "slug": "vanilluxe"
+  },
+  {
+    "dexNumber": 585,
+    "name": "Deerling",
+    "slug": "deerling"
+  },
+  {
+    "dexNumber": 586,
+    "name": "Sawsbuck",
+    "slug": "sawsbuck"
+  },
+  {
+    "dexNumber": 587,
+    "name": "Emolga",
+    "slug": "emolga"
+  },
+  {
+    "dexNumber": 588,
+    "name": "Karrablast",
+    "slug": "karrablast"
+  },
+  {
+    "dexNumber": 589,
+    "name": "Escavalier",
+    "slug": "escavalier"
+  },
+  {
+    "dexNumber": 590,
+    "name": "Foongus",
+    "slug": "foongus"
+  },
+  {
+    "dexNumber": 591,
+    "name": "Amoonguss",
+    "slug": "amoonguss"
+  },
+  {
+    "dexNumber": 592,
+    "name": "Frillish",
+    "slug": "frillish"
+  },
+  {
+    "dexNumber": 593,
+    "name": "Jellicent",
+    "slug": "jellicent"
+  },
+  {
+    "dexNumber": 594,
+    "name": "Alomomola",
+    "slug": "alomomola"
+  },
+  {
+    "dexNumber": 595,
+    "name": "Joltik",
+    "slug": "joltik"
+  },
+  {
+    "dexNumber": 596,
+    "name": "Galvantula",
+    "slug": "galvantula"
+  },
+  {
+    "dexNumber": 597,
+    "name": "Ferroseed",
+    "slug": "ferroseed"
+  },
+  {
+    "dexNumber": 598,
+    "name": "Ferrothorn",
+    "slug": "ferrothorn"
+  },
+  {
+    "dexNumber": 599,
+    "name": "Klink",
+    "slug": "klink"
+  },
+  {
+    "dexNumber": 600,
+    "name": "Klang",
+    "slug": "klang"
+  },
+  {
+    "dexNumber": 601,
+    "name": "Klinklang",
+    "slug": "klinklang"
+  },
+  {
+    "dexNumber": 602,
+    "name": "Tynamo",
+    "slug": "tynamo"
+  },
+  {
+    "dexNumber": 603,
+    "name": "Eelektrik",
+    "slug": "eelektrik"
+  },
+  {
+    "dexNumber": 604,
+    "name": "Eelektross",
+    "slug": "eelektross"
+  },
+  {
+    "dexNumber": 605,
+    "name": "Elgyem",
+    "slug": "elgyem"
+  },
+  {
+    "dexNumber": 606,
+    "name": "Beheeyem",
+    "slug": "beheeyem"
+  },
+  {
+    "dexNumber": 607,
+    "name": "Litwick",
+    "slug": "litwick"
+  },
+  {
+    "dexNumber": 608,
+    "name": "Lampent",
+    "slug": "lampent"
+  },
+  {
+    "dexNumber": 609,
+    "name": "Chandelure",
+    "slug": "chandelure"
+  },
+  {
+    "dexNumber": 610,
+    "name": "Axew",
+    "slug": "axew"
+  },
+  {
+    "dexNumber": 611,
+    "name": "Fraxure",
+    "slug": "fraxure"
+  },
+  {
+    "dexNumber": 612,
+    "name": "Haxorus",
+    "slug": "haxorus"
+  },
+  {
+    "dexNumber": 613,
+    "name": "Cubchoo",
+    "slug": "cubchoo"
+  },
+  {
+    "dexNumber": 614,
+    "name": "Beartic",
+    "slug": "beartic"
+  },
+  {
+    "dexNumber": 615,
+    "name": "Cryogonal",
+    "slug": "cryogonal"
+  },
+  {
+    "dexNumber": 616,
+    "name": "Shelmet",
+    "slug": "shelmet"
+  },
+  {
+    "dexNumber": 617,
+    "name": "Accelgor",
+    "slug": "accelgor"
+  },
+  {
+    "dexNumber": 618,
+    "name": "Stunfisk",
+    "slug": "stunfisk"
+  },
+  {
+    "dexNumber": 619,
+    "name": "Mienfoo",
+    "slug": "mienfoo"
+  },
+  {
+    "dexNumber": 620,
+    "name": "Mienshao",
+    "slug": "mienshao"
+  },
+  {
+    "dexNumber": 621,
+    "name": "Druddigon",
+    "slug": "druddigon"
+  },
+  {
+    "dexNumber": 622,
+    "name": "Golett",
+    "slug": "golett"
+  },
+  {
+    "dexNumber": 623,
+    "name": "Golurk",
+    "slug": "golurk"
+  },
+  {
+    "dexNumber": 624,
+    "name": "Pawniard",
+    "slug": "pawniard"
+  },
+  {
+    "dexNumber": 625,
+    "name": "Bisharp",
+    "slug": "bisharp"
+  },
+  {
+    "dexNumber": 626,
+    "name": "Bouffalant",
+    "slug": "bouffalant"
+  },
+  {
+    "dexNumber": 627,
+    "name": "Rufflet",
+    "slug": "rufflet"
+  },
+  {
+    "dexNumber": 628,
+    "name": "Braviary",
+    "slug": "braviary"
+  },
+  {
+    "dexNumber": 629,
+    "name": "Vullaby",
+    "slug": "vullaby"
+  },
+  {
+    "dexNumber": 630,
+    "name": "Mandibuzz",
+    "slug": "mandibuzz"
+  },
+  {
+    "dexNumber": 631,
+    "name": "Heatmor",
+    "slug": "heatmor"
+  },
+  {
+    "dexNumber": 632,
+    "name": "Durant",
+    "slug": "durant"
+  },
+  {
+    "dexNumber": 633,
+    "name": "Deino",
+    "slug": "deino"
+  },
+  {
+    "dexNumber": 634,
+    "name": "Zweilous",
+    "slug": "zweilous"
+  },
+  {
+    "dexNumber": 635,
+    "name": "Hydreigon",
+    "slug": "hydreigon"
+  },
+  {
+    "dexNumber": 636,
+    "name": "Larvesta",
+    "slug": "larvesta"
+  },
+  {
+    "dexNumber": 637,
+    "name": "Volcarona",
+    "slug": "volcarona"
+  },
+  {
+    "dexNumber": 638,
+    "name": "Cobalion",
+    "slug": "cobalion"
+  },
+  {
+    "dexNumber": 639,
+    "name": "Terrakion",
+    "slug": "terrakion"
+  },
+  {
+    "dexNumber": 640,
+    "name": "Virizion",
+    "slug": "virizion"
+  },
+  {
+    "dexNumber": 641,
+    "name": "Tornadus",
+    "slug": "tornadus"
+  },
+  {
+    "dexNumber": 642,
+    "name": "Thundurus",
+    "slug": "thundurus"
+  },
+  {
+    "dexNumber": 643,
+    "name": "Reshiram",
+    "slug": "reshiram"
+  },
+  {
+    "dexNumber": 644,
+    "name": "Zekrom",
+    "slug": "zekrom"
+  },
+  {
+    "dexNumber": 645,
+    "name": "Landorus",
+    "slug": "landorus"
+  },
+  {
+    "dexNumber": 646,
+    "name": "Kyurem",
+    "slug": "kyurem"
+  },
+  {
+    "dexNumber": 647,
+    "name": "Keldeo",
+    "slug": "keldeo"
+  },
+  {
+    "dexNumber": 648,
+    "name": "Meloetta",
+    "slug": "meloetta"
+  },
+  {
+    "dexNumber": 649,
+    "name": "Genesect",
+    "slug": "genesect"
+  },
+  {
+    "dexNumber": 650,
+    "name": "Chespin",
+    "slug": "chespin"
+  },
+  {
+    "dexNumber": 651,
+    "name": "Quilladin",
+    "slug": "quilladin"
+  },
+  {
+    "dexNumber": 652,
+    "name": "Chesnaught",
+    "slug": "chesnaught"
+  },
+  {
+    "dexNumber": 653,
+    "name": "Fennekin",
+    "slug": "fennekin"
+  },
+  {
+    "dexNumber": 654,
+    "name": "Braixen",
+    "slug": "braixen"
+  },
+  {
+    "dexNumber": 655,
+    "name": "Delphox",
+    "slug": "delphox"
+  },
+  {
+    "dexNumber": 656,
+    "name": "Froakie",
+    "slug": "froakie"
+  },
+  {
+    "dexNumber": 657,
+    "name": "Frogadier",
+    "slug": "frogadier"
+  },
+  {
+    "dexNumber": 658,
+    "name": "Greninja",
+    "slug": "greninja"
+  },
+  {
+    "dexNumber": 659,
+    "name": "Bunnelby",
+    "slug": "bunnelby"
+  },
+  {
+    "dexNumber": 660,
+    "name": "Diggersby",
+    "slug": "diggersby"
+  },
+  {
+    "dexNumber": 661,
+    "name": "Fletchling",
+    "slug": "fletchling"
+  },
+  {
+    "dexNumber": 662,
+    "name": "Fletchinder",
+    "slug": "fletchinder"
+  },
+  {
+    "dexNumber": 663,
+    "name": "Talonflame",
+    "slug": "talonflame"
+  },
+  {
+    "dexNumber": 664,
+    "name": "Scatterbug",
+    "slug": "scatterbug"
+  },
+  {
+    "dexNumber": 665,
+    "name": "Spewpa",
+    "slug": "spewpa"
+  },
+  {
+    "dexNumber": 666,
+    "name": "Vivillon",
+    "slug": "vivillon"
+  },
+  {
+    "dexNumber": 667,
+    "name": "Litleo",
+    "slug": "litleo"
+  },
+  {
+    "dexNumber": 668,
+    "name": "Pyroar",
+    "slug": "pyroar"
+  },
+  {
+    "dexNumber": 669,
+    "name": "Flabébé",
+    "slug": "flabebe"
+  },
+  {
+    "dexNumber": 670,
+    "name": "Floette",
+    "slug": "floette"
+  },
+  {
+    "dexNumber": 671,
+    "name": "Florges",
+    "slug": "florges"
+  },
+  {
+    "dexNumber": 672,
+    "name": "Skiddo",
+    "slug": "skiddo"
+  },
+  {
+    "dexNumber": 673,
+    "name": "Gogoat",
+    "slug": "gogoat"
+  },
+  {
+    "dexNumber": 674,
+    "name": "Pancham",
+    "slug": "pancham"
+  },
+  {
+    "dexNumber": 675,
+    "name": "Pangoro",
+    "slug": "pangoro"
+  },
+  {
+    "dexNumber": 676,
+    "name": "Furfrou",
+    "slug": "furfrou"
+  },
+  {
+    "dexNumber": 677,
+    "name": "Espurr",
+    "slug": "espurr"
+  },
+  {
+    "dexNumber": 678,
+    "name": "Meowstic",
+    "slug": "meowstic"
+  },
+  {
+    "dexNumber": 679,
+    "name": "Honedge",
+    "slug": "honedge"
+  },
+  {
+    "dexNumber": 680,
+    "name": "Doublade",
+    "slug": "doublade"
+  },
+  {
+    "dexNumber": 681,
+    "name": "Aegislash",
+    "slug": "aegislash"
+  },
+  {
+    "dexNumber": 682,
+    "name": "Spritzee",
+    "slug": "spritzee"
+  },
+  {
+    "dexNumber": 683,
+    "name": "Aromatisse",
+    "slug": "aromatisse"
+  },
+  {
+    "dexNumber": 684,
+    "name": "Swirlix",
+    "slug": "swirlix"
+  },
+  {
+    "dexNumber": 685,
+    "name": "Slurpuff",
+    "slug": "slurpuff"
+  },
+  {
+    "dexNumber": 686,
+    "name": "Inkay",
+    "slug": "inkay"
+  },
+  {
+    "dexNumber": 687,
+    "name": "Malamar",
+    "slug": "malamar"
+  },
+  {
+    "dexNumber": 688,
+    "name": "Binacle",
+    "slug": "binacle"
+  },
+  {
+    "dexNumber": 689,
+    "name": "Barbaracle",
+    "slug": "barbaracle"
+  },
+  {
+    "dexNumber": 690,
+    "name": "Skrelp",
+    "slug": "skrelp"
+  },
+  {
+    "dexNumber": 691,
+    "name": "Dragalge",
+    "slug": "dragalge"
+  },
+  {
+    "dexNumber": 692,
+    "name": "Clauncher",
+    "slug": "clauncher"
+  },
+  {
+    "dexNumber": 693,
+    "name": "Clawitzer",
+    "slug": "clawitzer"
+  },
+  {
+    "dexNumber": 694,
+    "name": "Helioptile",
+    "slug": "helioptile"
+  },
+  {
+    "dexNumber": 695,
+    "name": "Heliolisk",
+    "slug": "heliolisk"
+  },
+  {
+    "dexNumber": 696,
+    "name": "Tyrunt",
+    "slug": "tyrunt"
+  },
+  {
+    "dexNumber": 697,
+    "name": "Tyrantrum",
+    "slug": "tyrantrum"
+  },
+  {
+    "dexNumber": 698,
+    "name": "Amaura",
+    "slug": "amaura"
+  },
+  {
+    "dexNumber": 699,
+    "name": "Aurorus",
+    "slug": "aurorus"
+  },
+  {
+    "dexNumber": 700,
+    "name": "Sylveon",
+    "slug": "sylveon"
+  },
+  {
+    "dexNumber": 701,
+    "name": "Hawlucha",
+    "slug": "hawlucha"
+  },
+  {
+    "dexNumber": 702,
+    "name": "Dedenne",
+    "slug": "dedenne"
+  },
+  {
+    "dexNumber": 703,
+    "name": "Carbink",
+    "slug": "carbink"
+  },
+  {
+    "dexNumber": 704,
+    "name": "Goomy",
+    "slug": "goomy"
+  },
+  {
+    "dexNumber": 705,
+    "name": "Sliggoo",
+    "slug": "sliggoo"
+  },
+  {
+    "dexNumber": 706,
+    "name": "Goodra",
+    "slug": "goodra"
+  },
+  {
+    "dexNumber": 707,
+    "name": "Klefki",
+    "slug": "klefki"
+  },
+  {
+    "dexNumber": 708,
+    "name": "Phantump",
+    "slug": "phantump"
+  },
+  {
+    "dexNumber": 709,
+    "name": "Trevenant",
+    "slug": "trevenant"
+  },
+  {
+    "dexNumber": 710,
+    "name": "Pumpkaboo",
+    "slug": "pumpkaboo"
+  },
+  {
+    "dexNumber": 711,
+    "name": "Gourgeist",
+    "slug": "gourgeist"
+  },
+  {
+    "dexNumber": 712,
+    "name": "Bergmite",
+    "slug": "bergmite"
+  },
+  {
+    "dexNumber": 713,
+    "name": "Avalugg",
+    "slug": "avalugg"
+  },
+  {
+    "dexNumber": 714,
+    "name": "Noibat",
+    "slug": "noibat"
+  },
+  {
+    "dexNumber": 715,
+    "name": "Noivern",
+    "slug": "noivern"
+  },
+  {
+    "dexNumber": 716,
+    "name": "Xerneas",
+    "slug": "xerneas"
+  },
+  {
+    "dexNumber": 717,
+    "name": "Yveltal",
+    "slug": "yveltal"
+  },
+  {
+    "dexNumber": 718,
+    "name": "Zygarde",
+    "slug": "zygarde"
+  },
+  {
+    "dexNumber": 719,
+    "name": "Diancie",
+    "slug": "diancie"
+  },
+  {
+    "dexNumber": 720,
+    "name": "Hoopa",
+    "slug": "hoopa"
+  },
+  {
+    "dexNumber": 721,
+    "name": "Volcanion",
+    "slug": "volcanion"
+  },
+  {
+    "dexNumber": 722,
+    "name": "Rowlet",
+    "slug": "rowlet"
+  },
+  {
+    "dexNumber": 723,
+    "name": "Dartrix",
+    "slug": "dartrix"
+  },
+  {
+    "dexNumber": 724,
+    "name": "Decidueye",
+    "slug": "decidueye"
+  },
+  {
+    "dexNumber": 725,
+    "name": "Litten",
+    "slug": "litten"
+  },
+  {
+    "dexNumber": 726,
+    "name": "Torracat",
+    "slug": "torracat"
+  },
+  {
+    "dexNumber": 727,
+    "name": "Incineroar",
+    "slug": "incineroar"
+  },
+  {
+    "dexNumber": 728,
+    "name": "Popplio",
+    "slug": "popplio"
+  },
+  {
+    "dexNumber": 729,
+    "name": "Brionne",
+    "slug": "brionne"
+  },
+  {
+    "dexNumber": 730,
+    "name": "Primarina",
+    "slug": "primarina"
+  },
+  {
+    "dexNumber": 731,
+    "name": "Pikipek",
+    "slug": "pikipek"
+  },
+  {
+    "dexNumber": 732,
+    "name": "Trumbeak",
+    "slug": "trumbeak"
+  },
+  {
+    "dexNumber": 733,
+    "name": "Toucannon",
+    "slug": "toucannon"
+  },
+  {
+    "dexNumber": 734,
+    "name": "Yungoos",
+    "slug": "yungoos"
+  },
+  {
+    "dexNumber": 735,
+    "name": "Gumshoos",
+    "slug": "gumshoos"
+  },
+  {
+    "dexNumber": 736,
+    "name": "Grubbin",
+    "slug": "grubbin"
+  },
+  {
+    "dexNumber": 737,
+    "name": "Charjabug",
+    "slug": "charjabug"
+  },
+  {
+    "dexNumber": 738,
+    "name": "Vikavolt",
+    "slug": "vikavolt"
+  },
+  {
+    "dexNumber": 739,
+    "name": "Crabrawler",
+    "slug": "crabrawler"
+  },
+  {
+    "dexNumber": 740,
+    "name": "Crabominable",
+    "slug": "crabominable"
+  },
+  {
+    "dexNumber": 741,
+    "name": "Oricorio",
+    "slug": "oricorio"
+  },
+  {
+    "dexNumber": 742,
+    "name": "Cutiefly",
+    "slug": "cutiefly"
+  },
+  {
+    "dexNumber": 743,
+    "name": "Ribombee",
+    "slug": "ribombee"
+  },
+  {
+    "dexNumber": 744,
+    "name": "Rockruff",
+    "slug": "rockruff"
+  },
+  {
+    "dexNumber": 745,
+    "name": "Lycanroc",
+    "slug": "lycanroc"
+  },
+  {
+    "dexNumber": 746,
+    "name": "Wishiwashi",
+    "slug": "wishiwashi"
+  },
+  {
+    "dexNumber": 747,
+    "name": "Mareanie",
+    "slug": "mareanie"
+  },
+  {
+    "dexNumber": 748,
+    "name": "Toxapex",
+    "slug": "toxapex"
+  },
+  {
+    "dexNumber": 749,
+    "name": "Mudbray",
+    "slug": "mudbray"
+  },
+  {
+    "dexNumber": 750,
+    "name": "Mudsdale",
+    "slug": "mudsdale"
+  },
+  {
+    "dexNumber": 751,
+    "name": "Dewpider",
+    "slug": "dewpider"
+  },
+  {
+    "dexNumber": 752,
+    "name": "Araquanid",
+    "slug": "araquanid"
+  },
+  {
+    "dexNumber": 753,
+    "name": "Fomantis",
+    "slug": "fomantis"
+  },
+  {
+    "dexNumber": 754,
+    "name": "Lurantis",
+    "slug": "lurantis"
+  },
+  {
+    "dexNumber": 755,
+    "name": "Morelull",
+    "slug": "morelull"
+  },
+  {
+    "dexNumber": 756,
+    "name": "Shiinotic",
+    "slug": "shiinotic"
+  },
+  {
+    "dexNumber": 757,
+    "name": "Salandit",
+    "slug": "salandit"
+  },
+  {
+    "dexNumber": 758,
+    "name": "Salazzle",
+    "slug": "salazzle"
+  },
+  {
+    "dexNumber": 759,
+    "name": "Stufful",
+    "slug": "stufful"
+  },
+  {
+    "dexNumber": 760,
+    "name": "Bewear",
+    "slug": "bewear"
+  },
+  {
+    "dexNumber": 761,
+    "name": "Bounsweet",
+    "slug": "bounsweet"
+  },
+  {
+    "dexNumber": 762,
+    "name": "Steenee",
+    "slug": "steenee"
+  },
+  {
+    "dexNumber": 763,
+    "name": "Tsareena",
+    "slug": "tsareena"
+  },
+  {
+    "dexNumber": 764,
+    "name": "Comfey",
+    "slug": "comfey"
+  },
+  {
+    "dexNumber": 765,
+    "name": "Oranguru",
+    "slug": "oranguru"
+  },
+  {
+    "dexNumber": 766,
+    "name": "Passimian",
+    "slug": "passimian"
+  },
+  {
+    "dexNumber": 767,
+    "name": "Wimpod",
+    "slug": "wimpod"
+  },
+  {
+    "dexNumber": 768,
+    "name": "Golisopod",
+    "slug": "golisopod"
+  },
+  {
+    "dexNumber": 769,
+    "name": "Sandygast",
+    "slug": "sandygast"
+  },
+  {
+    "dexNumber": 770,
+    "name": "Palossand",
+    "slug": "palossand"
+  },
+  {
+    "dexNumber": 771,
+    "name": "Pyukumuku",
+    "slug": "pyukumuku"
+  },
+  {
+    "dexNumber": 772,
+    "name": "Type: Null",
+    "slug": "type-null"
+  },
+  {
+    "dexNumber": 773,
+    "name": "Silvally",
+    "slug": "silvally"
+  },
+  {
+    "dexNumber": 774,
+    "name": "Minior",
+    "slug": "minior"
+  },
+  {
+    "dexNumber": 775,
+    "name": "Komala",
+    "slug": "komala"
+  },
+  {
+    "dexNumber": 776,
+    "name": "Turtonator",
+    "slug": "turtonator"
+  },
+  {
+    "dexNumber": 777,
+    "name": "Togedemaru",
+    "slug": "togedemaru"
+  },
+  {
+    "dexNumber": 778,
+    "name": "Mimikyu",
+    "slug": "mimikyu"
+  },
+  {
+    "dexNumber": 779,
+    "name": "Bruxish",
+    "slug": "bruxish"
+  },
+  {
+    "dexNumber": 780,
+    "name": "Drampa",
+    "slug": "drampa"
+  },
+  {
+    "dexNumber": 781,
+    "name": "Dhelmise",
+    "slug": "dhelmise"
+  },
+  {
+    "dexNumber": 782,
+    "name": "Jangmo-o",
+    "slug": "jangmo-o"
+  },
+  {
+    "dexNumber": 783,
+    "name": "Hakamo-o",
+    "slug": "hakamo-o"
+  },
+  {
+    "dexNumber": 784,
+    "name": "Kommo-o",
+    "slug": "kommo-o"
+  },
+  {
+    "dexNumber": 785,
+    "name": "Tapu Koko",
+    "slug": "tapu-koko"
+  },
+  {
+    "dexNumber": 786,
+    "name": "Tapu Lele",
+    "slug": "tapu-lele"
+  },
+  {
+    "dexNumber": 787,
+    "name": "Tapu Bulu",
+    "slug": "tapu-bulu"
+  },
+  {
+    "dexNumber": 788,
+    "name": "Tapu Fini",
+    "slug": "tapu-fini"
+  },
+  {
+    "dexNumber": 789,
+    "name": "Cosmog",
+    "slug": "cosmog"
+  },
+  {
+    "dexNumber": 790,
+    "name": "Cosmoem",
+    "slug": "cosmoem"
+  },
+  {
+    "dexNumber": 791,
+    "name": "Solgaleo",
+    "slug": "solgaleo"
+  },
+  {
+    "dexNumber": 792,
+    "name": "Lunala",
+    "slug": "lunala"
+  },
+  {
+    "dexNumber": 793,
+    "name": "Nihilego",
+    "slug": "nihilego"
+  },
+  {
+    "dexNumber": 794,
+    "name": "Buzzwole",
+    "slug": "buzzwole"
+  },
+  {
+    "dexNumber": 795,
+    "name": "Pheromosa",
+    "slug": "pheromosa"
+  },
+  {
+    "dexNumber": 796,
+    "name": "Xurkitree",
+    "slug": "xurkitree"
+  },
+  {
+    "dexNumber": 797,
+    "name": "Celesteela",
+    "slug": "celesteela"
+  },
+  {
+    "dexNumber": 798,
+    "name": "Kartana",
+    "slug": "kartana"
+  },
+  {
+    "dexNumber": 799,
+    "name": "Guzzlord",
+    "slug": "guzzlord"
+  },
+  {
+    "dexNumber": 800,
+    "name": "Necrozma",
+    "slug": "necrozma"
+  },
+  {
+    "dexNumber": 801,
+    "name": "Magearna",
+    "slug": "magearna"
+  },
+  {
+    "dexNumber": 802,
+    "name": "Marshadow",
+    "slug": "marshadow"
+  },
+  {
+    "dexNumber": 803,
+    "name": "Poipole",
+    "slug": "poipole"
+  },
+  {
+    "dexNumber": 804,
+    "name": "Naganadel",
+    "slug": "naganadel"
+  },
+  {
+    "dexNumber": 805,
+    "name": "Stakataka",
+    "slug": "stakataka"
+  },
+  {
+    "dexNumber": 806,
+    "name": "Blacephalon",
+    "slug": "blacephalon"
+  },
+  {
+    "dexNumber": 807,
+    "name": "Zeraora",
+    "slug": "zeraora"
+  },
+  {
+    "dexNumber": 808,
+    "name": "Meltan",
+    "slug": "meltan"
+  },
+  {
+    "dexNumber": 809,
+    "name": "Melmetal",
+    "slug": "melmetal"
+  },
+  {
+    "dexNumber": 810,
+    "name": "Grookey",
+    "slug": "grookey"
+  },
+  {
+    "dexNumber": 811,
+    "name": "Thwackey",
+    "slug": "thwackey"
+  },
+  {
+    "dexNumber": 812,
+    "name": "Rillaboom",
+    "slug": "rillaboom"
+  },
+  {
+    "dexNumber": 813,
+    "name": "Scorbunny",
+    "slug": "scorbunny"
+  },
+  {
+    "dexNumber": 814,
+    "name": "Raboot",
+    "slug": "raboot"
+  },
+  {
+    "dexNumber": 815,
+    "name": "Cinderace",
+    "slug": "cinderace"
+  },
+  {
+    "dexNumber": 816,
+    "name": "Sobble",
+    "slug": "sobble"
+  },
+  {
+    "dexNumber": 817,
+    "name": "Drizzile",
+    "slug": "drizzile"
+  },
+  {
+    "dexNumber": 818,
+    "name": "Inteleon",
+    "slug": "inteleon"
+  },
+  {
+    "dexNumber": 819,
+    "name": "Skwovet",
+    "slug": "skwovet"
+  },
+  {
+    "dexNumber": 820,
+    "name": "Greedent",
+    "slug": "greedent"
+  },
+  {
+    "dexNumber": 821,
+    "name": "Rookidee",
+    "slug": "rookidee"
+  },
+  {
+    "dexNumber": 822,
+    "name": "Corvisquire",
+    "slug": "corvisquire"
+  },
+  {
+    "dexNumber": 823,
+    "name": "Corviknight",
+    "slug": "corviknight"
+  },
+  {
+    "dexNumber": 824,
+    "name": "Blipbug",
+    "slug": "blipbug"
+  },
+  {
+    "dexNumber": 825,
+    "name": "Dottler",
+    "slug": "dottler"
+  },
+  {
+    "dexNumber": 826,
+    "name": "Orbeetle",
+    "slug": "orbeetle"
+  },
+  {
+    "dexNumber": 827,
+    "name": "Nickit",
+    "slug": "nickit"
+  },
+  {
+    "dexNumber": 828,
+    "name": "Thievul",
+    "slug": "thievul"
+  },
+  {
+    "dexNumber": 829,
+    "name": "Gossifleur",
+    "slug": "gossifleur"
+  },
+  {
+    "dexNumber": 830,
+    "name": "Eldegoss",
+    "slug": "eldegoss"
+  },
+  {
+    "dexNumber": 831,
+    "name": "Wooloo",
+    "slug": "wooloo"
+  },
+  {
+    "dexNumber": 832,
+    "name": "Dubwool",
+    "slug": "dubwool"
+  },
+  {
+    "dexNumber": 833,
+    "name": "Chewtle",
+    "slug": "chewtle"
+  },
+  {
+    "dexNumber": 834,
+    "name": "Drednaw",
+    "slug": "drednaw"
+  },
+  {
+    "dexNumber": 835,
+    "name": "Yamper",
+    "slug": "yamper"
+  },
+  {
+    "dexNumber": 836,
+    "name": "Boltund",
+    "slug": "boltund"
+  },
+  {
+    "dexNumber": 837,
+    "name": "Rolycoly",
+    "slug": "rolycoly"
+  },
+  {
+    "dexNumber": 838,
+    "name": "Carkol",
+    "slug": "carkol"
+  },
+  {
+    "dexNumber": 839,
+    "name": "Coalossal",
+    "slug": "coalossal"
+  },
+  {
+    "dexNumber": 840,
+    "name": "Applin",
+    "slug": "applin"
+  },
+  {
+    "dexNumber": 841,
+    "name": "Flapple",
+    "slug": "flapple"
+  },
+  {
+    "dexNumber": 842,
+    "name": "Appletun",
+    "slug": "appletun"
+  },
+  {
+    "dexNumber": 843,
+    "name": "Silicobra",
+    "slug": "silicobra"
+  },
+  {
+    "dexNumber": 844,
+    "name": "Sandaconda",
+    "slug": "sandaconda"
+  },
+  {
+    "dexNumber": 845,
+    "name": "Cramorant",
+    "slug": "cramorant"
+  },
+  {
+    "dexNumber": 846,
+    "name": "Arrokuda",
+    "slug": "arrokuda"
+  },
+  {
+    "dexNumber": 847,
+    "name": "Barraskewda",
+    "slug": "barraskewda"
+  },
+  {
+    "dexNumber": 848,
+    "name": "Toxel",
+    "slug": "toxel"
+  },
+  {
+    "dexNumber": 849,
+    "name": "Toxtricity",
+    "slug": "toxtricity"
+  },
+  {
+    "dexNumber": 850,
+    "name": "Sizzlipede",
+    "slug": "sizzlipede"
+  },
+  {
+    "dexNumber": 851,
+    "name": "Centiskorch",
+    "slug": "centiskorch"
+  },
+  {
+    "dexNumber": 852,
+    "name": "Clobbopus",
+    "slug": "clobbopus"
+  },
+  {
+    "dexNumber": 853,
+    "name": "Grapploct",
+    "slug": "grapploct"
+  },
+  {
+    "dexNumber": 854,
+    "name": "Sinistea",
+    "slug": "sinistea"
+  },
+  {
+    "dexNumber": 855,
+    "name": "Polteageist",
+    "slug": "polteageist"
+  },
+  {
+    "dexNumber": 856,
+    "name": "Hatenna",
+    "slug": "hatenna"
+  },
+  {
+    "dexNumber": 857,
+    "name": "Hattrem",
+    "slug": "hattrem"
+  },
+  {
+    "dexNumber": 858,
+    "name": "Hatterene",
+    "slug": "hatterene"
+  },
+  {
+    "dexNumber": 859,
+    "name": "Impidimp",
+    "slug": "impidimp"
+  },
+  {
+    "dexNumber": 860,
+    "name": "Morgrem",
+    "slug": "morgrem"
+  },
+  {
+    "dexNumber": 861,
+    "name": "Grimmsnarl",
+    "slug": "grimmsnarl"
+  },
+  {
+    "dexNumber": 862,
+    "name": "Obstagoon",
+    "slug": "obstagoon"
+  },
+  {
+    "dexNumber": 863,
+    "name": "Perrserker",
+    "slug": "perrserker"
+  },
+  {
+    "dexNumber": 864,
+    "name": "Cursola",
+    "slug": "cursola"
+  },
+  {
+    "dexNumber": 865,
+    "name": "Sirfetch’d",
+    "slug": "sirfetchd"
+  },
+  {
+    "dexNumber": 866,
+    "name": "Mr. Rime",
+    "slug": "mr-rime"
+  },
+  {
+    "dexNumber": 867,
+    "name": "Runerigus",
+    "slug": "runerigus"
+  },
+  {
+    "dexNumber": 868,
+    "name": "Milcery",
+    "slug": "milcery"
+  },
+  {
+    "dexNumber": 869,
+    "name": "Alcremie",
+    "slug": "alcremie"
+  },
+  {
+    "dexNumber": 870,
+    "name": "Falinks",
+    "slug": "falinks"
+  },
+  {
+    "dexNumber": 871,
+    "name": "Pincurchin",
+    "slug": "pincurchin"
+  },
+  {
+    "dexNumber": 872,
+    "name": "Snom",
+    "slug": "snom"
+  },
+  {
+    "dexNumber": 873,
+    "name": "Frosmoth",
+    "slug": "frosmoth"
+  },
+  {
+    "dexNumber": 874,
+    "name": "Stonjourner",
+    "slug": "stonjourner"
+  },
+  {
+    "dexNumber": 875,
+    "name": "Eiscue",
+    "slug": "eiscue"
+  },
+  {
+    "dexNumber": 876,
+    "name": "Indeedee",
+    "slug": "indeedee"
+  },
+  {
+    "dexNumber": 877,
+    "name": "Morpeko",
+    "slug": "morpeko"
+  },
+  {
+    "dexNumber": 878,
+    "name": "Cufant",
+    "slug": "cufant"
+  },
+  {
+    "dexNumber": 879,
+    "name": "Copperajah",
+    "slug": "copperajah"
+  },
+  {
+    "dexNumber": 880,
+    "name": "Dracozolt",
+    "slug": "dracozolt"
+  },
+  {
+    "dexNumber": 881,
+    "name": "Arctozolt",
+    "slug": "arctozolt"
+  },
+  {
+    "dexNumber": 882,
+    "name": "Dracovish",
+    "slug": "dracovish"
+  },
+  {
+    "dexNumber": 883,
+    "name": "Arctovish",
+    "slug": "arctovish"
+  },
+  {
+    "dexNumber": 884,
+    "name": "Duraludon",
+    "slug": "duraludon"
+  },
+  {
+    "dexNumber": 885,
+    "name": "Dreepy",
+    "slug": "dreepy"
+  },
+  {
+    "dexNumber": 886,
+    "name": "Drakloak",
+    "slug": "drakloak"
+  },
+  {
+    "dexNumber": 887,
+    "name": "Dragapult",
+    "slug": "dragapult"
+  },
+  {
+    "dexNumber": 888,
+    "name": "Zacian",
+    "slug": "zacian"
+  },
+  {
+    "dexNumber": 889,
+    "name": "Zamazenta",
+    "slug": "zamazenta"
+  },
+  {
+    "dexNumber": 890,
+    "name": "Eternatus",
+    "slug": "eternatus"
+  },
+  {
+    "dexNumber": 891,
+    "name": "Kubfu",
+    "slug": "kubfu"
+  },
+  {
+    "dexNumber": 892,
+    "name": "Urshifu",
+    "slug": "urshifu"
+  },
+  {
+    "dexNumber": 893,
+    "name": "Zarude",
+    "slug": "zarude"
+  },
+  {
+    "dexNumber": 894,
+    "name": "Regieleki",
+    "slug": "regieleki"
+  },
+  {
+    "dexNumber": 895,
+    "name": "Regidrago",
+    "slug": "regidrago"
+  },
+  {
+    "dexNumber": 896,
+    "name": "Glastrier",
+    "slug": "glastrier"
+  },
+  {
+    "dexNumber": 897,
+    "name": "Spectrier",
+    "slug": "spectrier"
+  },
+  {
+    "dexNumber": 898,
+    "name": "Calyrex",
+    "slug": "calyrex"
+  },
+  {
+    "dexNumber": 899,
+    "name": "Wyrdeer",
+    "slug": "wyrdeer"
+  },
+  {
+    "dexNumber": 900,
+    "name": "Kleavor",
+    "slug": "kleavor"
+  },
+  {
+    "dexNumber": 901,
+    "name": "Ursaluna",
+    "slug": "ursaluna"
+  },
+  {
+    "dexNumber": 902,
+    "name": "Basculegion",
+    "slug": "basculegion"
+  },
+  {
+    "dexNumber": 903,
+    "name": "Sneasler",
+    "slug": "sneasler"
+  },
+  {
+    "dexNumber": 904,
+    "name": "Overqwil",
+    "slug": "overqwil"
+  },
+  {
+    "dexNumber": 905,
+    "name": "Enamorus",
+    "slug": "enamorus"
+  },
+  {
+    "dexNumber": 906,
+    "name": "Sprigatito",
+    "slug": "sprigatito"
+  },
+  {
+    "dexNumber": 907,
+    "name": "Floragato",
+    "slug": "floragato"
+  },
+  {
+    "dexNumber": 908,
+    "name": "Meowscarada",
+    "slug": "meowscarada"
+  },
+  {
+    "dexNumber": 909,
+    "name": "Fuecoco",
+    "slug": "fuecoco"
+  },
+  {
+    "dexNumber": 910,
+    "name": "Crocalor",
+    "slug": "crocalor"
+  },
+  {
+    "dexNumber": 911,
+    "name": "Skeledirge",
+    "slug": "skeledirge"
+  },
+  {
+    "dexNumber": 912,
+    "name": "Quaxly",
+    "slug": "quaxly"
+  },
+  {
+    "dexNumber": 913,
+    "name": "Quaxwell",
+    "slug": "quaxwell"
+  },
+  {
+    "dexNumber": 914,
+    "name": "Quaquaval",
+    "slug": "quaquaval"
+  },
+  {
+    "dexNumber": 915,
+    "name": "Lechonk",
+    "slug": "lechonk"
+  },
+  {
+    "dexNumber": 916,
+    "name": "Oinkologne",
+    "slug": "oinkologne"
+  },
+  {
+    "dexNumber": 917,
+    "name": "Tarountula",
+    "slug": "tarountula"
+  },
+  {
+    "dexNumber": 918,
+    "name": "Spidops",
+    "slug": "spidops"
+  },
+  {
+    "dexNumber": 919,
+    "name": "Nymble",
+    "slug": "nymble"
+  },
+  {
+    "dexNumber": 920,
+    "name": "Lokix",
+    "slug": "lokix"
+  },
+  {
+    "dexNumber": 921,
+    "name": "Pawmi",
+    "slug": "pawmi"
+  },
+  {
+    "dexNumber": 922,
+    "name": "Pawmo",
+    "slug": "pawmo"
+  },
+  {
+    "dexNumber": 923,
+    "name": "Pawmot",
+    "slug": "pawmot"
+  },
+  {
+    "dexNumber": 924,
+    "name": "Tandemaus",
+    "slug": "tandemaus"
+  },
+  {
+    "dexNumber": 925,
+    "name": "Maushold",
+    "slug": "maushold"
+  },
+  {
+    "dexNumber": 926,
+    "name": "Fidough",
+    "slug": "fidough"
+  },
+  {
+    "dexNumber": 927,
+    "name": "Dachsbun",
+    "slug": "dachsbun"
+  },
+  {
+    "dexNumber": 928,
+    "name": "Smoliv",
+    "slug": "smoliv"
+  },
+  {
+    "dexNumber": 929,
+    "name": "Dolliv",
+    "slug": "dolliv"
+  },
+  {
+    "dexNumber": 930,
+    "name": "Arboliva",
+    "slug": "arboliva"
+  },
+  {
+    "dexNumber": 931,
+    "name": "Squawkabilly",
+    "slug": "squawkabilly"
+  },
+  {
+    "dexNumber": 932,
+    "name": "Nacli",
+    "slug": "nacli"
+  },
+  {
+    "dexNumber": 933,
+    "name": "Naclstack",
+    "slug": "naclstack"
+  },
+  {
+    "dexNumber": 934,
+    "name": "Garganacl",
+    "slug": "garganacl"
+  },
+  {
+    "dexNumber": 935,
+    "name": "Charcadet",
+    "slug": "charcadet"
+  },
+  {
+    "dexNumber": 936,
+    "name": "Armarouge",
+    "slug": "armarouge"
+  },
+  {
+    "dexNumber": 937,
+    "name": "Ceruledge",
+    "slug": "ceruledge"
+  },
+  {
+    "dexNumber": 938,
+    "name": "Tadbulb",
+    "slug": "tadbulb"
+  },
+  {
+    "dexNumber": 939,
+    "name": "Bellibolt",
+    "slug": "bellibolt"
+  },
+  {
+    "dexNumber": 940,
+    "name": "Wattrel",
+    "slug": "wattrel"
+  },
+  {
+    "dexNumber": 941,
+    "name": "Kilowattrel",
+    "slug": "kilowattrel"
+  },
+  {
+    "dexNumber": 942,
+    "name": "Maschiff",
+    "slug": "maschiff"
+  },
+  {
+    "dexNumber": 943,
+    "name": "Mabosstiff",
+    "slug": "mabosstiff"
+  },
+  {
+    "dexNumber": 944,
+    "name": "Shroodle",
+    "slug": "shroodle"
+  },
+  {
+    "dexNumber": 945,
+    "name": "Grafaiai",
+    "slug": "grafaiai"
+  },
+  {
+    "dexNumber": 946,
+    "name": "Bramblin",
+    "slug": "bramblin"
+  },
+  {
+    "dexNumber": 947,
+    "name": "Brambleghast",
+    "slug": "brambleghast"
+  },
+  {
+    "dexNumber": 948,
+    "name": "Toedscool",
+    "slug": "toedscool"
+  },
+  {
+    "dexNumber": 949,
+    "name": "Toedscruel",
+    "slug": "toedscruel"
+  },
+  {
+    "dexNumber": 950,
+    "name": "Klawf",
+    "slug": "klawf"
+  },
+  {
+    "dexNumber": 951,
+    "name": "Capsakid",
+    "slug": "capsakid"
+  },
+  {
+    "dexNumber": 952,
+    "name": "Scovillain",
+    "slug": "scovillain"
+  },
+  {
+    "dexNumber": 953,
+    "name": "Rellor",
+    "slug": "rellor"
+  },
+  {
+    "dexNumber": 954,
+    "name": "Rabsca",
+    "slug": "rabsca"
+  },
+  {
+    "dexNumber": 955,
+    "name": "Flittle",
+    "slug": "flittle"
+  },
+  {
+    "dexNumber": 956,
+    "name": "Espathra",
+    "slug": "espathra"
+  },
+  {
+    "dexNumber": 957,
+    "name": "Tinkatink",
+    "slug": "tinkatink"
+  },
+  {
+    "dexNumber": 958,
+    "name": "Tinkatuff",
+    "slug": "tinkatuff"
+  },
+  {
+    "dexNumber": 959,
+    "name": "Tinkaton",
+    "slug": "tinkaton"
+  },
+  {
+    "dexNumber": 960,
+    "name": "Wiglett",
+    "slug": "wiglett"
+  },
+  {
+    "dexNumber": 961,
+    "name": "Wugtrio",
+    "slug": "wugtrio"
+  },
+  {
+    "dexNumber": 962,
+    "name": "Bombirdier",
+    "slug": "bombirdier"
+  },
+  {
+    "dexNumber": 963,
+    "name": "Finizen",
+    "slug": "finizen"
+  },
+  {
+    "dexNumber": 964,
+    "name": "Palafin",
+    "slug": "palafin"
+  },
+  {
+    "dexNumber": 965,
+    "name": "Varoom",
+    "slug": "varoom"
+  },
+  {
+    "dexNumber": 966,
+    "name": "Revavroom",
+    "slug": "revavroom"
+  },
+  {
+    "dexNumber": 967,
+    "name": "Cyclizar",
+    "slug": "cyclizar"
+  },
+  {
+    "dexNumber": 968,
+    "name": "Orthworm",
+    "slug": "orthworm"
+  },
+  {
+    "dexNumber": 969,
+    "name": "Glimmet",
+    "slug": "glimmet"
+  },
+  {
+    "dexNumber": 970,
+    "name": "Glimmora",
+    "slug": "glimmora"
+  },
+  {
+    "dexNumber": 971,
+    "name": "Greavard",
+    "slug": "greavard"
+  },
+  {
+    "dexNumber": 972,
+    "name": "Houndstone",
+    "slug": "houndstone"
+  },
+  {
+    "dexNumber": 973,
+    "name": "Flamigo",
+    "slug": "flamigo"
+  },
+  {
+    "dexNumber": 974,
+    "name": "Cetoddle",
+    "slug": "cetoddle"
+  },
+  {
+    "dexNumber": 975,
+    "name": "Cetitan",
+    "slug": "cetitan"
+  },
+  {
+    "dexNumber": 976,
+    "name": "Veluza",
+    "slug": "veluza"
+  },
+  {
+    "dexNumber": 977,
+    "name": "Dondozo",
+    "slug": "dondozo"
+  },
+  {
+    "dexNumber": 978,
+    "name": "Tatsugiri",
+    "slug": "tatsugiri"
+  },
+  {
+    "dexNumber": 979,
+    "name": "Annihilape",
+    "slug": "annihilape"
+  },
+  {
+    "dexNumber": 980,
+    "name": "Clodsire",
+    "slug": "clodsire"
+  },
+  {
+    "dexNumber": 981,
+    "name": "Farigiraf",
+    "slug": "farigiraf"
+  },
+  {
+    "dexNumber": 982,
+    "name": "Dudunsparce",
+    "slug": "dudunsparce"
+  },
+  {
+    "dexNumber": 983,
+    "name": "Kingambit",
+    "slug": "kingambit"
+  },
+  {
+    "dexNumber": 984,
+    "name": "Great Tusk",
+    "slug": "great-tusk"
+  },
+  {
+    "dexNumber": 985,
+    "name": "Scream Tail",
+    "slug": "scream-tail"
+  },
+  {
+    "dexNumber": 986,
+    "name": "Brute Bonnet",
+    "slug": "brute-bonnet"
+  },
+  {
+    "dexNumber": 987,
+    "name": "Flutter Mane",
+    "slug": "flutter-mane"
+  },
+  {
+    "dexNumber": 988,
+    "name": "Slither Wing",
+    "slug": "slither-wing"
+  },
+  {
+    "dexNumber": 989,
+    "name": "Sandy Shocks",
+    "slug": "sandy-shocks"
+  },
+  {
+    "dexNumber": 990,
+    "name": "Iron Treads",
+    "slug": "iron-treads"
+  },
+  {
+    "dexNumber": 991,
+    "name": "Iron Bundle",
+    "slug": "iron-bundle"
+  },
+  {
+    "dexNumber": 992,
+    "name": "Iron Hands",
+    "slug": "iron-hands"
+  },
+  {
+    "dexNumber": 993,
+    "name": "Iron Jugulis",
+    "slug": "iron-jugulis"
+  },
+  {
+    "dexNumber": 994,
+    "name": "Iron Moth",
+    "slug": "iron-moth"
+  },
+  {
+    "dexNumber": 995,
+    "name": "Iron Thorns",
+    "slug": "iron-thorns"
+  },
+  {
+    "dexNumber": 996,
+    "name": "Frigibax",
+    "slug": "frigibax"
+  },
+  {
+    "dexNumber": 997,
+    "name": "Arctibax",
+    "slug": "arctibax"
+  },
+  {
+    "dexNumber": 998,
+    "name": "Baxcalibur",
+    "slug": "baxcalibur"
+  },
+  {
+    "dexNumber": 999,
+    "name": "Gimmighoul",
+    "slug": "gimmighoul"
+  },
+  {
+    "dexNumber": 1000,
+    "name": "Gholdengo",
+    "slug": "gholdengo"
+  },
+  {
+    "dexNumber": 1001,
+    "name": "Wo-Chien",
+    "slug": "wo-chien"
+  },
+  {
+    "dexNumber": 1002,
+    "name": "Chien-Pao",
+    "slug": "chien-pao"
+  },
+  {
+    "dexNumber": 1003,
+    "name": "Ting-Lu",
+    "slug": "ting-lu"
+  },
+  {
+    "dexNumber": 1004,
+    "name": "Chi-Yu",
+    "slug": "chi-yu"
+  },
+  {
+    "dexNumber": 1005,
+    "name": "Roaring Moon",
+    "slug": "roaring-moon"
+  },
+  {
+    "dexNumber": 1006,
+    "name": "Iron Valiant",
+    "slug": "iron-valiant"
+  },
+  {
+    "dexNumber": 1007,
+    "name": "Koraidon",
+    "slug": "koraidon"
+  },
+  {
+    "dexNumber": 1008,
+    "name": "Miraidon",
+    "slug": "miraidon"
+  },
+  {
+    "dexNumber": 1009,
+    "name": "Walking Wake",
+    "slug": "walking-wake"
+  },
+  {
+    "dexNumber": 1010,
+    "name": "Iron Leaves",
+    "slug": "iron-leaves"
+  },
+  {
+    "dexNumber": 1011,
+    "name": "Dipplin",
+    "slug": "dipplin"
+  },
+  {
+    "dexNumber": 1012,
+    "name": "Poltchageist",
+    "slug": "poltchageist"
+  },
+  {
+    "dexNumber": 1013,
+    "name": "Sinistcha",
+    "slug": "sinistcha"
+  },
+  {
+    "dexNumber": 1014,
+    "name": "Okidogi",
+    "slug": "okidogi"
+  },
+  {
+    "dexNumber": 1015,
+    "name": "Munkidori",
+    "slug": "munkidori"
+  },
+  {
+    "dexNumber": 1016,
+    "name": "Fezandipiti",
+    "slug": "fezandipiti"
+  },
+  {
+    "dexNumber": 1017,
+    "name": "Ogerpon",
+    "slug": "ogerpon"
+  },
+  {
+    "dexNumber": 1018,
+    "name": "Archaludon",
+    "slug": "archaludon"
+  },
+  {
+    "dexNumber": 1019,
+    "name": "Hydrapple",
+    "slug": "hydrapple"
+  },
+  {
+    "dexNumber": 1020,
+    "name": "Gouging Fire",
+    "slug": "gouging-fire"
+  },
+  {
+    "dexNumber": 1021,
+    "name": "Raging Bolt",
+    "slug": "raging-bolt"
+  },
+  {
+    "dexNumber": 1022,
+    "name": "Iron Boulder",
+    "slug": "iron-boulder"
+  },
+  {
+    "dexNumber": 1023,
+    "name": "Iron Crown",
+    "slug": "iron-crown"
+  },
+  {
+    "dexNumber": 1024,
+    "name": "Terapagos",
+    "slug": "terapagos"
+  },
+  {
+    "dexNumber": 1025,
+    "name": "Pecharunt",
+    "slug": "pecharunt"
   }
 ]

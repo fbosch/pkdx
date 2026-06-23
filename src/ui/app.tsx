@@ -164,7 +164,7 @@ export function App({ initialQuery = "", onExit }: AppProps) {
         <KeyHints
           hints={[
             { key: "type", action: "filter" },
-            { key: "shift+j/k", action: "move" },
+            { key: "ctrl+j/k", action: "move" },
             { key: "enter", action: "open" },
             { key: "esc", action: "exit" },
           ]}

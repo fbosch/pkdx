@@ -169,6 +169,13 @@ test("excludes unsupported Gmax varieties from selectable Pokemon Forms", () => 
         {
           is_default: false,
           pokemon: {
+            name: "eevee-starter",
+            url: "https://pokeapi.co/api/v2/pokemon/eevee-starter/",
+          },
+        },
+        {
+          is_default: false,
+          pokemon: {
             name: "eevee-gmax",
             url: "https://pokeapi.co/api/v2/pokemon/eevee-gmax/",
           },
@@ -182,6 +189,13 @@ test("excludes unsupported Gmax varieties from selectable Pokemon Forms", () => 
       pokemonName: "eevee",
       pokemonUrl: "https://pokeapi.co/api/v2/pokemon/133/",
       spriteFormKey: "$",
+    },
+    {
+      displayName: "Eevee Starter",
+      isDefault: false,
+      pokemonName: "eevee-starter",
+      pokemonUrl: "https://pokeapi.co/api/v2/pokemon/eevee-starter/",
+      spriteFormKey: "starter",
     },
   ]);
 });

@@ -53,8 +53,8 @@ const searchKeyHandlers: Record<string, SearchKeyHandler> = {
   backspace: (state) => updateSearchQuery(state, state.query.slice(0, -1)),
   down: (state) => moveSearchSelection(state, 1),
   enter: openSelectedSpecies,
-  J: (state) => moveSearchSelection(state, 1),
-  K: (state) => moveSearchSelection(state, -1),
+  "ctrl+j": (state) => moveSearchSelection(state, 1),
+  "ctrl+k": (state) => moveSearchSelection(state, -1),
   return: openSelectedSpecies,
   up: (state) => moveSearchSelection(state, -1),
 };
@@ -346,6 +346,10 @@ function applySearchKey(state: SearchState, key: AppKey): AppState {
 }
 
 function searchKeyName(key: AppKey): string {
+  if (key.ctrl === true && key.name.length === 1) {
+    return `ctrl+${key.name}`;
+  }
+
   if (key.shift === true && key.name.length === 1) {
     return key.name.toUpperCase();
   }
