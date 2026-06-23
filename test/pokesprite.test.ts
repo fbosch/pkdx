@@ -1,10 +1,15 @@
 import { expect, test } from "bun:test";
 import { HttpResponse, http } from "msw";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import {
+  cachePokeSpriteAsset,
   parsePokeSpriteMetadata,
   PokeSpriteResourceError,
   pokespriteMetadataQueryKey,
   pokespriteMetadataQueryOptions,
+  pokeSpriteAssetCachePath,
   resolveDefaultPokeSpriteAsset,
   resolvePokeSpriteAsset,
 } from "../src/pokesprite";
@@ -114,6 +119,59 @@ test("resolves form aliases and shiny asset URLs", () => {
     url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/shiny/raticate-alola.png",
   });
 });
+
+test("caches PokeSprite PNG assets by resolved URL", async () => {
+  const cacheDirectory = await mkdtemp(join(tmpdir(), "pkdx-pokesprite-"));
+  const asset = pikachuDefaultSpriteAsset();
+  const pngBytes = new Uint8Array([137, 80, 78, 71]);
+  let requestCount = 0;
+
+  server.use(
+    http.get(asset.url, () => {
+      requestCount += 1;
+      return new HttpResponse(pngBytes);
+    }),
+  );
+
+  try {
+    const cached = await cachePokeSpriteAsset(asset, { cacheDirectory });
+    const reused = await cachePokeSpriteAsset(asset, { cacheDirectory });
+
+    expect(cached.filePath).toBe(
+      pokeSpriteAssetCachePath(cacheDirectory, asset.url),
+    );
+    expect(reused.filePath).toBe(cached.filePath);
+    expect(
+      new Uint8Array(await Bun.file(cached.filePath).arrayBuffer()),
+    ).toEqual(pngBytes);
+    expect(requestCount).toBe(1);
+  } finally {
+    await rm(cacheDirectory, { force: true, recursive: true });
+  }
+});
+
+test("turns failed PokeSprite asset responses into boundary errors", async () => {
+  const cacheDirectory = await mkdtemp(join(tmpdir(), "pkdx-pokesprite-"));
+  const asset = pikachuDefaultSpriteAsset();
+
+  server.use(
+    http.get(asset.url, () => new HttpResponse("nope", { status: 503 })),
+  );
+
+  try {
+    await expect(
+      cachePokeSpriteAsset(asset, { cacheDirectory }),
+    ).rejects.toThrow(PokeSpriteResourceError);
+  } finally {
+    await rm(cacheDirectory, { force: true, recursive: true });
+  }
+});
+
+function pikachuDefaultSpriteAsset() {
+  const metadata = parsePokeSpriteMetadata(pokespritePokemonMetadata);
+  const pikachu = findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu");
+  return resolveDefaultPokeSpriteAsset(metadata, pikachu);
+}
 
 function throwMissingSpecies(slug: string): never {
   throw new Error(`Missing test species: ${slug}`);

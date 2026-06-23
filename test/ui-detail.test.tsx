@@ -1,7 +1,11 @@
 import { expect, test } from "bun:test";
 import { isValidElement } from "react";
 import { findExactSpecies } from "../src/search";
-import { DamageTakenPanel, DetailLoadingSkeleton } from "../src/ui/app";
+import {
+  DamageTakenPanel,
+  DetailLoadingSkeleton,
+  PokemonSpriteArtwork,
+} from "../src/ui/app";
 
 test("renders Damage Taken panel with matchup entries", () => {
   const element = DamageTakenPanel({
@@ -35,6 +39,24 @@ test("renders full-size Detail loading skeleton", () => {
   }
 
   const element = DetailLoadingSkeleton({ species: pikachu });
+
+  expect(element).toBeDefined();
+  expect(isValidElement(element)).toBe(true);
+});
+
+test("renders terminal sprite artwork rows", () => {
+  const element = PokemonSpriteArtwork({
+    sprite: {
+      height: 1,
+      rows: [
+        [
+          { bg: 196, char: "▄", fg: 21 },
+          { char: "▀", fg: 46 },
+        ],
+      ],
+      width: 2,
+    },
+  });
 
   expect(element).toBeDefined();
   expect(isValidElement(element)).toBe(true);

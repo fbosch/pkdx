@@ -1,4 +1,4 @@
-import type { KeyEvent } from "@opentui/core";
+import { RGBA, type KeyEvent } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -15,7 +15,10 @@ import {
   pokemonAbilityDetailsQueryOptions,
   pokemonDetailQueryOptions,
 } from "../pokemon-detail";
+import { pokespriteRenderedSpriteQueryOptions } from "../pokesprite";
 import { minimumSearchQueryLength, searchResults } from "../search";
+import type { SpeciesIndexEntry } from "../search";
+import type { RenderedSprite, SpriteCell } from "../sprite-rendering";
 import type { DamageTaken, DamageTakenEntry } from "../type-matchups";
 import {
   DetailCardTitle,
@@ -34,6 +37,11 @@ import {
 import { colors, textStyles } from "./design-tokens";
 
 const detailLoadingGraceMs = 120;
+const detailInfoPanelWidth = 53;
+const detailSpriteCanvasHeight = 15;
+const detailSpriteCanvasWidth = 40;
+const detailSpritePanelHeight = 17;
+const detailSpritePanelWidth = 42;
 
 type AppProps = {
   initialQuery?: string;
@@ -195,6 +203,7 @@ function DetailView({
         abilityViewerOpen={state.detailOverlay === "abilities"}
         detail={state.detail.detail}
         errorMessage={state.status === "error" ? state.errorMessage : undefined}
+        loadedSpecies={state.detail.species}
         loadingSpecies={state.status === "loading" ? state.species : undefined}
         queryClient={queryClient}
       />
@@ -340,10 +349,10 @@ export function DetailLoadingSkeleton({
             style={{
               alignItems: "center",
               flexDirection: "column",
-              height: 16,
+              height: detailSpritePanelHeight,
               justifyContent: "center",
               paddingX: 1,
-              width: 30,
+              width: detailSpritePanelWidth,
             }}
           >
             <box
@@ -351,9 +360,9 @@ export function DetailLoadingSkeleton({
                 alignItems: "center",
                 flexDirection: "column",
                 gap: 1,
-                height: 13,
+                height: detailSpriteCanvasHeight,
                 justifyContent: "center",
-                width: 18,
+                width: detailSpriteCanvasWidth,
               }}
             >
               <SkeletonText width={10} />
@@ -361,13 +370,13 @@ export function DetailLoadingSkeleton({
               <SkeletonText width={12} />
             </box>
           </box>
-          <box style={{ flexDirection: "column", width: 65 }}>
-            <DetailPanel minHeight={7} width={65}>
-              <SkeletonText width={58} />
-              <SkeletonText width={52} />
-              <SkeletonText width={44} />
+          <box style={{ flexDirection: "column", width: detailInfoPanelWidth }}>
+            <DetailPanel minHeight={7} width={detailInfoPanelWidth}>
+              <SkeletonText width={46} />
+              <SkeletonText width={40} />
+              <SkeletonText width={34} />
             </DetailPanel>
-            <DetailPanel width={65}>
+            <DetailPanel width={detailInfoPanelWidth}>
               {(
                 [
                   ["Species", 20],
@@ -474,6 +483,7 @@ type LoadedDetailViewProps = {
   abilityViewerOpen: boolean;
   detail: PokemonDetail;
   errorMessage: string | undefined;
+  loadedSpecies: SpeciesIndexEntry;
   loadingSpecies: DetailState["species"] | undefined;
   queryClient: ReturnType<typeof useQueryClient>;
 };
@@ -482,6 +492,7 @@ function LoadedDetailView({
   abilityViewerOpen,
   detail,
   errorMessage,
+  loadedSpecies,
   loadingSpecies,
   queryClient,
 }: LoadedDetailViewProps) {
@@ -527,26 +538,22 @@ function LoadedDetailView({
             style={{
               alignItems: "center",
               flexDirection: "column",
-              height: 16,
+              height: detailSpritePanelHeight,
               justifyContent: "center",
               paddingX: 1,
-              width: 30,
+              width: detailSpritePanelWidth,
             }}
           >
-            <box
-              style={{
-                alignItems: "center",
-                height: 13,
-                justifyContent: "center",
-                width: 18,
-              }}
+            <PokemonSpritePanel
+              queryClient={queryClient}
+              species={loadedSpecies}
             />
           </box>
-          <box style={{ flexDirection: "column", width: 65 }}>
-            <DetailPanel minHeight={7} width={65}>
+          <box style={{ flexDirection: "column", width: detailInfoPanelWidth }}>
+            <DetailPanel minHeight={7} width={detailInfoPanelWidth}>
               <text>{detail.flavorText}</text>
             </DetailPanel>
-            <DetailPanel width={65}>
+            <DetailPanel width={detailInfoPanelWidth}>
               <FactRow label="Species" value={detail.species} />
               <FactRow label="Egg Group" value={detail.eggGroups.join(" / ")} />
               <FactRow
@@ -601,6 +608,91 @@ function LoadedDetailView({
       </InstructionFooter>
     </DetailScreen>
   );
+}
+
+type PokemonSpritePanelProps = {
+  queryClient: ReturnType<typeof useQueryClient>;
+  species: SpeciesIndexEntry;
+};
+
+function PokemonSpritePanel({ queryClient, species }: PokemonSpritePanelProps) {
+  const sprite = useQuery(
+    pokespriteRenderedSpriteQueryOptions(species, queryClient),
+  );
+
+  if (sprite.data !== undefined) {
+    return <PokemonSpriteArtwork sprite={sprite.data} />;
+  }
+
+  return (
+    <box
+      style={{
+        alignItems: "center",
+        flexDirection: "column",
+        height: detailSpriteCanvasHeight,
+        justifyContent: "center",
+        width: detailSpriteCanvasWidth,
+      }}
+    >
+      <text fg={colors.muted} attributes={textStyles.muted}>
+        {sprite.isError ? "Sprite unavailable" : "Loading sprite..."}
+      </text>
+    </box>
+  );
+}
+
+export function PokemonSpriteArtwork({ sprite }: { sprite: RenderedSprite }) {
+  return (
+    <box
+      style={{
+        alignItems: "center",
+        flexDirection: "column",
+        height: detailSpriteCanvasHeight,
+        justifyContent: "center",
+        width: detailSpriteCanvasWidth,
+      }}
+    >
+      {sprite.rows.map((row, rowIndex) => (
+        <text key={rowIndex.toString()}>{spriteRowSpans(row)}</text>
+      ))}
+    </box>
+  );
+}
+
+function spriteRowSpans(row: readonly SpriteCell[]) {
+  return groupSpriteCells(row).map((group, index) => (
+    <span
+      key={index.toString()}
+      {...(group.fg === undefined ? {} : { fg: RGBA.fromIndex(group.fg) })}
+      {...(group.bg === undefined ? {} : { bg: RGBA.fromIndex(group.bg) })}
+    >
+      {group.text}
+    </span>
+  ));
+}
+
+function groupSpriteCells(row: readonly SpriteCell[]) {
+  const groups: { bg?: number; fg?: number; text: string }[] = [];
+
+  for (const cell of row) {
+    const current = groups.at(-1);
+    if (
+      current !== undefined &&
+      current.fg === cell.fg &&
+      current.bg === cell.bg
+    ) {
+      current.text = `${current.text}${cell.char}`;
+      continue;
+    }
+
+    groups.push({
+      ...(cell.bg === undefined ? {} : { bg: cell.bg }),
+      ...(cell.fg === undefined ? {} : { fg: cell.fg }),
+      text: cell.char,
+    });
+  }
+
+  return groups;
 }
 
 type AbilityViewerProps = {

@@ -1,7 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
+import type { QueryClient } from "@tanstack/react-query";
+import { mkdir } from "node:fs/promises";
+import { join } from "node:path";
 import { z } from "zod";
 import { queryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
+import { renderPngSpriteFile, type RenderedSprite } from "./sprite-rendering";
 
 const pokespriteBaseUrl =
   "https://raw.githubusercontent.com/msikma/pokesprite/master/";
@@ -13,6 +17,13 @@ export type PokeSpriteMetadataQueryKey = readonly [
 ];
 
 type FetchResource = (input: string, init?: RequestInit) => Promise<Response>;
+type ResourceQueryClient = Pick<QueryClient, "fetchQuery">;
+
+type PokeSpriteRenderedSpriteQueryKey = readonly [
+  "pokesprite-rendered-sprite",
+  dexNumber: number,
+  shiny: boolean,
+];
 
 const formMetadataSchema = z
   .object({
@@ -60,6 +71,10 @@ export type PokeSpriteAssetReference = {
   url: string;
 };
 
+export type CachedPokeSpriteAsset = PokeSpriteAssetReference & {
+  filePath: string;
+};
+
 export class PokeSpriteResourceError extends Error {
   readonly status: number;
   readonly url: string;
@@ -88,6 +103,34 @@ export function pokespriteMetadataQueryOptions(
         signal,
       );
       return parsePokeSpriteMetadata(resource);
+    },
+    ...queryCachePolicies.pokespriteMetadata,
+  });
+}
+
+function pokespriteRenderedSpriteQueryKey(
+  species: SpeciesIndexEntry,
+  shiny = false,
+): PokeSpriteRenderedSpriteQueryKey {
+  return ["pokesprite-rendered-sprite", species.dexNumber, shiny];
+}
+
+export function pokespriteRenderedSpriteQueryOptions(
+  species: SpeciesIndexEntry,
+  queryClient: ResourceQueryClient,
+  shiny = false,
+) {
+  return queryOptions({
+    queryKey: pokespriteRenderedSpriteQueryKey(species, shiny),
+    queryFn: async (): Promise<RenderedSprite> => {
+      const metadata = await queryClient.fetchQuery(
+        pokespriteMetadataQueryOptions(),
+      );
+      const asset = await cachePokeSpriteAsset(
+        resolveDefaultPokeSpriteAsset(metadata, species, shiny),
+      );
+
+      return renderPngSpriteFile(asset.filePath);
     },
     ...queryCachePolicies.pokespriteMetadata,
   });
@@ -135,6 +178,40 @@ export function resolvePokeSpriteAsset(
   };
 }
 
+export async function cachePokeSpriteAsset(
+  asset: PokeSpriteAssetReference,
+  options: {
+    cacheDirectory?: string;
+    fetch?: FetchResource;
+  } = {},
+): Promise<CachedPokeSpriteAsset> {
+  const cacheDirectory =
+    options.cacheDirectory ?? getDefaultPokeSpriteAssetCacheDirectory();
+  const filePath = pokeSpriteAssetCachePath(cacheDirectory, asset.url);
+  const cachedFile = Bun.file(filePath);
+
+  if (await cachedFile.exists()) {
+    return { ...asset, filePath };
+  }
+
+  const response = await (options.fetch ?? globalThis.fetch)(asset.url);
+  if (!response.ok) {
+    throw new PokeSpriteResourceError(asset.url, response.status);
+  }
+
+  await mkdir(cacheDirectory, { recursive: true });
+  await Bun.write(filePath, await response.arrayBuffer());
+
+  return { ...asset, filePath };
+}
+
+export function pokeSpriteAssetCachePath(
+  cacheDirectory: string,
+  url: string,
+): string {
+  return join(cacheDirectory, encodeURIComponent(url));
+}
+
 async function fetchPokeSpriteResource(
   url: string,
   fetchResource: FetchResource,
@@ -151,6 +228,12 @@ async function fetchPokeSpriteResource(
 
 function dexKey(dexNumber: number): string {
   return dexNumber.toString().padStart(3, "0");
+}
+
+function getDefaultPokeSpriteAssetCacheDirectory(): string {
+  const baseDirectory =
+    process.env.XDG_CACHE_HOME ?? join(Bun.env.HOME ?? ".", ".cache");
+  return join(baseDirectory, "pkdx", "pokesprite-assets");
 }
 
 function spriteSlug(speciesSlug: string, formKey: string): string {
