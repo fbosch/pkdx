@@ -1,4 +1,5 @@
 import Fuse from "fuse.js";
+import fuseIndex from "./species-fuse-index.json";
 import speciesIndex from "./species-index.json";
 
 export type SpeciesIndexEntry = {
@@ -13,7 +14,7 @@ export type SearchResult = SpeciesIndexEntry & {
   selected: boolean;
 };
 
-const fuse = new Fuse(speciesIndex, {
+const fuseOptions = {
   includeScore: true,
   keys: [
     { name: "name", weight: 0.45 },
@@ -22,7 +23,9 @@ const fuse = new Fuse(speciesIndex, {
     { name: "aliases", weight: 0.25 },
   ],
   threshold: 0.35,
-});
+};
+
+const fuse = new Fuse(speciesIndex, fuseOptions, Fuse.parseIndex(fuseIndex));
 
 const normalizedSpeciesIndex = speciesIndex.map((entry) => ({
   entry,
@@ -40,7 +43,7 @@ const exactSpeciesByIdentity = new Map(
 const searchResultCache = new Map<string, SpeciesIndexEntry[]>();
 const searchResultCacheLimit = 50;
 
-export const minimumSearchQueryLength = 3;
+export const minimumSearchQueryLength = 1;
 
 export function searchSpecies(query: string, limit = 10): SpeciesIndexEntry[] {
   const normalizedQuery = normalize(query);

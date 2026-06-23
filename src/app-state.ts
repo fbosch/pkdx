@@ -55,6 +55,7 @@ const searchKeyHandlers: Record<string, SearchKeyHandler> = {
   enter: openSelectedSpecies,
   "ctrl+j": (state) => moveSearchSelection(state, 1),
   "ctrl+k": (state) => moveSearchSelection(state, -1),
+  "ctrl+u": (state) => updateSearchQuery(state, ""),
   return: openSelectedSpecies,
   up: (state) => moveSearchSelection(state, -1),
 };

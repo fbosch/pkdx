@@ -23,9 +23,9 @@ test("exact species matching excludes fuzzy aliases", () => {
   expect(findExactSpecies("pika")).toBeUndefined();
 });
 
-test("search waits for a few input characters", () => {
-  expect(minimumSearchQueryLength).toBe(3);
+test("search starts after one input character", () => {
+  expect(minimumSearchQueryLength).toBe(1);
   expect(searchSpecies("")).toEqual([]);
-  expect(searchSpecies("pi")).toEqual([]);
+  expect(searchSpecies("p").length).toBeGreaterThan(0);
   expect(searchSpecies("pik")[0]?.slug).toBe("pikachu");
 });

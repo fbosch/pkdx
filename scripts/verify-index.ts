@@ -1,15 +1,18 @@
-import { buildSpeciesIndex } from "./build-species-index";
+import Fuse from "fuse.js";
+import { buildSpeciesIndex, speciesFuseOptions } from "./build-species-index";
 
 const index = buildSpeciesIndex();
+const fuseIndex = Fuse.createIndex(speciesFuseOptions.keys, index).toJSON();
 
-const expected = JSON.stringify(index);
-const actual = JSON.stringify(
-  await Bun.file("src/search/species-index.json").json(),
-);
+await verifyGeneratedJson("src/search/species-index.json", index);
+await verifyGeneratedJson("src/search/species-fuse-index.json", fuseIndex);
 
-if (actual !== expected) {
-  process.stderr.write(
-    "src/search/species-index.json is stale. Run bun run generate:index.\n",
-  );
-  process.exit(1);
+async function verifyGeneratedJson(path: string, expectedValue: unknown) {
+  const expected = JSON.stringify(expectedValue);
+  const actual = JSON.stringify(await Bun.file(path).json());
+
+  if (actual !== expected) {
+    process.stderr.write(`${path} is stale. Run bun run generate:index.\n`);
+    process.exit(1);
+  }
 }

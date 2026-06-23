@@ -3,6 +3,7 @@ import { findExactSpecies, searchSpecies } from "../../src/search";
 const iterations = Number(Bun.env.PKDX_SEARCH_BENCH_ITERATIONS ?? 100);
 
 const fuzzyBenchmarks = [
+  { name: "single-char-p", query: "p" },
   { name: "name-pikachu", query: "pikachu" },
   { name: "alias-pika", query: "pika" },
   { name: "dex-001", query: "001" },

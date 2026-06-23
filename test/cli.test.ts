@@ -121,7 +121,7 @@ test("Search selection moves with Ctrl-J and Ctrl-K", () => {
   });
 });
 
-test("Search selection waits for enough query input", () => {
+test("Search selection moves for short query input", () => {
   const selected = applyAppKey(createInitialAppState("pi"), {
     name: "j",
     ctrl: true,
@@ -130,7 +130,7 @@ test("Search selection waits for enough query input", () => {
   expect(selected).toMatchObject({
     screen: "search",
     query: "pi",
-    selectedIndex: 0,
+    selectedIndex: 1,
   });
 });
 
@@ -145,6 +145,20 @@ test("shifted Vim keys remain Search input", () => {
     screen: "search",
     query: "J",
     selectedIndex: 0,
+  });
+});
+
+test("Ctrl-U clears Search input", () => {
+  const next = applyAppKey(createInitialAppState("pika"), {
+    name: "u",
+    ctrl: true,
+  });
+
+  expect(next).toEqual({
+    screen: "search",
+    query: "",
+    selectedIndex: 0,
+    shouldExit: false,
   });
 });
 
