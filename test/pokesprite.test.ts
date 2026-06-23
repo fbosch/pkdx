@@ -37,6 +37,12 @@ test("parses consumed PokeSprite metadata fields", () => {
     name: "Pikachu",
     slug: "pikachu",
   });
+  expect(metadata["810"]).toMatchObject({
+    dexNumber: 810,
+    forms: {},
+    name: "Grookey",
+    slug: "grookey",
+  });
 });
 
 test("loads PokeSprite metadata through persisted query options", async () => {
@@ -118,6 +124,21 @@ test("resolves form aliases and shiny asset URLs", () => {
     slug: "raticate-alola",
     url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/shiny/raticate-alola.png",
   });
+});
+
+test("fails concisely when requested Gen 7x sprite metadata is missing", () => {
+  const metadata = parsePokeSpriteMetadata(pokespritePokemonMetadata);
+  const grookey: SpeciesIndexEntry = {
+    aliases: [],
+    dexNumber: 810,
+    dexNumbers: ["810"],
+    name: "Grookey",
+    slug: "grookey",
+  };
+
+  expect(() => resolveDefaultPokeSpriteAsset(metadata, grookey)).toThrow(
+    "PokeSprite metadata missing grookey form $",
+  );
 });
 
 test("caches PokeSprite PNG assets by resolved URL", async () => {

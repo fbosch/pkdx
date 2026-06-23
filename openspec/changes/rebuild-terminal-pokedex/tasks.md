@@ -55,7 +55,7 @@
 - [x] 7.1 Add persisted PokeSprite metadata querying and parsing for sprite slug and asset resolution.
 - [x] 7.2 Add PokeSprite PNG asset file caching by resolved Sprite URL.
 - [x] 7.3 Add terminal-rendered Sprite rendering in Detail from cached PokeSprite-style source artwork.
-- [ ] 7.4 Keep Detail recoverable when Sprite resources fail, while surfacing the Sprite-specific error in the Detail UI.
+- [x] 7.4 Keep Detail recoverable when Sprite resources fail, while surfacing the Sprite-specific error in the Detail UI.
 - [ ] 7.5 Verify the slice with PokeSprite metadata fixtures, sprite cache tests, known slug mapping tests, and Detail Sprite smoke.
 
 ## 8. Shiny Sprite Toggle

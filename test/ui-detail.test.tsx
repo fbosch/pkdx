@@ -5,6 +5,7 @@ import {
   DamageTakenPanel,
   DetailLoadingSkeleton,
   PokemonSpriteArtwork,
+  PokemonSpriteFallback,
 } from "../src/ui/app";
 
 test("renders Damage Taken panel with matchup entries", () => {
@@ -57,6 +58,13 @@ test("renders terminal sprite artwork rows", () => {
       width: 2,
     },
   });
+
+  expect(element).toBeDefined();
+  expect(isValidElement(element)).toBe(true);
+});
+
+test("renders recoverable sprite-specific errors", () => {
+  const element = PokemonSpriteFallback({ error: new Error("sprite offline") });
 
   expect(element).toBeDefined();
   expect(isValidElement(element)).toBe(true);

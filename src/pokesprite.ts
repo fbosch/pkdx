@@ -44,13 +44,15 @@ const pokemonMetadataEntrySchema = z
     idx: z.string(),
     name: z.object({ eng: z.string() }),
     slug: z.object({ eng: z.string() }),
-    "gen-7": z.object({
-      forms: z.record(z.string(), formMetadataSchema),
-    }),
+    "gen-7": z
+      .object({
+        forms: z.record(z.string(), formMetadataSchema).optional(),
+      })
+      .optional(),
   })
   .transform((entry) => ({
     dexNumber: Number.parseInt(entry.idx, 10),
-    forms: entry["gen-7"].forms,
+    forms: entry["gen-7"]?.forms ?? {},
     name: entry.name.eng,
     slug: entry.slug.eng,
   }));

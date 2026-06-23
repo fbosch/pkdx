@@ -192,6 +192,11 @@ function DetailView({
     queryClient,
     state,
   });
+  usePokemonSpritePrefetch({
+    enabled: state.status !== "error",
+    queryClient,
+    species: state.species,
+  });
   const showColdLoadingSkeleton = useDelayedVisibility(
     state.detail === undefined && state.status === "loading",
     state.species.slug,
@@ -290,6 +295,21 @@ function usePokemonDetailLoad({
     state.species,
     state.status,
   ]);
+}
+
+function usePokemonSpritePrefetch({
+  enabled,
+  queryClient,
+  species,
+}: {
+  enabled: boolean;
+  queryClient: ReturnType<typeof useQueryClient>;
+  species: SpeciesIndexEntry;
+}) {
+  useQuery({
+    ...pokespriteRenderedSpriteQueryOptions(species, queryClient),
+    enabled,
+  });
 }
 
 function useDelayedVisibility(active: boolean, key: string): boolean {
@@ -624,6 +644,28 @@ function PokemonSpritePanel({ queryClient, species }: PokemonSpritePanelProps) {
     return <PokemonSpriteArtwork sprite={sprite.data} />;
   }
 
+  if (sprite.isError) {
+    return <PokemonSpriteFallback error={sprite.error} />;
+  }
+
+  return <PokemonSpriteLoading />;
+}
+
+function PokemonSpriteLoading() {
+  return (
+    <box
+      style={{
+        alignItems: "center",
+        flexDirection: "column",
+        height: detailSpriteCanvasHeight,
+        justifyContent: "center",
+        width: detailSpriteCanvasWidth,
+      }}
+    />
+  );
+}
+
+export function PokemonSpriteFallback({ error }: { error: unknown }) {
   return (
     <box
       style={{
@@ -635,10 +677,24 @@ function PokemonSpritePanel({ queryClient, species }: PokemonSpritePanelProps) {
       }}
     >
       <text fg={colors.muted} attributes={textStyles.muted}>
-        {sprite.isError ? "Sprite unavailable" : "Loading sprite..."}
+        Sprite unavailable
+      </text>
+      <text fg={colors.muted} attributes={textStyles.muted}>
+        {spriteErrorMessage(error)}
+      </text>
+      <text fg={colors.muted} attributes={textStyles.muted}>
+        Detail data is still available.
       </text>
     </box>
   );
+}
+
+function spriteErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message.length > 0) {
+    return error.message;
+  }
+
+  return "Sprite resources could not be loaded or read from cache.";
 }
 
 export function PokemonSpriteArtwork({ sprite }: { sprite: RenderedSprite }) {

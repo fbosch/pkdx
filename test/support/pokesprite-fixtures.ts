@@ -50,4 +50,10 @@ export const pokespritePokemonMetadata = {
       },
     },
   },
+  "810": {
+    idx: "810",
+    name: { eng: "Grookey" },
+    slug: { eng: "grookey" },
+    "gen-7": {},
+  },
 };
