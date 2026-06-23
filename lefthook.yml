@@ -16,6 +16,13 @@ pre-push:
         - "bun.lock"
         - "tsconfig.json"
       run: bun run typecheck
+    typecheck-native:
+      glob:
+        - "*.{ts,tsx}"
+        - "package.json"
+        - "bun.lock"
+        - "tsconfig.json"
+      run: bun run typecheck:native
     fallow-audit:
       glob:
         - "*.{js,jsx,ts,tsx,mjs,mts,cjs,cts}"

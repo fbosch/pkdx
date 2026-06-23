@@ -2,11 +2,8 @@ import {
   evolutionChainResourceSchema,
   pokemonResourceSchema,
   pokemonSpeciesResourceSchema,
-} from "../src/pokeapi/schema";
-import {
-  pikachuPokemon,
-  pikachuSpecies,
-} from "../test/support/pokeapi-fixtures";
+} from "../../src/pokeapi/schema";
+import { pikachuPokemon, pikachuSpecies } from "../support/pokeapi-fixtures";
 
 const iterations = Number(Bun.env.POKEDEX_BENCH_ITERATIONS ?? 100_000);
 
