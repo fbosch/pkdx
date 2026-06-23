@@ -1,6 +1,7 @@
 import type { KeyEvent } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import {
   applyAppKey,
@@ -333,14 +334,16 @@ function LoadedDetailView({
             search.
           </text>
         ) : null}
-        <box style={{ flexDirection: "row", gap: 1 }}>
+        <box style={{ alignItems: "flex-start", flexDirection: "row", gap: 1 }}>
           <box
             border
             borderColor={colors.panelSecondary}
             borderStyle="rounded"
             style={{
+              alignItems: "center",
               flexDirection: "column",
-              minHeight: 14,
+              height: 16,
+              justifyContent: "center",
               paddingX: 1,
               width: 30,
             }}
@@ -348,8 +351,9 @@ function LoadedDetailView({
             <box
               style={{
                 alignItems: "center",
-                flexGrow: 1,
+                height: 13,
                 justifyContent: "center",
+                width: 18,
               }}
             />
           </box>
@@ -373,6 +377,12 @@ function LoadedDetailView({
               borderStyle="rounded"
               style={{ flexDirection: "column", paddingX: 1, width: 65 }}
             >
+              <FactRow label="Species" value={detail.species} />
+              <FactRow label="Egg Group" value={detail.eggGroups.join(" / ")} />
+              <FactRow
+                label="Gender"
+                value={<GenderRatio ratio={detail.genderRatio} />}
+              />
               <FactRow
                 label="Height"
                 value={`${detail.heightMeters.toFixed(1)} m`}
@@ -574,11 +584,41 @@ function chunkEntries(entries: readonly DamageTakenEntry[], size: number) {
   return rows;
 }
 
-function FactRow({ label, value }: { label: string; value: string }) {
+function GenderRatio({ ratio }: { ratio: PokemonDetail["genderRatio"] }) {
+  if (ratio.kind === "genderless") {
+    return <span fg={colors.muted}>Genderless</span>;
+  }
+
+  return (
+    <span>
+      {ratio.malePercent > 0 ? (
+        <span>
+          <span fg={colors.genderMale}>♂</span>
+          <span>{` ${formatPercent(ratio.malePercent)}`}</span>
+        </span>
+      ) : null}
+      {ratio.malePercent > 0 && ratio.femalePercent > 0 ? (
+        <span fg={colors.muted}> / </span>
+      ) : null}
+      {ratio.femalePercent > 0 ? (
+        <span>
+          <span fg={colors.genderFemale}>♀</span>
+          <span>{` ${formatPercent(ratio.femalePercent)}`}</span>
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
+function formatPercent(value: number): string {
+  return `${Number.isInteger(value) ? value.toString() : value.toFixed(1)}%`;
+}
+
+function FactRow({ label, value }: { label: string; value: ReactNode }) {
   return (
     <text>
-      <span fg={colors.muted}>{label.padEnd(9)}</span>
-      <span>{value}</span>
+      <span fg={colors.muted}>{label.padEnd(11)}</span>
+      {value}
     </text>
   );
 }

@@ -55,10 +55,13 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
       weaknesses: [{ multiplier: 2, type: "Ground" }],
     },
     dexNumber: 25,
+    eggGroups: ["Field", "Fairy"],
     flavorText:
       "When several of these POKéMON gather, their electricity can build and cause lightning storms.",
+    genderRatio: { femalePercent: 50, kind: "gendered", malePercent: 50 },
     heightMeters: 0.4,
     name: "Pikachu",
+    species: "Mouse Pokémon",
     sprite: {
       kind: "placeholder",
       label: "pikachu sprite pending",

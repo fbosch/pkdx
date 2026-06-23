@@ -21,9 +21,12 @@ export type PokemonDetail = {
   abilities: PokemonAbility[];
   damageTaken: DamageTaken;
   dexNumber: number;
+  eggGroups: string[];
   flavorText: string;
+  genderRatio: PokemonGenderRatio;
   heightMeters: number;
   name: string;
+  species: string;
   sprite: PokemonSpriteReference;
   stats: PokemonStat[];
   types: string[];
@@ -41,6 +44,10 @@ export type PokemonAbilityDetail = {
   name: string;
   shortEffect: string;
 };
+
+export type PokemonGenderRatio =
+  | { kind: "genderless" }
+  | { femalePercent: number; kind: "gendered"; malePercent: number };
 
 export type PokemonStat = {
   base: number;
@@ -150,9 +157,14 @@ export function buildDefaultPokemonDetail(
       })),
     dexNumber: species.dexNumber,
     damageTaken: calculateDamageTaken(types),
+    eggGroups: speciesResource.egg_groups.map((eggGroup) =>
+      formatResourceName(eggGroup.name),
+    ),
     flavorText: selectFlavorText(speciesResource),
+    genderRatio: formatGenderRatio(speciesResource.gender_rate),
     heightMeters: pokemonResource.height / 10,
     name: getEnglishSpeciesName(speciesResource) ?? species.name,
+    species: getEnglishGenus(speciesResource) ?? "Unknown Pokemon",
     sprite: {
       kind: "placeholder",
       label: `${species.slug} sprite pending`,
@@ -189,6 +201,24 @@ export function buildPokemonAbilityDetail(
         "No short ability description available.",
     ),
   };
+}
+
+function getEnglishGenus(
+  speciesResource: PokeApiPokemonSpecies,
+): string | undefined {
+  return speciesResource.genera.find((entry) => entry.language.name === "en")
+    ?.genus;
+}
+
+function formatGenderRatio(genderRate: number): PokemonGenderRatio {
+  if (genderRate === -1) {
+    return { kind: "genderless" };
+  }
+
+  const femalePercent = (genderRate / 8) * 100;
+  const malePercent = 100 - femalePercent;
+
+  return { femalePercent, kind: "gendered", malePercent };
 }
 
 function getDefaultPokemonUrl(speciesResource: PokeApiPokemonSpecies): string {

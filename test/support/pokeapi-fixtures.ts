@@ -10,6 +10,16 @@ const languageEnglish = {
 };
 
 export const pikachuSpecies: PokeApiPokemonSpecies = {
+  egg_groups: [
+    {
+      name: "field",
+      url: "https://pokeapi.co/api/v2/egg-group/5/",
+    },
+    {
+      name: "fairy",
+      url: "https://pokeapi.co/api/v2/egg-group/6/",
+    },
+  ],
   evolution_chain: {
     url: "https://pokeapi.co/api/v2/evolution-chain/10/",
   },
@@ -33,6 +43,13 @@ export const pikachuSpecies: PokeApiPokemonSpecies = {
         name: "red",
         url: "https://pokeapi.co/api/v2/version/1/",
       },
+    },
+  ],
+  gender_rate: 4,
+  genera: [
+    {
+      genus: "Mouse Pokémon",
+      language: languageEnglish,
     },
   ],
   id: 25,

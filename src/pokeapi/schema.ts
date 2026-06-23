@@ -24,12 +24,14 @@ export type PokeApiPokemon = {
 export type PokeApiPokemonSpecies = Pick<
   GeneratedSpecies,
   | "evolution_chain"
+  | "egg_groups"
   | "flavor_text_entries"
+  | "genera"
   | "id"
   | "name"
   | "names"
   | "varieties"
->;
+> & { gender_rate: number };
 
 export type PokeApiAbility = Pick<
   GeneratedAbility,
@@ -78,12 +80,20 @@ export const pokemonResourceSchema = z.object({
 });
 
 export const pokemonSpeciesResourceSchema = z.object({
+  egg_groups: z.array(namedResourceSchema),
   evolution_chain: z.object({ url: z.string() }),
   flavor_text_entries: z.array(
     z.object({
       flavor_text: z.string(),
       language: namedResourceSchema,
       version: namedResourceSchema,
+    }),
+  ),
+  gender_rate: z.number(),
+  genera: z.array(
+    z.object({
+      genus: z.string(),
+      language: namedResourceSchema,
     }),
   ),
   id: z.number(),

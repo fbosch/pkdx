@@ -6,7 +6,7 @@
     "pokedex": "./src/cli.tsx"
   },
   "scripts": {
-    "dev": "bun run src/cli.tsx",
+    "dev": "POKEDEX_DISABLE_QUERY_CACHE=1 bun run src/cli.tsx",
     "build": "bun run scripts/build.ts",
     "test": "bun test",
     "test:related": "bun test",

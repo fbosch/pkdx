@@ -62,6 +62,33 @@ test("calculates dual-type Fire and Flying neutral cancellations", () => {
   );
 });
 
+test("calculates dual-type weaknesses independent of defensive type order", () => {
+  expect(calculateDamageTaken(["Flying", "Dragon"])).toEqual(
+    calculateDamageTaken(["Dragon", "Flying"]),
+  );
+  expect(calculateDamageTaken(["Rock", "Fire"])).toEqual(
+    calculateDamageTaken(["Fire", "Rock"]),
+  );
+});
+
+test("matches representative poke-types dual-type composition rules", () => {
+  expect(
+    entryFor(calculateDamageTaken(["Ground", "Fire"]), "Ground"),
+  ).toMatchObject({ multiplier: 2 });
+  expect(
+    entryFor(calculateDamageTaken(["Flying", "Dragon"]), "Ice"),
+  ).toMatchObject({ multiplier: 4 });
+  expect(
+    entryFor(calculateDamageTaken(["Normal", "Fire"]), "Electric"),
+  ).toBeUndefined();
+  expect(
+    entryFor(calculateDamageTaken(["Rock", "Steel"]), "Normal"),
+  ).toMatchObject({ multiplier: 0.25 });
+  expect(
+    entryFor(calculateDamageTaken(["Water", "Flying"]), "Ground"),
+  ).toMatchObject({ multiplier: 0 });
+});
+
 test("normalizes display names case-insensitively", () => {
   expect(calculateDamageTaken(["electric"])).toEqual(
     calculateDamageTaken(["Electric"]),
@@ -99,4 +126,8 @@ test("rejects unknown types", () => {
 
 function flatten(damageTaken: DamageTaken) {
   return [...damageTaken.weaknesses, ...damageTaken.resistances];
+}
+
+function entryFor(damageTaken: DamageTaken, type: string) {
+  return flatten(damageTaken).find((entry) => entry.type === type);
 }

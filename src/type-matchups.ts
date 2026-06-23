@@ -32,8 +32,8 @@ export type DamageTaken = {
   weaknesses: DamageTakenEntry[];
 };
 
-const attackingTypeOrder = new Map(
-  pokemonTypes.map((type, index) => [type, index] as const),
+const pokemonTypeByLowercase = new Map(
+  pokemonTypes.map((type) => [type.toLowerCase(), type] as const),
 );
 
 const singleTypeEffectiveness: Record<
@@ -131,46 +131,52 @@ const singleTypeEffectiveness: Record<
 
 export function calculateDamageTaken(types: readonly string[]): DamageTaken {
   const defensiveTypes = types.map(toPokemonType);
-  const entries = pokemonTypes
-    .map((attackingType) => ({
-      multiplier: defensiveTypes.reduce<DamageMultiplier>(
-        (multiplier, defensiveType) => {
-          return (multiplier *
-            (singleTypeEffectiveness[defensiveType][attackingType] ??
-              1)) as DamageMultiplier;
-        },
-        1,
-      ),
-      type: attackingType,
-    }))
-    .filter((entry): entry is DamageTakenEntry => entry.multiplier !== 1)
-    .toSorted((left, right) => {
-      if (left.multiplier !== right.multiplier) {
-        return right.multiplier - left.multiplier;
-      }
+  const immune: DamageTakenEntry[] = [];
+  const doubleResistances: DamageTakenEntry[] = [];
+  const resistances: DamageTakenEntry[] = [];
+  const weaknesses: DamageTakenEntry[] = [];
+  const doubleWeaknesses: DamageTakenEntry[] = [];
 
-      return typeOrder(left.type) - typeOrder(right.type);
-    });
+  for (const attackingType of pokemonTypes) {
+    let multiplier: DamageMultiplier = 1;
+
+    for (const defensiveType of defensiveTypes) {
+      multiplier = (multiplier *
+        (singleTypeEffectiveness[defensiveType][attackingType] ??
+          1)) as DamageMultiplier;
+    }
+
+    switch (multiplier) {
+      case 0:
+        immune.push({ multiplier, type: attackingType });
+        break;
+      case 0.25:
+        doubleResistances.push({ multiplier, type: attackingType });
+        break;
+      case 0.5:
+        resistances.push({ multiplier, type: attackingType });
+        break;
+      case 2:
+        weaknesses.push({ multiplier, type: attackingType });
+        break;
+      case 4:
+        doubleWeaknesses.push({ multiplier, type: attackingType });
+        break;
+    }
+  }
 
   return {
-    resistances: entries.filter((entry) => entry.multiplier < 1),
-    weaknesses: entries.filter((entry) => entry.multiplier > 1),
+    resistances: [...resistances, ...doubleResistances, ...immune],
+    weaknesses: [...doubleWeaknesses, ...weaknesses],
   };
 }
 
 function toPokemonType(type: string): PokemonType {
-  const normalized = type.toLowerCase();
-  const pokemonType = pokemonTypes.find(
-    (candidate) => candidate.toLowerCase() === normalized,
-  );
+  const pokemonType = pokemonTypeByLowercase.get(type.toLowerCase());
 
   if (pokemonType === undefined) {
     throw new Error(`Unknown Pokemon type: ${type}`);
   }
 
   return pokemonType;
-}
-
-function typeOrder(type: PokemonType): number {
-  return attackingTypeOrder.get(type) ?? Number.MAX_SAFE_INTEGER;
 }

@@ -1,3 +1,7 @@
 {
+  "entry": ["test/benchmarks/*.ts"],
+  "duplicates": {
+    "ignore": ["test/benchmarks/*.ts"]
+  },
   "ignorePatterns": ["src/pokeapi/generated.ts"]
 }

@@ -1,3 +1,4 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import {
   createAppQueryClient,
@@ -7,8 +8,8 @@ import {
 } from "../query-cache";
 import { App } from "./app";
 
+const persistQueryCache = Bun.env.POKEDEX_DISABLE_QUERY_CACHE !== "1";
 const queryClient = createAppQueryClient();
-const persister = createQueryPersister();
 
 type RootProps = {
   initialQuery?: string;
@@ -16,6 +17,16 @@ type RootProps = {
 };
 
 export function Root({ initialQuery = "", onExit }: RootProps) {
+  if (!persistQueryCache) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <App initialQuery={initialQuery} onExit={onExit} />
+      </QueryClientProvider>
+    );
+  }
+
+  const persister = createQueryPersister();
+
   return (
     <PersistQueryClientProvider
       client={queryClient}

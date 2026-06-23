@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { isValidElement } from "react";
 import { DamageTakenPanel } from "../src/ui/app";
 
 test("renders Damage Taken panel with matchup entries", () => {
@@ -16,5 +17,11 @@ test("renders Damage Taken panel with matchup entries", () => {
   });
 
   expect(element).toBeDefined();
+  expect(isValidElement(element)).toBe(true);
+
+  if (!isValidElement(element)) {
+    throw new Error("DamageTakenPanel did not return a React element");
+  }
+
   expect(element.type).toBe("box");
 });

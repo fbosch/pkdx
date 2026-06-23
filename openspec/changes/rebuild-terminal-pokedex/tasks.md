@@ -45,10 +45,10 @@
 
 ## 6. Damage Taken Panel
 
-- [ ] 6.1 Add the selected type-matchup dependency and wrap it behind a focused `type-matchups` module.
-- [ ] 6.2 Compute Damage Taken as all non-neutral attacking-type multipliers for the current Pokémon types.
-- [ ] 6.3 Render the Damage Taken panel in Detail with both weaknesses and resistances while excluding neutral `1x` entries.
-- [ ] 6.4 Verify the slice with representative single-type and dual-type matchup tests and a Detail render smoke test.
+- [x] 6.1 Add the selected type-matchup dependency and wrap it behind a focused `type-matchups` module.
+- [x] 6.2 Compute Damage Taken as all non-neutral attacking-type multipliers for the current Pokémon types.
+- [x] 6.3 Render the Damage Taken panel in Detail with both weaknesses and resistances while excluding neutral `1x` entries.
+- [x] 6.4 Verify the slice with representative single-type and dual-type matchup tests and a Detail render smoke test.
 
 ## 7. PokeSprite Runtime Sprite
 
