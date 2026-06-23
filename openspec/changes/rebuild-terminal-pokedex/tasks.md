@@ -11,7 +11,7 @@
 
 ## 2. Bootable App Skeleton
 
-- [x] 2.1 Add OpenTUI React app entrypoint and `pokedex` executable wiring that launches a minimal Search screen.
+- [x] 2.1 Add OpenTUI React app entrypoint and `pkdx` executable wiring that launches a minimal Search screen.
 - [x] 2.2 Add app-state handling for top-level Search state and clean exit on `q`, Escape, and Ctrl-C.
 - [x] 2.3 Add first smoke tests for launch state and exit-state transitions.
 - [x] 2.4 Verify the slice with `bun run check` and a compiled binary smoke run that starts and exits cleanly.

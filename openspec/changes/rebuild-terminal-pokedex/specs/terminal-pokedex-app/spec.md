@@ -1,10 +1,10 @@
 ## ADDED Requirements
 
 ### Requirement: TUI app launch
-The system SHALL expose a `pokedex` executable that launches the Terminal Pokédex App as an interactive TUI.
+The system SHALL expose a `pkdx` executable that launches the Terminal Pokédex App as an interactive TUI.
 
 #### Scenario: Launch without arguments opens Search
-- **WHEN** the user runs `pokedex` without arguments
+- **WHEN** the user runs `pkdx` without arguments
 - **THEN** the app opens the Search state
 
 #### Scenario: Exit keys close the app
@@ -15,11 +15,11 @@ The system SHALL expose a `pokedex` executable that launches the Terminal Pokéd
 The system SHALL interpret a launch argument as a Pokémon Species query and route to Detail only when it resolves to one exact species.
 
 #### Scenario: Exact argument opens Detail
-- **WHEN** the user runs `pokedex pikachu`
+- **WHEN** the user runs `pkdx pikachu`
 - **THEN** the app opens Detail for Pikachu after required Detail data loads
 
 #### Scenario: Ambiguous argument opens Search
-- **WHEN** the user runs `pokedex pika` and the query is not an exact species identity
+- **WHEN** the user runs `pkdx pika` and the query is not an exact species identity
 - **THEN** the app opens Search with `pika` as the active query and ranked results visible
 
 ### Requirement: Search and Detail state navigation

@@ -5,7 +5,7 @@ import {
 } from "../../src/pokeapi/schema";
 import { pikachuPokemon, pikachuSpecies } from "../support/pokeapi-fixtures";
 
-const iterations = Number(Bun.env.POKEDEX_BENCH_ITERATIONS ?? 100_000);
+const iterations = Number(Bun.env.PKDX_BENCH_ITERATIONS ?? 100_000);
 
 const pikachuEvolutionChain = {
   id: 10,

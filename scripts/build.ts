@@ -1,11 +1,11 @@
 export {};
 
-const compileTarget = Bun.env.POKEDEX_BUILD_TARGET;
+const compileTarget = Bun.env.PKDX_BUILD_TARGET;
 
 const result = await Bun.build({
   compile: {
     ...(compileTarget === undefined ? {} : { target: compileTarget }),
-    outfile: "dist/pokedex",
+    outfile: "dist/pkdx",
   },
   entrypoints: ["src/cli.tsx"],
 } as Parameters<typeof Bun.build>[0] & {

@@ -76,7 +76,7 @@ export function createFileStorage(cacheDirectory: string): AsyncStorage {
 function getDefaultCacheDirectory(): string {
   const baseDirectory =
     process.env.XDG_CACHE_HOME ?? join(Bun.env.HOME ?? ".", ".cache");
-  return join(baseDirectory, "pokedex", "tanstack-query");
+  return join(baseDirectory, "pkdx", "tanstack-query");
 }
 
 function cacheFilePath(cacheDirectory: string, key: string): string {

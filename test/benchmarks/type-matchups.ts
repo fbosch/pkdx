@@ -1,6 +1,6 @@
 import { calculateDamageTaken } from "../../src/type-matchups";
 
-const iterations = Number(Bun.env.POKEDEX_BENCH_ITERATIONS ?? 1_000_000);
+const iterations = Number(Bun.env.PKDX_BENCH_ITERATIONS ?? 1_000_000);
 
 const benchmarks = [
   {

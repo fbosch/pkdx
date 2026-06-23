@@ -8,7 +8,7 @@ import {
 } from "../query-cache";
 import { App } from "./app";
 
-const persistQueryCache = Bun.env.POKEDEX_DISABLE_QUERY_CACHE !== "1";
+const persistQueryCache = Bun.env.PKDX_DISABLE_QUERY_CACHE !== "1";
 const queryClient = createAppQueryClient();
 
 type RootProps = {
