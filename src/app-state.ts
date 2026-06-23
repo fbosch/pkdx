@@ -21,6 +21,7 @@ export type DetailState = {
   previousQuery: string;
   detail: LoadedDetail | undefined;
   detailOverlay: DetailOverlay | undefined;
+  descriptionIndex: number;
   errorMessage: string | undefined;
   form: PokemonForm | undefined;
   retryToken: number;
@@ -67,6 +68,7 @@ export function createInitialAppState(query = ""): AppState {
       screen: "detail",
       detail: undefined,
       detailOverlay: undefined,
+      descriptionIndex: 0,
       errorMessage: undefined,
       form: undefined,
       previousQuery: "",
@@ -131,15 +133,15 @@ function applyDetailActionKey(state: DetailState, key: AppKey): AppState {
     return openDetailOverlay(state, "abilities");
   }
 
-  if (
-    key.name === "f" &&
-    state.detail !== undefined &&
-    hasAlternatePokemonForms(state.detail.detail)
-  ) {
+  if (canOpenFormSelector(state, key)) {
     return openDetailOverlay(state, {
       kind: "forms",
       selectedIndex: getCurrentPokemonFormIndex(state),
     });
+  }
+
+  if (canCycleDetailDescription(state, key)) {
+    return cycleDetailDescription(state, key.shift === true ? -1 : 1);
   }
 
   if (key.name === "r" && state.status === "error") {
@@ -151,6 +153,18 @@ function applyDetailActionKey(state: DetailState, key: AppKey): AppState {
   }
 
   return state;
+}
+
+function canOpenFormSelector(state: DetailState, key: AppKey): boolean {
+  return (
+    key.name === "f" &&
+    state.detail !== undefined &&
+    hasAlternatePokemonForms(state.detail.detail)
+  );
+}
+
+function canCycleDetailDescription(state: DetailState, key: AppKey): boolean {
+  return key.name === "d" && state.detail !== undefined;
 }
 
 function applyDetailOverlayKey(state: DetailState, key: AppKey): AppState {
@@ -243,6 +257,21 @@ function toggleDetailShiny(state: DetailState): DetailState {
   };
 }
 
+function cycleDetailDescription(
+  state: DetailState,
+  delta: number,
+): DetailState {
+  const count = state.detail?.detail.flavorTexts.length ?? 0;
+  if (count <= 1) {
+    return state;
+  }
+
+  return {
+    ...state,
+    descriptionIndex: wrapIndex(state.descriptionIndex + delta, count),
+  };
+}
+
 function openDetailOverlay(
   state: DetailState,
   detailOverlay: DetailState["detailOverlay"],
@@ -266,6 +295,7 @@ export function loadDetailSpecies(
 ): DetailState {
   return {
     ...state,
+    descriptionIndex: 0,
     errorMessage: undefined,
     detailOverlay: undefined,
     form: undefined,
@@ -279,6 +309,7 @@ function loadDetailForm(state: DetailState, form: PokemonForm): DetailState {
   return {
     ...state,
     detailOverlay: undefined,
+    descriptionIndex: 0,
     errorMessage: undefined,
     form,
     retryToken: 0,
@@ -300,6 +331,10 @@ export function detailLoadSucceeded(
 
   return {
     ...state,
+    descriptionIndex: Math.min(
+      state.descriptionIndex,
+      Math.max(0, detail.flavorTexts.length - 1),
+    ),
     detail: { detail, form: detail.form, species },
     detailOverlay: undefined,
     errorMessage: undefined,
@@ -389,6 +424,7 @@ function openSelectedSpecies(state: SearchState): AppState {
     screen: "detail",
     detail: undefined,
     detailOverlay: undefined,
+    descriptionIndex: 0,
     errorMessage: undefined,
     form: undefined,
     previousQuery: state.query,
@@ -431,6 +467,10 @@ function updateSearchQuery(state: SearchState, query: string): SearchState {
     query,
     selectedIndex: 0,
   };
+}
+
+function wrapIndex(index: number, count: number): number {
+  return ((index % count) + count) % count;
 }
 
 function isExitKey(key: AppKey): boolean {

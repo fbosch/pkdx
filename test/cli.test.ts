@@ -38,6 +38,10 @@ const pikachuDetail: PokemonDetail = {
   dexNumber: 25,
   eggGroups: ["Field", "Fairy"],
   flavorText: "Mouse Pokemon.",
+  flavorTexts: [
+    { source: "Red", text: "Mouse Pokemon." },
+    { source: "Yellow", text: "It keeps its tail raised." },
+  ],
   form: {
     displayName: "Pikachu (Default)",
     isDefault: true,
@@ -243,6 +247,23 @@ test("Detail toggles shiny Sprite presentation without changing identity", () =>
   expect(regular).toMatchObject({
     screen: "detail",
     shiny: false,
+    species: { slug: "pikachu" },
+  });
+});
+
+test("Detail cycles descriptions with d and Shift-D", () => {
+  const state = loadedPikachuDetailState();
+  const next = applyAppKey(state, { name: "d" });
+  const previous = applyAppKey(next, { name: "d", shift: true });
+
+  expect(next).toMatchObject({
+    screen: "detail",
+    descriptionIndex: 1,
+    species: { slug: "pikachu" },
+  });
+  expect(previous).toMatchObject({
+    screen: "detail",
+    descriptionIndex: 0,
     species: { slug: "pikachu" },
   });
 });

@@ -218,6 +218,7 @@ function DetailView({
       <LoadedDetailView
         abilityViewerOpen={state.detailOverlay === "abilities"}
         detail={state.detail.detail}
+        descriptionIndex={state.descriptionIndex}
         errorMessage={state.status === "error" ? state.errorMessage : undefined}
         formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
         loadedSpecies={state.detail.species}
@@ -495,6 +496,7 @@ function DetailPanel({
         flexDirection: "column",
         ...(minHeight === undefined ? {} : { minHeight }),
         paddingX: 1,
+        position: "relative",
         width,
       }}
     >
@@ -527,6 +529,7 @@ function SkeletonLine({ width }: { width: number }) {
 type LoadedDetailViewProps = {
   abilityViewerOpen: boolean;
   detail: PokemonDetail;
+  descriptionIndex: number;
   errorMessage: string | undefined;
   formSelectorSelectedIndex: number | undefined;
   loadedSpecies: SpeciesIndexEntry;
@@ -538,6 +541,7 @@ type LoadedDetailViewProps = {
 function LoadedDetailView({
   abilityViewerOpen,
   detail,
+  descriptionIndex,
   errorMessage,
   formSelectorSelectedIndex,
   loadedSpecies,
@@ -604,7 +608,10 @@ function LoadedDetailView({
           </box>
           <box style={{ flexDirection: "column", width: detailInfoPanelWidth }}>
             <DetailPanel minHeight={7} width={detailInfoPanelWidth}>
-              <text>{detail.flavorText}</text>
+              <FlavorTextPanel
+                detail={detail}
+                selectedIndex={descriptionIndex}
+              />
             </DetailPanel>
             <DetailPanel width={detailInfoPanelWidth}>
               <FactRow label="Species" value={detail.species} />
@@ -701,12 +708,40 @@ function LoadedDetailFooter({
         hints={[
           { key: "a", action: "abilities" },
           ...(hasAlternateForms ? [{ key: "f", action: "forms" }] : []),
+          { key: "d/D", action: "desc" },
           { key: "s", action: shiny ? "regular" : "shiny" },
           { key: "/", action: "search" },
           { key: "q/esc", action: "exit" },
         ]}
       />
     </InstructionFooter>
+  );
+}
+
+function FlavorTextPanel({
+  detail,
+  selectedIndex,
+}: {
+  detail: PokemonDetail;
+  selectedIndex: number;
+}) {
+  const selected = detail.flavorTexts[selectedIndex];
+  const text = selected?.text ?? detail.flavorText;
+  const source = selected?.source ?? "Unknown";
+  const count = Math.max(1, detail.flavorTexts.length);
+  const displayIndex = Math.min(selectedIndex + 1, count);
+
+  return (
+    <>
+      <text>{text}</text>
+      <text
+        fg={colors.muted}
+        attributes={textStyles.muted}
+        style={{ bottom: 0, position: "absolute", right: 1 }}
+      >
+        {`${displayIndex.toString()}/${count.toString()} (${source})`}
+      </text>
+    </>
   );
 }
 

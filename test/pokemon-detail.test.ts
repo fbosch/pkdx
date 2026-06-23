@@ -86,6 +86,12 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
     eggGroups: ["Field", "Fairy"],
     flavorText:
       "When several of these POKéMON gather, their electricity can build and cause lightning storms.",
+    flavorTexts: [
+      {
+        source: "Red",
+        text: "When several of these POKéMON gather, their electricity can build and cause lightning storms.",
+      },
+    ],
     form: defaultForm,
     forms,
     genderRatio: { femalePercent: 50, kind: "gendered", malePercent: 50 },

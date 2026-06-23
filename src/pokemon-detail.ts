@@ -24,6 +24,7 @@ export type PokemonDetail = {
   dexNumber: number;
   eggGroups: string[];
   flavorText: string;
+  flavorTexts: PokemonFlavorText[];
   form: PokemonForm;
   forms: PokemonForm[];
   genderRatio: PokemonGenderRatio;
@@ -40,6 +41,11 @@ export type PokemonAbility = {
   isHidden: boolean;
   name: string;
   url?: string;
+};
+
+export type PokemonFlavorText = {
+  source: string;
+  text: string;
 };
 
 export type PokemonForm = {
@@ -192,6 +198,7 @@ export function buildPokemonDetail(
   const types = pokemonResource.types
     .toSorted((left, right) => left.slot - right.slot)
     .map((entry) => formatResourceName(entry.type.name));
+  const flavorTexts = buildFlavorTexts(speciesResource);
 
   return {
     abilities: pokemonResource.abilities
@@ -206,7 +213,8 @@ export function buildPokemonDetail(
     eggGroups: speciesResource.egg_groups.map((eggGroup) =>
       formatResourceName(eggGroup.name),
     ),
-    flavorText: selectFlavorText(speciesResource),
+    flavorText: flavorTexts[0]?.text ?? "No flavor text available.",
+    flavorTexts,
     form,
     forms: [...forms],
     genderRatio: formatGenderRatio(speciesResource.gender_rate),
@@ -351,17 +359,19 @@ function getEnglishSpeciesName(
     ?.name;
 }
 
-function selectFlavorText(speciesResource: PokeApiPokemonSpecies): string {
-  const englishEntries = speciesResource.flavor_text_entries.filter(
-    (entry) => entry.language.name === "en",
-  );
-  const selectedEntry = englishEntries.toSorted((left, right) =>
-    left.version.name.localeCompare(right.version.name),
-  )[0];
+function buildFlavorTexts(
+  speciesResource: PokeApiPokemonSpecies,
+): PokemonFlavorText[] {
+  const entries = speciesResource.flavor_text_entries
+    .filter((entry) => entry.language.name === "en")
+    .toSorted((left, right) =>
+      left.version.name.localeCompare(right.version.name),
+    );
 
-  return selectedEntry === undefined
-    ? "No flavor text available."
-    : normalizeFlavorText(selectedEntry.flavor_text);
+  return entries.map((entry) => ({
+    source: formatResourceName(entry.version.name),
+    text: normalizeFlavorText(entry.flavor_text),
+  }));
 }
 
 function normalizeFlavorText(value: string): string {
