@@ -12,11 +12,17 @@ import {
 import type { PokemonDetail } from "../pokemon-detail";
 import { pokemonDetailQueryOptions } from "../pokemon-detail";
 import { minimumSearchQueryLength, searchResults } from "../search";
+import {
+  DetailCardTitle,
+  DetailScreen,
+  InstructionFooter,
+  PokedexCard,
+  PokedexHeader,
+  StatBar,
+  TypeLabels,
+  typeLabelsWidth,
+} from "./components";
 import { colors, textStyles } from "./design-tokens";
-
-const detailCardWidth = 100;
-const detailTitleWidth = 86;
-const statBarWidth = 22;
 
 type AppProps = {
   initialQuery?: string;
@@ -83,6 +89,7 @@ export function App({ initialQuery = "", onExit }: AppProps) {
         <box
           border
           borderColor={colors.accent}
+          borderStyle="rounded"
           style={{ flexDirection: "column", paddingX: 1, width: 56 }}
         >
           <text
@@ -92,19 +99,7 @@ export function App({ initialQuery = "", onExit }: AppProps) {
             {...(state.query.length === 0 ? { fg: colors.muted } : {})}
           >{`> ${queryLabel}`}</text>
         </box>
-        <text
-          attributes={textStyles.active}
-          style={{ left: 2, position: "absolute", top: 0 }}
-        >
-          <span fg={colors.indicatorBlue}>⬤</span>
-          <span> </span>
-          <span fg={colors.indicatorRed}>●</span>
-          <span> </span>
-          <span fg={colors.indicatorYellow}>●</span>
-          <span> </span>
-          <span fg={colors.indicatorGreen}>●</span>
-          <span> Pokedex </span>
-        </text>
+        <PokedexHeader />
         {hasSearchableQuery ? (
           <box
             style={{
@@ -272,17 +267,24 @@ function LoadedDetailView({
   errorMessage,
   loadingSpecies,
 }: LoadedDetailViewProps) {
-  const abilityLabel = detail.abilities
-    .map((ability) => `${ability.name}${ability.isHidden ? " (Hidden)" : ""}`)
-    .join(", ");
-
   return (
     <DetailScreen>
       <PokedexCard>
         <DetailCardTitle
-          left={`#${detail.dexNumber.toString().padStart(3, "0")} ${detail.name}`}
+          left={
+            <span>
+              <span fg={colors.muted}>
+                #{detail.dexNumber.toString().padStart(3, "0")}
+              </span>
+              <span> {detail.name}</span>
+            </span>
+          }
+          leftWidth={
+            `#${detail.dexNumber.toString().padStart(3, "0")} ${detail.name}`
+              .length
+          }
           right={<TypeLabels types={detail.types} />}
-          rightWidth={detail.types.join(" / ").length}
+          rightWidth={typeLabelsWidth(detail.types)}
         />
         {loadingSpecies !== undefined ? (
           <text fg={colors.muted} attributes={textStyles.muted}>
@@ -300,10 +302,11 @@ function LoadedDetailView({
         <box style={{ flexDirection: "row", gap: 1 }}>
           <box
             border
-            borderColor={colors.accent}
+            borderColor={colors.panelSecondary}
+            borderStyle="rounded"
             style={{
               flexDirection: "column",
-              minHeight: 10,
+              minHeight: 14,
               paddingX: 1,
               width: 30,
             }}
@@ -321,30 +324,51 @@ function LoadedDetailView({
               </text>
             </box>
           </box>
-          <box
-            border
-            borderColor={colors.accent}
-            style={{
-              flexDirection: "column",
-              gap: 1,
-              minHeight: 10,
-              paddingX: 1,
-              width: 61,
-            }}
-          >
-            <text attributes={textStyles.active}>Overview</text>
-            <text>{detail.flavorText}</text>
-            <text>
-              Height {detail.heightMeters.toFixed(1)} m | Weight{" "}
-              {detail.weightKilograms.toFixed(1)} kg
-            </text>
-            <text>Abilities {abilityLabel}</text>
+          <box style={{ flexDirection: "column", width: 65 }}>
+            <box
+              border
+              borderColor={colors.panelSecondary}
+              borderStyle="rounded"
+              style={{
+                flexDirection: "column",
+                minHeight: 7,
+                paddingX: 1,
+                width: 65,
+              }}
+            >
+              <text attributes={textStyles.active}>Overview</text>
+              <text>{detail.flavorText}</text>
+            </box>
+            <box
+              border
+              borderColor={colors.panelSecondary}
+              borderStyle="rounded"
+              style={{ flexDirection: "column", paddingX: 1, width: 65 }}
+            >
+              <text attributes={textStyles.active}>Facts</text>
+              <FactRow
+                label="Height"
+                value={`${detail.heightMeters.toFixed(1)} m`}
+              />
+              <FactRow
+                label="Weight"
+                value={`${detail.weightKilograms.toFixed(1)} kg`}
+              />
+              {detail.abilities.map((ability, index) => (
+                <FactRow
+                  key={ability.name}
+                  label={index === 0 ? "Ability" : ""}
+                  value={`${ability.name}${ability.isHidden ? " (Hidden)" : ""}`}
+                />
+              ))}
+            </box>
           </box>
         </box>
         <box style={{ flexDirection: "row", gap: 1 }}>
           <box
             border
-            borderColor={colors.accent}
+            borderColor={colors.panelSecondary}
+            borderStyle="rounded"
             style={{ flexDirection: "column", paddingX: 1, width: 45 }}
           >
             <text attributes={textStyles.active}>Stats</text>
@@ -358,8 +382,9 @@ function LoadedDetailView({
           </box>
           <box
             border
-            borderColor={colors.accent}
-            style={{ flexDirection: "column", paddingX: 1, width: 46 }}
+            borderColor={colors.panelSecondary}
+            borderStyle="rounded"
+            style={{ flexDirection: "column", paddingX: 1, width: 50 }}
           >
             <text attributes={textStyles.active}>Damage Taken</text>
             <text fg={colors.muted} attributes={textStyles.muted}>
@@ -375,183 +400,11 @@ function LoadedDetailView({
   );
 }
 
-function DetailScreen({ children }: { children: React.ReactNode }) {
+function FactRow({ label, value }: { label: string; value: string }) {
   return (
-    <box
-      style={{
-        alignItems: "center",
-        flexDirection: "column",
-        height: "100%",
-        justifyContent: "center",
-        padding: 1,
-        position: "relative",
-      }}
-    >
-      {children}
-    </box>
-  );
-}
-
-function PokedexCard({ children }: { children: React.ReactNode }) {
-  return (
-    <box
-      style={{
-        flexDirection: "column",
-        gap: 1,
-        position: "relative",
-        width: detailCardWidth,
-      }}
-    >
-      <box
-        border
-        borderColor={colors.accent}
-        style={{
-          flexDirection: "column",
-          gap: 1,
-          paddingX: 1,
-          width: detailCardWidth,
-        }}
-      >
-        {children}
-      </box>
-      <PokedexHeader />
-    </box>
-  );
-}
-
-function PokedexHeader() {
-  return (
-    <text
-      attributes={textStyles.active}
-      style={{ left: 2, position: "absolute", top: 0 }}
-    >
-      <span fg={colors.indicatorBlue}>⬤</span>
-      <span> </span>
-      <span fg={colors.indicatorRed}>●</span>
-      <span> </span>
-      <span fg={colors.indicatorYellow}>●</span>
-      <span> </span>
-      <span fg={colors.indicatorGreen}>●</span>
-      <span> Pokedex </span>
-    </text>
-  );
-}
-
-function DetailCardTitle({
-  left,
-  right,
-  rightWidth,
-}: {
-  left: string;
-  right: React.ReactNode;
-  rightWidth?: number;
-}) {
-  const resolvedRightWidth =
-    rightWidth ?? (typeof right === "string" ? right.length : 0);
-  const spacerWidth = Math.max(
-    1,
-    detailTitleWidth - left.length - resolvedRightWidth,
-  );
-
-  return (
-    <text attributes={textStyles.active}>
-      <span>{left}</span>
-      <span>{" ".repeat(spacerWidth)}</span>
-      {right}
-    </text>
-  );
-}
-
-function TypeLabels({ types }: { types: string[] }) {
-  return (
-    <span>
-      {types.map((type, index) => (
-        <span key={type}>
-          {index > 0 ? <span fg={colors.muted}> / </span> : null}
-          <span bg={typeColor(type)} fg={typeTextColor(type)}>
-            {` ${type} `}
-          </span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function StatBar({ name, value }: { name: string; value: number }) {
-  const filled = Math.max(1, Math.min(statBarWidth, Math.round(value / 8)));
-  const empty = statBarWidth - filled;
-
-  return (
-    <span>
-      <span fg={statColor(name)}>{"━".repeat(filled)}</span>
-      <span fg={colors.statEmpty}>{"━".repeat(empty)}</span>
-    </span>
-  );
-}
-
-function statColor(name: string) {
-  const statColors: Record<string, (typeof colors)[keyof typeof colors]> = {
-    Attack: colors.statAttack,
-    Defense: colors.statDefense,
-    HP: colors.statHp,
-    "Sp. Attack": colors.statSpecialAttack,
-    "Sp. Defense": colors.statSpecialDefense,
-    Speed: colors.statSpeed,
-  };
-
-  return statColors[name] ?? colors.muted;
-}
-
-function typeColor(type: string) {
-  const typeColors: Record<string, (typeof colors)[keyof typeof colors]> = {
-    Bug: colors.typeBug,
-    Dark: colors.typeDark,
-    Dragon: colors.typeDragon,
-    Electric: colors.typeElectric,
-    Fairy: colors.typeFairy,
-    Fighting: colors.typeFighting,
-    Fire: colors.typeFire,
-    Flying: colors.typeFlying,
-    Ghost: colors.typeGhost,
-    Grass: colors.typeGrass,
-    Ground: colors.typeGround,
-    Ice: colors.typeIce,
-    Normal: colors.typeNormal,
-    Poison: colors.typePoison,
-    Psychic: colors.typePsychic,
-    Rock: colors.typeRock,
-    Steel: colors.typeSteel,
-    Water: colors.typeWater,
-  };
-
-  return typeColors[type] ?? colors.muted;
-}
-
-function typeTextColor(type: string) {
-  const lightTextTypes = new Set([
-    "Dark",
-    "Dragon",
-    "Fighting",
-    "Fire",
-    "Ghost",
-    "Poison",
-    "Psychic",
-    "Water",
-  ]);
-
-  return lightTextTypes.has(type)
-    ? colors.typeTagTextLight
-    : colors.typeTagTextDark;
-}
-
-function InstructionFooter({ children }: { children: string }) {
-  return (
-    <text
-      fg={colors.muted}
-      attributes={textStyles.muted}
-      style={{ alignSelf: "center", bottom: 1, position: "absolute" }}
-    >
-      {children}
+    <text>
+      <span fg={colors.muted}>{label.padEnd(9)}</span>
+      <span>{value}</span>
     </text>
   );
 }
