@@ -2,9 +2,10 @@ import { expect, test } from "bun:test";
 import { HttpResponse, http } from "msw";
 import {
   buildDefaultPokemonDetail,
+  pokemonDetailQueryKey,
   pokemonDetailQueryOptions,
 } from "../src/pokemon-detail";
-import { queryCachePolicies } from "../src/query-cache";
+import { createAppQueryClient, queryCachePolicies } from "../src/query-cache";
 import type { SpeciesIndexEntry } from "../src/search";
 import { pikachuPokemon, pikachuSpecies } from "./support/pokeapi-fixtures";
 import { createMockServer, executeQuery } from "./support/query-test";
@@ -76,4 +77,36 @@ test("loads Default Representative PokemonDetail through mocked PokeAPI queries"
   });
   expect(options.staleTime).toBe(queryCachePolicies.pokemonDetail.staleTime);
   expect(options.gcTime).toBe(queryCachePolicies.pokemonDetail.gcTime);
+});
+
+test("loads cached PokemonDetail without network access", async () => {
+  const queryClient = createAppQueryClient();
+  const cachedDetail = buildDefaultPokemonDetail(
+    pikachuIndexEntry,
+    pikachuSpecies,
+    pikachuPokemon,
+  );
+  queryClient.setQueryDefaults(pokemonDetailQueryKey(pikachuIndexEntry), {
+    gcTime: Infinity,
+  });
+  queryClient.setQueryData(
+    pokemonDetailQueryKey(pikachuIndexEntry),
+    cachedDetail,
+  );
+
+  await expect(
+    queryClient.fetchQuery(
+      pokemonDetailQueryOptions(pikachuIndexEntry, queryClient),
+    ),
+  ).resolves.toEqual(cachedDetail);
+});
+
+test("fails recoverably when uncached PokemonDetail is offline", async () => {
+  const queryClient = {
+    fetchQuery: () => Promise.reject(new Error("offline")),
+  };
+
+  await expect(
+    executeQuery(pokemonDetailQueryOptions(pikachuIndexEntry, queryClient)),
+  ).rejects.toThrow();
 });

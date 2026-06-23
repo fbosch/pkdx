@@ -4,6 +4,7 @@ import {
   searchSpecies,
   type SpeciesIndexEntry,
 } from "./search";
+import type { PokemonDetail } from "./pokemon-detail";
 
 export type AppState = SearchState | DetailState;
 
@@ -17,8 +18,17 @@ export type SearchState = {
 export type DetailState = {
   screen: "detail";
   previousQuery: string;
+  detail: LoadedDetail | undefined;
+  errorMessage: string | undefined;
+  retryToken: number;
   species: SpeciesIndexEntry;
+  status: "loading" | "ready" | "error";
   shouldExit: boolean;
+};
+
+export type LoadedDetail = {
+  detail: PokemonDetail;
+  species: SpeciesIndexEntry;
 };
 
 export type AppKey = {
@@ -45,8 +55,12 @@ export function createInitialAppState(query = ""): AppState {
   if (exactSpecies !== undefined) {
     return {
       screen: "detail",
+      detail: undefined,
+      errorMessage: undefined,
       previousQuery: "",
+      retryToken: 0,
       species: exactSpecies,
+      status: "loading",
       shouldExit: false,
     };
   }
@@ -84,7 +98,66 @@ function applyDetailKey(state: DetailState, key: AppKey): AppState {
     };
   }
 
+  if (key.name === "r" && state.status === "error") {
+    return retryDetailLoad(state);
+  }
+
   return state;
+}
+
+export function loadDetailSpecies(
+  state: DetailState,
+  species: SpeciesIndexEntry,
+): DetailState {
+  return {
+    ...state,
+    errorMessage: undefined,
+    retryToken: 0,
+    species,
+    status: "loading",
+  };
+}
+
+export function detailLoadSucceeded(
+  state: DetailState,
+  species: SpeciesIndexEntry,
+  detail: PokemonDetail,
+): DetailState {
+  if (state.species.slug !== species.slug) {
+    return state;
+  }
+
+  return {
+    ...state,
+    detail: { detail, species },
+    errorMessage: undefined,
+    status: "ready",
+  };
+}
+
+export function detailLoadFailed(
+  state: DetailState,
+  species: SpeciesIndexEntry,
+  error: unknown,
+): DetailState {
+  if (state.species.slug !== species.slug) {
+    return state;
+  }
+
+  return {
+    ...state,
+    errorMessage: getDetailErrorMessage(error),
+    status: "error",
+  };
+}
+
+function retryDetailLoad(state: DetailState): DetailState {
+  return {
+    ...state,
+    errorMessage: undefined,
+    retryToken: state.retryToken + 1,
+    status: "loading",
+  };
 }
 
 function applySearchKey(state: SearchState, key: AppKey): AppState {
@@ -134,10 +207,22 @@ function openSelectedSpecies(state: SearchState): AppState {
 
   return {
     screen: "detail",
+    detail: undefined,
+    errorMessage: undefined,
     previousQuery: state.query,
+    retryToken: 0,
     species,
+    status: "loading",
     shouldExit: false,
   };
+}
+
+function getDetailErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message.length > 0) {
+    return error.message;
+  }
+
+  return "Detail data is unavailable. If offline, this species is not cached yet.";
 }
 
 function updateSearchQuery(state: SearchState, query: string): SearchState {

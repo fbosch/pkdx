@@ -37,11 +37,11 @@
 
 ## 5. Loading, Error, And Offline Behavior
 
-- [ ] 5.1 Add atomic Detail loading state so the UI swaps to a new `PokemonDetail` only after required resources are ready.
-- [ ] 5.2 Add inline recoverable Detail errors with retry and return-to-Search behavior.
-- [ ] 5.3 Add offline behavior where Search works from the static index, cached Detail loads offline, and uncached Detail fails recoverably.
-- [ ] 5.4 Add app-state tests for loading, successful load, retry, Search fallback, cached-offline Detail, and not-cached offline errors.
-- [ ] 5.5 Verify the slice with `bun test` and manual smoke using mocked or disabled network paths.
+- [x] 5.1 Add atomic Detail loading state so the UI swaps to a new `PokemonDetail` only after required resources are ready.
+- [x] 5.2 Add inline recoverable Detail errors with retry and return-to-Search behavior.
+- [x] 5.3 Add offline behavior where Search works from the static index, cached Detail loads offline, and uncached Detail fails recoverably.
+- [x] 5.4 Add app-state tests for loading, successful load, retry, Search fallback, cached-offline Detail, and not-cached offline errors.
+- [x] 5.5 Verify the slice with `bun test` and manual smoke using mocked or disabled network paths.
 
 ## 6. Damage Taken Panel
 

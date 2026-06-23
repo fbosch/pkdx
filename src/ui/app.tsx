@@ -1,8 +1,15 @@
 import type { CliRenderer, KeyEvent } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { applyAppKey, createInitialAppState } from "../app-state";
+import { useEffect, useRef, useState } from "react";
+import {
+  applyAppKey,
+  createInitialAppState,
+  detailLoadFailed,
+  detailLoadSucceeded,
+  type DetailState,
+} from "../app-state";
+import type { PokemonDetail } from "../pokemon-detail";
 import { pokemonDetailQueryOptions } from "../pokemon-detail";
 import { minimumSearchQueryLength, searchResults } from "../search";
 import { colors, textStyles } from "./design-tokens";
@@ -27,7 +34,26 @@ export function App({ initialQuery = "", renderer }: AppProps) {
   });
 
   if (state.screen === "detail") {
-    return <DetailView state={state} queryClient={queryClient} />;
+    return (
+      <DetailView
+        onLoadFailed={(species, error) => {
+          setState((current) =>
+            current.screen === "detail"
+              ? detailLoadFailed(current, species, error)
+              : current,
+          );
+        }}
+        onLoadSucceeded={(species, detail) => {
+          setState((current) =>
+            current.screen === "detail"
+              ? detailLoadSucceeded(current, species, detail)
+              : current,
+          );
+        }}
+        queryClient={queryClient}
+        state={state}
+      />
+    );
   }
 
   const results = searchResults(state.query, state.selectedIndex);
@@ -122,19 +148,72 @@ export function App({ initialQuery = "", renderer }: AppProps) {
 }
 
 type DetailViewProps = {
+  onLoadFailed: (species: DetailState["species"], error: unknown) => void;
+  onLoadSucceeded: (
+    species: DetailState["species"],
+    detail: PokemonDetail,
+  ) => void;
   queryClient: ReturnType<typeof useQueryClient>;
-  state: Extract<
-    ReturnType<typeof createInitialAppState>,
-    { screen: "detail" }
-  >;
+  state: DetailState;
 };
 
-function DetailView({ state, queryClient }: DetailViewProps) {
-  const detail = useQuery(
-    pokemonDetailQueryOptions(state.species, queryClient),
-  );
+function DetailView({
+  onLoadFailed,
+  onLoadSucceeded,
+  queryClient,
+  state,
+}: DetailViewProps) {
+  const retryErrorUpdatedAt = useRef<number | undefined>(undefined);
+  const detail = useQuery({
+    ...pokemonDetailQueryOptions(state.species, queryClient),
+    enabled: state.status !== "error",
+  });
 
-  if (detail.isPending) {
+  useEffect(() => {
+    if (detail.data !== undefined && state.status !== "ready") {
+      retryErrorUpdatedAt.current = undefined;
+      onLoadSucceeded(state.species, detail.data);
+    }
+  }, [detail.data, onLoadSucceeded, state.species, state.status]);
+
+  useEffect(() => {
+    if (state.retryToken > 0 && state.status === "loading") {
+      retryErrorUpdatedAt.current = detail.errorUpdatedAt;
+      void detail.refetch();
+    }
+  }, [detail.errorUpdatedAt, detail.refetch, state.retryToken, state.status]);
+
+  useEffect(() => {
+    if (
+      detail.isError &&
+      !detail.isFetching &&
+      state.status !== "error" &&
+      retryErrorUpdatedAt.current !== detail.errorUpdatedAt
+    ) {
+      retryErrorUpdatedAt.current = undefined;
+      onLoadFailed(state.species, detail.error);
+    }
+  }, [
+    detail.error,
+    detail.errorUpdatedAt,
+    detail.isError,
+    detail.isFetching,
+    onLoadFailed,
+    state.species,
+    state.status,
+  ]);
+
+  if (state.detail !== undefined) {
+    return (
+      <LoadedDetailView
+        detail={state.detail.detail}
+        errorMessage={state.status === "error" ? state.errorMessage : undefined}
+        loadingSpecies={state.status === "loading" ? state.species : undefined}
+      />
+    );
+  }
+
+  if (state.status === "loading") {
     return (
       <box style={{ flexDirection: "column", padding: 1 }}>
         <text>Terminal Pokedex</text>
@@ -150,43 +229,65 @@ function DetailView({ state, queryClient }: DetailViewProps) {
     );
   }
 
-  if (detail.isError) {
-    return (
-      <box style={{ flexDirection: "column", padding: 1 }}>
-        <text>Terminal Pokedex</text>
-        <text>Detail</text>
-        <text>Could not load Detail for {state.species.name}.</text>
-        <text>
-          Press / to return to Search. Press q, Escape, or Ctrl-C to exit.
-        </text>
-      </box>
-    );
-  }
-
   return (
     <box style={{ flexDirection: "column", padding: 1 }}>
       <text>Terminal Pokedex</text>
       <text>Detail</text>
-      <text>
-        #{detail.data.dexNumber.toString().padStart(3, "0")} {detail.data.name}
+      <text>Could not load Detail for {state.species.name}.</text>
+      <text fg={colors.muted} attributes={textStyles.muted}>
+        {state.errorMessage ??
+          "Detail data is unavailable. If offline, this species is not cached yet."}
       </text>
-      <text>Types: {detail.data.types.join(" / ")}</text>
+      <text>Press r to retry, / to return to Search, or q to exit.</text>
+    </box>
+  );
+}
+
+type LoadedDetailViewProps = {
+  detail: PokemonDetail;
+  errorMessage: string | undefined;
+  loadingSpecies: DetailState["species"] | undefined;
+};
+
+function LoadedDetailView({
+  detail,
+  errorMessage,
+  loadingSpecies,
+}: LoadedDetailViewProps) {
+  return (
+    <box style={{ flexDirection: "column", padding: 1 }}>
+      <text>Terminal Pokedex</text>
+      <text>Detail</text>
+      {loadingSpecies !== undefined ? (
+        <text fg={colors.muted} attributes={textStyles.muted}>
+          Loading #
+          {loadingSpecies.dexNumbers[1] ?? loadingSpecies.dexNumbers[0]}{" "}
+          {loadingSpecies.name}...
+        </text>
+      ) : null}
+      {errorMessage !== undefined ? (
+        <text fg={colors.muted} attributes={textStyles.muted}>
+          Could not load next Detail: {errorMessage}. Press r to retry or / to
+          search.
+        </text>
+      ) : null}
       <text>
-        Abilities:{" "}
-        {detail.data.abilities.map((ability) => ability.name).join(", ")}
+        #{detail.dexNumber.toString().padStart(3, "0")} {detail.name}
+      </text>
+      <text>Types: {detail.types.join(" / ")}</text>
+      <text>
+        Abilities: {detail.abilities.map((ability) => ability.name).join(", ")}
       </text>
       <text>
-        Height: {detail.data.heightMeters.toFixed(1)} m | Weight:{" "}
-        {detail.data.weightKilograms.toFixed(1)} kg
+        Height: {detail.heightMeters.toFixed(1)} m | Weight:{" "}
+        {detail.weightKilograms.toFixed(1)} kg
       </text>
       <text>
         Stats:{" "}
-        {detail.data.stats
-          .map((stat) => `${stat.name} ${stat.base}`)
-          .join(" | ")}
+        {detail.stats.map((stat) => `${stat.name} ${stat.base}`).join(" | ")}
       </text>
-      <text>{detail.data.flavorText}</text>
-      <text>Sprite: {detail.data.sprite.label}</text>
+      <text>{detail.flavorText}</text>
+      <text>Sprite: {detail.sprite.label}</text>
       <text>
         Press / to return to Search. Press q, Escape, or Ctrl-C to exit.
       </text>

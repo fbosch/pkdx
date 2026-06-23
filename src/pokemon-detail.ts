@@ -40,7 +40,7 @@ export type PokemonSpriteReference = {
 
 type PokemonDetailQueryKey = readonly ["pokemon-detail", speciesSlug: string];
 
-function pokemonDetailQueryKey(
+export function pokemonDetailQueryKey(
   species: SpeciesIndexEntry,
 ): PokemonDetailQueryKey {
   return ["pokemon-detail", species.slug];
