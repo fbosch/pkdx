@@ -7,7 +7,7 @@ import { dirname, join } from "node:path";
 const oneHour = 60 * 60 * 1000;
 const oneDay = 24 * oneHour;
 
-export const queryCacheBuster = "query-cache-v1";
+export const queryCacheBuster = "query-cache-v2";
 
 export const queryCachePolicies = {
   pokeapiResource: {

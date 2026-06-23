@@ -1,10 +1,15 @@
 import { expect, test } from "bun:test";
 import {
+  parseAbilityResource,
   parseEvolutionChainResource,
   parsePokemonResource,
   parsePokemonSpeciesResource,
 } from "../src/pokeapi/schema";
-import { pikachuPokemon, pikachuSpecies } from "./support/pokeapi-fixtures";
+import {
+  pikachuPokemon,
+  pikachuSpecies,
+  staticAbility,
+} from "./support/pokeapi-fixtures";
 
 test("parses consumed Pokemon resource fields", () => {
   expect(parsePokemonResource({ ...pikachuPokemon, unused: true })).toEqual(
@@ -16,6 +21,12 @@ test("parses consumed Pokemon Species fields", () => {
   expect(
     parsePokemonSpeciesResource({ ...pikachuSpecies, unused: true }),
   ).toEqual(pikachuSpecies);
+});
+
+test("parses consumed Ability fields", () => {
+  expect(parseAbilityResource({ ...staticAbility, unused: true })).toEqual(
+    staticAbility,
+  );
 });
 
 test("rejects invalid consumed Pokemon fields", () => {

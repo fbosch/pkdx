@@ -1,4 +1,5 @@
 import type {
+  PokeApiAbility,
   PokeApiPokemon,
   PokeApiPokemonSpecies,
 } from "../../src/pokeapi/schema";
@@ -96,6 +97,28 @@ export const pikachuPokemon: PokeApiPokemon = {
     },
   ],
   weight: 60,
+};
+
+export const staticAbility: PokeApiAbility = {
+  effect_entries: [
+    {
+      effect: "This Pokémon has a chance of paralyzing attackers on contact.",
+      language: languageEnglish,
+      short_effect: "May paralyze attackers on contact.",
+    },
+  ],
+  flavor_text_entries: [
+    {
+      flavor_text: "Contact may paralyze the attacker.",
+      language: languageEnglish,
+      version_group: {
+        name: "sword-shield",
+        url: "https://pokeapi.co/api/v2/version-group/20/",
+      },
+    },
+  ],
+  id: 9,
+  name: "static",
 };
 
 function statEntry(name: string, baseStat: number, id: number) {

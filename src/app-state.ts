@@ -19,6 +19,7 @@ export type DetailState = {
   screen: "detail";
   previousQuery: string;
   detail: LoadedDetail | undefined;
+  detailOverlay: "abilities" | undefined;
   errorMessage: string | undefined;
   retryToken: number;
   species: SpeciesIndexEntry;
@@ -56,6 +57,7 @@ export function createInitialAppState(query = ""): AppState {
     return {
       screen: "detail",
       detail: undefined,
+      detailOverlay: undefined,
       errorMessage: undefined,
       previousQuery: "",
       retryToken: 0,
@@ -74,6 +76,14 @@ export function createInitialAppState(query = ""): AppState {
 }
 
 export function applyAppKey(state: AppState, key: AppKey): AppState {
+  if (
+    state.screen === "detail" &&
+    state.detailOverlay !== undefined &&
+    key.name === "escape"
+  ) {
+    return closeDetailOverlay(state);
+  }
+
   if (isExitKey(key)) {
     return {
       ...state,
@@ -98,11 +108,34 @@ function applyDetailKey(state: DetailState, key: AppKey): AppState {
     };
   }
 
+  if (key.name === "a" && state.detail !== undefined) {
+    return state.detailOverlay === "abilities"
+      ? closeDetailOverlay(state)
+      : openDetailOverlay(state, "abilities");
+  }
+
   if (key.name === "r" && state.status === "error") {
     return retryDetailLoad(state);
   }
 
   return state;
+}
+
+function openDetailOverlay(
+  state: DetailState,
+  detailOverlay: DetailState["detailOverlay"],
+): DetailState {
+  return {
+    ...state,
+    detailOverlay,
+  };
+}
+
+function closeDetailOverlay(state: DetailState): DetailState {
+  return {
+    ...state,
+    detailOverlay: undefined,
+  };
 }
 
 export function loadDetailSpecies(
@@ -112,6 +145,7 @@ export function loadDetailSpecies(
   return {
     ...state,
     errorMessage: undefined,
+    detailOverlay: undefined,
     retryToken: 0,
     species,
     status: "loading",
@@ -130,6 +164,7 @@ export function detailLoadSucceeded(
   return {
     ...state,
     detail: { detail, species },
+    detailOverlay: undefined,
     errorMessage: undefined,
     status: "ready",
   };
@@ -208,6 +243,7 @@ function openSelectedSpecies(state: SearchState): AppState {
   return {
     screen: "detail",
     detail: undefined,
+    detailOverlay: undefined,
     errorMessage: undefined,
     previousQuery: state.query,
     retryToken: 0,

@@ -20,7 +20,13 @@ import {
 import { findExactSpecies } from "../src/search";
 
 const pikachuDetail: PokemonDetail = {
-  abilities: [{ isHidden: false, name: "Static" }],
+  abilities: [
+    {
+      isHidden: false,
+      name: "Static",
+      url: "https://pokeapi.co/api/v2/ability/9/",
+    },
+  ],
   dexNumber: 25,
   flavorText: "Mouse Pokemon.",
   heightMeters: 0.4,
@@ -195,6 +201,34 @@ test("Detail retry returns a recoverable error to loading", () => {
   });
 });
 
+test("Detail opens and closes ability viewer with a", () => {
+  const state = loadedPikachuDetailState();
+  const opened = applyAppKey(state, { name: "a" });
+  const closed = applyAppKey(opened, { name: "a" });
+
+  expect(opened).toMatchObject({
+    screen: "detail",
+    detailOverlay: "abilities",
+  });
+  expect(closed).toMatchObject({
+    screen: "detail",
+    detailOverlay: undefined,
+    shouldExit: false,
+  });
+});
+
+test("Detail ability viewer closes with Escape instead of exiting", () => {
+  const state = loadedPikachuDetailState();
+  const opened = applyAppKey(state, { name: "a" });
+  const closed = applyAppKey(opened, { name: "escape" });
+
+  expect(closed).toMatchObject({
+    screen: "detail",
+    detailOverlay: undefined,
+    shouldExit: false,
+  });
+});
+
 test("Detail returns to Search on slash", () => {
   const detail = applyAppKey(createInitialAppState("pika"), { name: "enter" });
   const next = applyAppKey(detail, { name: "/" });
@@ -250,4 +284,12 @@ test("persists query cache state to filesystem storage", async () => {
 
 function throwMissingSpecies(slug: string): never {
   throw new Error(`Missing test species: ${slug}`);
+}
+
+function loadedPikachuDetailState(): DetailState {
+  return detailLoadSucceeded(
+    createInitialAppState("pikachu") as DetailState,
+    findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
+    pikachuDetail,
+  );
 }

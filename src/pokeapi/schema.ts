@@ -3,6 +3,7 @@ import { z } from "zod";
 
 type GeneratedPokemon = components["schemas"]["PokemonDetail"];
 type GeneratedSpecies = components["schemas"]["PokemonSpeciesDetail"];
+type GeneratedAbility = components["schemas"]["AbilityDetail"];
 type GeneratedEvolutionChain = components["schemas"]["EvolutionChainDetail"];
 type GeneratedPokemonAbility = GeneratedPokemon["abilities"][number];
 type GeneratedPokemonStat = GeneratedPokemon["stats"][number];
@@ -28,6 +29,11 @@ export type PokeApiPokemonSpecies = Pick<
   | "name"
   | "names"
   | "varieties"
+>;
+
+export type PokeApiAbility = Pick<
+  GeneratedAbility,
+  "effect_entries" | "flavor_text_entries" | "id" | "name"
 >;
 
 type PokeApiEvolutionChainNode = {
@@ -96,6 +102,25 @@ export const pokemonSpeciesResourceSchema = z.object({
   ),
 });
 
+const abilityResourceSchema = z.object({
+  effect_entries: z.array(
+    z.object({
+      effect: z.string(),
+      language: namedResourceSchema,
+      short_effect: z.string(),
+    }),
+  ),
+  flavor_text_entries: z.array(
+    z.object({
+      flavor_text: z.string(),
+      language: namedResourceSchema,
+      version_group: namedResourceSchema,
+    }),
+  ),
+  id: z.number(),
+  name: z.string(),
+});
+
 type EvolutionChainNode = {
   evolves_to: EvolutionChainNode[];
   species: z.infer<typeof namedResourceSchema>;
@@ -121,6 +146,10 @@ export function parsePokemonSpeciesResource(
   resource: unknown,
 ): PokeApiPokemonSpecies {
   return pokemonSpeciesResourceSchema.parse(resource) as PokeApiPokemonSpecies;
+}
+
+export function parseAbilityResource(resource: unknown): PokeApiAbility {
+  return abilityResourceSchema.parse(resource) as PokeApiAbility;
 }
 
 export function parseEvolutionChainResource(

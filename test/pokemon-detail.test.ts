@@ -1,13 +1,19 @@
 import { expect, test } from "bun:test";
 import { HttpResponse, http } from "msw";
 import {
+  buildPokemonAbilityDetail,
   buildDefaultPokemonDetail,
+  pokemonAbilityDetailsQueryOptions,
   pokemonDetailQueryKey,
   pokemonDetailQueryOptions,
 } from "../src/pokemon-detail";
 import { createAppQueryClient, queryCachePolicies } from "../src/query-cache";
 import type { SpeciesIndexEntry } from "../src/search";
-import { pikachuPokemon, pikachuSpecies } from "./support/pokeapi-fixtures";
+import {
+  pikachuPokemon,
+  pikachuSpecies,
+  staticAbility,
+} from "./support/pokeapi-fixtures";
 import { createMockServer, executeQuery } from "./support/query-test";
 
 const server = createMockServer();
@@ -29,8 +35,16 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
 
   expect(detail).toEqual({
     abilities: [
-      { isHidden: false, name: "Static" },
-      { isHidden: true, name: "Lightning Rod" },
+      {
+        isHidden: false,
+        name: "Static",
+        url: "https://pokeapi.co/api/v2/ability/9/",
+      },
+      {
+        isHidden: true,
+        name: "Lightning Rod",
+        url: "https://pokeapi.co/api/v2/ability/31/",
+      },
     ],
     dexNumber: 25,
     flavorText:
@@ -52,6 +66,39 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
     types: ["Electric"],
     weightKilograms: 6,
   });
+});
+
+test("builds PokemonAbilityDetail from validated PokeAPI Ability resources", () => {
+  expect(buildPokemonAbilityDetail(staticAbility)).toEqual({
+    effect: "This Pokémon has a chance of paralyzing attackers on contact.",
+    name: "Static",
+    shortEffect: "May paralyze attackers on contact.",
+  });
+});
+
+test("loads ability descriptions for cached Detail abilities without resource URLs", async () => {
+  server.use(
+    http.get("https://pokeapi.co/api/v2/ability/static/", () => {
+      return HttpResponse.json(staticAbility);
+    }),
+  );
+  const queryClient = {
+    fetchQuery: <TData>(resourceOptions: { queryFn?: unknown }) => {
+      return executeQuery<TData>(resourceOptions);
+    },
+  };
+  const options = pokemonAbilityDetailsQueryOptions(
+    [{ isHidden: false, name: "Static" }],
+    queryClient,
+  );
+
+  await expect(executeQuery(options)).resolves.toEqual([
+    {
+      effect: "This Pokémon has a chance of paralyzing attackers on contact.",
+      name: "Static",
+      shortEffect: "May paralyze attackers on contact.",
+    },
+  ]);
 });
 
 test("loads Default Representative PokemonDetail through mocked PokeAPI queries", async () => {

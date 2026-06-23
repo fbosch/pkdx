@@ -9,17 +9,23 @@ import {
   detailLoadSucceeded,
   type DetailState,
 } from "../app-state";
-import type { PokemonDetail } from "../pokemon-detail";
-import { pokemonDetailQueryOptions } from "../pokemon-detail";
+import type { PokemonAbilityDetail, PokemonDetail } from "../pokemon-detail";
+import {
+  pokemonAbilityDetailsQueryOptions,
+  pokemonDetailQueryOptions,
+} from "../pokemon-detail";
 import { minimumSearchQueryLength, searchResults } from "../search";
 import {
   DetailCardTitle,
   DetailScreen,
   InstructionFooter,
+  KeyHints,
+  Modal,
   PokedexCard,
   PokedexHeader,
   StatBar,
   TypeLabels,
+  keyHintsWidth,
   typeLabelsWidth,
 } from "./components";
 import { colors, textStyles } from "./design-tokens";
@@ -138,7 +144,14 @@ export function App({ initialQuery = "", onExit }: AppProps) {
       </box>
 
       <InstructionFooter>
-        Type to filter | Shift-J/K move | Enter opens | Esc exits
+        <KeyHints
+          hints={[
+            { key: "type", action: "filter" },
+            { key: "shift+j/k", action: "move" },
+            { key: "enter", action: "open" },
+            { key: "esc", action: "exit" },
+          ]}
+        />
       </InstructionFooter>
     </box>
   );
@@ -203,9 +216,11 @@ function DetailView({
   if (state.detail !== undefined) {
     return (
       <LoadedDetailView
+        abilityViewerOpen={state.detailOverlay === "abilities"}
         detail={state.detail.detail}
         errorMessage={state.status === "error" ? state.errorMessage : undefined}
         loadingSpecies={state.status === "loading" ? state.species : undefined}
+        queryClient={queryClient}
       />
     );
   }
@@ -231,7 +246,12 @@ function DetailView({
           </box>
         </PokedexCard>
         <InstructionFooter>
-          Press / to return to Search | q/Esc exits
+          <KeyHints
+            hints={[
+              { key: "/", action: "search" },
+              { key: "q/esc", action: "exit" },
+            ]}
+          />
         </InstructionFooter>
       </DetailScreen>
     );
@@ -251,21 +271,33 @@ function DetailView({
           </text>
         </box>
       </PokedexCard>
-      <InstructionFooter>r retry | / Search | q/Esc exits</InstructionFooter>
+      <InstructionFooter>
+        <KeyHints
+          hints={[
+            { key: "r", action: "retry" },
+            { key: "/", action: "search" },
+            { key: "q/esc", action: "exit" },
+          ]}
+        />
+      </InstructionFooter>
     </DetailScreen>
   );
 }
 
 type LoadedDetailViewProps = {
+  abilityViewerOpen: boolean;
   detail: PokemonDetail;
   errorMessage: string | undefined;
   loadingSpecies: DetailState["species"] | undefined;
+  queryClient: ReturnType<typeof useQueryClient>;
 };
 
 function LoadedDetailView({
+  abilityViewerOpen,
   detail,
   errorMessage,
   loadingSpecies,
+  queryClient,
 }: LoadedDetailViewProps) {
   return (
     <DetailScreen>
@@ -391,10 +423,72 @@ function LoadedDetailView({
           </box>
         </box>
       </PokedexCard>
+      {abilityViewerOpen ? (
+        <AbilityViewer abilities={detail.abilities} queryClient={queryClient} />
+      ) : null}
       <InstructionFooter>
-        Press / to return to Search | q/Esc exits
+        <KeyHints
+          hints={[
+            { key: "a", action: "abilities" },
+            { key: "/", action: "search" },
+            { key: "q/esc", action: "exit" },
+          ]}
+        />
       </InstructionFooter>
     </DetailScreen>
+  );
+}
+
+type AbilityViewerProps = {
+  abilities: PokemonDetail["abilities"];
+  queryClient: ReturnType<typeof useQueryClient>;
+};
+
+function AbilityViewer({ abilities, queryClient }: AbilityViewerProps) {
+  const abilityDetails = useQuery(
+    pokemonAbilityDetailsQueryOptions(abilities, queryClient),
+  );
+
+  return (
+    <Modal
+      right={<KeyHints hints={[{ key: "a/esc", action: "close" }]} />}
+      rightWidth={keyHintsWidth([{ key: "a/esc", action: "close" }])}
+      title="Abilities"
+    >
+      {abilityDetails.isPending ? (
+        <text fg={colors.muted} attributes={textStyles.muted}>
+          Loading ability descriptions...
+        </text>
+      ) : null}
+      {abilityDetails.isError ? (
+        <text fg={colors.muted} attributes={textStyles.muted}>
+          {abilityErrorMessage(abilityDetails.error)}
+        </text>
+      ) : null}
+      {abilityDetails.data?.map((ability) => (
+        <AbilityDescription key={ability.name} ability={ability} />
+      ))}
+    </Modal>
+  );
+}
+
+function abilityErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message.length > 0) {
+    return `Could not load ability descriptions: ${error.message}`;
+  }
+
+  return "Could not load ability descriptions. If offline, they may not be cached yet.";
+}
+
+function AbilityDescription({ ability }: { ability: PokemonAbilityDetail }) {
+  return (
+    <box style={{ flexDirection: "column", marginBottom: 1 }}>
+      <text attributes={textStyles.active}>{ability.name}</text>
+      <text>{ability.shortEffect}</text>
+      <text fg={colors.muted} attributes={textStyles.muted}>
+        {ability.effect}
+      </text>
+    </box>
   );
 }
 

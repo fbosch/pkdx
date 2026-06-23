@@ -71,11 +71,13 @@ export function DetailCardTitle({
   left,
   leftWidth,
   right,
+  titleWidth = detailTitleWidth,
   rightWidth,
 }: {
   left: ReactNode;
   leftWidth?: number;
   right: ReactNode;
+  titleWidth?: number;
   rightWidth?: number;
 }) {
   const resolvedLeftWidth =
@@ -84,7 +86,7 @@ export function DetailCardTitle({
     rightWidth ?? (typeof right === "string" ? right.length : 0);
   const spacerWidth = Math.max(
     1,
-    detailTitleWidth - resolvedLeftWidth - resolvedRightWidth,
+    titleWidth - resolvedLeftWidth - resolvedRightWidth,
   );
 
   return (
@@ -93,6 +95,61 @@ export function DetailCardTitle({
       <span>{" ".repeat(spacerWidth)}</span>
       {right}
     </text>
+  );
+}
+
+export function Modal({
+  children,
+  right,
+  rightWidth,
+  title,
+  top = 4,
+  width = 84,
+}: {
+  children: ReactNode;
+  right: ReactNode;
+  rightWidth?: number;
+  title: string;
+  top?: number;
+  width?: number;
+}) {
+  return (
+    <>
+      <box
+        backgroundColor={colors.modalBackdrop}
+        style={{
+          height: "100%",
+          left: 0,
+          opacity: 0.45,
+          position: "absolute",
+          top: 0,
+          width: "100%",
+          zIndex: 199,
+        }}
+      />
+      <box
+        backgroundColor={colors.modalBackground}
+        border
+        borderColor={colors.accent}
+        borderStyle="rounded"
+        style={{
+          flexDirection: "column",
+          paddingX: 1,
+          position: "absolute",
+          top,
+          width,
+          zIndex: 200,
+        }}
+      >
+        <DetailCardTitle
+          left={title}
+          right={right}
+          titleWidth={width - 4}
+          {...(rightWidth === undefined ? {} : { rightWidth })}
+        />
+        {children}
+      </box>
+    </>
   );
 }
 
@@ -129,15 +186,49 @@ export function StatBar({ name, value }: { name: string; value: number }) {
   );
 }
 
-export function InstructionFooter({ children }: { children: string }) {
+export type KeyHint = {
+  action: string;
+  key: string;
+};
+
+export function KeyHints({ hints }: { hints: readonly KeyHint[] }) {
+  return (
+    <span>
+      {hints.map((hint, index) => (
+        <span key={`${hint.key}-${hint.action}`}>
+          {index > 0 ? <span fg={colors.muted}> | </span> : null}
+          <KeyHintView hint={hint} />
+        </span>
+      ))}
+    </span>
+  );
+}
+
+export function keyHintsWidth(hints: readonly KeyHint[]): number {
+  return hints.reduce((width, hint, index) => {
+    return (
+      width + hint.key.length + 1 + hint.action.length + (index > 0 ? 3 : 0)
+    );
+  }, 0);
+}
+
+export function InstructionFooter({ children }: { children: ReactNode }) {
   return (
     <text
-      fg={colors.muted}
       attributes={textStyles.muted}
       style={{ alignSelf: "center", bottom: 1, position: "absolute" }}
     >
       {children}
     </text>
+  );
+}
+
+function KeyHintView({ hint }: { hint: KeyHint }) {
+  return (
+    <span>
+      <span fg={colors.keyHint}>{hint.key}</span>
+      <span fg={colors.muted}> {hint.action}</span>
+    </span>
   );
 }
 

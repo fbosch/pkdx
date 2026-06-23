@@ -1,8 +1,13 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { queryOptions } from "@tanstack/react-query";
 import { pokeApiResourceQueryOptions } from "./pokeapi";
-import type { PokeApiPokemon, PokeApiPokemonSpecies } from "./pokeapi/schema";
+import type {
+  PokeApiAbility,
+  PokeApiPokemon,
+  PokeApiPokemonSpecies,
+} from "./pokeapi/schema";
 import {
+  parseAbilityResource,
   parsePokemonResource,
   parsePokemonSpeciesResource,
 } from "./pokeapi/schema";
@@ -26,6 +31,13 @@ export type PokemonDetail = {
 export type PokemonAbility = {
   isHidden: boolean;
   name: string;
+  url?: string;
+};
+
+export type PokemonAbilityDetail = {
+  effect: string;
+  name: string;
+  shortEffect: string;
 };
 
 export type PokemonStat = {
@@ -39,6 +51,10 @@ export type PokemonSpriteReference = {
 };
 
 type PokemonDetailQueryKey = readonly ["pokemon-detail", speciesSlug: string];
+type PokemonAbilityDetailsQueryKey = readonly [
+  "pokemon-ability-details",
+  abilityUrls: readonly string[],
+];
 
 export function pokemonDetailQueryKey(
   species: SpeciesIndexEntry,
@@ -76,6 +92,43 @@ export function pokemonDetailQueryOptions(
   });
 }
 
+export function pokemonAbilityDetailsQueryOptions(
+  abilities: readonly PokemonAbility[],
+  queryClient: ResourceQueryClient,
+) {
+  return queryOptions({
+    queryKey: pokemonAbilityDetailsQueryKey(abilities),
+    queryFn: async () => {
+      const resources = await Promise.all(
+        abilities.map((ability) =>
+          queryClient.fetchQuery(
+            pokeApiResourceQueryOptions({
+              parse: parseAbilityResource,
+              url: getAbilityResourceUrl(ability),
+            }),
+          ),
+        ),
+      );
+
+      return resources.map(buildPokemonAbilityDetail);
+    },
+    ...queryCachePolicies.pokemonDetail,
+  });
+}
+
+function pokemonAbilityDetailsQueryKey(
+  abilities: readonly PokemonAbility[],
+): PokemonAbilityDetailsQueryKey {
+  return [
+    "pokemon-ability-details",
+    abilities.map((ability) => getAbilityResourceUrl(ability)),
+  ];
+}
+
+function getAbilityResourceUrl(ability: PokemonAbility): string {
+  return ability.url ?? `ability/${slugifyResourceName(ability.name)}`;
+}
+
 export function buildDefaultPokemonDetail(
   species: SpeciesIndexEntry,
   speciesResource: PokeApiPokemonSpecies,
@@ -87,6 +140,7 @@ export function buildDefaultPokemonDetail(
       .map((entry) => ({
         isHidden: entry.is_hidden,
         name: formatResourceName(entry.ability.name),
+        url: entry.ability.url,
       })),
     dexNumber: species.dexNumber,
     flavorText: selectFlavorText(speciesResource),
@@ -104,6 +158,31 @@ export function buildDefaultPokemonDetail(
       .toSorted((left, right) => left.slot - right.slot)
       .map((entry) => formatResourceName(entry.type.name)),
     weightKilograms: pokemonResource.weight / 10,
+  };
+}
+
+export function buildPokemonAbilityDetail(
+  abilityResource: PokeApiAbility,
+): PokemonAbilityDetail {
+  const englishEffect = abilityResource.effect_entries.find(
+    (entry) => entry.language.name === "en",
+  );
+  const englishFlavor = abilityResource.flavor_text_entries.find(
+    (entry) => entry.language.name === "en",
+  );
+
+  return {
+    effect: normalizeFlavorText(
+      englishEffect?.effect ??
+        englishFlavor?.flavor_text ??
+        "No ability description available.",
+    ),
+    name: formatResourceName(abilityResource.name),
+    shortEffect: normalizeFlavorText(
+      englishEffect?.short_effect ??
+        englishFlavor?.flavor_text ??
+        "No short ability description available.",
+    ),
   };
 }
 
@@ -154,6 +233,10 @@ function formatResourceName(value: string): string {
     .split("-")
     .map((part) => `${part[0]?.toUpperCase() ?? ""}${part.slice(1)}`)
     .join(" ");
+}
+
+function slugifyResourceName(value: string): string {
+  return value.toLowerCase().replaceAll(" ", "-");
 }
 
 function formatStatName(value: string): string {
