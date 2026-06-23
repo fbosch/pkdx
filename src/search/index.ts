@@ -24,15 +24,44 @@ const fuse = new Fuse(speciesIndex, {
   threshold: 0.35,
 });
 
+const normalizedSpeciesIndex = speciesIndex.map((entry) => ({
+  entry,
+  aliases: entry.aliases.map(normalize),
+  dexNumbers: entry.dexNumbers.map(normalize),
+  name: normalize(entry.name),
+  slug: normalize(entry.slug),
+}));
+
+const exactSpeciesByIdentity = new Map(
+  normalizedSpeciesIndex.flatMap(({ dexNumbers, entry, name, slug }) =>
+    [name, slug, ...dexNumbers].map((value) => [value, entry] as const),
+  ),
+);
+const searchResultCache = new Map<string, SpeciesIndexEntry[]>();
+const searchResultCacheLimit = 50;
+
 export const minimumSearchQueryLength = 3;
 
 export function searchSpecies(query: string, limit = 10): SpeciesIndexEntry[] {
-  const normalizedQuery = query.trim();
+  const normalizedQuery = normalize(query);
   if (normalizedQuery.length < minimumSearchQueryLength) {
     return [];
   }
 
-  return fuse.search(normalizedQuery, { limit }).map((result) => result.item);
+  const cacheKey = `${normalizedQuery}:${limit.toString()}`;
+  const cachedResults = searchResultCache.get(cacheKey);
+  if (cachedResults !== undefined) {
+    return cachedResults;
+  }
+
+  const prefixMatches = searchSpeciesByPrefix(normalizedQuery, limit);
+  const results =
+    prefixMatches.length > 0
+      ? prefixMatches
+      : fuse.search(normalizedQuery, { limit }).map((result) => result.item);
+
+  cacheSearchResults(cacheKey, results);
+  return results;
 }
 
 export function searchResults(
@@ -52,11 +81,7 @@ export function findExactSpecies(query: string): SpeciesIndexEntry | undefined {
     return undefined;
   }
 
-  return speciesIndex.find((entry) => {
-    return [entry.name, entry.slug, ...entry.dexNumbers].some(
-      (value) => normalize(value) === normalizedQuery,
-    );
-  });
+  return exactSpeciesByIdentity.get(normalizedQuery);
 }
 
 export function getSpeciesBySelection(
@@ -73,4 +98,72 @@ function normalize(value: string): string {
     .replaceAll("♀", " female")
     .replaceAll("♂", " male")
     .trim();
+}
+
+function searchSpeciesByPrefix(
+  query: string,
+  limit: number,
+): SpeciesIndexEntry[] {
+  return normalizedSpeciesIndex
+    .map((entry) => ({
+      entry: entry.entry,
+      rank: prefixMatchRank(entry, query),
+    }))
+    .filter(hasPrefixMatchRank)
+    .toSorted((left, right) => {
+      if (left.rank !== right.rank) {
+        return left.rank - right.rank;
+      }
+
+      return left.entry.dexNumber - right.entry.dexNumber;
+    })
+    .slice(0, limit)
+    .map((result) => result.entry);
+}
+
+function hasPrefixMatchRank(result: {
+  entry: SpeciesIndexEntry;
+  rank: number | undefined;
+}): result is { entry: SpeciesIndexEntry; rank: number } {
+  return result.rank !== undefined;
+}
+
+function cacheSearchResults(key: string, results: SpeciesIndexEntry[]): void {
+  searchResultCache.set(key, results);
+
+  if (searchResultCache.size <= searchResultCacheLimit) {
+    return;
+  }
+
+  const oldestKey = searchResultCache.keys().next().value;
+  if (oldestKey !== undefined) {
+    searchResultCache.delete(oldestKey);
+  }
+}
+
+function prefixMatchRank(
+  entry: (typeof normalizedSpeciesIndex)[number],
+  query: string,
+): number | undefined {
+  if (
+    entry.name === query ||
+    entry.slug === query ||
+    entry.dexNumbers.includes(query)
+  ) {
+    return 0;
+  }
+
+  if (entry.name.startsWith(query) || entry.slug.startsWith(query)) {
+    return 1;
+  }
+
+  if (entry.aliases.some((alias) => alias.startsWith(query))) {
+    return 2;
+  }
+
+  if (entry.dexNumbers.some((dexNumber) => dexNumber.startsWith(query))) {
+    return 3;
+  }
+
+  return undefined;
 }
