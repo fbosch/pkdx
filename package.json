@@ -61,8 +61,10 @@
     "msw"
   ],
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,md}": "biome format --write",
-    "*.{js,jsx,ts,tsx,json,jsonc}": "biome lint",
+    "*.{js,jsx,ts,tsx,json,jsonc}": [
+      "biome format --write",
+      "biome lint"
+    ],
     "*.{ts,tsx}": "bun run test:related"
   }
 }
