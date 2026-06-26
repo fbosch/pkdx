@@ -117,9 +117,7 @@ test("renders evolution viewer modal", () => {
 
 test("formats evolution flowchart lines with methods", () => {
   expect(buildEvolutionFlowchartLines(pikachuPokemonEvolutionChain)).toEqual([
-    "Pichu",
-    "└─ [level up + happiness 220] ─▶ Pikachu",
-    "   └─ [Thunder Stone] ─▶ Raichu",
+    "Pichu ─[level up + happiness 220]─▶ Pikachu ─[Thunder Stone]─▶ Raichu",
   ]);
 });
 

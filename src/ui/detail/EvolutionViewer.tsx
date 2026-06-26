@@ -2,6 +2,7 @@ import type {
   PokemonEvolution,
   PokemonEvolutionChain,
 } from "../../pokemon-detail";
+import { useState } from "react";
 import { KeyHints, Modal, keyHintsWidth } from "../components";
 import { colors, textStyles } from "../design-tokens";
 
@@ -16,6 +17,14 @@ type EvolutionChartLink = {
 type EvolutionChartRow = {
   links: EvolutionChartLink[];
   text: string;
+};
+type EvolutionRouteStep = {
+  method: string;
+  name: string;
+};
+type EvolutionRoute = {
+  root: string;
+  steps: EvolutionRouteStep[];
 };
 
 export function EvolutionViewer({
@@ -74,19 +83,42 @@ function EvolutionChartTextRow({
           );
         }
 
-        const clickProps = { onMouseDown: () => onSelectSpecies(name) };
         return (
-          <text
+          <ClickableEvolutionName
             key={index.toString()}
-            attributes={textStyles.active}
-            fg={colors.keyHint}
-            {...clickProps}
-          >
-            {chunk.text}
-          </text>
+            name={name}
+            onSelectSpecies={onSelectSpecies}
+            text={chunk.text}
+          />
         );
       })}
     </box>
+  );
+}
+
+function ClickableEvolutionName({
+  name,
+  onSelectSpecies,
+  text,
+}: {
+  name: string;
+  onSelectSpecies: (name: string) => void;
+  text: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const mouseProps = {
+    onMouseDown: () => onSelectSpecies(name),
+    onMouseOut: () => setHovered(false),
+    onMouseOver: () => setHovered(true),
+  };
+  const hoverProps = hovered
+    ? { bg: colors.selected, fg: colors.selectedText }
+    : { fg: colors.keyHint };
+
+  return (
+    <text attributes={textStyles.active} {...hoverProps} {...mouseProps}>
+      {text}
+    </text>
   );
 }
 
@@ -99,30 +131,95 @@ export function buildEvolutionFlowchartLines(
 function buildEvolutionChartRows(
   evolutionChain: PokemonEvolutionChain,
 ): EvolutionChartRow[] {
-  return [
-    pokemonNameRow(evolutionChain.root.name, ""),
-    ...childEvolutionRows(evolutionChain.root.evolvesTo, ""),
-  ];
+  const routes = buildEvolutionRoutes(evolutionChain.root);
+  if (routes.length === 0) {
+    return [pokemonNameRow(evolutionChain.root.name, "")];
+  }
+
+  if (routes.length === 1) {
+    return [routePathRow(routes[0] ?? throwMissingRoute())];
+  }
+
+  return branchingRouteRows(routes);
 }
 
-function childEvolutionRows(
-  evolutions: readonly PokemonEvolution[],
-  prefix: string,
+function buildEvolutionRoutes(evolution: PokemonEvolution): EvolutionRoute[] {
+  if (evolution.evolvesTo.length === 0) {
+    return [];
+  }
+
+  return evolution.evolvesTo.flatMap((child) =>
+    childEvolutionRoutes(evolution.name, child, []),
+  );
+}
+
+function childEvolutionRoutes(
+  root: string,
+  evolution: PokemonEvolution,
+  ancestors: EvolutionRouteStep[],
+): EvolutionRoute[] {
+  const steps = [
+    ...ancestors,
+    { method: evolutionMethodLabel(evolution), name: evolution.name },
+  ];
+
+  if (evolution.evolvesTo.length === 0) {
+    return [{ root, steps }];
+  }
+
+  return evolution.evolvesTo.flatMap((child) =>
+    childEvolutionRoutes(root, child, steps),
+  );
+}
+
+function routePathRow(route: EvolutionRoute): EvolutionChartRow {
+  let text = route.root;
+  const links: EvolutionChartLink[] = [nameLink(route.root, 0)];
+
+  for (const step of route.steps) {
+    text = `${text} ─${step.method}─▶ `;
+    links.push(nameLink(step.name, text.length));
+    text = `${text}${step.name}`;
+  }
+
+  return { links, text };
+}
+
+function branchingRouteRows(
+  routes: readonly EvolutionRoute[],
 ): EvolutionChartRow[] {
+  const firstRoute = routes[0];
+  if (firstRoute === undefined) {
+    throwMissingRoute();
+  }
+
+  const root = firstRoute.root;
+  const rootWidth = root.length;
   const methodWidth = Math.max(
-    0,
-    ...evolutions.map((evolution) => evolutionMethodLabel(evolution).length),
+    ...routes.map(
+      (route) => route.steps.map((step) => step.method).join(" / ").length,
+    ),
   );
 
-  return evolutions.flatMap((evolution, index) => {
-    const isLast = index === evolutions.length - 1;
-    const branch = isLast ? "└─" : "├─";
-    const childPrefix = `${prefix}${isLast ? "   " : "│  "}`;
-    const method = evolutionMethodLabel(evolution).padEnd(methodWidth);
-    const textBeforeName = `${prefix}${branch} ${method} ─▶ `;
-    const row = pokemonNameRow(evolution.name, textBeforeName);
+  return routes.map((route, index) => {
+    const isFirst = index === 0;
+    const isLast = index === routes.length - 1;
+    const rootText = isFirst ? root : " ".repeat(rootWidth);
+    const branch = isFirst ? "┬" : isLast ? "└" : "├";
+    const method = route.steps
+      .map((step) => step.method)
+      .join(" / ")
+      .padEnd(methodWidth);
+    const target = route.steps.at(-1)?.name ?? root;
+    const prefix = `${rootText} ${branch}─${method}─▶ `;
 
-    return [row, ...childEvolutionRows(evolution.evolvesTo, childPrefix)];
+    return {
+      links: [
+        ...(isFirst ? [nameLink(root, 0)] : []),
+        nameLink(target, prefix.length),
+      ],
+      text: `${prefix}${target}`,
+    };
   });
 }
 
@@ -138,9 +235,17 @@ function evolutionMethodLabel(evolution: PokemonEvolution): string {
 
 function pokemonNameRow(name: string, prefix: string): EvolutionChartRow {
   return {
-    links: [{ end: prefix.length + name.length, name, start: prefix.length }],
+    links: [nameLink(name, prefix.length)],
     text: `${prefix}${name}`,
   };
+}
+
+function nameLink(name: string, start: number): EvolutionChartLink {
+  return { end: start + name.length, name, start };
+}
+
+function throwMissingRoute(): never {
+  throw new Error("Evolution chart has no routes");
 }
 
 function splitEvolutionChartRow(row: EvolutionChartRow) {

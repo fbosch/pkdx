@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { DetailNavigationDelta } from "../../app-state";
 import type { PokemonDetail } from "../../pokemon-detail";
 import { getSpeciesByDexDelta, type SpeciesIndexEntry } from "../../search";
@@ -228,21 +228,49 @@ function DexNavigationButton({
   label: string;
   onPress: (() => void) | undefined;
 }) {
-  const clickProps = onPress === undefined ? {} : { onMouseDown: onPress };
+  const [hovered, setHovered] = useState(false);
+  const clickProps =
+    onPress === undefined
+      ? {}
+      : {
+          onMouseDown: onPress,
+          onMouseOut: () => setHovered(false),
+          onMouseOver: () => setHovered(true),
+        };
+  const active = onPress !== undefined;
+  const highlighted = active && hovered;
 
   return (
     <text
       attributes={textStyles.active}
-      bg={onPress === undefined ? colors.statEmpty : colors.panelSecondary}
-      fg={onPress === undefined ? colors.muted : colors.keyHint}
+      bg={
+        active === false
+          ? colors.statEmpty
+          : highlighted
+            ? colors.selected
+            : colors.panelSecondary
+      }
+      fg={
+        active === false
+          ? colors.muted
+          : highlighted
+            ? colors.selectedText
+            : colors.keyHint
+      }
       {...clickProps}
     >
-      <DexNavigationButtonLabel label={label} />
+      <DexNavigationButtonLabel highlighted={highlighted} label={label} />
     </text>
   );
 }
 
-function DexNavigationButtonLabel({ label }: { label: string }) {
+function DexNavigationButtonLabel({
+  highlighted,
+  label,
+}: {
+  highlighted: boolean;
+  label: string;
+}) {
   const dexNumberMatch = /#\d{3}/.exec(label);
   if (dexNumberMatch === null) {
     return <span>{label}</span>;
@@ -255,7 +283,9 @@ function DexNavigationButtonLabel({ label }: { label: string }) {
   return (
     <span>
       {before}
-      <span fg={colors.muted}>{dexNumber}</span>
+      <span fg={highlighted ? colors.selectedText : colors.muted}>
+        {dexNumber}
+      </span>
       {after}
     </span>
   );
