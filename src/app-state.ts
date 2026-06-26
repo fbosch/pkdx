@@ -1,5 +1,6 @@
 import {
   findExactSpecies,
+  getSpeciesByDexDelta,
   getSpeciesBySelection,
   searchSpecies,
   type SpeciesIndexEntry,
@@ -48,6 +49,8 @@ export type AppKey = {
   shift?: boolean;
   sequence?: string;
 };
+
+export type DetailNavigationDelta = -1 | 1;
 
 type SearchKeyHandler = (state: SearchState) => AppState;
 
@@ -131,15 +134,9 @@ function applyDetailKey(state: DetailState, key: AppKey): AppState {
 }
 
 function applyDetailActionKey(state: DetailState, key: AppKey): AppState {
-  if (key.name === "a" && state.detail !== undefined) {
-    return openDetailOverlay(state, "abilities");
-  }
-
-  if (canOpenFormSelector(state, key)) {
-    return openDetailOverlay(state, {
-      kind: "forms",
-      selectedIndex: getCurrentPokemonFormIndex(state),
-    });
+  const detailOverlay = getDetailOverlayAction(state, key);
+  if (detailOverlay !== undefined) {
+    return openDetailOverlay(state, detailOverlay);
   }
 
   if (canCycleDetailDescription(state, key)) {
@@ -154,7 +151,44 @@ function applyDetailActionKey(state: DetailState, key: AppKey): AppState {
     return toggleDetailShiny(state);
   }
 
+  const navigationDelta = getDetailNavigationDelta(key);
+  if (navigationDelta !== undefined) {
+    return loadAdjacentDetailSpecies(state, navigationDelta);
+  }
+
   return state;
+}
+
+function getDetailOverlayAction(
+  state: DetailState,
+  key: AppKey,
+): DetailState["detailOverlay"] {
+  if (key.name === "a" && state.detail !== undefined) {
+    return "abilities";
+  }
+
+  if (canOpenFormSelector(state, key)) {
+    return {
+      kind: "forms",
+      selectedIndex: getCurrentPokemonFormIndex(state),
+    };
+  }
+
+  return undefined;
+}
+
+function getDetailNavigationDelta(
+  key: AppKey,
+): DetailNavigationDelta | undefined {
+  if (key.name === "h" || key.name === "left") {
+    return -1;
+  }
+
+  if (key.name === "l" || key.name === "right") {
+    return 1;
+  }
+
+  return undefined;
 }
 
 function canOpenFormSelector(state: DetailState, key: AppKey): boolean {
@@ -305,6 +339,18 @@ export function loadDetailSpecies(
     species,
     status: "loading",
   };
+}
+
+export function loadAdjacentDetailSpecies(
+  state: DetailState,
+  delta: DetailNavigationDelta,
+): DetailState {
+  const species = getSpeciesByDexDelta(state.species, delta);
+  if (species === undefined) {
+    return state;
+  }
+
+  return loadDetailSpecies(state, species);
 }
 
 function loadDetailForm(state: DetailState, form: PokemonForm): DetailState {

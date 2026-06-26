@@ -7,6 +7,8 @@ import {
   createInitialAppState,
   detailLoadFailed,
   detailLoadSucceeded,
+  loadAdjacentDetailSpecies,
+  type DetailNavigationDelta,
   type DetailState,
 } from "../app-state";
 import type { PokemonDetail, PokemonForm } from "../pokemon-detail";
@@ -62,6 +64,13 @@ export function App({ initialQuery = "", onExit }: AppProps) {
               : current,
           );
         }}
+        onNavigate={(delta) => {
+          setState((current) =>
+            current.screen === "detail"
+              ? loadAdjacentDetailSpecies(current, delta)
+              : current,
+          );
+        }}
         queryClient={queryClient}
         state={state}
       />
@@ -81,13 +90,17 @@ type DetailViewProps = {
     species: DetailState["species"],
     detail: PokemonDetail,
   ) => void;
+  onNavigate: (delta: DetailNavigationDelta) => void;
   queryClient: ReturnType<typeof useQueryClient>;
   state: DetailState;
 };
 
+type DetailLoadProps = Omit<DetailViewProps, "onNavigate">;
+
 function DetailView({
   onLoadFailed,
   onLoadSucceeded,
+  onNavigate,
   queryClient,
   state,
 }: DetailViewProps) {
@@ -115,6 +128,8 @@ function DetailView({
         formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
         loadedSpecies={state.detail.species}
         loadingSpecies={state.status === "loading" ? state.species : undefined}
+        navigationSpecies={state.species}
+        onNavigate={onNavigate}
         queryClient={queryClient}
         shiny={state.shiny}
       />
@@ -138,7 +153,7 @@ function usePokemonDetailLoad({
   onLoadSucceeded,
   queryClient,
   state,
-}: DetailViewProps) {
+}: DetailLoadProps) {
   const retryErrorUpdatedAt = useRef<number | undefined>(undefined);
   const detail = useQuery({
     ...pokemonDetailQueryOptions(state.species, queryClient, state.form),

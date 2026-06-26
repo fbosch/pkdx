@@ -94,6 +94,18 @@ export function getSpeciesBySelection(
   return searchSpecies(query)[selectedIndex];
 }
 
+export function getSpeciesByDexDelta(
+  species: SpeciesIndexEntry,
+  delta: number,
+): SpeciesIndexEntry | undefined {
+  const index = speciesIndex.findIndex((entry) => entry.slug === species.slug);
+  if (index === -1) {
+    return undefined;
+  }
+
+  return speciesIndex[index + delta];
+}
+
 function normalize(value: string): string {
   return value
     .toLowerCase()

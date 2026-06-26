@@ -1,8 +1,8 @@
 import type { useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import type { DetailState } from "../../app-state";
+import type { DetailNavigationDelta, DetailState } from "../../app-state";
 import type { PokemonDetail } from "../../pokemon-detail";
-import type { SpeciesIndexEntry } from "../../search";
+import { getSpeciesByDexDelta, type SpeciesIndexEntry } from "../../search";
 import {
   DetailCardTitle,
   DetailScreen,
@@ -36,6 +36,8 @@ export type LoadedDetailViewProps = {
   formSelectorSelectedIndex: number | undefined;
   loadedSpecies: SpeciesIndexEntry;
   loadingSpecies: DetailState["species"] | undefined;
+  navigationSpecies: SpeciesIndexEntry;
+  onNavigate: (delta: DetailNavigationDelta) => void;
   queryClient: ReturnType<typeof useQueryClient>;
   shiny: boolean;
 };
@@ -48,9 +50,14 @@ export function LoadedDetailView({
   formSelectorSelectedIndex,
   loadedSpecies,
   loadingSpecies,
+  navigationSpecies,
+  onNavigate,
   queryClient,
   shiny,
 }: LoadedDetailViewProps) {
+  const previousSpecies = getSpeciesByDexDelta(navigationSpecies, -1);
+  const nextSpecies = getSpeciesByDexDelta(navigationSpecies, 1);
+
   return (
     <DetailScreen>
       <PokedexCard>
@@ -70,13 +77,7 @@ export function LoadedDetailView({
           right={<TypeLabels types={detail.types} />}
           rightWidth={typeLabelsWidth(detail.types)}
         />
-        {loadingSpecies !== undefined ? (
-          <text fg={colors.muted} attributes={textStyles.muted}>
-            Loading next: #
-            {loadingSpecies.dexNumbers[1] ?? loadingSpecies.dexNumbers[0]}{" "}
-            {loadingSpecies.name}...
-          </text>
-        ) : errorMessage === undefined ? (
+        {loadingSpecies !== undefined || errorMessage === undefined ? (
           <text> </text>
         ) : null}
         {errorMessage !== undefined ? (
@@ -156,6 +157,11 @@ export function LoadedDetailView({
           </DetailPanel>
         </box>
       </PokedexCard>
+      <DexNavigationButtons
+        nextSpecies={nextSpecies}
+        onNavigate={onNavigate}
+        previousSpecies={previousSpecies}
+      />
       <DetailOverlays
         abilityViewerOpen={abilityViewerOpen}
         detail={detail}
@@ -167,6 +173,89 @@ export function LoadedDetailView({
         shiny={shiny}
       />
     </DetailScreen>
+  );
+}
+
+function DexNavigationButtons({
+  nextSpecies,
+  onNavigate,
+  previousSpecies,
+}: {
+  nextSpecies: SpeciesIndexEntry | undefined;
+  onNavigate: (delta: DetailNavigationDelta) => void;
+  previousSpecies: SpeciesIndexEntry | undefined;
+}) {
+  return (
+    <box
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: 100,
+      }}
+    >
+      <DexNavigationButton
+        label={
+          previousSpecies === undefined
+            ? ""
+            : `< ${formatDexNavigationSpecies(previousSpecies)}`
+        }
+        onPress={
+          previousSpecies === undefined ? undefined : () => onNavigate(-1)
+        }
+      />
+      <DexNavigationButton
+        label={
+          nextSpecies === undefined
+            ? ""
+            : `${formatDexNavigationSpecies(nextSpecies)} >`
+        }
+        onPress={nextSpecies === undefined ? undefined : () => onNavigate(1)}
+      />
+    </box>
+  );
+}
+
+function formatDexNavigationSpecies(species: SpeciesIndexEntry): string {
+  return `#${species.dexNumber.toString().padStart(3, "0")} ${species.name}`;
+}
+
+function DexNavigationButton({
+  label,
+  onPress,
+}: {
+  label: string;
+  onPress: (() => void) | undefined;
+}) {
+  const clickProps = onPress === undefined ? {} : { onMouseDown: onPress };
+
+  return (
+    <text
+      attributes={textStyles.active}
+      bg={onPress === undefined ? colors.statEmpty : colors.panelSecondary}
+      fg={onPress === undefined ? colors.muted : colors.keyHint}
+      {...clickProps}
+    >
+      <DexNavigationButtonLabel label={label} />
+    </text>
+  );
+}
+
+function DexNavigationButtonLabel({ label }: { label: string }) {
+  const dexNumberMatch = /#\d{3}/.exec(label);
+  if (dexNumberMatch === null) {
+    return <span>{label}</span>;
+  }
+
+  const before = label.slice(0, dexNumberMatch.index);
+  const dexNumber = dexNumberMatch[0];
+  const after = label.slice(dexNumberMatch.index + dexNumber.length);
+
+  return (
+    <span>
+      {before}
+      <span fg={colors.muted}>{dexNumber}</span>
+      {after}
+    </span>
   );
 }
 
@@ -208,6 +297,7 @@ function LoadedDetailFooter({
     <InstructionFooter>
       <KeyHints
         hints={[
+          { key: "h/l", action: "prev/next" },
           { key: "a", action: "abilities" },
           ...(hasAlternateForms ? [{ key: "f", action: "forms" }] : []),
           { key: "d/D", action: "desc" },

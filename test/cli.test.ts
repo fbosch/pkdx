@@ -324,6 +324,31 @@ test("Detail keeps current model while loading a new species", () => {
   });
 });
 
+test("Detail navigates previous and next species in National Dex order", () => {
+  const state = loadedPikachuDetailState();
+  const previous = applyAppKey(state, { name: "h" });
+  const next = applyAppKey(previous, { name: "right" });
+
+  expect(previous).toMatchObject({
+    screen: "detail",
+    descriptionIndex: 0,
+    form: undefined,
+    species: { dexNumber: 24, slug: "arbok" },
+    status: "loading",
+  });
+  expect(next).toMatchObject({
+    screen: "detail",
+    species: { dexNumber: 25, slug: "pikachu" },
+    status: "loading",
+  });
+});
+
+test("Detail National Dex navigation stops at boundaries", () => {
+  const state = createInitialAppState("bulbasaur");
+
+  expect(applyAppKey(state, { name: "left" })).toBe(state);
+});
+
 test("Detail retry returns a recoverable error to loading", () => {
   const state = createInitialAppState("pikachu") as DetailState;
   const failed = detailLoadFailed(state, state.species, new Error("offline"));
