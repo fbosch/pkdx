@@ -1,12 +1,16 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { queryOptions } from "@tanstack/react-query";
+import { match } from "ts-pattern";
 import { pokeApiResourceQueryOptions } from "./pokeapi";
 import type {
   PokeApiAbility,
+  PokeApiEvolutionChain,
+  PokeApiEvolutionDetail,
   PokeApiPokemon,
   PokeApiPokemonSpecies,
 } from "./pokeapi/schema";
 import {
+  parseEvolutionChainResource,
   parseAbilityResource,
   parsePokemonResource,
   parsePokemonSpeciesResource,
@@ -23,6 +27,7 @@ export type PokemonDetail = {
   damageTaken: DamageTaken;
   dexNumber: number;
   eggGroups: string[];
+  evolutionChain: PokemonEvolutionChain;
   flavorText: string;
   flavorTexts: PokemonFlavorText[];
   form: PokemonForm;
@@ -39,6 +44,17 @@ export type PokemonDetail = {
 
 export type PokemonAbility = {
   isHidden: boolean;
+  name: string;
+  url?: string;
+};
+
+export type PokemonEvolutionChain = {
+  root: PokemonEvolution;
+};
+
+export type PokemonEvolution = {
+  evolvesTo: PokemonEvolution[];
+  method: string | undefined;
   name: string;
   url?: string;
 };
@@ -115,11 +131,18 @@ export function pokemonDetailQueryOptions(
           url: selectedForm.pokemonUrl,
         }),
       );
+      const evolutionChainResource = await queryClient.fetchQuery(
+        pokeApiResourceQueryOptions({
+          parse: parseEvolutionChainResource,
+          url: speciesResource.evolution_chain.url,
+        }),
+      );
 
       return buildPokemonDetail(
         species,
         speciesResource,
         pokemonResource,
+        evolutionChainResource,
         forms,
         selectedForm,
       );
@@ -177,12 +200,14 @@ export function buildDefaultPokemonDetail(
   species: SpeciesIndexEntry,
   speciesResource: PokeApiPokemonSpecies,
   pokemonResource: PokeApiPokemon,
+  evolutionChainResource: PokeApiEvolutionChain,
 ): PokemonDetail {
   const forms = buildPokemonForms(species, speciesResource);
   return buildPokemonDetail(
     species,
     speciesResource,
     pokemonResource,
+    evolutionChainResource,
     forms,
     getSelectedPokemonForm(forms),
   );
@@ -192,6 +217,7 @@ export function buildPokemonDetail(
   species: SpeciesIndexEntry,
   speciesResource: PokeApiPokemonSpecies,
   pokemonResource: PokeApiPokemon,
+  evolutionChainResource: PokeApiEvolutionChain,
   forms: readonly PokemonForm[],
   form: PokemonForm,
 ): PokemonDetail {
@@ -213,6 +239,7 @@ export function buildPokemonDetail(
     eggGroups: speciesResource.egg_groups.map((eggGroup) =>
       formatResourceName(eggGroup.name),
     ),
+    evolutionChain: buildPokemonEvolutionChain(evolutionChainResource),
     flavorText: flavorTexts[0]?.text ?? "No flavor text available.",
     flavorTexts,
     form,
@@ -275,6 +302,79 @@ export function buildPokemonForms(
 
     return left.displayName.localeCompare(right.displayName);
   });
+}
+
+export function buildPokemonEvolutionChain(
+  evolutionChainResource: PokeApiEvolutionChain,
+): PokemonEvolutionChain {
+  return { root: buildPokemonEvolution(evolutionChainResource.chain) };
+}
+
+function buildPokemonEvolution(
+  evolution: PokeApiEvolutionChain["chain"],
+): PokemonEvolution {
+  return {
+    evolvesTo: evolution.evolves_to.map(buildPokemonEvolution),
+    method: formatEvolutionMethod(evolution.evolution_details),
+    name: formatResourceName(evolution.species.name),
+    url: evolution.species.url,
+  };
+}
+
+function formatEvolutionMethod(
+  details: readonly PokeApiEvolutionDetail[],
+): string | undefined {
+  const detail = details[0];
+  if (detail === undefined) {
+    return undefined;
+  }
+
+  const parts = [
+    formatEvolutionTrigger(detail),
+    detail.min_level === undefined || detail.min_level === null
+      ? undefined
+      : `Lv ${detail.min_level.toString()}`,
+    detail.item === undefined || detail.item === null
+      ? undefined
+      : formatResourceName(detail.item.name),
+    detail.held_item === undefined || detail.held_item === null
+      ? undefined
+      : `hold ${formatResourceName(detail.held_item.name)}`,
+    detail.known_move === undefined || detail.known_move === null
+      ? undefined
+      : `knows ${formatResourceName(detail.known_move.name)}`,
+    detail.known_move_type === undefined || detail.known_move_type === null
+      ? undefined
+      : `knows ${formatResourceName(detail.known_move_type.name)} move`,
+    detail.min_happiness === undefined || detail.min_happiness === null
+      ? undefined
+      : `happiness ${detail.min_happiness.toString()}`,
+    detail.min_affection === undefined || detail.min_affection === null
+      ? undefined
+      : `affection ${detail.min_affection.toString()}`,
+    detail.min_beauty === undefined || detail.min_beauty === null
+      ? undefined
+      : `beauty ${detail.min_beauty.toString()}`,
+    detail.location === undefined || detail.location === null
+      ? undefined
+      : `at ${formatResourceName(detail.location.name)}`,
+    detail.time_of_day === undefined || detail.time_of_day.length === 0
+      ? undefined
+      : detail.time_of_day,
+    detail.needs_overworld_rain === true ? "rain" : undefined,
+    detail.needs_multiplayer === true ? "multiplayer" : undefined,
+    detail.turn_upside_down === true ? "upside down" : undefined,
+  ].filter((part) => part !== undefined);
+
+  return parts.length === 0 ? undefined : parts.join(", ");
+}
+
+function formatEvolutionTrigger(detail: PokeApiEvolutionDetail): string {
+  return match(detail.trigger.name)
+    .with("level-up", () => "level up")
+    .with("trade", () => "trade")
+    .with("use-item", () => "use item")
+    .otherwise(formatResourceName);
 }
 
 function isSelectablePokemonForm(

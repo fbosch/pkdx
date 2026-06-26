@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "toolVersion": "0.6.0",
+  "sources": {
+    "opentui": {
+      "repo": "https://github.com/anomalyco/opentui",
+      "ref": "HEAD",
+      "resolvedCommit": "cea1daec460ab487b7f2aab274c6be0798a74c64",
+      "bytes": 485851,
+      "fileCount": 65,
+      "manifestSha256": "349e4c4315ca61a6987e1777d5e20eb5626cc5313f19256f303cc5fabb638f17",
+      "rulesSha256": "e27ef21aeab2353bc2d6ff94726ec517237ebf8598d863f22e23c437ccda1479"
+    }
+  }
+}

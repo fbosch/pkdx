@@ -38,6 +38,28 @@ const pikachuDetail: PokemonDetail = {
   },
   dexNumber: 25,
   eggGroups: ["Field", "Fairy"],
+  evolutionChain: {
+    root: {
+      evolvesTo: [
+        {
+          evolvesTo: [
+            {
+              evolvesTo: [],
+              method: "use item, Thunder Stone",
+              name: "Raichu",
+              url: "https://pokeapi.co/api/v2/pokemon-species/26/",
+            },
+          ],
+          method: "level up, happiness 220",
+          name: "Pikachu",
+          url: "https://pokeapi.co/api/v2/pokemon-species/25/",
+        },
+      ],
+      method: undefined,
+      name: "Pichu",
+      url: "https://pokeapi.co/api/v2/pokemon-species/172/",
+    },
+  },
   flavorText: "Mouse Pokemon.",
   flavorTexts: [
     { source: "Red", text: "Mouse Pokemon." },
@@ -183,6 +205,19 @@ test("Search maps raw Ctrl-J and Ctrl-K sequences to arrow movement", () => {
     },
     {
       name: "k",
+      sequence: "\v",
+    },
+  );
+});
+
+test("Search maps unnamed Ctrl-J and Ctrl-K sequences to arrow movement", () => {
+  expectSearchMovementForKeys(
+    {
+      name: "",
+      sequence: "\n",
+    },
+    {
+      name: "",
       sequence: "\v",
     },
   );
@@ -479,6 +514,34 @@ test("Detail ability viewer closes with Escape instead of exiting", () => {
   const state = loadedPikachuDetailState();
   const loading = applyAppKey(state, { name: "a" });
   const opened = detailAbilitiesLoaded(loading as DetailState);
+  const closed = applyAppKey(opened, { name: "escape" });
+
+  expect(closed).toMatchObject({
+    screen: "detail",
+    detailOverlay: undefined,
+    shouldExit: false,
+  });
+});
+
+test("Detail opens and closes evolution viewer with e", () => {
+  const state = loadedPikachuDetailState();
+  const opened = applyAppKey(state, { name: "e" });
+  const closed = applyAppKey(opened, { name: "e" });
+
+  expect(opened).toMatchObject({
+    screen: "detail",
+    detailOverlay: "evolutions",
+  });
+  expect(closed).toMatchObject({
+    screen: "detail",
+    detailOverlay: undefined,
+    shouldExit: false,
+  });
+});
+
+test("Detail evolution viewer closes with Escape instead of exiting", () => {
+  const state = loadedPikachuDetailState();
+  const opened = applyAppKey(state, { name: "e" });
   const closed = applyAppKey(opened, { name: "escape" });
 
   expect(closed).toMatchObject({

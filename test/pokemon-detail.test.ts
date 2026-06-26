@@ -14,6 +14,7 @@ import type { SpeciesIndexEntry } from "../src/search";
 import {
   charizardMegaXPokemon,
   charizardSpecies,
+  pikachuEvolutionChain,
   pikachuPokemon,
   pikachuRockStarPokemon,
   pikachuSpecies,
@@ -59,6 +60,7 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
     pikachuIndexEntry,
     pikachuSpecies,
     pikachuPokemon,
+    pikachuEvolutionChain,
   );
 
   expect(detail).toEqual({
@@ -84,6 +86,28 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
     },
     dexNumber: 25,
     eggGroups: ["Field", "Fairy"],
+    evolutionChain: {
+      root: {
+        evolvesTo: [
+          {
+            evolvesTo: [
+              {
+                evolvesTo: [],
+                method: "use item, Thunder Stone",
+                name: "Raichu",
+                url: "https://pokeapi.co/api/v2/pokemon-species/26/",
+              },
+            ],
+            method: "level up, happiness 220",
+            name: "Pikachu",
+            url: "https://pokeapi.co/api/v2/pokemon-species/25/",
+          },
+        ],
+        method: undefined,
+        name: "Pichu",
+        url: "https://pokeapi.co/api/v2/pokemon-species/172/",
+      },
+    },
     flavorText:
       "When several of these POKéMON gather, their electricity can build and cause lightning storms.",
     flavorTexts: [
@@ -247,6 +271,9 @@ test("loads Default Representative PokemonDetail through mocked PokeAPI queries"
     http.get("https://pokeapi.co/api/v2/pokemon/25/", () => {
       return HttpResponse.json(pikachuPokemon);
     }),
+    http.get("https://pokeapi.co/api/v2/evolution-chain/10/", () => {
+      return HttpResponse.json(pikachuEvolutionChain);
+    }),
   );
   const queryClient = {
     fetchQuery: <TData>(resourceOptions: { queryFn?: unknown }) => {
@@ -271,6 +298,9 @@ test("loads form-specific PokemonDetail through mocked PokeAPI queries", async (
     }),
     http.get("https://pokeapi.co/api/v2/pokemon/pikachu-rock-star/", () => {
       return HttpResponse.json(pikachuRockStarPokemon);
+    }),
+    http.get("https://pokeapi.co/api/v2/evolution-chain/10/", () => {
+      return HttpResponse.json(pikachuEvolutionChain);
     }),
   );
   const queryClient = {
@@ -321,6 +351,7 @@ test("builds form-specific PokemonDetail mapping", () => {
       charizardIndexEntry,
       charizardSpecies,
       charizardMegaXPokemon,
+      pikachuEvolutionChain,
       forms,
       megaX,
     ),
@@ -342,6 +373,7 @@ test("loads cached PokemonDetail without network access", async () => {
     pikachuIndexEntry,
     pikachuSpecies,
     pikachuPokemon,
+    pikachuEvolutionChain,
   );
   queryClient.setQueryDefaults(pokemonDetailQueryKey(pikachuIndexEntry), {
     gcTime: Infinity,

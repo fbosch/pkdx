@@ -39,8 +39,28 @@ export type PokeApiAbility = Pick<
 >;
 
 type PokeApiEvolutionChainNode = {
+  evolution_details: PokeApiEvolutionDetail[];
   evolves_to: PokeApiEvolutionChainNode[];
   species: GeneratedEvolutionChainSpecies;
+};
+
+export type PokeApiEvolutionDetail = {
+  gender?: string | null;
+  held_item?: { name: string; url: string } | null;
+  item?: { name: string; url: string } | null;
+  known_move?: { name: string; url: string } | null;
+  known_move_type?: { name: string; url: string } | null;
+  location?: { name: string; url: string } | null;
+  min_affection?: number | null;
+  min_beauty?: number | null;
+  min_happiness?: number | null;
+  min_level?: number | null;
+  needs_multiplayer?: boolean | null;
+  needs_overworld_rain?: boolean | null;
+  time_of_day?: string;
+  trade_species?: string | null;
+  trigger: { name: string; url: string };
+  turn_upside_down?: boolean | null;
 };
 
 export type PokeApiEvolutionChain = {
@@ -132,12 +152,35 @@ const abilityResourceSchema = z.object({
 });
 
 type EvolutionChainNode = {
+  evolution_details: PokeApiEvolutionDetail[];
   evolves_to: EvolutionChainNode[];
   species: z.infer<typeof namedResourceSchema>;
 };
 
+const optionalNamedResourceSchema = namedResourceSchema.nullable().optional();
+
+const evolutionDetailSchema = z.object({
+  gender: z.string().nullable().optional(),
+  held_item: optionalNamedResourceSchema,
+  item: optionalNamedResourceSchema,
+  known_move: optionalNamedResourceSchema,
+  known_move_type: optionalNamedResourceSchema,
+  location: optionalNamedResourceSchema,
+  min_affection: z.number().nullable().optional(),
+  min_beauty: z.number().nullable().optional(),
+  min_happiness: z.number().nullable().optional(),
+  min_level: z.number().nullable().optional(),
+  needs_multiplayer: z.boolean().nullable().optional(),
+  needs_overworld_rain: z.boolean().nullable().optional(),
+  time_of_day: z.string().optional(),
+  trade_species: z.string().nullable().optional(),
+  trigger: namedResourceSchema,
+  turn_upside_down: z.boolean().nullable().optional(),
+});
+
 const evolutionChainNodeSchema: z.ZodType<EvolutionChainNode> = z.lazy(() =>
   z.object({
+    evolution_details: z.array(evolutionDetailSchema),
     evolves_to: z.array(evolutionChainNodeSchema),
     species: namedResourceSchema,
   }),

@@ -16,6 +16,7 @@ import { colors, textStyles } from "../design-tokens";
 import { AbilityViewer } from "./AbilityViewer";
 import { DamageTakenPanel } from "./DamageTakenPanel";
 import { DetailPanel } from "./DetailPanel";
+import { EvolutionViewer } from "./EvolutionViewer";
 import { FlavorTextPanel } from "./FlavorTextPanel";
 import { FormSelector } from "./FormSelector";
 import {
@@ -32,6 +33,7 @@ export type LoadedDetailViewProps = {
   detail: PokemonDetail;
   descriptionIndex: number;
   errorMessage: string | undefined;
+  evolutionViewerOpen: boolean;
   formSelectorSelectedIndex: number | undefined;
   loadedSpecies: SpeciesIndexEntry;
   navigationSpecies: SpeciesIndexEntry;
@@ -44,6 +46,7 @@ export function LoadedDetailView({
   detail,
   descriptionIndex,
   errorMessage,
+  evolutionViewerOpen,
   formSelectorSelectedIndex,
   loadedSpecies,
   navigationSpecies,
@@ -155,6 +158,7 @@ export function LoadedDetailView({
       <DetailOverlays
         abilityViewerOpen={abilityViewerOpen}
         detail={detail}
+        evolutionViewerOpen={evolutionViewerOpen}
         formSelectorSelectedIndex={formSelectorSelectedIndex}
       />
       <LoadedDetailFooter
@@ -282,16 +286,21 @@ function padAbilities(
 function DetailOverlays({
   abilityViewerOpen,
   detail,
+  evolutionViewerOpen,
   formSelectorSelectedIndex,
 }: {
   abilityViewerOpen: boolean;
   detail: PokemonDetail;
+  evolutionViewerOpen: boolean;
   formSelectorSelectedIndex: number | undefined;
 }) {
   return (
     <>
       {abilityViewerOpen ? (
         <AbilityViewer abilities={detail.abilities} />
+      ) : null}
+      {evolutionViewerOpen ? (
+        <EvolutionViewer evolutionChain={detail.evolutionChain} />
       ) : null}
       {formSelectorSelectedIndex === undefined ? null : (
         <FormSelector
@@ -317,6 +326,7 @@ function LoadedDetailFooter({
         hints={[
           { key: "h/l", action: "prev/next" },
           { key: "a", action: "abilities" },
+          { key: "e", action: "evolution" },
           ...(hasAlternateForms ? [{ key: "f", action: "forms" }] : []),
           { key: "d/D", action: "desc" },
           { key: "s", action: shiny ? "regular" : "shiny" },

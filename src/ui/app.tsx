@@ -162,6 +162,7 @@ function DetailView({
         detail={state.detail.detail}
         descriptionIndex={state.descriptionIndex}
         errorMessage={state.status === "error" ? state.errorMessage : undefined}
+        evolutionViewerOpen={state.detailOverlay === "evolutions"}
         formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
         loadedSpecies={state.detail.species}
         navigationSpecies={state.species}

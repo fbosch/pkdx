@@ -3,3 +3,4 @@ dist/
 .devenv/
 .direnv/
 .fallow/
+.docs/

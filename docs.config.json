@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fbosch/docs-cache/main/docs.config.schema.json",
+  "sources": [
+    {
+      "id": "opentui",
+      "repo": "https://github.com/anomalyco/opentui"
+    }
+  ],
+  "cacheDir": ".docs",
+  "defaults": {
+    "ref": "HEAD",
+    "mode": "materialize",
+    "include": ["**/*.{md,mdx,markdown,mkd,txt,rst,adoc,asciidoc}"],
+    "exclude": [],
+    "targetMode": "symlink",
+    "required": true,
+    "maxBytes": 200000000,
+    "ignoreHidden": false,
+    "allowHosts": ["github.com", "gitlab.com", "visualstudio.com"],
+    "toc": true,
+    "unwrapSingleRootDir": true
+  }
+}

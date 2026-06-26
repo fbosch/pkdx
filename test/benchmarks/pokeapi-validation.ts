@@ -10,8 +10,18 @@ const iterations = Number(Bun.env.PKDX_BENCH_ITERATIONS ?? 100_000);
 const pikachuEvolutionChain = {
   id: 10,
   chain: {
+    evolution_details: [],
     evolves_to: [
       {
+        evolution_details: [
+          {
+            min_level: 22,
+            trigger: {
+              name: "level-up",
+              url: "https://pokeapi.co/api/v2/evolution-trigger/1/",
+            },
+          },
+        ],
         evolves_to: [],
         species: {
           name: "raichu",

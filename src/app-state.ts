@@ -42,6 +42,7 @@ export type LoadedDetail = {
 export type DetailOverlay =
   | "abilities"
   | "abilities-loading"
+  | "evolutions"
   | { kind: "forms"; selectedIndex: number };
 
 export type AppKey = {
@@ -278,6 +279,10 @@ function getDetailOverlayAction(
     return "abilities-loading";
   }
 
+  if (key.name === "e" && state.detail !== undefined) {
+    return "evolutions";
+  }
+
   if (canOpenFormSelector(state, key)) {
     return {
       kind: "forms",
@@ -323,6 +328,10 @@ function applyDetailOverlayKey(state: DetailState, key: AppKey): AppState {
     return applyAbilityLoadingOverlayKey(state, key);
   }
 
+  if (state.detailOverlay === "evolutions") {
+    return applyEvolutionOverlayKey(state, key);
+  }
+
   return applyFormOverlayKey(state, key);
 }
 
@@ -339,6 +348,14 @@ function applyAbilityLoadingOverlayKey(
   key: AppKey,
 ): AppState {
   if (key.name === "a") {
+    return closeDetailOverlay(state);
+  }
+
+  return state;
+}
+
+function applyEvolutionOverlayKey(state: DetailState, key: AppKey): AppState {
+  if (key.name === "e") {
     return closeDetailOverlay(state);
   }
 
@@ -369,15 +386,11 @@ function moveDetailFormSelection(
   state: DetailState,
   delta: number,
 ): DetailState {
-  if (state.detail === undefined || state.detailOverlay === undefined) {
-    return state;
-  }
-
-  if (state.detailOverlay === "abilities") {
-    return state;
-  }
-
-  if (state.detailOverlay === "abilities-loading") {
+  if (
+    state.detail === undefined ||
+    typeof state.detailOverlay !== "object" ||
+    state.detailOverlay.kind !== "forms"
+  ) {
     return state;
   }
 
@@ -398,9 +411,8 @@ function moveDetailFormSelection(
 function loadSelectedDetailForm(state: DetailState): DetailState {
   if (
     state.detail === undefined ||
-    state.detailOverlay === undefined ||
-    state.detailOverlay === "abilities" ||
-    state.detailOverlay === "abilities-loading"
+    typeof state.detailOverlay !== "object" ||
+    state.detailOverlay.kind !== "forms"
   ) {
     return state;
   }

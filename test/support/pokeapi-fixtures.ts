@@ -1,5 +1,6 @@
 import type {
   PokeApiAbility,
+  PokeApiEvolutionChain,
   PokeApiPokemon,
   PokeApiPokemonSpecies,
 } from "../../src/pokeapi/schema";
@@ -121,6 +122,55 @@ export const pikachuPokemon: PokeApiPokemon = {
     },
   ],
   weight: 60,
+};
+
+export const pikachuEvolutionChain: PokeApiEvolutionChain = {
+  chain: {
+    evolution_details: [],
+    evolves_to: [
+      {
+        evolution_details: [
+          {
+            min_happiness: 220,
+            trigger: {
+              name: "level-up",
+              url: "https://pokeapi.co/api/v2/evolution-trigger/1/",
+            },
+          },
+        ],
+        evolves_to: [
+          {
+            evolution_details: [
+              {
+                item: {
+                  name: "thunder-stone",
+                  url: "https://pokeapi.co/api/v2/item/83/",
+                },
+                trigger: {
+                  name: "use-item",
+                  url: "https://pokeapi.co/api/v2/evolution-trigger/3/",
+                },
+              },
+            ],
+            evolves_to: [],
+            species: {
+              name: "raichu",
+              url: "https://pokeapi.co/api/v2/pokemon-species/26/",
+            },
+          },
+        ],
+        species: {
+          name: "pikachu",
+          url: "https://pokeapi.co/api/v2/pokemon-species/25/",
+        },
+      },
+    ],
+    species: {
+      name: "pichu",
+      url: "https://pokeapi.co/api/v2/pokemon-species/172/",
+    },
+  },
+  id: 10,
 };
 
 export const pikachuRockStarPokemon: PokeApiPokemon = {

@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { isValidElement } from "react";
 import { DamageTakenPanel } from "../src/ui/detail/DamageTakenPanel";
+import { EvolutionViewer } from "../src/ui/detail/EvolutionViewer";
 import { FormSelector } from "../src/ui/detail/FormSelector";
 import {
   PokemonSpriteArtwork,
@@ -91,6 +92,36 @@ test("renders form selector modal", () => {
     currentForm,
     forms,
     selectedIndex: 1,
+  });
+
+  expect(element).toBeDefined();
+  expect(isValidElement(element)).toBe(true);
+});
+
+test("renders evolution viewer modal", () => {
+  const element = EvolutionViewer({
+    evolutionChain: {
+      root: {
+        evolvesTo: [
+          {
+            evolvesTo: [
+              {
+                evolvesTo: [],
+                method: "use item, Thunder Stone",
+                name: "Raichu",
+                url: "https://pokeapi.co/api/v2/pokemon-species/26/",
+              },
+            ],
+            method: "level up, happiness 220",
+            name: "Pikachu",
+            url: "https://pokeapi.co/api/v2/pokemon-species/25/",
+          },
+        ],
+        method: undefined,
+        name: "Pichu",
+        url: "https://pokeapi.co/api/v2/pokemon-species/172/",
+      },
+    },
   });
 
   expect(element).toBeDefined();
