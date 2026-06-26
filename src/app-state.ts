@@ -19,6 +19,7 @@ export type SearchState = {
 export type DetailState = {
   screen: "detail";
   previousQuery: string;
+  previousSelectedIndex: number;
   detail: LoadedDetail | undefined;
   detailOverlay: DetailOverlay | undefined;
   descriptionIndex: number;
@@ -72,6 +73,7 @@ export function createInitialAppState(query = ""): AppState {
       errorMessage: undefined,
       form: undefined,
       previousQuery: "",
+      previousSelectedIndex: 0,
       retryToken: 0,
       shiny: false,
       species: exactSpecies,
@@ -120,7 +122,7 @@ function applyDetailKey(state: DetailState, key: AppKey): AppState {
     return {
       screen: "search",
       query: state.previousQuery,
-      selectedIndex: 0,
+      selectedIndex: state.previousSelectedIndex,
       shouldExit: false,
     };
   }
@@ -428,6 +430,7 @@ function openSelectedSpecies(state: SearchState): AppState {
     errorMessage: undefined,
     form: undefined,
     previousQuery: state.query,
+    previousSelectedIndex: state.selectedIndex,
     retryToken: 0,
     shiny: false,
     species,

@@ -40,7 +40,6 @@ import {
 } from "./components";
 import { colors, textStyles } from "./design-tokens";
 
-const detailLoadingGraceMs = 120;
 const detailInfoPanelWidth = 53;
 const detailSpriteCanvasHeight = 15;
 const detailSpriteCanvasWidth = 40;
@@ -91,11 +90,19 @@ export function App({ initialQuery = "", onExit }: AppProps) {
     );
   }
 
-  const results = searchResults(state.query, state.selectedIndex);
-  const queryLabel =
-    state.query.length === 0 ? "Search Pokemon species..." : state.query;
-  const hasSearchableQuery =
-    state.query.trim().length >= minimumSearchQueryLength;
+  return <SearchView query={state.query} selectedIndex={state.selectedIndex} />;
+}
+
+function SearchView({
+  query,
+  selectedIndex,
+}: {
+  query: string;
+  selectedIndex: number;
+}) {
+  const results = searchResults(query, selectedIndex);
+  const queryLabel = query.length === 0 ? "Search Pokemon species..." : query;
+  const hasSearchableQuery = query.trim().length >= minimumSearchQueryLength;
 
   return (
     <box
@@ -117,9 +124,9 @@ export function App({ initialQuery = "", onExit }: AppProps) {
         >
           <text
             attributes={
-              state.query.length === 0 ? textStyles.muted : textStyles.active
+              query.length === 0 ? textStyles.muted : textStyles.active
             }
-            {...(state.query.length === 0 ? { fg: colors.muted } : {})}
+            {...(query.length === 0 ? { fg: colors.muted } : {})}
           >{`> ${queryLabel}`}</text>
         </box>
         <PokedexHeader />
@@ -208,11 +215,6 @@ function DetailView({
     shiny: state.shiny,
     species: state.species,
   });
-  const showColdLoadingSkeleton = useDelayedVisibility(
-    state.detail === undefined && state.status === "loading",
-    state.species.slug,
-  );
-
   if (state.detail !== undefined) {
     return (
       <LoadedDetailView
@@ -230,10 +232,11 @@ function DetailView({
   }
 
   if (state.status === "loading") {
-    return showColdLoadingSkeleton ? (
-      <DetailLoadingSkeleton species={state.species} />
-    ) : (
-      <DetailScreen>{null}</DetailScreen>
+    return (
+      <SearchView
+        query={state.previousQuery}
+        selectedIndex={state.previousSelectedIndex}
+      />
     );
   }
 
@@ -338,146 +341,6 @@ function getFormSelectorSelectedIndex(state: DetailState): number | undefined {
     : undefined;
 }
 
-function useDelayedVisibility(active: boolean, key: string): boolean {
-  const [visibleKey, setVisibleKey] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    if (!active) {
-      setVisibleKey(undefined);
-      return;
-    }
-
-    setVisibleKey(undefined);
-    const timeout = setTimeout(() => {
-      setVisibleKey(key);
-    }, detailLoadingGraceMs);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [active, key]);
-
-  return visibleKey === key;
-}
-
-export function DetailLoadingSkeleton({
-  species,
-}: {
-  species: DetailState["species"];
-}) {
-  const dexNumber = (species.dexNumbers[1] ?? species.dexNumbers[0] ?? 0)
-    .toString()
-    .padStart(3, "0");
-  const title = `#${dexNumber} ${species.name}`;
-
-  return (
-    <DetailScreen>
-      <PokedexCard>
-        <DetailCardTitle
-          left={
-            <span>
-              <span fg={colors.muted}>#{dexNumber}</span>
-              <span> {species.name}</span>
-            </span>
-          }
-          leftWidth={title.length}
-          right={<span fg={colors.muted}>Loading</span>}
-          rightWidth={7}
-        />
-        <text fg={colors.muted} attributes={textStyles.muted}>
-          <SkeletonLine width={22} />
-        </text>
-        <box style={{ alignItems: "flex-start", flexDirection: "row", gap: 1 }}>
-          <box
-            border
-            borderColor={colors.panelSecondary}
-            borderStyle="rounded"
-            style={{
-              alignItems: "center",
-              flexDirection: "column",
-              height: detailSpritePanelHeight,
-              justifyContent: "center",
-              paddingX: 1,
-              width: detailSpritePanelWidth,
-            }}
-          >
-            <box
-              style={{
-                alignItems: "center",
-                flexDirection: "column",
-                gap: 1,
-                height: detailSpriteCanvasHeight,
-                justifyContent: "center",
-                width: detailSpriteCanvasWidth,
-              }}
-            >
-              <SkeletonText width={10} />
-              <SkeletonText width={16} />
-              <SkeletonText width={12} />
-            </box>
-          </box>
-          <box style={{ flexDirection: "column", width: detailInfoPanelWidth }}>
-            <DetailPanel minHeight={7} width={detailInfoPanelWidth}>
-              <SkeletonText width={46} />
-              <SkeletonText width={40} />
-              <SkeletonText width={34} />
-            </DetailPanel>
-            <DetailPanel width={detailInfoPanelWidth}>
-              {(
-                [
-                  ["Species", 20],
-                  ["Egg Group", 18],
-                  ["Gender", 24],
-                  ["Height", 10],
-                  ["Weight", 12],
-                  ["Ability", 22],
-                ] satisfies [string, number][]
-              ).map(([label, width]) => (
-                <SkeletonFactRow key={label} label={label} width={width} />
-              ))}
-            </DetailPanel>
-          </box>
-        </box>
-        <box style={{ flexDirection: "row", gap: 1 }}>
-          <DetailPanel width={45}>
-            <text attributes={textStyles.active}>Stats</text>
-            {[
-              "HP",
-              "Attack",
-              "Defense",
-              "Sp. Attack",
-              "Sp. Defense",
-              "Speed",
-            ].map((label) => (
-              <text key={label} fg={colors.muted} attributes={textStyles.muted}>
-                <span>{label.padEnd(11)}</span>
-                <span> </span>
-                <SkeletonLine width={20} />
-              </text>
-            ))}
-          </DetailPanel>
-          <DetailPanel width={50}>
-            <text attributes={textStyles.active}>Damage Taken</text>
-            <SkeletonText width={38} />
-            <SkeletonText width={28} />
-            <text> </text>
-            <SkeletonText width={34} />
-            <SkeletonText width={24} />
-          </DetailPanel>
-        </box>
-      </PokedexCard>
-      <InstructionFooter>
-        <KeyHints
-          hints={[
-            { key: "/", action: "search" },
-            { key: "q/esc", action: "exit" },
-          ]}
-        />
-      </InstructionFooter>
-    </DetailScreen>
-  );
-}
-
 function DetailPanel({
   children,
   minHeight,
@@ -503,27 +366,6 @@ function DetailPanel({
       {children}
     </box>
   );
-}
-
-function SkeletonFactRow({ label, width }: { label: string; width: number }) {
-  return (
-    <text fg={colors.muted} attributes={textStyles.muted}>
-      <span>{label.padEnd(11)}</span>
-      <SkeletonLine width={width} />
-    </text>
-  );
-}
-
-function SkeletonText({ width }: { width: number }) {
-  return (
-    <text fg={colors.muted} attributes={textStyles.muted}>
-      <SkeletonLine width={width} />
-    </text>
-  );
-}
-
-function SkeletonLine({ width }: { width: number }) {
-  return <span>{"░".repeat(width)}</span>;
 }
 
 type LoadedDetailViewProps = {

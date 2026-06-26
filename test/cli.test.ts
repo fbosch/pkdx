@@ -213,10 +213,31 @@ test("Search opens Detail on Enter", () => {
 
   expect(next).toMatchObject({
     screen: "detail",
+    previousSelectedIndex: 0,
     status: "loading",
     species: {
       slug: "pikachu",
     },
+  });
+});
+
+test("Search preserves selection while opening Detail", () => {
+  const selected = applyAppKey(createInitialAppState("nidoran"), {
+    name: "j",
+    ctrl: true,
+  });
+  const detail = applyAppKey(selected, { name: "enter" });
+  const search = applyAppKey(detail, { name: "/" });
+
+  expect(detail).toMatchObject({
+    screen: "detail",
+    previousQuery: "nidoran",
+    previousSelectedIndex: 1,
+  });
+  expect(search).toMatchObject({
+    screen: "search",
+    query: "nidoran",
+    selectedIndex: 1,
   });
 });
 
