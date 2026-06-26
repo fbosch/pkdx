@@ -4,7 +4,7 @@ import { colors, textStyles } from "../design-tokens";
 
 const damageTakenRowWidth = 44;
 const damageTakenRowLabelWidth = 7;
-const damageTakenRowsPerSection = 3;
+const damageTakenRowsPerSection = 2;
 const shortTypeTagWidth = 5;
 
 export function DamageTakenPanel({
@@ -15,6 +15,7 @@ export function DamageTakenPanel({
   return (
     <box style={{ flexDirection: "column" }}>
       <text attributes={textStyles.active}>Damage Taken</text>
+      <text> </text>
       <DamageTakenRow label="Weak" entries={damageTaken.weaknesses} />
       <text> </text>
       <DamageTakenRow label="Resist" entries={damageTaken.resistances} />
@@ -30,7 +31,7 @@ function DamageTakenRow({
   label: string;
 }) {
   const rows = padRows(
-    entries.length === 0 ? [null] : chunkEntries(entries, 3),
+    entries.length === 0 ? [null] : chunkEntriesByWidth(entries),
     damageTakenRowsPerSection,
   );
 
@@ -112,11 +113,11 @@ function damageTakenEntriesWidth(
 
 function formatMultiplier(multiplier: DamageTakenEntry["multiplier"]): string {
   if (multiplier === 0.25) {
-    return "¼";
+    return "1/4";
   }
 
   if (multiplier === 0.5) {
-    return "½";
+    return "1/2";
   }
 
   return `${multiplier}x`;
@@ -130,14 +131,33 @@ function multiplierColor(multiplier: DamageTakenEntry["multiplier"]) {
   return multiplier > 1 ? colors.multiplierWeak : colors.multiplierResist;
 }
 
-function chunkEntries(entries: readonly DamageTakenEntry[], size: number) {
+function chunkEntriesByWidth(entries: readonly DamageTakenEntry[]) {
   const rows: DamageTakenEntry[][] = [];
+  let row: DamageTakenEntry[] = [];
+  let rowWidth = 0;
+  const availableWidth = damageTakenRowWidth - damageTakenRowLabelWidth;
 
-  for (let index = 0; index < entries.length; index += size) {
-    rows.push(entries.slice(index, index + size));
+  for (const entry of entries) {
+    const entryWidth = damageTakenEntryWidth(entry);
+    if (row.length > 0 && rowWidth + entryWidth > availableWidth) {
+      rows.push(row);
+      row = [];
+      rowWidth = 0;
+    }
+
+    row.push(entry);
+    rowWidth += entryWidth;
+  }
+
+  if (row.length > 0) {
+    rows.push(row);
   }
 
   return rows;
+}
+
+function damageTakenEntryWidth(entry: DamageTakenEntry): number {
+  return shortTypeTagWidth + formatMultiplier(entry.multiplier).length + 2;
 }
 
 function padRows<T>(rows: T[], minLength: number): (T | undefined)[] {

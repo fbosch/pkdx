@@ -1,6 +1,6 @@
 import type { useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import type { DetailNavigationDelta, DetailState } from "../../app-state";
+import type { DetailNavigationDelta } from "../../app-state";
 import type { PokemonDetail } from "../../pokemon-detail";
 import { getSpeciesByDexDelta, type SpeciesIndexEntry } from "../../search";
 import {
@@ -35,7 +35,6 @@ export type LoadedDetailViewProps = {
   errorMessage: string | undefined;
   formSelectorSelectedIndex: number | undefined;
   loadedSpecies: SpeciesIndexEntry;
-  loadingSpecies: DetailState["species"] | undefined;
   navigationSpecies: SpeciesIndexEntry;
   onNavigate: (delta: DetailNavigationDelta) => void;
   queryClient: ReturnType<typeof useQueryClient>;
@@ -49,7 +48,6 @@ export function LoadedDetailView({
   errorMessage,
   formSelectorSelectedIndex,
   loadedSpecies,
-  loadingSpecies,
   navigationSpecies,
   onNavigate,
   queryClient,
@@ -77,9 +75,6 @@ export function LoadedDetailView({
           right={<TypeLabels types={detail.types} />}
           rightWidth={typeLabelsWidth(detail.types)}
         />
-        {loadingSpecies !== undefined || errorMessage === undefined ? (
-          <text> </text>
-        ) : null}
         {errorMessage !== undefined ? (
           <text fg={colors.muted} attributes={textStyles.muted}>
             Could not load next Detail: {errorMessage}. Press r to retry or / to
@@ -131,19 +126,14 @@ export function LoadedDetailView({
                 label="Weight"
                 value={`${detail.weightKilograms.toFixed(1)} kg`}
               />
-              {detail.abilities.map((ability, index) => (
-                <FactRow
-                  key={ability.name}
-                  label={index === 0 ? "Ability" : ""}
-                  value={`${ability.name}${ability.isHidden ? " (Hidden)" : ""}`}
-                />
-              ))}
+              <AbilityRows abilities={detail.abilities} />
             </DetailPanel>
           </box>
         </box>
         <box style={{ flexDirection: "row", gap: 1 }}>
           <DetailPanel minHeight={10} width={45}>
             <text attributes={textStyles.active}>Stats</text>
+            <text> </text>
             {detail.stats.map((stat) => (
               <text key={stat.name}>
                 <span>{stat.name.padEnd(11)}</span>
@@ -152,7 +142,11 @@ export function LoadedDetailView({
               </text>
             ))}
           </DetailPanel>
-          <DetailPanel minHeight={10} width={50}>
+          <DetailPanel
+            key={`damage-${detail.dexNumber}`}
+            minHeight={10}
+            width={50}
+          >
             <DamageTakenPanel damageTaken={detail.damageTaken} />
           </DetailPanel>
         </box>
@@ -263,6 +257,30 @@ function DexNavigationButtonLabel({ label }: { label: string }) {
       {after}
     </span>
   );
+}
+
+function AbilityRows({ abilities }: { abilities: PokemonDetail["abilities"] }) {
+  return padAbilities(abilities, 3).map((ability, index) => (
+    <FactRow
+      key={ability?.name ?? `empty-ability-${index.toString()}`}
+      label={index === 0 ? "Ability" : ""}
+      value={
+        ability === undefined
+          ? ""
+          : `${ability.name}${ability.isHidden ? " (Hidden)" : ""}`
+      }
+    />
+  ));
+}
+
+function padAbilities(
+  abilities: PokemonDetail["abilities"],
+  minLength: number,
+): Array<PokemonDetail["abilities"][number] | undefined> {
+  return [
+    ...abilities,
+    ...Array.from({ length: Math.max(0, minLength - abilities.length) }),
+  ];
 }
 
 function DetailOverlays({

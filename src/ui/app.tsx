@@ -136,7 +136,6 @@ function DetailView({
         errorMessage={state.status === "error" ? state.errorMessage : undefined}
         formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
         loadedSpecies={state.detail.species}
-        loadingSpecies={state.status === "loading" ? state.species : undefined}
         navigationSpecies={state.species}
         onNavigate={onNavigate}
         queryClient={queryClient}
@@ -169,7 +168,6 @@ function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
           left={`#${species.dexNumber.toString().padStart(3, "0")} ${species.name}`}
           right=""
         />
-        <text> </text>
         <box style={{ alignItems: "flex-start", flexDirection: "row", gap: 1 }}>
           <SkeletonPanel height={17} width={42} />
           <box style={{ flexDirection: "column", width: 53 }}>
