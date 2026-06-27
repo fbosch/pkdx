@@ -35,6 +35,10 @@ export type DamageTaken = {
 const pokemonTypeByLowercase = new Map(
   pokemonTypes.map((type) => [type.toLowerCase(), type] as const),
 );
+const pokemonTypeOrder = new Map(
+  pokemonTypes.map((type, index) => [type, index] as const),
+);
+const damageTakenCache = new Map<string, DamageTaken>();
 
 const singleTypeEffectiveness: Record<
   PokemonType,
@@ -131,6 +135,12 @@ const singleTypeEffectiveness: Record<
 
 export function calculateDamageTaken(types: readonly string[]): DamageTaken {
   const defensiveTypes = types.map(toPokemonType);
+  const cacheKey = damageTakenCacheKey(defensiveTypes);
+  const cached = damageTakenCache.get(cacheKey);
+  if (cached !== undefined) {
+    return cached;
+  }
+
   const immune: DamageTakenEntry[] = [];
   const doubleResistances: DamageTakenEntry[] = [];
   const resistances: DamageTakenEntry[] = [];
@@ -165,10 +175,21 @@ export function calculateDamageTaken(types: readonly string[]): DamageTaken {
     }
   }
 
-  return {
+  const damageTaken = {
     resistances: [...resistances, ...doubleResistances, ...immune],
     weaknesses: [...doubleWeaknesses, ...weaknesses],
   };
+  damageTakenCache.set(cacheKey, damageTaken);
+  return damageTaken;
+}
+
+function damageTakenCacheKey(types: readonly PokemonType[]): string {
+  return types
+    .toSorted(
+      (left, right) =>
+        (pokemonTypeOrder.get(left) ?? 0) - (pokemonTypeOrder.get(right) ?? 0),
+    )
+    .join("|");
 }
 
 function toPokemonType(type: string): PokemonType {
