@@ -193,6 +193,14 @@ type DetailQueryTarget = {
   form: PokemonForm | undefined;
   species: SpeciesIndexEntry;
 };
+type DetailViewContentProps = Pick<
+  DetailViewProps,
+  | "onCloseOverlay"
+  | "onNavigate"
+  | "onSelectSpecies"
+  | "state"
+  | "terminalImagesEnabled"
+>;
 
 const detailQueryDebounceMs = 100;
 
@@ -237,6 +245,24 @@ function DetailView({
     state,
   });
 
+  return (
+    <DetailViewContent
+      onCloseOverlay={onCloseOverlay}
+      onNavigate={onNavigate}
+      onSelectSpecies={onSelectSpecies}
+      state={state}
+      terminalImagesEnabled={terminalImagesEnabled}
+    />
+  );
+}
+
+function DetailViewContent({
+  onCloseOverlay,
+  onNavigate,
+  onSelectSpecies,
+  state,
+  terminalImagesEnabled,
+}: DetailViewContentProps) {
   if (state.detail !== undefined) {
     return (
       <LoadedDetailView
