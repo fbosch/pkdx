@@ -184,12 +184,27 @@ export function calculateDamageTaken(types: readonly string[]): DamageTaken {
 }
 
 function damageTakenCacheKey(types: readonly PokemonType[]): string {
-  return types
-    .toSorted(
-      (left, right) =>
-        (pokemonTypeOrder.get(left) ?? 0) - (pokemonTypeOrder.get(right) ?? 0),
-    )
-    .join("|");
+  if (types.length === 1) {
+    return types[0] ?? "";
+  }
+
+  if (types.length === 2) {
+    const left = types[0];
+    const right = types[1];
+    if (left === undefined || right === undefined) {
+      return "";
+    }
+
+    return comparePokemonTypes(left, right) <= 0
+      ? `${left}|${right}`
+      : `${right}|${left}`;
+  }
+
+  return [...types].sort(comparePokemonTypes).join("|");
+}
+
+function comparePokemonTypes(left: PokemonType, right: PokemonType): number {
+  return (pokemonTypeOrder.get(left) ?? 0) - (pokemonTypeOrder.get(right) ?? 0);
 }
 
 function toPokemonType(type: string): PokemonType {
