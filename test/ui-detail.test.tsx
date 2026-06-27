@@ -92,11 +92,10 @@ test("renders query debug panel entries", () => {
     entries: [
       {
         error: "",
-        fetchStatus: "idle",
         id: "pokemon-detail-25",
-        key: '["pokemon-detail",25]',
+        key: "detail pikachu default",
         observers: 1,
-        status: "success",
+        status: "fresh",
         updated: "0s ago",
       },
     ],
