@@ -240,6 +240,25 @@ test("loads carried regional form by sprite form key", async () => {
   expect(detail.flavorText).toBe("This form lives on snowy mountains.");
 });
 
+test("prefers selected form version group flavor text", async () => {
+  setupNinetalesDetailResources({
+    includeAlola: true,
+    includeFormDescription: true,
+    includeVersionGroupFlavor: true,
+  });
+  const detail = await loadNinetalesWithCarriedAlolaForm();
+
+  expect(detail.form).toMatchObject({
+    pokemonName: "ninetales-alola",
+    spriteFormKey: "alola",
+  });
+  expect(detail.flavorText).toBe("Alolan Ninetales protects snowy peaks.");
+  expect(detail.flavorTexts[0]).toEqual({
+    source: "Moon",
+    text: "Alolan Ninetales protects snowy peaks.",
+  });
+});
+
 test("falls back to species flavor text when selected form has no description", async () => {
   setupNinetalesDetailResources({
     includeAlola: true,
@@ -327,6 +346,29 @@ test("loads form-specific PokemonDetail through mocked PokeAPI queries", async (
     }),
     http.get("https://pokeapi.co/api/v2/pokemon/pikachu-rock-star/", () => {
       return HttpResponse.json(pikachuRockStarPokemon);
+    }),
+    http.get(
+      "https://pokeapi.co/api/v2/pokemon-form/pikachu-rock-star/",
+      () => {
+        return HttpResponse.json({
+          name: "pikachu-rock-star",
+          version_group: {
+            name: "omega-ruby-alpha-sapphire",
+            url: "https://pokeapi.co/api/v2/version-group/16/",
+          },
+        });
+      },
+    ),
+    http.get("https://pokeapi.co/api/v2/version-group/16/", () => {
+      return HttpResponse.json({
+        name: "omega-ruby-alpha-sapphire",
+        versions: [
+          {
+            name: "omega-ruby",
+            url: "https://pokeapi.co/api/v2/version/15/",
+          },
+        ],
+      });
     }),
     http.get("https://pokeapi.co/api/v2/evolution-chain/10/", () => {
       return HttpResponse.json(pikachuEvolutionChain);
@@ -436,9 +478,11 @@ function createResourceQueryClient() {
 function setupNinetalesDetailResources({
   includeAlola,
   includeFormDescription = includeAlola,
+  includeVersionGroupFlavor = false,
 }: {
   includeAlola: boolean;
   includeFormDescription?: boolean;
+  includeVersionGroupFlavor?: boolean;
 }) {
   server.use(
     http.get("https://pokeapi.co/api/v2/pokemon-species/38/", () => {
@@ -452,6 +496,21 @@ function setupNinetalesDetailResources({
               },
             ]
           : [],
+        flavor_text_entries: [
+          ...pikachuSpecies.flavor_text_entries,
+          ...(includeVersionGroupFlavor
+            ? [
+                {
+                  flavor_text: "Alolan Ninetales protects snowy peaks.",
+                  language: { name: "en", url: "" },
+                  version: {
+                    name: "moon",
+                    url: "https://pokeapi.co/api/v2/version/18/",
+                  },
+                },
+              ]
+            : []),
+        ],
         id: 38,
         name: "ninetales",
         names: [{ language: { name: "en", url: "" }, name: "Ninetales" }],
@@ -463,6 +522,26 @@ function setupNinetalesDetailResources({
     }),
     http.get("https://pokeapi.co/api/v2/pokemon/ninetales-alola/", () => {
       return HttpResponse.json({ ...pikachuPokemon, name: "ninetales-alola" });
+    }),
+    http.get("https://pokeapi.co/api/v2/pokemon-form/ninetales-alola/", () => {
+      return HttpResponse.json({
+        name: "ninetales-alola",
+        version_group: {
+          name: "sun-moon",
+          url: "https://pokeapi.co/api/v2/version-group/17/",
+        },
+      });
+    }),
+    http.get("https://pokeapi.co/api/v2/version-group/17/", () => {
+      return HttpResponse.json({
+        name: "sun-moon",
+        versions: [
+          {
+            name: includeVersionGroupFlavor ? "moon" : "ultra-sun",
+            url: "https://pokeapi.co/api/v2/version/18/",
+          },
+        ],
+      });
     }),
     http.get("https://pokeapi.co/api/v2/evolution-chain/10/", () => {
       return HttpResponse.json(pikachuEvolutionChain);

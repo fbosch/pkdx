@@ -3,6 +3,8 @@ import { z } from "zod";
 
 type GeneratedPokemon = components["schemas"]["PokemonDetail"];
 type GeneratedSpecies = components["schemas"]["PokemonSpeciesDetail"];
+type GeneratedPokemonForm = components["schemas"]["PokemonFormDetail"];
+type GeneratedVersionGroup = components["schemas"]["VersionGroupDetail"];
 type GeneratedAbility = components["schemas"]["AbilityDetail"];
 type GeneratedEvolutionChain = components["schemas"]["EvolutionChainDetail"];
 type GeneratedPokemonAbility = GeneratedPokemon["abilities"][number];
@@ -10,6 +12,7 @@ type GeneratedPokemonStat = GeneratedPokemon["stats"][number];
 type GeneratedPokemonType = GeneratedPokemon["types"][number];
 type GeneratedEvolutionChainSpecies =
   GeneratedEvolutionChain["chain"]["species"];
+type GeneratedFormDescription = GeneratedSpecies["form_descriptions"][number];
 
 export type PokeApiPokemon = {
   abilities: Pick<GeneratedPokemonAbility, "ability" | "is_hidden" | "slot">[];
@@ -25,14 +28,29 @@ export type PokeApiPokemonSpecies = Pick<
   GeneratedSpecies,
   | "evolution_chain"
   | "egg_groups"
-  | "form_descriptions"
   | "flavor_text_entries"
   | "genera"
   | "id"
   | "name"
   | "names"
   | "varieties"
-> & { gender_rate: number };
+> & {
+  form_descriptions: ({ description?: string | undefined } & Pick<
+    GeneratedFormDescription,
+    "language"
+  >)[];
+  gender_rate: number;
+};
+
+export type PokeApiPokemonForm = Pick<
+  GeneratedPokemonForm,
+  "name" | "version_group"
+>;
+
+export type PokeApiVersionGroup = Pick<
+  GeneratedVersionGroup,
+  "name" | "versions"
+>;
 
 export type PokeApiAbility = Pick<
   GeneratedAbility,
@@ -139,6 +157,16 @@ export const pokemonSpeciesResourceSchema = z.object({
   ),
 });
 
+const pokemonFormResourceSchema = z.object({
+  name: z.string(),
+  version_group: namedResourceSchema,
+});
+
+const versionGroupResourceSchema = z.object({
+  name: z.string(),
+  versions: z.array(namedResourceSchema),
+});
+
 const abilityResourceSchema = z.object({
   effect_entries: z.array(
     z.object({
@@ -199,21 +227,33 @@ export const evolutionChainResourceSchema = z.object({
 });
 
 export function parsePokemonResource(resource: unknown): PokeApiPokemon {
-  return pokemonResourceSchema.parse(resource) as PokeApiPokemon;
+  return pokemonResourceSchema.parse(resource);
 }
 
 export function parsePokemonSpeciesResource(
   resource: unknown,
 ): PokeApiPokemonSpecies {
-  return pokemonSpeciesResourceSchema.parse(resource) as PokeApiPokemonSpecies;
+  return pokemonSpeciesResourceSchema.parse(resource);
+}
+
+export function parsePokemonFormResource(
+  resource: unknown,
+): PokeApiPokemonForm {
+  return pokemonFormResourceSchema.parse(resource);
+}
+
+export function parseVersionGroupResource(
+  resource: unknown,
+): PokeApiVersionGroup {
+  return versionGroupResourceSchema.parse(resource);
 }
 
 export function parseAbilityResource(resource: unknown): PokeApiAbility {
-  return abilityResourceSchema.parse(resource) as PokeApiAbility;
+  return abilityResourceSchema.parse(resource);
 }
 
 export function parseEvolutionChainResource(
   resource: unknown,
 ): PokeApiEvolutionChain {
-  return evolutionChainResourceSchema.parse(resource) as PokeApiEvolutionChain;
+  return evolutionChainResourceSchema.parse(resource);
 }

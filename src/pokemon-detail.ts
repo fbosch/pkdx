@@ -8,12 +8,15 @@ import type {
   PokeApiEvolutionDetail,
   PokeApiPokemon,
   PokeApiPokemonSpecies,
+  PokeApiVersionGroup,
 } from "./pokeapi/schema";
 import {
   parseEvolutionChainResource,
   parseAbilityResource,
+  parsePokemonFormResource,
   parsePokemonResource,
   parsePokemonSpeciesResource,
+  parseVersionGroupResource,
 } from "./pokeapi/schema";
 import { isPokeSpriteSupportedPokemonForm } from "./pokesprite-supported-forms";
 import { queryCachePolicies } from "./query-cache";
@@ -144,6 +147,10 @@ export function pokemonDetailQueryOptions(
           url: speciesResource.evolution_chain.url,
         }),
       );
+      const formVersionGroup = await loadPokemonFormVersionGroup(
+        selectedForm,
+        queryClient,
+      );
 
       return buildPokemonDetail(
         species,
@@ -152,6 +159,7 @@ export function pokemonDetailQueryOptions(
         evolutionChainResource,
         forms,
         selectedForm,
+        formVersionGroup,
       );
     },
     ...queryCachePolicies.pokemonDetail,
@@ -227,11 +235,12 @@ export function buildPokemonDetail(
   evolutionChainResource: PokeApiEvolutionChain,
   forms: readonly PokemonForm[],
   form: PokemonForm,
+  formVersionGroup?: PokeApiVersionGroup,
 ): PokemonDetail {
   const types = pokemonResource.types
     .toSorted((left, right) => left.slot - right.slot)
     .map((entry) => formatResourceName(entry.type.name));
-  const flavorTexts = buildFlavorTexts(speciesResource, form);
+  const flavorTexts = buildFlavorTexts(speciesResource, form, formVersionGroup);
 
   return {
     abilities: pokemonResource.abilities
@@ -495,7 +504,16 @@ function getEnglishSpeciesName(
 function buildFlavorTexts(
   speciesResource: PokeApiPokemonSpecies,
   form: PokemonForm,
+  formVersionGroup?: PokeApiVersionGroup,
 ): PokemonFlavorText[] {
+  const versionGroupTexts = buildVersionGroupFlavorTexts(
+    speciesResource,
+    formVersionGroup,
+  );
+  if (versionGroupTexts.length > 0) {
+    return versionGroupTexts;
+  }
+
   if (form.isDefault === false) {
     const formDescriptions = buildFormDescriptionTexts(speciesResource);
     if (formDescriptions.length > 0) {
@@ -513,6 +531,55 @@ function buildFlavorTexts(
     source: formatResourceName(entry.version.name),
     text: normalizeFlavorText(entry.flavor_text),
   }));
+}
+
+async function loadPokemonFormVersionGroup(
+  form: PokemonForm,
+  queryClient: ResourceQueryClient,
+): Promise<PokeApiVersionGroup | undefined> {
+  if (form.isDefault) {
+    return undefined;
+  }
+
+  const formResource = await queryClient.fetchQuery(
+    pokeApiResourceQueryOptions({
+      parse: parsePokemonFormResource,
+      url: `pokemon-form/${form.pokemonName}`,
+    }),
+  );
+
+  return await queryClient.fetchQuery(
+    pokeApiResourceQueryOptions({
+      parse: parseVersionGroupResource,
+      url: formResource.version_group.url,
+    }),
+  );
+}
+
+function buildVersionGroupFlavorTexts(
+  speciesResource: PokeApiPokemonSpecies,
+  versionGroup: PokeApiVersionGroup | undefined,
+): PokemonFlavorText[] {
+  if (versionGroup === undefined) {
+    return [];
+  }
+
+  const versionNames = new Set(
+    versionGroup.versions.map((version) => version.name),
+  );
+
+  return speciesResource.flavor_text_entries
+    .filter(
+      (entry) =>
+        entry.language.name === "en" && versionNames.has(entry.version.name),
+    )
+    .toSorted((left, right) =>
+      left.version.name.localeCompare(right.version.name),
+    )
+    .map((entry) => ({
+      source: formatResourceName(entry.version.name),
+      text: normalizeFlavorText(entry.flavor_text),
+    }));
 }
 
 function buildFormDescriptionTexts(
