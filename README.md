@@ -6,8 +6,9 @@ It supports fuzzy species search, form selection, shiny sprites, damage matchups
 
 ## Requirements
 
-- A terminal that can run OpenTUI applications
-- Network access for uncached PokeAPI and sprite requests
+- macOS, Linux, WSL, Git Bash, or Windows PowerShell/CMD
+- A modern terminal such as Kitty, Ghostty, WezTerm, Alacritty, or iTerm2
+- Internet Access
 
 ## Install
 
@@ -29,41 +30,13 @@ Start with an initial query:
 pkdx pikachu
 ```
 
-Useful flags:
+## Credits
 
-- `--images=ascii` renders sprites as ASCII fallback output.
-- `--images=builtin` uses OpenTUI image rendering. This is the default.
-- `--debug` opens OpenTUI's debug overlay and enables debug error logging paths.
-
-## Controls
-
-Search:
-
-- Type to search Pokémon species by name, slug, dex number, or alias.
-- `Up` / `Down` or `Ctrl+k` / `Ctrl+j` moves the selected result.
-- `Enter` opens the selected species detail view.
-- `Backspace` edits the query.
-- `Ctrl+u` clears the query.
-- `Ctrl+c` exits.
-
-Detail:
-
-- `h` / `Left` and `l` / `Right` move through the National Dex.
-- `/` returns to search.
-- `s` toggles shiny sprite rendering.
-- `f` opens or toggles available forms.
-- `d` cycles flavor text entries.
-- `a` opens ability details.
-- `e` opens evolution details.
-- `o` opens the species entry on Pokémon Database in a browser.
-- `r` retries after a detail loading error.
-- `Esc` closes an open overlay.
-- `Ctrl+c` exits.
-
-## Cache
-
-Non-development runs cache API and sprite data under `${XDG_CACHE_HOME:-~/.cache}/pkdx/tanstack-query`.
+- [PokeAPI](https://pokeapi.co/) for Pokémon data.
+- [PokeSprite](https://github.com/msikma/pokesprite) and [PokeAPI sprites](https://github.com/PokeAPI/sprites) for sprite artwork.
+- [OpenTUI](https://github.com/anomalyco/opentui) for the terminal UI runtime.
+- [Pokémon Database](https://pokemondb.net/) for external Pokédex links.
 
 ## License
 
-No license file is currently present.
+MIT. See [`LICENSE`](LICENSE).

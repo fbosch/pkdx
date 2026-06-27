@@ -1,5 +1,6 @@
 {
   "name": "pkdx",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "pkdx": "./src/cli.tsx"
