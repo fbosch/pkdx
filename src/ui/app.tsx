@@ -14,7 +14,6 @@ import {
   type DetailNavigationDelta,
   type DetailState,
 } from "../app-state";
-import { openPokemonDbPokedexEntry } from "../external-links";
 import type { PokemonDetail, PokemonForm } from "../pokemon-detail";
 import {
   pokemonAbilityDetailsQueryOptions,
@@ -59,7 +58,7 @@ export function App({ initialQuery = "", onExit }: AppProps) {
 
   useKeyboard((key: KeyEvent) => {
     if (shouldOpenPokemonDbEntry(state, key)) {
-      void openPokemonDbPokedexEntry(state.detail.species);
+      void openPokemonDbPokedexEntryInBrowser(state.detail.species);
       return;
     }
 
@@ -133,6 +132,11 @@ export function App({ initialQuery = "", onExit }: AppProps) {
   }
 
   return <SearchView query={state.query} selectedIndex={state.selectedIndex} />;
+}
+
+async function openPokemonDbPokedexEntryInBrowser(species: SpeciesIndexEntry) {
+  const { openPokemonDbPokedexEntry } = await import("../external-links");
+  await openPokemonDbPokedexEntry(species);
 }
 
 function shouldOpenPokemonDbEntry(

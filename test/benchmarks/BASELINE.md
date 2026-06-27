@@ -36,10 +36,10 @@ Command: `bun run bench`
 | sprite-rendering | xterm-color-index | 500 | 1.33 | 375662 |
 | sprite-rendering | render-png-small-16x16 | 500 | 25.03 | 19977 |
 | sprite-rendering | render-png-medium-64x64 | 500 | 91.96 | 5437 |
-| startup | import-search-module | 25 | 518.19 | 48 |
-| startup | import-ui-root | 25 | 7558.98 | 3 |
-| startup | create-initial-search-state | 25 | 1557.47 | 16 |
-| startup | create-initial-detail-state | 25 | 1523.89 | 16 |
+| startup | import-search-module | 25 | 519.43 | 48 |
+| startup | import-ui-root | 25 | 7372.77 | 3 |
+| startup | create-initial-search-state | 25 | 1431.93 | 17 |
+| startup | create-initial-detail-state | 25 | 1452.90 | 17 |
 | type-matchups | single-electric | 1000000 | 576.31 | 1735186 |
 | type-matchups | dual-water-flying | 1000000 | 768.30 | 1301569 |
 | type-matchups | dual-fire-flying | 1000000 | 800.64 | 1249006 |
