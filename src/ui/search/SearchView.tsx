@@ -3,6 +3,7 @@ import { InstructionFooter, KeyHints, PokedexHeader } from "../components";
 import { colors, textStyles } from "../design-tokens";
 
 const searchPanelWidth = 56;
+const searchInputWidth = searchPanelWidth - 4;
 
 export function SearchView({
   query,
@@ -12,7 +13,6 @@ export function SearchView({
   selectedIndex: number;
 }) {
   const results = searchResults(query, selectedIndex);
-  const queryLabel = query.length === 0 ? "Search Pokemon species..." : query;
   const hasSearchableQuery = query.trim().length >= minimumSearchQueryLength;
 
   return (
@@ -33,16 +33,21 @@ export function SearchView({
           borderStyle="rounded"
           style={{
             flexDirection: "column",
+            height: 3,
             paddingX: 1,
             width: searchPanelWidth,
           }}
         >
-          <text
-            attributes={
-              query.length === 0 ? textStyles.muted : textStyles.active
-            }
-            {...(query.length === 0 ? { fg: colors.muted } : {})}
-          >{`> ${queryLabel}`}</text>
+          <box style={{ flexDirection: "row", height: 1 }}>
+            <input
+              cursorColor={colors.accent}
+              focused
+              placeholder="Search Pokemon species..."
+              textColor={colors.keyHint}
+              value={query}
+              width={searchInputWidth}
+            />
+          </box>
         </box>
         <PokedexHeader />
         {hasSearchableQuery ? (
