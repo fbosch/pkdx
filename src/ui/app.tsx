@@ -119,6 +119,9 @@ export function App({ initialQuery = "", onExit }: AppProps) {
           );
         }}
         state={state}
+        onCloseOverlay={() => {
+          setState((current) => applyAppKey(current, { name: "escape" }));
+        }}
       />
     );
   }
@@ -129,6 +132,7 @@ export function App({ initialQuery = "", onExit }: AppProps) {
 type DetailViewProps = {
   onAbilityDetailsLoadFailed: () => void;
   onAbilityDetailsLoaded: () => void;
+  onCloseOverlay: () => void;
   onLoadFailed: (
     species: DetailState["species"],
     form: DetailState["form"],
@@ -161,6 +165,7 @@ const detailQueryDebounceMs = 100;
 function DetailView({
   onAbilityDetailsLoadFailed,
   onAbilityDetailsLoaded,
+  onCloseOverlay,
   onLoadFailed,
   onLoadSucceeded,
   onNavigate,
@@ -206,6 +211,7 @@ function DetailView({
         formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
         loadedSpecies={state.detail.species}
         navigationSpecies={state.species}
+        onCloseOverlay={onCloseOverlay}
         onNavigate={onNavigate}
         onSelectSpecies={onSelectSpecies}
         shiny={state.shiny}

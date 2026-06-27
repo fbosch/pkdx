@@ -44,6 +44,7 @@ export type LoadedDetailViewProps = {
   formSelectorSelectedIndex: number | undefined;
   loadedSpecies: SpeciesIndexEntry;
   navigationSpecies: SpeciesIndexEntry;
+  onCloseOverlay: () => void;
   onNavigate: (delta: DetailNavigationDelta) => void;
   onSelectSpecies: (name: string) => void;
   shiny: boolean;
@@ -58,6 +59,7 @@ export function LoadedDetailView({
   formSelectorSelectedIndex,
   loadedSpecies,
   navigationSpecies,
+  onCloseOverlay,
   onNavigate,
   onSelectSpecies,
   shiny,
@@ -182,6 +184,7 @@ export function LoadedDetailView({
         detail={detail}
         evolutionViewerOpen={evolutionViewerOpen}
         formSelectorSelectedIndex={formSelectorSelectedIndex}
+        onCloseOverlay={onCloseOverlay}
         onSelectSpecies={onSelectSpecies}
       />
       <LoadedDetailFooter
@@ -341,22 +344,25 @@ function DetailOverlays({
   detail,
   evolutionViewerOpen,
   formSelectorSelectedIndex,
+  onCloseOverlay,
   onSelectSpecies,
 }: {
   abilityViewerOpen: boolean;
   detail: PokemonDetail;
   evolutionViewerOpen: boolean;
   formSelectorSelectedIndex: number | undefined;
+  onCloseOverlay: () => void;
   onSelectSpecies: (name: string) => void;
 }) {
   return (
     <>
       {abilityViewerOpen ? (
-        <AbilityViewer abilities={detail.abilities} />
+        <AbilityViewer abilities={detail.abilities} onClose={onCloseOverlay} />
       ) : null}
       {evolutionViewerOpen ? (
         <EvolutionViewer
           evolutionChain={detail.evolutionChain}
+          onClose={onCloseOverlay}
           onSelectSpecies={onSelectSpecies}
         />
       ) : null}
@@ -364,6 +370,7 @@ function DetailOverlays({
         <FormSelector
           currentForm={detail.form}
           forms={detail.forms}
+          onClose={onCloseOverlay}
           selectedIndex={formSelectorSelectedIndex}
         />
       )}

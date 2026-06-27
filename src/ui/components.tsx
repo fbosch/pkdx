@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { colors, textStyles } from "./design-tokens";
 
 export const detailCardWidth = 100;
@@ -100,17 +100,23 @@ export function DetailCardTitle({
 
 export function Modal({
   children,
+  minWidth,
+  onClose,
   right,
   rightWidth,
   title,
   width = 84,
 }: {
   children: ReactNode;
+  minWidth?: number;
+  onClose?: () => void;
   right: ReactNode;
   rightWidth?: number;
   title: string;
   width?: number;
 }) {
+  const resolvedWidth = Math.max(minWidth ?? 0, width);
+
   return (
     <>
       <box
@@ -143,20 +149,78 @@ export function Modal({
           style={{
             flexDirection: "column",
             paddingX: 1,
-            width,
+            position: "relative",
+            width: resolvedWidth,
           }}
         >
-          <DetailCardTitle
-            left={title}
+          <ModalTitle
+            closeWidth={onClose === undefined ? 0 : 6}
             right={right}
-            titleWidth={width - 4}
-            {...(rightWidth === undefined ? {} : { rightWidth })}
+            rightWidth={rightWidth}
+            title={title}
+            width={resolvedWidth - 4}
           />
+          {onClose === undefined ? null : (
+            <ModalCloseButton left={resolvedWidth - 8} onClose={onClose} />
+          )}
           <text> </text>
           {children}
         </box>
       </box>
     </>
+  );
+}
+
+function ModalTitle({
+  closeWidth,
+  right,
+  rightWidth,
+  title,
+  width,
+}: {
+  closeWidth: number;
+  right: ReactNode;
+  rightWidth: number | undefined;
+  title: string;
+  width: number;
+}) {
+  const resolvedRightWidth =
+    rightWidth ?? (typeof right === "string" ? right.length : 0);
+  const spacerWidth = Math.max(
+    1,
+    width - title.length - resolvedRightWidth - closeWidth,
+  );
+
+  return (
+    <box style={{ flexDirection: "row" }}>
+      <text attributes={textStyles.active}>{title}</text>
+      <text>{" ".repeat(spacerWidth)}</text>
+      <text>{right}</text>
+    </box>
+  );
+}
+
+function ModalCloseButton({
+  left,
+  onClose,
+}: {
+  left: number;
+  onClose: () => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <text
+      attributes={textStyles.active}
+      bg={hovered ? colors.selected : colors.panelSecondary}
+      fg={hovered ? colors.selectedText : colors.keyHint}
+      onMouseDown={onClose}
+      onMouseOut={() => setHovered(false)}
+      onMouseOver={() => setHovered(true)}
+      style={{ left, position: "absolute", top: 0 }}
+    >
+      [ X ]
+    </text>
   );
 }
 

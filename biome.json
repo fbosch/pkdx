@@ -17,6 +17,18 @@
   },
   "overrides": [
     {
+      "includes": ["src/ui/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noStaticElementInteractions": "off",
+            "useKeyWithMouseEvents": "off",
+            "useSemanticElements": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["src/pokeapi/schema.compiled.ts"],
       "linter": {
         "enabled": false

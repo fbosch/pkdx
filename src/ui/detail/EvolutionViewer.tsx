@@ -7,6 +7,9 @@ import { KeyHints, Modal, keyHintsWidth } from "../components";
 import { colors, textStyles } from "../design-tokens";
 
 const closeHints = [{ key: "e/esc", action: "close" }] as const;
+const evolutionModalHorizontalPadding = 4;
+const evolutionModalMaxWidth = 96;
+const evolutionModalMinWidth = 56;
 
 type EvolutionChartLink = {
   end: number;
@@ -32,25 +35,32 @@ type EvolutionRoute = {
 
 export function EvolutionViewer({
   evolutionChain,
+  onClose,
   onSelectSpecies,
 }: {
   evolutionChain: PokemonEvolutionChain;
+  onClose?: () => void;
   onSelectSpecies: (name: string) => void;
 }) {
   const rows = buildEvolutionChartRows(evolutionChain);
+  const contentWidth = chartWidth(rows) + evolutionModalHorizontalPadding * 2;
+  const modalWidth = Math.min(evolutionModalMaxWidth, contentWidth + 4);
 
   return (
     <Modal
+      minWidth={evolutionModalMinWidth}
       right={<KeyHints hints={closeHints} />}
       rightWidth={keyHintsWidth(closeHints)}
       title="Evolution"
-      width={96}
+      width={modalWidth}
+      {...(onClose === undefined ? {} : { onClose })}
     >
       <box
         style={{
           alignSelf: "center",
           flexDirection: "column",
-          width: Math.min(chartWidth(rows), 90),
+          paddingX: evolutionModalHorizontalPadding,
+          width: Math.min(contentWidth, evolutionModalMaxWidth - 4),
         }}
       >
         {rows.map((row, index) => (
@@ -60,6 +70,7 @@ export function EvolutionViewer({
             row={row}
           />
         ))}
+        <text> </text>
       </box>
     </Modal>
   );

@@ -5,10 +5,12 @@ import { colors, textStyles } from "../design-tokens";
 export function FormSelector({
   currentForm,
   forms,
+  onClose,
   selectedIndex,
 }: {
   currentForm: PokemonForm;
   forms: readonly PokemonForm[];
+  onClose?: () => void;
   selectedIndex: number;
 }) {
   return (
@@ -28,6 +30,7 @@ export function FormSelector({
         { key: "esc", action: "close" },
       ])}
       title="Forms"
+      {...(onClose === undefined ? {} : { onClose })}
     >
       {forms.map((form, index) => {
         const selected = index === selectedIndex;

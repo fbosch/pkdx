@@ -6,8 +6,10 @@ import { colors, textStyles } from "../design-tokens";
 
 export function AbilityViewer({
   abilities,
+  onClose,
 }: {
   abilities: PokemonDetail["abilities"];
+  onClose?: () => void;
 }) {
   const queryClient = useQueryClient();
   const abilityDetails = useQuery(
@@ -19,6 +21,7 @@ export function AbilityViewer({
       right={<KeyHints hints={[{ key: "a/esc", action: "close" }]} />}
       rightWidth={keyHintsWidth([{ key: "a/esc", action: "close" }])}
       title="Abilities"
+      {...(onClose === undefined ? {} : { onClose })}
     >
       {abilityDetails.isError ? (
         <text fg={colors.muted} attributes={textStyles.muted}>
