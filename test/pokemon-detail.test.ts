@@ -10,6 +10,7 @@ import {
   pokemonDetailQueryOptions,
 } from "../src/pokemon-detail";
 import type { PokemonDetail } from "../src/pokemon-detail";
+import type { PokeApiEvolutionChain } from "../src/pokeapi/schema";
 import { createAppQueryClient, queryCachePolicies } from "../src/query-cache";
 import type { SpeciesIndexEntry } from "../src/search";
 import {
@@ -62,6 +63,55 @@ const carriedVulpixAlolaForm = {
   pokemonName: "vulpix-alola",
   pokemonUrl: "https://pokeapi.co/api/v2/pokemon/vulpix-alola/",
   spriteFormKey: "alola",
+};
+const vulpixEvolutionChainWithForms: PokeApiEvolutionChain = {
+  chain: {
+    evolution_details: [],
+    evolves_to: [
+      {
+        evolution_details: [
+          {
+            item: {
+              name: "fire-stone",
+              url: "https://pokeapi.co/api/v2/item/82/",
+            },
+            trigger: {
+              name: "use-item",
+              url: "https://pokeapi.co/api/v2/evolution-trigger/3/",
+            },
+          },
+          {
+            base_form: {
+              name: "vulpix-alola",
+              url: "https://pokeapi.co/api/v2/pokemon/10103/",
+            },
+            evolved_form: {
+              name: "ninetales-alola",
+              url: "https://pokeapi.co/api/v2/pokemon/10104/",
+            },
+            item: {
+              name: "ice-stone",
+              url: "https://pokeapi.co/api/v2/item/885/",
+            },
+            trigger: {
+              name: "use-item",
+              url: "https://pokeapi.co/api/v2/evolution-trigger/3/",
+            },
+          },
+        ],
+        evolves_to: [],
+        species: {
+          name: "ninetales",
+          url: "https://pokeapi.co/api/v2/pokemon-species/38/",
+        },
+      },
+    ],
+    species: {
+      name: "vulpix",
+      url: "https://pokeapi.co/api/v2/pokemon-species/37/",
+    },
+  },
+  id: 15,
 };
 
 test("builds Default Representative PokemonDetail from validated PokeAPI resources", () => {
@@ -557,6 +607,78 @@ test("builds form-specific PokemonDetail mapping", () => {
     name: "Charizard Mega X",
     types: ["Fire", "Dragon"],
     weightKilograms: 110.5,
+  });
+});
+
+test("uses form-specific evolution details when PokeAPI provides them", () => {
+  const alolanVulpixForm = {
+    displayName: "Vulpix Alola",
+    isDefault: false,
+    pokemonName: "vulpix-alola",
+    pokemonUrl: "https://pokeapi.co/api/v2/pokemon/10103/",
+    spriteFormKey: "alola",
+  };
+  const defaultVulpixForm = {
+    displayName: "Vulpix (Default)",
+    isDefault: true,
+    pokemonName: "vulpix",
+    pokemonUrl: "https://pokeapi.co/api/v2/pokemon/37/",
+    spriteFormKey: "$",
+  };
+
+  const detail = buildPokemonDetail(
+    {
+      aliases: ["037", "37"],
+      dexNumber: 37,
+      dexNumbers: ["37", "037"],
+      name: "Vulpix",
+      slug: "vulpix",
+    },
+    {
+      ...pikachuSpecies,
+      id: 37,
+      name: "vulpix",
+      names: [{ language: { name: "en", url: "" }, name: "Vulpix" }],
+      varieties: [
+        {
+          is_default: true,
+          pokemon: {
+            name: "vulpix",
+            url: "https://pokeapi.co/api/v2/pokemon/37/",
+          },
+        },
+        {
+          is_default: false,
+          pokemon: {
+            name: "vulpix-alola",
+            url: "https://pokeapi.co/api/v2/pokemon/10103/",
+          },
+        },
+      ],
+    },
+    {
+      ...pikachuPokemon,
+      name: "vulpix-alola",
+      species: {
+        name: "vulpix",
+        url: "https://pokeapi.co/api/v2/pokemon-species/37/",
+      },
+    },
+    vulpixEvolutionChainWithForms,
+    [defaultVulpixForm, alolanVulpixForm],
+    alolanVulpixForm,
+  );
+
+  expect(detail.evolutionChain).toMatchObject({
+    root: {
+      evolvesTo: [
+        {
+          method: "use item, Ice Stone",
+          name: "Ninetales Alola",
+        },
+      ],
+      name: "Vulpix Alola",
+    },
   });
 });
 

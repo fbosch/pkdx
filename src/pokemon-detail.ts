@@ -117,7 +117,7 @@ const formattedResourceNames = new Map<string, string>();
 const normalizedFlavorTexts = new Map<string, string>();
 const pokemonEvolutionChains = new WeakMap<
   PokeApiEvolutionChain,
-  PokemonEvolutionChain
+  Map<string, PokemonEvolutionChain>
 >();
 
 export function pokemonDetailQueryKey(
@@ -282,7 +282,7 @@ export function buildPokemonDetail(
         effort: entry.effort,
         name: formatEvYieldStatName(entry.stat.name),
       })),
-    evolutionChain: buildPokemonEvolutionChain(evolutionChainResource),
+    evolutionChain: buildPokemonEvolutionChain(evolutionChainResource, form),
     flavorText: flavorTexts[0]?.text ?? "No flavor text available.",
     flavorTexts,
     form,
@@ -349,32 +349,67 @@ export function buildPokemonForms(
 
 function buildPokemonEvolutionChain(
   evolutionChainResource: PokeApiEvolutionChain,
+  form: PokemonForm,
 ): PokemonEvolutionChain {
-  const cached = pokemonEvolutionChains.get(evolutionChainResource);
+  const cacheKey = form.pokemonName;
+  const cached = pokemonEvolutionChains
+    .get(evolutionChainResource)
+    ?.get(cacheKey);
   if (cached !== undefined) {
     return cached;
   }
 
-  const chain = { root: buildPokemonEvolution(evolutionChainResource.chain) };
-  pokemonEvolutionChains.set(evolutionChainResource, chain);
+  const chain = {
+    root: buildPokemonEvolution(evolutionChainResource.chain, form),
+  };
+  const cachedChains = pokemonEvolutionChains.get(evolutionChainResource);
+  if (cachedChains === undefined) {
+    pokemonEvolutionChains.set(
+      evolutionChainResource,
+      new Map([[cacheKey, chain]]),
+    );
+    return chain;
+  }
+
+  cachedChains.set(cacheKey, chain);
   return chain;
 }
 
+type BuiltPokemonEvolution = PokemonEvolution & {
+  selectedBaseFormName: string | undefined;
+};
+
 function buildPokemonEvolution(
   evolution: PokeApiEvolutionChain["chain"],
-): PokemonEvolution {
+  form: PokemonForm,
+): BuiltPokemonEvolution {
+  const selectedDetail = selectEvolutionDetail(
+    evolution.evolution_details,
+    form,
+  );
+  const evolvesTo = evolution.evolves_to.map((child) =>
+    buildPokemonEvolution(child, form),
+  );
+
   return {
-    evolvesTo: evolution.evolves_to.map(buildPokemonEvolution),
-    method: formatEvolutionMethod(evolution.evolution_details),
-    name: formatResourceName(evolution.species.name),
+    evolvesTo,
+    method: formatEvolutionMethod(evolution.evolution_details, form),
+    name: formatResourceName(
+      selectedDetail?.evolved_form?.name ??
+        evolvesTo.find((child) => child.selectedBaseFormName !== undefined)
+          ?.selectedBaseFormName ??
+        evolution.species.name,
+    ),
+    selectedBaseFormName: selectedDetail?.base_form?.name,
     url: evolution.species.url,
   };
 }
 
 function formatEvolutionMethod(
   details: readonly PokeApiEvolutionDetail[],
+  form: PokemonForm,
 ): string | undefined {
-  const detail = details[0];
+  const detail = selectEvolutionDetail(details, form);
   if (detail === undefined) {
     return undefined;
   }
@@ -397,6 +432,33 @@ function formatEvolutionMethod(
   ].filter((part) => part !== undefined);
 
   return parts.length === 0 ? undefined : parts.join(", ");
+}
+
+function selectEvolutionDetail(
+  details: readonly PokeApiEvolutionDetail[],
+  form: PokemonForm,
+): PokeApiEvolutionDetail | undefined {
+  const matchingForm = details.find(
+    (detail) =>
+      detail.base_form?.name === form.pokemonName ||
+      detail.evolved_form?.name === form.pokemonName,
+  );
+
+  if (matchingForm !== undefined) {
+    return matchingForm;
+  }
+
+  if (form.isDefault) {
+    return (
+      details.find(
+        (detail) =>
+          (detail.base_form === undefined || detail.base_form === null) &&
+          (detail.evolved_form === undefined || detail.evolved_form === null),
+      ) ?? details[0]
+    );
+  }
+
+  return details[0];
 }
 
 function formatEvolutionMinimum(
