@@ -1,6 +1,6 @@
 import type { PokemonForm } from "../../pokemon-detail";
 import { KeyHints, Modal, keyHintsWidth } from "../components";
-import { colors, textStyles } from "../design-tokens";
+import { colors } from "../design-tokens";
 
 export function FormSelector({
   currentForm,
@@ -13,6 +13,12 @@ export function FormSelector({
   onClose?: () => void;
   selectedIndex: number;
 }) {
+  const options = forms.map((form) => ({
+    description: "",
+    name: `${form.pokemonName === currentForm.pokemonName ? "*" : " "} ${form.displayName}`,
+    value: form.pokemonName,
+  }));
+
   return (
     <Modal
       right={
@@ -32,23 +38,16 @@ export function FormSelector({
       title="Forms"
       {...(onClose === undefined ? {} : { onClose })}
     >
-      {forms.map((form, index) => {
-        const selected = index === selectedIndex;
-        const current = form.pokemonName === currentForm.pokemonName;
-        const label = `${current ? "*" : " "} ${form.displayName}`;
-
-        return (
-          <text
-            key={form.pokemonName}
-            attributes={selected ? textStyles.selected : textStyles.normal}
-            {...(selected
-              ? { bg: colors.selected, fg: colors.selectedText }
-              : {})}
-          >
-            {selected ? label.padEnd(36) : label}
-          </text>
-        );
-      })}
+      <select
+        height={forms.length}
+        options={options}
+        selectedBackgroundColor={colors.selected}
+        selectedIndex={selectedIndex}
+        selectedTextColor={colors.selectedText}
+        showDescription={false}
+        textColor={colors.keyHint}
+        width={36}
+      />
     </Modal>
   );
 }
