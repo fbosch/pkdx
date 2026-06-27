@@ -23,6 +23,7 @@ Terminal Pokédex App rebuild workspace for the `pkdx` executable.
 
 - Use Bun scripts from `package.json` for project validation; `bun run check` is the main local quality gate.
 - Use `bun run ci` when binary smoke coverage matters in addition to `bun run check`.
+- Use `bun run bench` for performance baselines and update `test/benchmarks/BASELINE.md` when establishing a new baseline.
 - Use `devenv test` for validating the Nix/devenv environment after changing `devenv.*` files.
 - Worktrunk is host-provided. Keep `.config/wt.toml` checked in, but do not add Worktrunk to `devenv.nix`.
 
