@@ -6,6 +6,7 @@ import { dirname, join } from "node:path";
 
 const oneHour = 60 * 60 * 1000;
 const oneDay = 24 * oneHour;
+const maxRuntimeGcTime = 24 * oneDay;
 
 export const queryCacheBuster = "query-cache-v5";
 
@@ -28,11 +29,19 @@ export const persistedQueryMaxAge = Math.max(
   ...Object.values(queryCachePolicies).map((policy) => policy.gcTime),
 );
 
+export const runtimeQueryCachePolicies = {
+  pokeapiResource: runtimeQueryCachePolicy(queryCachePolicies.pokeapiResource),
+  pokemonDetail: runtimeQueryCachePolicy(queryCachePolicies.pokemonDetail),
+  pokespriteMetadata: runtimeQueryCachePolicy(
+    queryCachePolicies.pokespriteMetadata,
+  ),
+} as const;
+
 export function createAppQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        gcTime: persistedQueryMaxAge,
+        gcTime: maxRuntimeGcTime,
         networkMode: "offlineFirst",
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
@@ -41,6 +50,15 @@ export function createAppQueryClient(): QueryClient {
       },
     },
   });
+}
+
+function runtimeQueryCachePolicy<
+  T extends { gcTime: number; staleTime: number },
+>(policy: T): T {
+  return {
+    ...policy,
+    gcTime: Math.min(policy.gcTime, maxRuntimeGcTime),
+  };
 }
 
 export function createQueryPersister(

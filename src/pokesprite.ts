@@ -4,7 +4,7 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { z } from "zod";
 import type { PokemonForm } from "./pokemon-detail";
-import { queryCachePolicies } from "./query-cache";
+import { runtimeQueryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
 import {
   renderPngSpriteFile,
@@ -189,7 +189,7 @@ export function pokespriteMetadataQueryOptions(
       );
       return parsePokeSpriteMetadata(resource);
     },
-    ...queryCachePolicies.pokespriteMetadata,
+    ...runtimeQueryCachePolicies.pokespriteMetadata,
   });
 }
 
@@ -244,7 +244,7 @@ export function pokespriteRenderedSpriteQueryOptions(
         form,
         renderOptions,
       ),
-    ...queryCachePolicies.pokespriteMetadata,
+    ...runtimeQueryCachePolicies.pokespriteMetadata,
   });
 }
 
@@ -280,7 +280,7 @@ export function pokespriteCachedAssetQueryOptions(
         ),
       );
     },
-    ...queryCachePolicies.pokespriteMetadata,
+    ...runtimeQueryCachePolicies.pokespriteMetadata,
   });
 }
 

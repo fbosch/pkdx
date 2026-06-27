@@ -242,6 +242,7 @@ type DetailViewContentProps = Pick<
 >;
 
 const detailQueryDebounceMs = 100;
+export const detailLoadingPlaceholderDelayMs = 50;
 
 function DetailView({
   onAbilityDetailsLoadFailed,
@@ -308,6 +309,8 @@ function DetailViewContent({
   state,
   terminalImagesEnabled,
 }: DetailViewContentProps) {
+  const showPreviousSearch = usePreviousSearchDuringDetailLoad(state);
+
   if (state.detail !== undefined) {
     return (
       <LoadedDetailView
@@ -329,19 +332,49 @@ function DetailViewContent({
   }
 
   if (state.status === "loading") {
-    if (state.previousQuery.length === 0) {
-      return <InitialDetailLoadingView species={state.species} />;
-    }
-
-    return (
+    return showPreviousSearch ? (
       <SearchView
         query={state.previousQuery}
         selectedIndex={state.previousSelectedIndex}
       />
+    ) : (
+      <InitialDetailLoadingView species={state.species} />
     );
   }
 
   return <DetailErrorView state={state} />;
+}
+
+function usePreviousSearchDuringDetailLoad(state: DetailState): boolean {
+  const shouldDelayPlaceholder =
+    shouldShowPreviousSearchDuringDetailLoad(state);
+  const [showPreviousSearch, setShowPreviousSearch] = useState(
+    () => shouldDelayPlaceholder,
+  );
+
+  useEffect(() => {
+    if (shouldDelayPlaceholder === false) {
+      setShowPreviousSearch(false);
+      return;
+    }
+
+    setShowPreviousSearch(true);
+    const timeout = setTimeout(() => {
+      setShowPreviousSearch(false);
+    }, detailLoadingPlaceholderDelayMs);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [shouldDelayPlaceholder]);
+
+  return showPreviousSearch;
+}
+
+export function shouldShowPreviousSearchDuringDetailLoad(
+  state: DetailState,
+): boolean {
+  return state.status === "loading" && state.previousQuery.length > 0;
 }
 
 function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {

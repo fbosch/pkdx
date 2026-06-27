@@ -19,7 +19,10 @@ import {
   resolvePokemonFormPokeSpriteAsset,
   resolvePokeSpriteAsset,
 } from "../src/pokesprite";
-import { queryCachePolicies } from "../src/query-cache";
+import {
+  queryCachePolicies,
+  runtimeQueryCachePolicies,
+} from "../src/query-cache";
 import { findExactSpecies } from "../src/search";
 import type { SpeciesIndexEntry } from "../src/search";
 import { pokespritePokemonMetadata } from "./support/pokesprite-fixtures";
@@ -81,7 +84,9 @@ test("loads PokeSprite metadata through persisted query options", async () => {
   expect(options.staleTime).toBe(
     queryCachePolicies.pokespriteMetadata.staleTime,
   );
-  expect(options.gcTime).toBe(queryCachePolicies.pokespriteMetadata.gcTime);
+  expect(options.gcTime).toBe(
+    runtimeQueryCachePolicies.pokespriteMetadata.gcTime,
+  );
   expect(requestedUrl).toBe(
     "https://raw.githubusercontent.com/msikma/pokesprite/master/data/pokemon.json",
   );

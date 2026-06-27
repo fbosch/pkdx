@@ -2,8 +2,13 @@ import { expect, test } from "bun:test";
 import { createElement } from "react";
 import { isValidElement } from "react";
 import { QueryDebugPanelView } from "../src/ui/QueryDebugPanel";
+import { applyAppKey, createInitialAppState } from "../src/app-state";
 import { DamageTakenPanel } from "../src/ui/detail/DamageTakenPanel";
 import { DetailErrorModal } from "../src/ui/detail/DetailErrorModal";
+import {
+  detailLoadingPlaceholderDelayMs,
+  shouldShowPreviousSearchDuringDetailLoad,
+} from "../src/ui/app";
 import {
   EvolutionViewer,
   buildEvolutionFlowchartLinks,
@@ -103,6 +108,25 @@ test("renders query debug panel entries", () => {
 
   expect(element).toBeDefined();
   expect(isValidElement(element)).toBe(true);
+});
+
+test("shows previous Search only during the Detail loading grace period", () => {
+  const state = applyAppKey(createInitialAppState("pika"), { name: "enter" });
+
+  expect(detailLoadingPlaceholderDelayMs).toBe(50);
+  expect(state).toMatchObject({ screen: "detail", status: "loading" });
+
+  if (state.screen !== "detail") {
+    throw new Error("Expected Detail state");
+  }
+
+  expect(shouldShowPreviousSearchDuringDetailLoad(state)).toBe(true);
+  expect(
+    shouldShowPreviousSearchDuringDetailLoad({
+      ...state,
+      previousQuery: "",
+    }),
+  ).toBe(false);
 });
 
 test("renders detail errors in a modal", () => {

@@ -2,12 +2,31 @@
   "name": "pkdx",
   "license": "MIT",
   "type": "module",
+  "imports": {
+    "#app-state": "./src/app-state.ts",
+    "#cli": "./src/cli.tsx",
+    "#error-log": "./src/error-log.ts",
+    "#external-links": "./src/external-links.ts",
+    "#pokeapi": "./src/pokeapi/index.ts",
+    "#pokeapi/*": "./src/pokeapi/*.ts",
+    "#pokemon-detail": "./src/pokemon-detail.ts",
+    "#pokesprite": "./src/pokesprite.ts",
+    "#query-cache": "./src/query-cache.ts",
+    "#search": "./src/search/index.ts",
+    "#sprite-rendering": "./src/sprite-rendering.ts",
+    "#terminal-images": "./src/terminal-images.ts",
+    "#type-matchups": "./src/type-matchups.ts"
+  },
+  "files": [
+    "dist"
+  ],
   "bin": {
-    "pkdx": "./src/cli.tsx"
+    "pkdx": "./dist/pkdx"
   },
   "scripts": {
     "dev": "NODE_ENV=development bun run src/cli.tsx",
-    "build": "bun run scripts/build.ts",
+    "start": "bun run build && ./dist/pkdx",
+    "build": "bun build --compile --outfile=dist/pkdx src/cli.tsx",
     "test": "bun test",
     "test:related": "bun test",
     "typecheck": "tsc --noEmit",

@@ -18,7 +18,7 @@ import {
   parsePokemonSpeciesResource,
   parseVersionGroupResource,
 } from "./pokeapi/schema";
-import { queryCachePolicies } from "./query-cache";
+import { runtimeQueryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
 import { calculateDamageTaken, type DamageTaken } from "./type-matchups";
 
@@ -177,7 +177,7 @@ export function pokemonDetailQueryOptions(
         excludedVersionGroups,
       );
     },
-    ...queryCachePolicies.pokemonDetail,
+    ...runtimeQueryCachePolicies.pokemonDetail,
   });
 }
 
@@ -209,7 +209,7 @@ export function pokemonAbilityDetailsQueryOptions(
 
       return resources.map(buildPokemonAbilityDetail);
     },
-    ...queryCachePolicies.pokemonDetail,
+    ...runtimeQueryCachePolicies.pokemonDetail,
   });
 }
 

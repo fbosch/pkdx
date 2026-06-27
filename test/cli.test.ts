@@ -21,6 +21,7 @@ import {
   createFileStorage,
   persistedQueryMaxAge,
   queryCachePolicies,
+  runtimeQueryCachePolicies,
 } from "../src/query-cache";
 import { findExactSpecies } from "../src/search";
 import { pikachuPokemonEvolutionChain } from "./support/pokeapi-fixtures";
@@ -817,6 +818,15 @@ test("defines per-query cache policies", () => {
     queryCachePolicies.pokeapiResource.gcTime,
   );
   expect(persistedQueryMaxAge).toBe(
+    queryCachePolicies.pokespriteMetadata.gcTime,
+  );
+  expect(runtimeQueryCachePolicies.pokemonDetail.gcTime).toBe(
+    queryCachePolicies.pokemonDetail.gcTime,
+  );
+  expect(runtimeQueryCachePolicies.pokeapiResource.gcTime).toBeLessThan(
+    queryCachePolicies.pokeapiResource.gcTime,
+  );
+  expect(runtimeQueryCachePolicies.pokespriteMetadata.gcTime).toBeLessThan(
     queryCachePolicies.pokespriteMetadata.gcTime,
   );
 });

@@ -41,10 +41,10 @@ Compile the app to `dist/pkdx`:
 bun run build
 ```
 
-Set `PKDX_BUILD_TARGET` to pass a Bun compile target:
+Pass a Bun compile target when building for another platform:
 
 ```bash
-PKDX_BUILD_TARGET=bun-linux-x64 bun run build
+bun build --compile --target=bun-linux-x64 --outfile=dist/pkdx src/cli.tsx
 ```
 
 Smoke-test the compiled binary:

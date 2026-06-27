@@ -1,6 +1,9 @@
 import { expect, test } from "bun:test";
 import { HttpResponse, http } from "msw";
-import { queryCachePolicies } from "../src/query-cache";
+import {
+  queryCachePolicies,
+  runtimeQueryCachePolicies,
+} from "../src/query-cache";
 import {
   canonicalPokeApiUrl,
   PokeApiResourceError,
@@ -54,7 +57,7 @@ test("fetches resources through query options and returns parsed values", async 
     "https://pokeapi.co/api/v2/pokemon/pikachu/",
   ]);
   expect(options.staleTime).toBe(queryCachePolicies.pokeapiResource.staleTime);
-  expect(options.gcTime).toBe(queryCachePolicies.pokeapiResource.gcTime);
+  expect(options.gcTime).toBe(runtimeQueryCachePolicies.pokeapiResource.gcTime);
   expect(requestedUrl).toBe("https://pokeapi.co/api/v2/pokemon/pikachu/");
 });
 

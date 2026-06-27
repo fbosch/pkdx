@@ -1,6 +1,6 @@
 # pkdx
 
-`pkdx` is a terminal Pokédex app for searching Pokémon species and browsing detail views in an interactive terminal UI.
+`pkdx` is a terminal Pokédex app for searching Pokémon species and browsing detail views.
 
 It supports fuzzy species search, form selection, shiny sprites, damage matchups, abilities, evolutions, and flavor text.
 
@@ -8,7 +8,7 @@ It supports fuzzy species search, form selection, shiny sprites, damage matchups
 
 - macOS, Linux, WSL, Git Bash, or Windows PowerShell/CMD
 - A modern terminal such as Kitty, Ghostty, WezTerm, Alacritty, or iTerm2
-- Internet Access
+- Internet access
 
 ## Install
 

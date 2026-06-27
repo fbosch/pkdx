@@ -11,7 +11,11 @@ import {
 } from "../src/pokemon-detail";
 import type { PokemonDetail } from "../src/pokemon-detail";
 import type { PokeApiEvolutionChain } from "../src/pokeapi/schema";
-import { createAppQueryClient, queryCachePolicies } from "../src/query-cache";
+import {
+  createAppQueryClient,
+  queryCachePolicies,
+  runtimeQueryCachePolicies,
+} from "../src/query-cache";
 import type { SpeciesIndexEntry } from "../src/search";
 import {
   charizardMegaXPokemon,
@@ -512,7 +516,7 @@ test("loads Default Representative PokemonDetail through mocked PokeAPI queries"
     types: ["Electric"],
   });
   expect(options.staleTime).toBe(queryCachePolicies.pokemonDetail.staleTime);
-  expect(options.gcTime).toBe(queryCachePolicies.pokemonDetail.gcTime);
+  expect(options.gcTime).toBe(runtimeQueryCachePolicies.pokemonDetail.gcTime);
 });
 
 test("loads form-specific PokemonDetail through mocked PokeAPI queries", async () => {
