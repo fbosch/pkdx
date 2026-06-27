@@ -62,6 +62,7 @@ export type PokemonEvolution = {
   evolvesTo: PokemonEvolution[];
   method: string | undefined;
   name: string;
+  speciesName?: string;
   url?: string;
 };
 
@@ -360,7 +361,7 @@ function buildPokemonEvolutionChain(
   }
 
   const chain = {
-    root: buildPokemonEvolution(evolutionChainResource.chain, form),
+    root: buildPokemonEvolution(evolutionChainResource.chain, form).evolution,
   };
   const cachedChains = pokemonEvolutionChains.get(evolutionChainResource);
   if (cachedChains === undefined) {
@@ -375,7 +376,8 @@ function buildPokemonEvolutionChain(
   return chain;
 }
 
-type BuiltPokemonEvolution = PokemonEvolution & {
+type BuiltPokemonEvolution = {
+  evolution: PokemonEvolution;
   selectedBaseFormName: string | undefined;
 };
 
@@ -390,18 +392,23 @@ function buildPokemonEvolution(
   const evolvesTo = evolution.evolves_to.map((child) =>
     buildPokemonEvolution(child, form),
   );
+  const speciesName = formatResourceName(evolution.species.name);
+  const displayName = formatResourceName(
+    selectedDetail?.evolved_form?.name ??
+      evolvesTo.find((child) => child.selectedBaseFormName !== undefined)
+        ?.selectedBaseFormName ??
+      evolution.species.name,
+  );
 
   return {
-    evolvesTo,
-    method: formatEvolutionMethod(evolution.evolution_details, form),
-    name: formatResourceName(
-      selectedDetail?.evolved_form?.name ??
-        evolvesTo.find((child) => child.selectedBaseFormName !== undefined)
-          ?.selectedBaseFormName ??
-        evolution.species.name,
-    ),
+    evolution: {
+      evolvesTo: evolvesTo.map((child) => child.evolution),
+      method: formatEvolutionMethod(evolution.evolution_details, form),
+      name: displayName,
+      ...(displayName === speciesName ? {} : { speciesName }),
+      url: evolution.species.url,
+    },
     selectedBaseFormName: selectedDetail?.base_form?.name,
-    url: evolution.species.url,
   };
 }
 

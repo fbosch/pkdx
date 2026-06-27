@@ -3,6 +3,7 @@ import { isValidElement } from "react";
 import { DamageTakenPanel } from "../src/ui/detail/DamageTakenPanel";
 import {
   EvolutionViewer,
+  buildEvolutionFlowchartLinks,
   buildEvolutionFlowchartLines,
 } from "../src/ui/detail/EvolutionViewer";
 import { FormSelector } from "../src/ui/detail/FormSelector";
@@ -137,4 +138,30 @@ test("formats branching Eevee evolution flowchart without clipping labels", () =
   expect(output).toContain("▶ Glaceon");
   expect(output).toContain("▶ Sylveon");
   expect(output).toContain("[level up + happiness 220 + night]");
+});
+
+test("links form-specific evolution labels to base species names", () => {
+  const chain = {
+    root: {
+      evolvesTo: [
+        {
+          evolvesTo: [],
+          method: "use item, Ice Stone",
+          name: "Ninetales Alola",
+          speciesName: "Ninetales",
+        },
+      ],
+      method: undefined,
+      name: "Vulpix Alola",
+      speciesName: "Vulpix",
+    },
+  };
+
+  expect(buildEvolutionFlowchartLines(chain)).toEqual([
+    "Vulpix Alola ─[Ice Stone]─▶ Ninetales Alola",
+  ]);
+  expect(buildEvolutionFlowchartLinks(chain)).toEqual([
+    { name: "Vulpix Alola", targetName: "Vulpix" },
+    { name: "Ninetales Alola", targetName: "Ninetales" },
+  ]);
 });

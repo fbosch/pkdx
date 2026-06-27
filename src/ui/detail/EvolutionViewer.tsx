@@ -12,6 +12,7 @@ type EvolutionChartLink = {
   end: number;
   name: string;
   start: number;
+  targetName: string;
 };
 
 type EvolutionChartRow = {
@@ -21,9 +22,11 @@ type EvolutionChartRow = {
 type EvolutionRouteStep = {
   method: string;
   name: string;
+  targetName: string;
 };
 type EvolutionRoute = {
   root: string;
+  rootTargetName: string;
   steps: EvolutionRouteStep[];
 };
 
@@ -86,7 +89,7 @@ function EvolutionChartTextRow({
         return (
           <ClickableEvolutionName
             key={index.toString()}
-            name={name}
+            name={chunk.targetName ?? name}
             onSelectSpecies={onSelectSpecies}
             text={chunk.text}
           />
@@ -128,12 +131,29 @@ export function buildEvolutionFlowchartLines(
   return buildEvolutionChartRows(evolutionChain).map((row) => row.text);
 }
 
+export function buildEvolutionFlowchartLinks(
+  evolutionChain: PokemonEvolutionChain,
+): Array<{ name: string; targetName: string }> {
+  return buildEvolutionChartRows(evolutionChain).flatMap((row) =>
+    row.links.map((link) => ({
+      name: link.name,
+      targetName: link.targetName,
+    })),
+  );
+}
+
 function buildEvolutionChartRows(
   evolutionChain: PokemonEvolutionChain,
 ): EvolutionChartRow[] {
   const routes = buildEvolutionRoutes(evolutionChain.root);
   if (routes.length === 0) {
-    return [pokemonNameRow(evolutionChain.root.name, "")];
+    return [
+      pokemonNameRow(
+        evolutionChain.root.name,
+        "",
+        evolutionChain.root.speciesName ?? evolutionChain.root.name,
+      ),
+    ];
   }
 
   if (routes.length === 1) {
@@ -149,36 +169,48 @@ function buildEvolutionRoutes(evolution: PokemonEvolution): EvolutionRoute[] {
   }
 
   return evolution.evolvesTo.flatMap((child) =>
-    childEvolutionRoutes(evolution.name, child, []),
+    childEvolutionRoutes(
+      evolution.name,
+      evolution.speciesName ?? evolution.name,
+      child,
+      [],
+    ),
   );
 }
 
 function childEvolutionRoutes(
   root: string,
+  rootTargetName: string,
   evolution: PokemonEvolution,
   ancestors: EvolutionRouteStep[],
 ): EvolutionRoute[] {
   const steps = [
     ...ancestors,
-    { method: evolutionMethodLabel(evolution), name: evolution.name },
+    {
+      method: evolutionMethodLabel(evolution),
+      name: evolution.name,
+      targetName: evolution.speciesName ?? evolution.name,
+    },
   ];
 
   if (evolution.evolvesTo.length === 0) {
-    return [{ root, steps }];
+    return [{ root, rootTargetName, steps }];
   }
 
   return evolution.evolvesTo.flatMap((child) =>
-    childEvolutionRoutes(root, child, steps),
+    childEvolutionRoutes(root, rootTargetName, child, steps),
   );
 }
 
 function routePathRow(route: EvolutionRoute): EvolutionChartRow {
   let text = route.root;
-  const links: EvolutionChartLink[] = [nameLink(route.root, 0)];
+  const links: EvolutionChartLink[] = [
+    nameLink(route.root, route.rootTargetName, 0),
+  ];
 
   for (const step of route.steps) {
     text = `${text} ─${step.method}─▶ `;
-    links.push(nameLink(step.name, text.length));
+    links.push(nameLink(step.name, step.targetName, text.length));
     text = `${text}${step.name}`;
   }
 
@@ -194,6 +226,7 @@ function branchingRouteRows(
   }
 
   const root = firstRoute.root;
+  const rootTargetName = firstRoute.rootTargetName;
   const rootWidth = root.length;
   const methodWidth = Math.max(
     ...routes.map(
@@ -215,8 +248,12 @@ function branchingRouteRows(
 
     return {
       links: [
-        ...(isFirst ? [nameLink(root, 0)] : []),
-        nameLink(target, prefix.length),
+        ...(isFirst ? [nameLink(root, rootTargetName, 0)] : []),
+        nameLink(
+          target,
+          route.steps.at(-1)?.targetName ?? target,
+          prefix.length,
+        ),
       ],
       text: `${prefix}${target}`,
     };
@@ -233,15 +270,23 @@ function evolutionMethodLabel(evolution: PokemonEvolution): string {
   return `[${method.replaceAll(", ", " + ")}]`;
 }
 
-function pokemonNameRow(name: string, prefix: string): EvolutionChartRow {
+function pokemonNameRow(
+  name: string,
+  prefix: string,
+  targetName = name,
+): EvolutionChartRow {
   return {
-    links: [nameLink(name, prefix.length)],
+    links: [nameLink(name, targetName, prefix.length)],
     text: `${prefix}${name}`,
   };
 }
 
-function nameLink(name: string, start: number): EvolutionChartLink {
-  return { end: start + name.length, name, start };
+function nameLink(
+  name: string,
+  targetName: string,
+  start: number,
+): EvolutionChartLink {
+  return { end: start + name.length, name, start, targetName };
 }
 
 function throwMissingRoute(): never {
@@ -249,7 +294,7 @@ function throwMissingRoute(): never {
 }
 
 function splitEvolutionChartRow(row: EvolutionChartRow) {
-  const chunks: { name?: string; text: string }[] = [];
+  const chunks: { name?: string; targetName?: string; text: string }[] = [];
   let cursor = 0;
 
   for (const link of row.links.toSorted(
@@ -261,6 +306,7 @@ function splitEvolutionChartRow(row: EvolutionChartRow) {
 
     chunks.push({
       name: link.name,
+      targetName: link.targetName,
       text: row.text.slice(link.start, link.end),
     });
     cursor = link.end;

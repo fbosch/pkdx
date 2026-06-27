@@ -679,7 +679,7 @@ function evolutionChainIncludesSpecies(
   evolution: PokemonEvolution,
   speciesName: string,
 ): boolean {
-  if (evolution.name === speciesName) {
+  if ((evolution.speciesName ?? evolution.name) === speciesName) {
     return true;
   }
 

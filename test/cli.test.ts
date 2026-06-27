@@ -833,11 +833,13 @@ const vulpixEvolutionChain = {
       {
         evolvesTo: [],
         method: "use item, ice stone",
-        name: "Ninetales",
+        name: "Ninetales Alola",
+        speciesName: "Ninetales",
       },
     ],
     method: undefined,
-    name: "Vulpix",
+    name: "Vulpix Alola",
+    speciesName: "Vulpix",
   },
 };
 const alolanVulpixDetail = pokemonDetailWithForms(

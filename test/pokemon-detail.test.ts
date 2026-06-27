@@ -675,9 +675,11 @@ test("uses form-specific evolution details when PokeAPI provides them", () => {
         {
           method: "use item, Ice Stone",
           name: "Ninetales Alola",
+          speciesName: "Ninetales",
         },
       ],
       name: "Vulpix Alola",
+      speciesName: "Vulpix",
     },
   });
 });
