@@ -717,7 +717,8 @@ function pokemonFormsShareAlternateKey(
   return (
     requested.isDefault === false &&
     loaded.isDefault === false &&
-    requested.spriteFormKey === loaded.spriteFormKey
+    requested.spriteFormKey === loaded.spriteFormKey &&
+    loaded.pokemonName.endsWith(`-${requested.spriteFormKey}`)
   );
 }
 

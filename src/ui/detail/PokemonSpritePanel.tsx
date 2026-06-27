@@ -6,7 +6,7 @@ import type { SpeciesIndexEntry } from "../../search";
 import type { RenderedSprite, SpriteCell } from "../../sprite-rendering";
 import { colors, textStyles } from "../design-tokens";
 
-const detailSpriteCanvasHeight = 15;
+const detailSpriteCanvasHeight = 20;
 const detailSpriteCanvasWidth = 40;
 
 type PokemonSpritePanelProps = {
@@ -22,7 +22,10 @@ export function PokemonSpritePanel({
 }: PokemonSpritePanelProps) {
   const queryClient = useQueryClient();
   const sprite = useQuery(
-    pokespriteRenderedSpriteQueryOptions(species, queryClient, shiny, form),
+    pokespriteRenderedSpriteQueryOptions(species, queryClient, shiny, form, {
+      maxHeight: detailSpriteCanvasHeight,
+      maxWidth: detailSpriteCanvasWidth,
+    }),
   );
 
   if (sprite.data !== undefined) {
@@ -83,6 +86,15 @@ function spriteErrorMessage(error: unknown): string {
 }
 
 export function PokemonSpriteArtwork({ sprite }: { sprite: RenderedSprite }) {
+  const top = Math.max(
+    0,
+    Math.floor((detailSpriteCanvasHeight - sprite.height) / 2),
+  );
+  const left = Math.max(
+    0,
+    Math.floor((detailSpriteCanvasWidth - sprite.width) / 2),
+  );
+
   return (
     <box
       style={{
@@ -90,17 +102,29 @@ export function PokemonSpriteArtwork({ sprite }: { sprite: RenderedSprite }) {
         flexDirection: "column",
         height: detailSpriteCanvasHeight,
         justifyContent: "center",
+        position: "relative",
         width: detailSpriteCanvasWidth,
       }}
     >
-      {sprite.rows.map((row, rowIndex) => (
-        <text key={rowIndex.toString()}>{spriteRowSpans(row)}</text>
-      ))}
+      {sprite.rows.flatMap((row, rowIndex) =>
+        visibleSpriteCellGroups(row).map((group, groupIndex) => (
+          <text
+            key={`${rowIndex.toString()}-${groupIndex.toString()}`}
+            style={{
+              left: left + group.x,
+              position: "absolute",
+              top: top + rowIndex,
+            }}
+          >
+            {spriteCellGroupSpans(group.cells)}
+          </text>
+        )),
+      )}
     </box>
   );
 }
 
-function spriteRowSpans(row: readonly SpriteCell[]) {
+function spriteCellGroupSpans(row: readonly SpriteCell[]) {
   return groupSpriteCells(row).map((group, index) => (
     <span
       key={index.toString()}
@@ -110,6 +134,31 @@ function spriteRowSpans(row: readonly SpriteCell[]) {
       {group.text}
     </span>
   ));
+}
+
+function visibleSpriteCellGroups(row: readonly SpriteCell[]) {
+  const groups: { cells: SpriteCell[]; x: number }[] = [];
+  let current: { cells: SpriteCell[]; x: number } | undefined;
+
+  row.forEach((cell, x) => {
+    if (isTransparentSpriteCell(cell)) {
+      current = undefined;
+      return;
+    }
+
+    if (current === undefined) {
+      current = { cells: [], x };
+      groups.push(current);
+    }
+
+    current.cells.push(cell);
+  });
+
+  return groups;
+}
+
+function isTransparentSpriteCell(cell: SpriteCell): boolean {
+  return cell.char === " " && cell.fg === undefined && cell.bg === undefined;
 }
 
 function groupSpriteCells(row: readonly SpriteCell[]) {

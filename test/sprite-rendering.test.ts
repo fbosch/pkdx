@@ -61,6 +61,91 @@ test("renders fully transparent PNGs as empty sprites", () => {
   expect(renderPngSprite(png)).toEqual({ height: 0, rows: [], width: 0 });
 });
 
+test("keeps fitting sprites at native terminal size", () => {
+  const red = [255, 0, 0, 255] satisfies Rgba;
+  const png = createRgbaPng(
+    20,
+    20,
+    Array.from({ length: 20 * 20 }, () => red),
+  );
+
+  expect(renderPngSprite(png, { maxHeight: 15, maxWidth: 40 })).toMatchObject({
+    height: 10,
+    width: 20,
+  });
+});
+
+test("preserves transparent terminal cells needed for row alignment", () => {
+  const transparent = [0, 0, 0, 0] satisfies Rgba;
+  const red = [255, 0, 0, 255] satisfies Rgba;
+  const blue = [0, 0, 255, 255] satisfies Rgba;
+  const png = createRgbaPng(6, 4, [
+    red,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    blue,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+    transparent,
+  ]);
+
+  expect(renderPngSprite(png)).toEqual({
+    height: 2,
+    rows: [
+      [
+        { char: "▀", fg: 196 },
+        { char: " " },
+        { char: " " },
+        { char: " " },
+        { char: " " },
+        { char: " " },
+      ],
+      [
+        { char: " " },
+        { char: " " },
+        { char: " " },
+        { char: " " },
+        { char: " " },
+        { char: "▀", fg: 21 },
+      ],
+    ],
+    width: 6,
+  });
+});
+
+test("fits oversized sprites within terminal canvas bounds", () => {
+  const red = [255, 0, 0, 255] satisfies Rgba;
+  const png = createRgbaPng(
+    68,
+    56,
+    Array.from({ length: 68 * 56 }, () => red),
+  );
+
+  const sprite = renderPngSprite(png, { maxHeight: 15, maxWidth: 40 });
+
+  expect(sprite.width).toBeLessThanOrEqual(40);
+  expect(sprite.height).toBeLessThanOrEqual(15);
+  expect(sprite.rows).toHaveLength(sprite.height);
+  expect(sprite.rows.every((row) => row.length === sprite.width)).toBe(true);
+});
+
 type Rgba = readonly [red: number, green: number, blue: number, alpha: number];
 
 function createRgbaPng(

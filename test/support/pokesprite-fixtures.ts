@@ -3,7 +3,7 @@ export const pokespritePokemonMetadata = {
     idx: "006",
     name: { eng: "Charizard" },
     slug: { eng: "charizard" },
-    "gen-7": {
+    "gen-8": {
       forms: {
         $: { has_female: false, has_right: false },
         "mega-x": { has_female: false, has_right: false },
@@ -15,7 +15,7 @@ export const pokespritePokemonMetadata = {
     idx: "020",
     name: { eng: "Raticate" },
     slug: { eng: "raticate" },
-    "gen-7": {
+    "gen-8": {
       forms: {
         $: { has_female: false, has_right: false },
         alola: { has_female: false, has_right: false },
@@ -31,7 +31,7 @@ export const pokespritePokemonMetadata = {
     idx: "025",
     name: { eng: "Pikachu" },
     slug: { eng: "pikachu" },
-    "gen-7": {
+    "gen-8": {
       forms: {
         $: {
           has_female: true,
@@ -49,9 +49,20 @@ export const pokespritePokemonMetadata = {
     idx: "029",
     name: { eng: "Nidoran♀" },
     slug: { eng: "nidoran-f" },
-    "gen-7": {
+    "gen-8": {
       forms: {
         $: { has_female: false, has_right: false },
+      },
+    },
+  },
+  "146": {
+    idx: "146",
+    name: { eng: "Moltres" },
+    slug: { eng: "moltres" },
+    "gen-8": {
+      forms: {
+        $: { has_female: false, has_right: false },
+        galar: { has_female: false, has_right: false },
       },
     },
   },
@@ -59,6 +70,6 @@ export const pokespritePokemonMetadata = {
     idx: "810",
     name: { eng: "Grookey" },
     slug: { eng: "grookey" },
-    "gen-7": {},
+    "gen-8": {},
   },
 };

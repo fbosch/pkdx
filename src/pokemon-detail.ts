@@ -18,7 +18,6 @@ import {
   parsePokemonSpeciesResource,
   parseVersionGroupResource,
 } from "./pokeapi/schema";
-import { isPokeSpriteSupportedPokemonForm } from "./pokesprite-supported-forms";
 import { queryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
 import { calculateDamageTaken, type DamageTaken } from "./type-matchups";
@@ -134,7 +133,7 @@ export function pokemonDetailQueryOptions(
         }),
       );
       const forms = buildPokemonForms(species, speciesResource);
-      const selectedForm = getSelectedPokemonForm(forms, form);
+      const selectedForm = getSelectedPokemonForm(forms, species.slug, form);
       const pokemonResource = await queryClient.fetchQuery(
         pokeApiResourceQueryOptions({
           parse: parsePokemonResource,
@@ -230,7 +229,7 @@ export function buildDefaultPokemonDetail(
     pokemonResource,
     evolutionChainResource,
     forms,
-    getSelectedPokemonForm(forms),
+    getSelectedPokemonForm(forms, species.slug),
   );
 }
 
@@ -295,23 +294,21 @@ export function buildPokemonForms(
   species: SpeciesIndexEntry,
   speciesResource: PokeApiPokemonSpecies,
 ): PokemonForm[] {
-  const forms = speciesResource.varieties
-    .map((variety) => ({
-      displayName: getPokemonFormDisplayName(
-        species,
-        variety.pokemon.name,
-        variety.is_default,
-      ),
-      isDefault: variety.is_default,
-      pokemonName: variety.pokemon.name,
-      pokemonUrl: variety.pokemon.url,
-      spriteFormKey: getPokeSpriteFormKey(
-        species.slug,
-        variety.pokemon.name,
-        variety.is_default,
-      ),
-    }))
-    .filter((form) => isSelectablePokemonForm(species.slug, form));
+  const forms = speciesResource.varieties.map((variety) => ({
+    displayName: getPokemonFormDisplayName(
+      species,
+      variety.pokemon.name,
+      variety.is_default,
+    ),
+    isDefault: variety.is_default,
+    pokemonName: variety.pokemon.name,
+    pokemonUrl: variety.pokemon.url,
+    spriteFormKey: getPokeSpriteFormKey(
+      species.slug,
+      variety.pokemon.name,
+      variety.is_default,
+    ),
+  }));
 
   if (forms.some((form) => form.isDefault) === false) {
     throw new Error(
@@ -419,16 +416,6 @@ function formatEvolutionTrigger(detail: PokeApiEvolutionDetail): string {
     .otherwise(formatResourceName);
 }
 
-function isSelectablePokemonForm(
-  speciesSlug: string,
-  form: PokemonForm,
-): boolean {
-  return (
-    form.isDefault ||
-    isPokeSpriteSupportedPokemonForm(speciesSlug, form.spriteFormKey)
-  );
-}
-
 export function buildPokemonAbilityDetail(
   abilityResource: PokeApiAbility,
 ): PokemonAbilityDetail {
@@ -474,13 +461,15 @@ function formatGenderRatio(genderRate: number): PokemonGenderRatio {
 
 function getSelectedPokemonForm(
   forms: readonly PokemonForm[],
+  speciesSlug: string,
   selectedForm?: PokemonForm,
 ): PokemonForm {
   const defaultForm = forms.find((candidate) => candidate.isDefault);
   const form =
     selectedForm === undefined
       ? defaultForm
-      : (findSelectedPokemonForm(forms, selectedForm) ?? defaultForm);
+      : (findSelectedPokemonForm(forms, speciesSlug, selectedForm) ??
+        defaultForm);
 
   if (form === undefined) {
     throw new Error("PokeAPI species has no default variety");
@@ -491,6 +480,7 @@ function getSelectedPokemonForm(
 
 function findSelectedPokemonForm(
   forms: readonly PokemonForm[],
+  speciesSlug: string,
   selectedForm: PokemonForm,
 ): PokemonForm | undefined {
   return (
@@ -501,6 +491,8 @@ function findSelectedPokemonForm(
       (candidate) =>
         selectedForm.isDefault === false &&
         candidate.isDefault === false &&
+        candidate.pokemonName ===
+          `${speciesSlug}-${selectedForm.spriteFormKey}` &&
         candidate.spriteFormKey === selectedForm.spriteFormKey,
     )
   );

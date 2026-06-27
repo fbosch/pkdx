@@ -107,11 +107,11 @@ test("resolves known default sprite slugs from metadata", () => {
     formKey: "$",
     shiny: false,
     slug: "pikachu",
-    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/regular/pikachu.png",
+    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/pikachu.png",
   });
   expect(resolveDefaultPokeSpriteAsset(metadata, nidoranFemale)).toMatchObject({
     slug: "nidoran-f",
-    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/regular/nidoran-f.png",
+    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/nidoran-f.png",
   });
 });
 
@@ -131,7 +131,7 @@ test("resolves form aliases and shiny asset URLs", () => {
     formKey: "alola",
     shiny: true,
     slug: "raticate-alola",
-    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/shiny/raticate-alola.png",
+    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/shiny/raticate-alola.png",
   });
 });
 
@@ -140,16 +140,28 @@ test("keys rendered Sprite cache by dex number and shiny state", () => {
 
   expect(pokespriteRenderedSpriteQueryKey(pikachu)).toEqual([
     "pokesprite-rendered-sprite",
+    "gen-8",
     25,
     "$",
     false,
+    undefined,
+    undefined,
   ]);
   expect(pokespriteRenderedSpriteQueryKey(pikachu, true)).toEqual([
     "pokesprite-rendered-sprite",
+    "gen-8",
     25,
     "$",
     true,
+    undefined,
+    undefined,
   ]);
+  expect(
+    pokespriteRenderedSpriteQueryKey(pikachu, false, undefined, {
+      maxHeight: 15,
+      maxWidth: 40,
+    }),
+  ).toEqual(["pokesprite-rendered-sprite", "gen-8", 25, "$", false, 40, 15]);
 });
 
 test("maps Pokemon Forms to PokeSprite regular and shiny assets", () => {
@@ -176,6 +188,14 @@ test("maps Pokemon Forms to PokeSprite regular and shiny assets", () => {
     pokemonUrl: "https://pokeapi.co/api/v2/pokemon/pikachu-rock-star/",
     spriteFormKey: "rock-star",
   };
+  const moltres = findExactSpecies("moltres") ?? throwMissingSpecies("moltres");
+  const galarianMoltres = {
+    displayName: "Moltres Galar",
+    isDefault: false,
+    pokemonName: "moltres-galar",
+    pokemonUrl: "https://pokeapi.co/api/v2/pokemon/10171/",
+    spriteFormKey: "galar",
+  };
 
   expect(
     resolvePokemonFormPokeSpriteAsset(metadata, charizard, megaX),
@@ -183,7 +203,7 @@ test("maps Pokemon Forms to PokeSprite regular and shiny assets", () => {
     formKey: "mega-x",
     shiny: false,
     slug: "charizard-mega-x",
-    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/regular/charizard-mega-x.png",
+    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/charizard-mega-x.png",
   });
   expect(
     resolvePokemonFormPokeSpriteAsset(metadata, pikachu, rockStar, true),
@@ -191,7 +211,15 @@ test("maps Pokemon Forms to PokeSprite regular and shiny assets", () => {
     formKey: "rock-star",
     shiny: true,
     slug: "pikachu-rock-star",
-    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen7x/shiny/pikachu-rock-star.png",
+    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/shiny/pikachu-rock-star.png",
+  });
+  expect(
+    resolvePokemonFormPokeSpriteAsset(metadata, moltres, galarianMoltres),
+  ).toMatchObject({
+    formKey: "galar",
+    shiny: false,
+    slug: "moltres-galar",
+    url: "https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/moltres-galar.png",
   });
 });
 
@@ -217,7 +245,7 @@ test("keeps previous rendered Sprite only across same-species presentation chang
   ).toBeUndefined();
 });
 
-test("fails concisely when requested Gen 7x sprite metadata is missing", () => {
+test("fails concisely when requested Gen 8 sprite metadata is missing", () => {
   const metadata = parsePokeSpriteMetadata(pokespritePokemonMetadata);
   const grookey: SpeciesIndexEntry = {
     aliases: [],

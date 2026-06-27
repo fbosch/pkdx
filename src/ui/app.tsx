@@ -230,10 +230,10 @@ function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
           right=""
         />
         <box style={{ alignItems: "flex-start", flexDirection: "row", gap: 1 }}>
-          <SkeletonPanel height={18} width={42} />
-          <box style={{ flexDirection: "column", width: 53 }}>
-            <SkeletonPanel height={8} width={53} />
-            <SkeletonPanel height={10} width={53} />
+          <SkeletonPanel height={23} width={45} />
+          <box style={{ flexDirection: "column", width: 50 }}>
+            <SkeletonPanel height={13} width={50} />
+            <SkeletonPanel height={10} width={50} />
           </box>
         </box>
         <box style={{ flexDirection: "row", gap: 1 }}>

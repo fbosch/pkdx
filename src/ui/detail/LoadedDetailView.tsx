@@ -10,6 +10,7 @@ import {
   PokedexCard,
   StatBar,
   TypeLabels,
+  detailCardWidth,
   typeLabelsWidth,
 } from "../components";
 import { colors, textStyles } from "../design-tokens";
@@ -24,9 +25,12 @@ import {
   PokemonSpriteShinyMarker,
 } from "./PokemonSpritePanel";
 
-const detailInfoPanelWidth = 53;
-const detailSpritePanelHeight = 18;
-const detailSpritePanelWidth = 42;
+const detailInfoPanelWidth = 50;
+const detailSpritePanelHeight = 23;
+const detailSpritePanelWidth = 45;
+const detailFactsPanelHeight = 10;
+const detailFlavorPanelHeight =
+  detailSpritePanelHeight - detailFactsPanelHeight;
 
 export type LoadedDetailViewProps = {
   abilityViewerOpen: boolean;
@@ -106,13 +110,19 @@ export function LoadedDetailView({
             />
           </box>
           <box style={{ flexDirection: "column", width: detailInfoPanelWidth }}>
-            <DetailPanel minHeight={8} width={detailInfoPanelWidth}>
+            <DetailPanel
+              height={detailFlavorPanelHeight}
+              width={detailInfoPanelWidth}
+            >
               <FlavorTextPanel
                 detail={detail}
                 selectedIndex={descriptionIndex}
               />
             </DetailPanel>
-            <DetailPanel width={detailInfoPanelWidth}>
+            <DetailPanel
+              height={detailFactsPanelHeight}
+              width={detailInfoPanelWidth}
+            >
               <FactRow label="Species" value={detail.species} />
               <FactRow label="Egg Group" value={detail.eggGroups.join(" / ")} />
               <FactRow
@@ -186,7 +196,7 @@ export function DexNavigationButtons({
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        width: 100,
+        width: detailCardWidth,
       }}
     >
       <DexNavigationButton

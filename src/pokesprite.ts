@@ -6,7 +6,11 @@ import { z } from "zod";
 import type { PokemonForm } from "./pokemon-detail";
 import { queryCachePolicies } from "./query-cache";
 import type { SpeciesIndexEntry } from "./search";
-import { renderPngSpriteFile, type RenderedSprite } from "./sprite-rendering";
+import {
+  renderPngSpriteFile,
+  type RenderedSprite,
+  type RenderPngSpriteOptions,
+} from "./sprite-rendering";
 
 const pokespriteBaseUrl =
   "https://raw.githubusercontent.com/msikma/pokesprite/master/";
@@ -22,9 +26,12 @@ type ResourceQueryClient = Pick<QueryClient, "fetchQuery">;
 
 type PokeSpriteRenderedSpriteQueryKey = readonly [
   "pokesprite-rendered-sprite",
+  generation: "gen-8",
   dexNumber: number,
   formKey: string,
   shiny: boolean,
+  maxWidth: number | undefined,
+  maxHeight: number | undefined,
 ];
 
 const formMetadataSchema = z
@@ -46,7 +53,7 @@ const pokemonMetadataEntrySchema = z
     idx: z.string(),
     name: z.object({ eng: z.string() }),
     slug: z.object({ eng: z.string() }),
-    "gen-7": z
+    "gen-8": z
       .object({
         forms: z.record(z.string(), formMetadataSchema).optional(),
       })
@@ -54,7 +61,7 @@ const pokemonMetadataEntrySchema = z
   })
   .transform((entry) => ({
     dexNumber: Number.parseInt(entry.idx, 10),
-    forms: entry["gen-7"]?.forms ?? {},
+    forms: entry["gen-8"]?.forms ?? {},
     name: entry.name.eng,
     slug: entry.slug.eng,
   }));
@@ -116,12 +123,16 @@ export function pokespriteRenderedSpriteQueryKey(
   species: SpeciesIndexEntry,
   shiny = false,
   form?: PokemonForm,
+  renderOptions: RenderPngSpriteOptions = {},
 ): PokeSpriteRenderedSpriteQueryKey {
   return [
     "pokesprite-rendered-sprite",
+    "gen-8",
     species.dexNumber,
     form?.spriteFormKey ?? "$",
     shiny,
+    renderOptions.maxWidth,
+    renderOptions.maxHeight,
   ];
 }
 
@@ -130,9 +141,15 @@ export function pokespriteRenderedSpriteQueryOptions(
   queryClient: ResourceQueryClient,
   shiny = false,
   form?: PokemonForm,
+  renderOptions: RenderPngSpriteOptions = {},
 ) {
   return queryOptions({
-    queryKey: pokespriteRenderedSpriteQueryKey(species, shiny, form),
+    queryKey: pokespriteRenderedSpriteQueryKey(
+      species,
+      shiny,
+      form,
+      renderOptions,
+    ),
     queryFn: async (): Promise<RenderedSprite> => {
       const metadata = await queryClient.fetchQuery(
         pokespriteMetadataQueryOptions(),
@@ -141,7 +158,7 @@ export function pokespriteRenderedSpriteQueryOptions(
         resolvePokemonFormPokeSpriteAsset(metadata, species, form, shiny),
       );
 
-      return renderPngSpriteFile(asset.filePath);
+      return renderPngSpriteFile(asset.filePath, renderOptions);
     },
     placeholderData: (previousData, previousQuery) =>
       pokespriteRenderedSpritePlaceholderData(
@@ -149,6 +166,7 @@ export function pokespriteRenderedSpriteQueryOptions(
         previousQuery?.queryKey,
         species,
         form,
+        renderOptions,
       ),
     ...queryCachePolicies.pokespriteMetadata,
   });
@@ -159,11 +177,15 @@ export function pokespriteRenderedSpritePlaceholderData(
   previousQueryKey: readonly unknown[] | undefined,
   species: SpeciesIndexEntry,
   form?: PokemonForm,
+  renderOptions: RenderPngSpriteOptions = {},
 ): RenderedSprite | undefined {
   if (
     previousQueryKey?.[0] !== "pokesprite-rendered-sprite" ||
-    previousQueryKey[1] !== species.dexNumber ||
-    previousQueryKey[2] !== (form?.spriteFormKey ?? "$")
+    previousQueryKey[1] !== "gen-8" ||
+    previousQueryKey[2] !== species.dexNumber ||
+    previousQueryKey[3] !== (form?.spriteFormKey ?? "$") ||
+    previousQueryKey[5] !== renderOptions.maxWidth ||
+    previousQueryKey[6] !== renderOptions.maxHeight
   ) {
     return undefined;
   }
@@ -223,7 +245,7 @@ export function resolvePokeSpriteAsset(
     metadata: entry,
     shiny,
     slug,
-    url: `${pokespriteBaseUrl}pokemon-gen7x/${shiny ? "shiny" : "regular"}/${slug}.png`,
+    url: `${pokespriteBaseUrl}pokemon-gen8/${shiny ? "shiny" : "regular"}/${slug}.png`,
   };
 }
 

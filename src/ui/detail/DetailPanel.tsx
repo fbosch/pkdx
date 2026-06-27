@@ -3,10 +3,12 @@ import { colors } from "../design-tokens";
 
 export function DetailPanel({
   children,
+  height,
   minHeight,
   width,
 }: {
   children: ReactNode;
+  height?: number;
   minHeight?: number;
   width: number;
 }) {
@@ -17,6 +19,7 @@ export function DetailPanel({
       borderStyle="rounded"
       style={{
         flexDirection: "column",
+        ...(height === undefined ? {} : { height }),
         ...(minHeight === undefined ? {} : { minHeight }),
         paddingX: 1,
         position: "relative",

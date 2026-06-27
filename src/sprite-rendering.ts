@@ -15,10 +15,22 @@ export type RenderedSprite = {
   width: number;
 };
 
+export type RenderPngSpriteOptions = {
+  maxHeight?: number;
+  maxWidth?: number;
+};
+
 type DecodedPng = {
   height: number;
   pixels: Uint8Array;
   width: number;
+};
+
+type SpriteBounds = {
+  bottom: number;
+  left: number;
+  right: number;
+  top: number;
 };
 
 type PngChunks = {
@@ -50,28 +62,60 @@ const xtermPalette = buildXtermPalette();
 
 export async function renderPngSpriteFile(
   filePath: string,
+  options: RenderPngSpriteOptions = {},
 ): Promise<RenderedSprite> {
-  return renderPngSprite(await Bun.file(filePath).arrayBuffer());
+  return renderPngSprite(await Bun.file(filePath).arrayBuffer(), options);
 }
 
-export function renderPngSprite(source: ArrayBuffer): RenderedSprite {
-  return renderDecodedPng(decodePng(source));
+export function renderPngSprite(
+  source: ArrayBuffer,
+  options: RenderPngSpriteOptions = {},
+): RenderedSprite {
+  return renderDecodedPng(decodePng(source), options);
 }
 
-function renderDecodedPng(image: DecodedPng): RenderedSprite {
+function renderDecodedPng(
+  image: DecodedPng,
+  options: RenderPngSpriteOptions,
+): RenderedSprite {
   const bounds = transparentTrimBounds(image);
   if (bounds === undefined) {
     return { height: 0, rows: [], width: 0 };
   }
 
+  const unscaled = renderSpriteRows(image, bounds, {
+    pixelHeight: bounds.bottom - bounds.top + 1,
+    scale: 1,
+    width: bounds.right - bounds.left + 1,
+  });
+  if (spriteFits(unscaled, options)) {
+    return unscaled;
+  }
+
+  // Keep rows on one aligned grid. Trimming each text row independently shifts
+  // centered rows against each other and visually breaks the sprite.
+  return renderSpriteRows(
+    image,
+    bounds,
+    fittedSpriteDimensions(bounds, options),
+  );
+}
+
+function renderSpriteRows(
+  image: DecodedPng,
+  bounds: SpriteBounds,
+  dimensions: { pixelHeight: number; scale: number; width: number },
+): RenderedSprite {
   const colorIndexes = new Map<number, number>();
   const rows: SpriteCell[][] = [];
-  for (let y = bounds.top; y <= bounds.bottom; y += 2) {
+  for (let y = 0; y < dimensions.pixelHeight; y += 2) {
     const row: SpriteCell[] = [];
-    for (let x = bounds.left; x <= bounds.right; x += 1) {
-      const top = pixelOffset(image, x, y);
+    for (let x = 0; x < dimensions.width; x += 1) {
+      const top = fittedPixelOffset(image, bounds, dimensions.scale, x, y);
       const bottom =
-        y + 1 <= bounds.bottom ? pixelOffset(image, x, y + 1) : undefined;
+        y + 1 < dimensions.pixelHeight
+          ? fittedPixelOffset(image, bounds, dimensions.scale, x, y + 1)
+          : undefined;
       row.push(renderPixelPair(image.pixels, top, bottom, colorIndexes));
     }
     rows.push(row);
@@ -80,8 +124,58 @@ function renderDecodedPng(image: DecodedPng): RenderedSprite {
   return {
     height: rows.length,
     rows,
-    width: bounds.right - bounds.left + 1,
+    width: dimensions.width,
   };
+}
+
+function spriteFits(
+  sprite: RenderedSprite,
+  options: RenderPngSpriteOptions,
+): boolean {
+  return (
+    (options.maxWidth === undefined || sprite.width <= options.maxWidth) &&
+    (options.maxHeight === undefined || sprite.height <= options.maxHeight)
+  );
+}
+
+function fittedSpriteDimensions(
+  bounds: SpriteBounds,
+  options: RenderPngSpriteOptions,
+): { pixelHeight: number; scale: number; width: number } {
+  const width = bounds.right - bounds.left + 1;
+  const pixelHeight = bounds.bottom - bounds.top + 1;
+  const height = Math.ceil(pixelHeight / 2);
+  if (
+    (options.maxWidth === undefined || width <= options.maxWidth) &&
+    (options.maxHeight === undefined || height <= options.maxHeight)
+  ) {
+    return { pixelHeight, scale: 1, width };
+  }
+
+  const maxPixelHeight =
+    options.maxHeight === undefined ? undefined : options.maxHeight * 2;
+  const scale = Math.min(
+    options.maxWidth === undefined ? 1 : options.maxWidth / width,
+    maxPixelHeight === undefined ? 1 : maxPixelHeight / pixelHeight,
+  );
+
+  return {
+    pixelHeight: Math.max(1, Math.floor(pixelHeight * scale)),
+    scale,
+    width: Math.max(1, Math.floor(width * scale)),
+  };
+}
+
+function fittedPixelOffset(
+  image: DecodedPng,
+  bounds: SpriteBounds,
+  scale: number,
+  x: number,
+  y: number,
+): number {
+  const sourceX = bounds.left + Math.floor(x / scale);
+  const sourceY = bounds.top + Math.floor(y / scale);
+  return pixelOffset(image, sourceX, sourceY);
 }
 
 export function xtermColorIndex(

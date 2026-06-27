@@ -168,7 +168,7 @@ test("normalizes PokeAPI varieties into Pokemon Forms", () => {
   });
 });
 
-test("excludes unsupported Gmax varieties from selectable Pokemon Forms", () => {
+test("includes every PokeAPI variety as selectable Pokemon Forms", () => {
   expect(
     buildPokemonForms(eeveeIndexEntry, {
       ...pikachuSpecies,
@@ -216,6 +216,13 @@ test("excludes unsupported Gmax varieties from selectable Pokemon Forms", () => 
       spriteFormKey: "$",
     },
     {
+      displayName: "Eevee Gmax",
+      isDefault: false,
+      pokemonName: "eevee-gmax",
+      pokemonUrl: "https://pokeapi.co/api/v2/pokemon/eevee-gmax/",
+      spriteFormKey: "gmax",
+    },
+    {
       displayName: "Eevee Starter",
       isDefault: false,
       pokemonName: "eevee-starter",
@@ -223,6 +230,48 @@ test("excludes unsupported Gmax varieties from selectable Pokemon Forms", () => 
       spriteFormKey: "starter",
     },
   ]);
+});
+
+test("includes Galarian legendary bird varieties", () => {
+  expect(
+    buildPokemonForms(
+      {
+        aliases: ["146"],
+        dexNumber: 146,
+        dexNumbers: ["146"],
+        name: "Moltres",
+        slug: "moltres",
+      },
+      {
+        ...pikachuSpecies,
+        id: 146,
+        name: "moltres",
+        names: [{ language: { name: "en", url: "" }, name: "Moltres" }],
+        varieties: [
+          {
+            is_default: true,
+            pokemon: {
+              name: "moltres",
+              url: "https://pokeapi.co/api/v2/pokemon/146/",
+            },
+          },
+          {
+            is_default: false,
+            pokemon: {
+              name: "moltres-galar",
+              url: "https://pokeapi.co/api/v2/pokemon/10171/",
+            },
+          },
+        ],
+      },
+    ),
+  ).toContainEqual({
+    displayName: "Moltres Galar",
+    isDefault: false,
+    pokemonName: "moltres-galar",
+    pokemonUrl: "https://pokeapi.co/api/v2/pokemon/10171/",
+    spriteFormKey: "galar",
+  });
 });
 
 test("loads carried regional form by sprite form key", async () => {
@@ -303,6 +352,37 @@ test("falls back to default form when carried evolution form is unavailable", as
     spriteFormKey: "$",
   });
   expect(detail.name).toBe("Ninetales");
+});
+
+test("does not carry unrelated alternate form keys to another species", async () => {
+  const forms = buildPokemonForms(charizardIndexEntry, charizardSpecies);
+  const megaX = forms.find((form) => form.pokemonName === "charizard-mega-x");
+
+  if (megaX === undefined) {
+    throw new Error("Missing Charizard Mega X form fixture");
+  }
+
+  setupRaichuDetailResources();
+  const detail = (await executeQuery(
+    pokemonDetailQueryOptions(
+      {
+        aliases: ["026", "26"],
+        dexNumber: 26,
+        dexNumbers: ["26", "026"],
+        name: "Raichu",
+        slug: "raichu",
+      },
+      createResourceQueryClient(),
+      megaX,
+    ),
+  )) as PokemonDetail;
+
+  expect(detail.form).toMatchObject({
+    isDefault: true,
+    pokemonName: "raichu",
+    spriteFormKey: "$",
+  });
+  expect(detail.name).toBe("Raichu");
 });
 
 test("builds PokemonAbilityDetail from validated PokeAPI Ability resources", () => {
@@ -612,6 +692,61 @@ function ninetalesVarieties(includeAlola: boolean) {
         ]
       : []),
   ];
+}
+
+function setupRaichuDetailResources() {
+  server.use(
+    http.get("https://pokeapi.co/api/v2/pokemon-species/26/", () => {
+      return HttpResponse.json({
+        ...pikachuSpecies,
+        id: 26,
+        name: "raichu",
+        names: [{ language: { name: "en", url: "" }, name: "Raichu" }],
+        varieties: [
+          {
+            is_default: true,
+            pokemon: {
+              name: "raichu",
+              url: "https://pokeapi.co/api/v2/pokemon/26/",
+            },
+          },
+          {
+            is_default: false,
+            pokemon: {
+              name: "raichu-alola",
+              url: "https://pokeapi.co/api/v2/pokemon/raichu-alola/",
+            },
+          },
+        ],
+      });
+    }),
+    http.get("https://pokeapi.co/api/v2/pokemon/26/", () => {
+      return HttpResponse.json({ ...pikachuPokemon, name: "raichu" });
+    }),
+    http.get("https://pokeapi.co/api/v2/pokemon-form/raichu-alola/", () => {
+      return HttpResponse.json({
+        name: "raichu-alola",
+        version_group: {
+          name: "sun-moon",
+          url: "https://pokeapi.co/api/v2/version-group/17/",
+        },
+      });
+    }),
+    http.get("https://pokeapi.co/api/v2/version-group/17/", () => {
+      return HttpResponse.json({
+        name: "sun-moon",
+        versions: [
+          {
+            name: "moon",
+            url: "https://pokeapi.co/api/v2/version/18/",
+          },
+        ],
+      });
+    }),
+    http.get("https://pokeapi.co/api/v2/evolution-chain/10/", () => {
+      return HttpResponse.json(pikachuEvolutionChain);
+    }),
+  );
 }
 
 async function loadNinetalesWithCarriedAlolaForm(): Promise<PokemonDetail> {
