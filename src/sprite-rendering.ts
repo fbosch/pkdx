@@ -60,15 +60,6 @@ type PngChunk = {
   type: string;
 };
 
-type RgbaReadContext = {
-  bitDepth: number;
-  palette: Uint8Array | undefined;
-  scanlineOffset: number;
-  source: Uint8Array;
-  transparency: Uint8Array | undefined;
-  x: number;
-};
-
 type PaletteEntry = readonly [red: number, green: number, blue: number];
 
 const xtermPalette = buildXtermPalette();
@@ -112,7 +103,7 @@ export function fitPngSpriteToTerminalCanvas(
   options: RenderPngSpriteOptions = {},
 ): { height: number; width: number } {
   const native = { height: Math.ceil(image.height / 2), width: image.width };
-  if (spriteFits({ ...native, rows: [] }, options)) {
+  if (spriteFits(native, options)) {
     return native;
   }
 
@@ -140,15 +131,6 @@ function renderDecodedPng(
     return { height: 0, rows: [], width: 0 };
   }
 
-  const unscaled = renderSpriteRows(image, bounds, {
-    pixelHeight: bounds.bottom - bounds.top + 1,
-    scale: 1,
-    width: bounds.right - bounds.left + 1,
-  });
-  if (spriteFits(unscaled, options)) {
-    return unscaled;
-  }
-
   // Keep rows on one aligned grid. Trimming each text row independently shifts
   // centered rows against each other and visually breaks the sprite.
   return renderSpriteRows(
@@ -165,6 +147,10 @@ function renderSpriteRows(
 ): RenderedSprite {
   const colorIndexes = new Map<number, number>();
   const rows: SpriteCell[][] = [];
+  if (dimensions.scale === 1) {
+    return renderNativeSpriteRows(image, bounds, dimensions, colorIndexes);
+  }
+
   for (let y = 0; y < dimensions.pixelHeight; y += 2) {
     const row: SpriteCell[] = [];
     for (let x = 0; x < dimensions.width; x += 1) {
@@ -183,16 +169,6 @@ function renderSpriteRows(
     rows,
     width: dimensions.width,
   };
-}
-
-function spriteFits(
-  sprite: RenderedSprite,
-  options: RenderPngSpriteOptions,
-): boolean {
-  return (
-    (options.maxWidth === undefined || sprite.width <= options.maxWidth) &&
-    (options.maxHeight === undefined || sprite.height <= options.maxHeight)
-  );
 }
 
 function fittedSpriteDimensions(
@@ -220,6 +196,46 @@ function fittedSpriteDimensions(
     pixelHeight: Math.max(1, Math.floor(pixelHeight * scale)),
     scale,
     width: Math.max(1, Math.floor(width * scale)),
+  };
+}
+
+function spriteFits(
+  sprite: Pick<RenderedSprite, "height" | "width">,
+  options: RenderPngSpriteOptions,
+): boolean {
+  return (
+    (options.maxWidth === undefined || sprite.width <= options.maxWidth) &&
+    (options.maxHeight === undefined || sprite.height <= options.maxHeight)
+  );
+}
+
+function renderNativeSpriteRows(
+  image: DecodedPng,
+  bounds: SpriteBounds,
+  dimensions: { pixelHeight: number; width: number },
+  colorIndexes: Map<number, number>,
+): RenderedSprite {
+  const rows: SpriteCell[][] = [];
+  for (let y = 0; y < dimensions.pixelHeight; y += 2) {
+    const row: SpriteCell[] = [];
+    const sourceY = bounds.top + y;
+    const nextSourceY = sourceY + 1;
+    for (let x = 0; x < dimensions.width; x += 1) {
+      const sourceX = bounds.left + x;
+      const top = pixelOffset(image, sourceX, sourceY);
+      const bottom =
+        y + 1 < dimensions.pixelHeight
+          ? pixelOffset(image, sourceX, nextSourceY)
+          : undefined;
+      row.push(renderPixelPair(image.pixels, top, bottom, colorIndexes));
+    }
+    rows.push(row);
+  }
+
+  return {
+    height: rows.length,
+    rows,
+    width: dimensions.width,
   };
 }
 
@@ -313,7 +329,7 @@ function readPngChunk(bytes: Uint8Array, offset: number): PngChunk {
   const dataEnd = dataStart + length;
 
   return {
-    data: bytes.slice(dataStart, dataEnd),
+    data: bytes.subarray(dataStart, dataEnd),
     endOffset: dataEnd + 4,
     type: readChunkType(bytes, offset + 4),
   };
@@ -375,79 +391,124 @@ function rgbaPixelsFromScanlines(
   const stride = scanlineByteWidth(chunks, channels);
   const pixels = new Uint8Array(chunks.width * chunks.height * 4);
 
+  if (chunks.colorType === 0) {
+    writeGrayscalePixels(chunks, scanlines, pixels, stride);
+    return pixels;
+  }
+
+  if (chunks.colorType === 2) {
+    writeRgbPixels(chunks, scanlines, pixels, stride);
+    return pixels;
+  }
+
+  if (chunks.colorType === 3) {
+    writeIndexedPixels(chunks, scanlines, pixels, stride);
+    return pixels;
+  }
+
+  if (chunks.colorType === 4) {
+    writeGrayscaleAlphaPixels(chunks, scanlines, pixels, stride);
+    return pixels;
+  }
+
+  throw new Error(`Unsupported PNG color type: ${chunks.colorType}`);
+}
+
+function writeGrayscalePixels(
+  chunks: PngChunks,
+  scanlines: Uint8Array,
+  pixels: Uint8Array,
+  stride: number,
+) {
   for (let y = 0; y < chunks.height; y += 1) {
     for (let x = 0; x < chunks.width; x += 1) {
-      pixels.set(
-        readRgbaPixel(chunks.colorType, {
-          bitDepth: chunks.bitDepth,
-          palette: chunks.palette,
-          scanlineOffset: scanlineOffset(chunks, channels, stride, x, y),
-          source: scanlines,
-          transparency: chunks.transparency,
+      const gray = scaleSampleToByte(
+        readPackedSample(
+          scanlines,
+          scanlineOffset(chunks, 1, stride, x, y),
           x,
-        }),
-        (y * chunks.width + x) * 4,
+          chunks.bitDepth,
+        ),
+        chunks.bitDepth,
       );
+      const target = (y * chunks.width + x) * 4;
+      pixels[target] = gray;
+      pixels[target + 1] = gray;
+      pixels[target + 2] = gray;
+      pixels[target + 3] = alphaForGrayscale(gray, chunks.transparency);
     }
   }
-
-  return pixels;
 }
 
-function readRgbaPixel(
-  colorType: number,
-  context: RgbaReadContext,
-): readonly [number, number, number, number] {
-  const reader = rgbaPixelReaders[colorType];
-  if (reader === undefined) {
-    throw new Error(`Unsupported PNG color type: ${colorType}`);
+function writeRgbPixels(
+  chunks: PngChunks,
+  scanlines: Uint8Array,
+  pixels: Uint8Array,
+  stride: number,
+) {
+  for (let y = 0; y < chunks.height; y += 1) {
+    const rowOffset = y * stride;
+    for (let x = 0; x < chunks.width; x += 1) {
+      const source = rowOffset + x * 3;
+      const red = scanlines[source] ?? 0;
+      const green = scanlines[source + 1] ?? 0;
+      const blue = scanlines[source + 2] ?? 0;
+      const target = (y * chunks.width + x) * 4;
+      pixels[target] = red;
+      pixels[target + 1] = green;
+      pixels[target + 2] = blue;
+      pixels[target + 3] = alphaForRgb(red, green, blue, chunks.transparency);
+    }
+  }
+}
+
+function writeIndexedPixels(
+  chunks: PngChunks,
+  scanlines: Uint8Array,
+  pixels: Uint8Array,
+  stride: number,
+) {
+  if (chunks.palette === undefined) {
+    throw new Error("Indexed PNG is missing a palette");
   }
 
-  return reader(context);
+  for (let y = 0; y < chunks.height; y += 1) {
+    for (let x = 0; x < chunks.width; x += 1) {
+      const paletteIndex = readPackedSample(
+        scanlines,
+        scanlineOffset(chunks, 1, stride, x, y),
+        x,
+        chunks.bitDepth,
+      );
+      const paletteOffset = paletteIndex * 3;
+      const target = (y * chunks.width + x) * 4;
+      pixels[target] = chunks.palette[paletteOffset] ?? 0;
+      pixels[target + 1] = chunks.palette[paletteOffset + 1] ?? 0;
+      pixels[target + 2] = chunks.palette[paletteOffset + 2] ?? 0;
+      pixels[target + 3] = chunks.transparency?.[paletteIndex] ?? 255;
+    }
+  }
 }
 
-const rgbaPixelReaders: Record<
-  number,
-  (context: RgbaReadContext) => readonly [number, number, number, number]
-> = {
-  0: ({ bitDepth, scanlineOffset, source, transparency, x }) => {
-    const gray = scaleSampleToByte(
-      readPackedSample(source, scanlineOffset, x, bitDepth),
-      bitDepth,
-    );
-    return [gray, gray, gray, alphaForGrayscale(gray, transparency)];
-  },
-  2: ({ scanlineOffset, source, transparency }) => {
-    const red = source[scanlineOffset] ?? 0;
-    const green = source[scanlineOffset + 1] ?? 0;
-    const blue = source[scanlineOffset + 2] ?? 0;
-    return [red, green, blue, alphaForRgb(red, green, blue, transparency)];
-  },
-  3: ({ bitDepth, palette, scanlineOffset, source, transparency, x }) => {
-    if (palette === undefined) {
-      throw new Error("Indexed PNG is missing a palette");
+function writeGrayscaleAlphaPixels(
+  chunks: PngChunks,
+  scanlines: Uint8Array,
+  pixels: Uint8Array,
+  stride: number,
+) {
+  for (let y = 0; y < chunks.height; y += 1) {
+    const rowOffset = y * stride;
+    for (let x = 0; x < chunks.width; x += 1) {
+      const source = rowOffset + x * 2;
+      const gray = scanlines[source] ?? 0;
+      const target = (y * chunks.width + x) * 4;
+      pixels[target] = gray;
+      pixels[target + 1] = gray;
+      pixels[target + 2] = gray;
+      pixels[target + 3] = scanlines[source + 1] ?? 255;
     }
-
-    const paletteIndex = readPackedSample(source, scanlineOffset, x, bitDepth);
-    const paletteOffset = paletteIndex * 3;
-    return [
-      palette[paletteOffset] ?? 0,
-      palette[paletteOffset + 1] ?? 0,
-      palette[paletteOffset + 2] ?? 0,
-      transparency?.[paletteIndex] ?? 255,
-    ];
-  },
-  4: ({ scanlineOffset, source }) => {
-    const gray = source[scanlineOffset] ?? 0;
-    return [gray, gray, gray, source[scanlineOffset + 1] ?? 255];
-  },
-  6: ({ scanlineOffset, source }) => [
-    source[scanlineOffset] ?? 0,
-    source[scanlineOffset + 1] ?? 0,
-    source[scanlineOffset + 2] ?? 0,
-    source[scanlineOffset + 3] ?? 255,
-  ],
-};
+  }
+}
 
 function unfilterScanlines(
   inflated: Uint8Array,
@@ -661,14 +722,12 @@ function croppedRgbaPixels(
   const pixels = new Uint8Array(width * height * 4);
 
   for (let y = 0; y < height; y += 1) {
-    for (let x = 0; x < width; x += 1) {
-      const sourceOffset = pixelOffset(image, bounds.left + x, bounds.top + y);
-      const targetOffset = (y * width + x) * 4;
-      pixels.set(
-        image.pixels.subarray(sourceOffset, sourceOffset + 4),
-        targetOffset,
-      );
-    }
+    const sourceOffset = pixelOffset(image, bounds.left, bounds.top + y);
+    const targetOffset = y * width * 4;
+    pixels.set(
+      image.pixels.subarray(sourceOffset, sourceOffset + width * 4),
+      targetOffset,
+    );
   }
 
   return pixels;
@@ -711,12 +770,21 @@ function pngHeaderData(width: number, height: number): Uint8Array {
 function encodePngChunk(type: string, data: Uint8Array): Uint8Array {
   const chunk = new Uint8Array(12 + data.length);
   const view = new DataView(chunk.buffer);
-  const typeBytes = new TextEncoder().encode(type);
+  const typeBytes = pngChunkTypeBytes(type);
   view.setUint32(0, data.length);
   chunk.set(typeBytes, 4);
   chunk.set(data, 8);
-  view.setUint32(8 + data.length, crc32(concatByteArrays([typeBytes, data])));
+  view.setUint32(8 + data.length, crc32PngChunk(typeBytes, data));
   return chunk;
+}
+
+function pngChunkTypeBytes(type: string): Uint8Array {
+  return Uint8Array.of(
+    type.charCodeAt(0),
+    type.charCodeAt(1),
+    type.charCodeAt(2),
+    type.charCodeAt(3),
+  );
 }
 
 function concatByteArrays(chunks: readonly Uint8Array[]): Uint8Array {
@@ -731,15 +799,23 @@ function concatByteArrays(chunks: readonly Uint8Array[]): Uint8Array {
   return result;
 }
 
-function crc32(bytes: Uint8Array): number {
+function crc32PngChunk(typeBytes: Uint8Array, data: Uint8Array): number {
   let crc = 0xffffffff;
-  for (const byte of bytes) {
-    crc ^= byte;
-    for (let bit = 0; bit < 8; bit += 1) {
-      crc = crc & 1 ? 0xedb88320 ^ (crc >>> 1) : crc >>> 1;
-    }
+  for (const byte of typeBytes) {
+    crc = crc32Byte(crc, byte);
+  }
+  for (const byte of data) {
+    crc = crc32Byte(crc, byte);
   }
   return (crc ^ 0xffffffff) >>> 0;
+}
+
+function crc32Byte(crc: number, byte: number): number {
+  let next = crc ^ byte;
+  for (let bit = 0; bit < 8; bit += 1) {
+    next = next & 1 ? 0xedb88320 ^ (next >>> 1) : next >>> 1;
+  }
+  return next;
 }
 
 function pixelOffset(image: DecodedPng, x: number, y: number): number {
