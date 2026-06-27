@@ -40,6 +40,9 @@ const exactSpeciesByIdentity = new Map(
     [name, slug, ...dexNumbers].map((value) => [value, entry] as const),
   ),
 );
+const speciesIndexBySlug = new Map(
+  speciesIndex.map((entry, index) => [entry.slug, index] as const),
+);
 const searchResultCache = new Map<string, SpeciesIndexEntry[]>();
 const searchResultCacheLimit = 50;
 
@@ -98,8 +101,8 @@ export function getSpeciesByDexDelta(
   species: SpeciesIndexEntry,
   delta: number,
 ): SpeciesIndexEntry | undefined {
-  const index = speciesIndex.findIndex((entry) => entry.slug === species.slug);
-  if (index === -1) {
+  const index = speciesIndexBySlug.get(species.slug);
+  if (index === undefined) {
     return undefined;
   }
 
