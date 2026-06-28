@@ -84,6 +84,11 @@ export type PokemonForm = {
   spriteFormKey: string;
 };
 
+export type PokemonFormIntent = {
+  pokemonName?: string;
+  spriteFormKey: string;
+};
+
 export type PokemonAbilityDetail = {
   effect: string;
   name: string;
@@ -123,7 +128,7 @@ const pokemonEvolutionChains = new WeakMap<
 
 export function pokemonDetailQueryKey(
   species: SpeciesIndexEntry,
-  form?: PokemonForm,
+  form?: PokemonFormIntent,
 ): PokemonDetailQueryKey {
   return ["pokemon-detail", species.slug, pokemonFormTargetKey(form)];
 }
@@ -131,7 +136,7 @@ export function pokemonDetailQueryKey(
 export function pokemonDetailQueryOptions(
   species: SpeciesIndexEntry,
   queryClient: ResourceQueryClient,
-  form?: PokemonForm,
+  form?: PokemonFormIntent,
 ) {
   return queryOptions({
     queryKey: pokemonDetailQueryKey(species, form),
@@ -181,12 +186,39 @@ export function pokemonDetailQueryOptions(
   });
 }
 
-export function pokemonFormTargetKey(form: PokemonForm | undefined): string {
-  if (form === undefined || form.isDefault) {
+export function pokemonFormIntent(
+  form: PokemonForm,
+): PokemonFormIntent | undefined {
+  if (form.isDefault) {
+    return undefined;
+  }
+
+  return {
+    pokemonName: form.pokemonName,
+    spriteFormKey: form.spriteFormKey,
+  };
+}
+
+export function pokemonFormCarryoverIntent(
+  form: PokemonForm,
+): PokemonFormIntent | undefined {
+  if (form.isDefault) {
+    return undefined;
+  }
+
+  return {
+    spriteFormKey: form.spriteFormKey,
+  };
+}
+
+export function pokemonFormTargetKey(
+  form: PokemonForm | PokemonFormIntent | undefined,
+): string {
+  if (form === undefined || ("isDefault" in form && form.isDefault)) {
     return "$";
   }
 
-  return form.pokemonName;
+  return form.pokemonName ?? `form-family:${form.spriteFormKey}`;
 }
 
 export function pokemonAbilityDetailsQueryOptions(
@@ -549,7 +581,7 @@ function formatGenderRatio(genderRate: number): PokemonGenderRatio {
 function getSelectedPokemonForm(
   forms: readonly PokemonForm[],
   speciesSlug: string,
-  selectedForm?: PokemonForm,
+  selectedForm?: PokemonFormIntent,
 ): PokemonForm {
   const defaultForm = forms.find((candidate) => candidate.isDefault);
   const form =
@@ -568,15 +600,16 @@ function getSelectedPokemonForm(
 function findSelectedPokemonForm(
   forms: readonly PokemonForm[],
   speciesSlug: string,
-  selectedForm: PokemonForm,
+  selectedForm: PokemonFormIntent,
 ): PokemonForm | undefined {
   return (
-    forms.find(
-      (candidate) => candidate.pokemonName === selectedForm.pokemonName,
-    ) ??
+    (selectedForm.pokemonName === undefined
+      ? undefined
+      : forms.find(
+          (candidate) => candidate.pokemonName === selectedForm.pokemonName,
+        )) ??
     forms.find(
       (candidate) =>
-        selectedForm.isDefault === false &&
         candidate.isDefault === false &&
         candidate.pokemonName ===
           `${speciesSlug}-${selectedForm.spriteFormKey}` &&

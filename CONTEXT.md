@@ -44,6 +44,10 @@ _Avoid_: Separate species, decorative sprite option
 Keeping a regional or form-family variant selected when navigating across a direct evolution relationship whose target species has the same form family.
 _Avoid_: Carrying cosmetic, gender, temporary, or battle-only forms across species navigation
 
+**Pokémon Form Intent**:
+The unresolved request to use a Pokémon Form, either by exact form identity for the current Pokémon Species or by form-family key during Form Carryover until Detail resolves it for the target Pokémon Species.
+_Avoid_: Treating a carried source form as the target Pokémon Form
+
 **Damage Taken**:
 The non-neutral type damage multipliers a Pokémon receives from attacking types, including both weaknesses and resistances.
 _Avoid_: Weaknesses-only, full type chart

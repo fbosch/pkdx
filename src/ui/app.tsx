@@ -16,7 +16,11 @@ import {
   type DetailState,
 } from "#src/app-state.ts";
 import { appendDebugErrorLog } from "#src/error-log.ts";
-import type { PokemonDetail, PokemonForm } from "#src/pokemon-detail.ts";
+import type {
+  PokemonDetail,
+  PokemonForm,
+  PokemonFormIntent,
+} from "#src/pokemon-detail.ts";
 import {
   pokemonAbilityDetailsQueryOptions,
   pokemonDetailQueryOptions,
@@ -229,7 +233,7 @@ type AbilityDetailsPreloadProps = Pick<
   "onAbilityDetailsLoadFailed" | "onAbilityDetailsLoaded" | "state"
 >;
 type DetailQueryTarget = {
-  form: PokemonForm | undefined;
+  form: PokemonFormIntent | undefined;
   species: SpeciesIndexEntry;
 };
 type DetailViewContentProps = Pick<
@@ -269,7 +273,7 @@ function DetailView({
   });
   usePokemonSpritePrefetch({
     enabled: state.status !== "error",
-    form: detailTarget.form,
+    form: resolveDetailTargetPokemonForm(state, detailTarget),
     shiny: state.shiny,
     species: detailTarget.species,
     terminalImagesEnabled,
@@ -501,7 +505,7 @@ function usePokemonDetailLoad({
 
 function useDebouncedDetailTarget(
   species: SpeciesIndexEntry,
-  form: PokemonForm | undefined,
+  form: PokemonFormIntent | undefined,
   delayMs: number,
 ): DetailQueryTarget {
   const [target, setTarget] = useState<DetailQueryTarget>(() => ({
@@ -529,11 +533,28 @@ function useDebouncedDetailTarget(
 function detailTargetsMatch(
   target: DetailQueryTarget,
   species: SpeciesIndexEntry,
-  form: PokemonForm | undefined,
+  form: PokemonFormIntent | undefined,
 ): boolean {
   return (
     target.species.slug === species.slug &&
     pokemonFormTargetKey(target.form) === pokemonFormTargetKey(form)
+  );
+}
+
+function resolveDetailTargetPokemonForm(
+  state: DetailState,
+  target: DetailQueryTarget,
+): PokemonForm | undefined {
+  if (
+    state.detail === undefined ||
+    state.detail.species.slug !== target.species.slug ||
+    target.form === undefined
+  ) {
+    return undefined;
+  }
+
+  return state.detail.detail.forms.find(
+    (form) => pokemonFormTargetKey(form) === pokemonFormTargetKey(target.form),
   );
 }
 

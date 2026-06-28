@@ -650,11 +650,7 @@ test("Detail form key toggles when there is one alternate form", () => {
   expect(toggled).toMatchObject({
     screen: "detail",
     detailOverlay: undefined,
-    form: {
-      isDefault: true,
-      pokemonName: "vulpix",
-      spriteFormKey: "$",
-    },
+    form: undefined,
     species: { slug: "vulpix" },
     status: "loading",
   });
@@ -671,13 +667,13 @@ test("Detail next navigation carries Alolan form to Ninetales", () => {
 
   expect(next).toMatchObject({
     screen: "detail",
-    form: {
-      pokemonName: "vulpix-alola",
-      spriteFormKey: "alola",
-    },
     species: { slug: "ninetales" },
     status: "loading",
   });
+  if (next.screen !== "detail") {
+    throw new Error("Expected Detail state");
+  }
+  expect(next.form).toEqual({ spriteFormKey: "alola" });
   expectAlolanNinetalesLoaded(loaded);
 });
 
@@ -692,13 +688,13 @@ test("Detail next navigation carries Galarian form to Rapidash", () => {
 
   expect(next).toMatchObject({
     screen: "detail",
-    form: {
-      pokemonName: "ponyta-galar",
-      spriteFormKey: "galar",
-    },
     species: { slug: "rapidash" },
     status: "loading",
   });
+  if (next.screen !== "detail") {
+    throw new Error("Expected Detail state");
+  }
+  expect(next.form).toEqual({ spriteFormKey: "galar" });
   expect(loaded).toMatchObject({
     screen: "detail",
     detail: {
@@ -727,13 +723,10 @@ test("Detail evolution selection carries Alolan form to Ninetales", () => {
 
   expect(next).toMatchObject({
     screen: "detail",
-    form: {
-      pokemonName: "vulpix-alola",
-      spriteFormKey: "alola",
-    },
     species: { slug: "ninetales" },
     status: "loading",
   });
+  expect(next.form).toEqual({ spriteFormKey: "alola" });
   expectAlolanNinetalesLoaded(loaded);
 });
 
@@ -746,13 +739,10 @@ test("Detail evolution selection accepts default when carried form is unavailabl
 
   expect(next).toMatchObject({
     screen: "detail",
-    form: {
-      pokemonName: "vulpix-alola",
-      spriteFormKey: "alola",
-    },
     species: { slug: "ninetales" },
     status: "loading",
   });
+  expect(next.form).toEqual({ spriteFormKey: "alola" });
   expect(loaded).toMatchObject({
     screen: "detail",
     detail: {

@@ -9,8 +9,13 @@ import type {
   PokemonDetail,
   PokemonEvolution,
   PokemonForm,
+  PokemonFormIntent,
 } from "./pokemon-detail";
-import { pokemonFormTargetKey } from "./pokemon-detail";
+import {
+  pokemonFormCarryoverIntent,
+  pokemonFormIntent,
+  pokemonFormTargetKey,
+} from "./pokemon-detail";
 
 export type AppState = SearchState | DetailState;
 
@@ -29,7 +34,7 @@ export type DetailState = {
   detailOverlay: DetailOverlay | undefined;
   descriptionIndex: number;
   errorMessage: string | undefined;
-  form: PokemonForm | undefined;
+  form: PokemonFormIntent | undefined;
   retryToken: number;
   shiny: boolean;
   species: SpeciesIndexEntry;
@@ -68,7 +73,7 @@ type AppEvent =
     }
   | {
       error: unknown;
-      form?: PokemonForm;
+      form?: PokemonFormIntent;
       species: SpeciesIndexEntry;
       type: "detail.loadFailed";
     }
@@ -528,7 +533,7 @@ function loadDetailForm(state: DetailState, form: PokemonForm): DetailState {
     detailOverlay: undefined,
     descriptionIndex: 0,
     errorMessage: undefined,
-    form,
+    form: pokemonFormIntent(form),
     retryToken: 0,
     status: "loading",
   };
@@ -550,7 +555,7 @@ export function detailLoadFailed(
   state: DetailState,
   species: SpeciesIndexEntry,
   error: unknown,
-  form?: PokemonForm,
+  form?: PokemonFormIntent,
 ): DetailState {
   const event: AppEvent = {
     error,
@@ -624,7 +629,7 @@ function detailLoadFailedState(
   state: DetailState,
   species: SpeciesIndexEntry,
   error: unknown,
-  form?: PokemonForm,
+  form?: PokemonFormIntent,
 ): DetailState {
   if (
     state.species.slug !== species.slug ||
@@ -654,13 +659,15 @@ function openLoadedAbilityOverlay(state: DetailState): DetailState {
 function carryOverDetailForm(
   state: DetailState,
   species: SpeciesIndexEntry,
-): PokemonForm | undefined {
-  const form = state.detail?.form ?? state.form;
-  if (form === undefined || form.isDefault) {
+): PokemonFormIntent | undefined {
+  const form = state.detail?.form;
+  if (form === undefined) {
     return undefined;
   }
 
-  return isDirectEvolutionSpecies(state, species) ? form : undefined;
+  return isDirectEvolutionSpecies(state, species)
+    ? pokemonFormCarryoverIntent(form)
+    : undefined;
 }
 
 function isDirectEvolutionSpecies(
@@ -704,8 +711,8 @@ function evolutionChainIncludesDirectRelationship(
 }
 
 function pokemonFormsMatch(
-  requested: PokemonForm | undefined,
-  loaded: PokemonForm | undefined,
+  requested: PokemonFormIntent | undefined,
+  loaded: PokemonForm | PokemonFormIntent | undefined,
   { allowDefaultFallback }: { allowDefaultFallback: boolean },
 ): boolean {
   if (pokemonFormTargetKey(requested) === pokemonFormTargetKey(loaded)) {
@@ -720,18 +727,18 @@ function pokemonFormsMatch(
     return true;
   }
 
-  return (
-    allowDefaultFallback && requested.isDefault === false && loaded.isDefault
-  );
+  return allowDefaultFallback && "isDefault" in loaded && loaded.isDefault;
 }
 
 function pokemonFormsShareAlternateKey(
-  requested: PokemonForm,
-  loaded: PokemonForm,
+  requested: PokemonFormIntent,
+  loaded: PokemonForm | PokemonFormIntent,
 ): boolean {
+  if (!("isDefault" in loaded) || loaded.isDefault) {
+    return false;
+  }
+
   return (
-    requested.isDefault === false &&
-    loaded.isDefault === false &&
     requested.spriteFormKey === loaded.spriteFormKey &&
     loaded.pokemonName.endsWith(`-${requested.spriteFormKey}`)
   );
