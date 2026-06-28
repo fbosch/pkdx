@@ -13,7 +13,7 @@ It supports fuzzy species search, form selection, shiny sprites, damage matchups
 ## Install
 
 ```bash
-npm install -g @fbosch/pkdx
+npm install -g @fbb.sh/pkdx
 ```
 
 ## Run
