@@ -422,7 +422,7 @@ function DetailOverlays({
   );
 }
 
-export function LoadedDetailFooter({
+function LoadedDetailFooter({
   hasAlternateForms,
   hasEvolutionChain,
   shiny,

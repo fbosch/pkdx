@@ -568,6 +568,25 @@ test("Detail opens and closes evolution viewer with e", () => {
   });
 });
 
+test("Detail does not open evolution viewer without an evolution chain", () => {
+  const state = detailLoadSucceeded(
+    createInitialAppState("pikachu") as DetailState,
+    findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
+    {
+      ...pikachuDetail,
+      evolutionChain: {
+        root: {
+          evolvesTo: [],
+          method: undefined,
+          name: "Pikachu",
+        },
+      },
+    },
+  );
+
+  expect(applyAppKey(state, { name: "e" })).toBe(state);
+});
+
 test("Detail evolution viewer closes with Escape instead of exiting", () => {
   const state = loadedPikachuDetailState();
   const opened = applyAppKey(state, { name: "e" });

@@ -19,7 +19,8 @@ A terminal Pokédex with fuzzy search, form selection, sprites, stats, abilities
 ## Requirements
 
 - macOS, Linux, WSL, Git Bash, or Windows PowerShell/CMD
-- A modern terminal such as Kitty, Ghostty, WezTerm, Alacritty, or iTerm2
+- A Unicode terminal with 24-bit color support
+- Kitty graphics support for best sprite rendering, such as Kitty or WezTerm; other terminals fall back to block-rendered sprites
 - Internet access
 
 ## Install
