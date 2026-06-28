@@ -2,6 +2,7 @@
   "name": "pkdx",
   "license": "MIT",
   "type": "module",
+  "version": "0.1.0",
   "imports": {
     "#src/*.ts": "./src/*.ts",
     "#src/*.tsx": "./src/*.tsx"
