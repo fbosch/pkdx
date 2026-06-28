@@ -1,12 +1,20 @@
-# pkdx
-
-[![npm](https://img.shields.io/npm/v/%40fbb.sh%2Fpkdx?logo=npm)](https://www.npmjs.com/package/@fbb.sh/pkdx)
-[![license](https://img.shields.io/npm/l/%40fbb.sh%2Fpkdx)](LICENSE)
-[![coverage](docs/coverage.svg)](docs/coverage.svg)
+<div align="center">
+  <img src="docs/pkdx-logo.png" alt="pkdx logo" width="150">
+  <h1>pkdx</h1>
+  <p>
+    <a href="https://www.npmjs.com/package/@fbb.sh/pkdx"><img src="https://img.shields.io/npm/v/%40fbb.sh%2Fpkdx?logo=npm" alt="npm"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/npm/l/%40fbb.sh%2Fpkdx" alt="license"></a>
+    <a href="docs/coverage.svg"><img src="docs/coverage.svg" alt="coverage"></a>
+  </p>
+</div>
 
 `pkdx` is a terminal Pokédex for quickly looking up Pokémon species without leaving the command line.
 
 It supports fuzzy species search, form selection, shiny sprites, damage matchups, abilities, evolutions, and flavor text.
+
+<p align="center">
+  <img src="docs/pkdx-politoed.svg" alt="pkdx showing Politoed details">
+</p>
 
 ## Requirements
 
@@ -28,7 +36,7 @@ Start the app:
 pkdx
 ```
 
-Start with an initial query:
+or start with an initial query:
 
 ```bash
 pkdx pikachu
@@ -37,9 +45,7 @@ pkdx pikachu
 ## Credits
 
 - [PokeAPI](https://pokeapi.co/) for Pokémon data.
-- [PokéSprite](https://github.com/msikma/pokesprite) and [PokeAPI Sprites](https://github.com/PokeAPI/sprites) for sprite artwork.
-- PokéSprite credits Nintendo/Creatures Inc./GAME FREAK Inc. as the source of the original sprites, [@Dada78641](https://twitter.com/dada78641) for shiny sprites, Project Pokémon contributors Zhorken and Kaphotics for raw sprite rips, and its community contributors for later form and game updates.
-- PokeAPI Sprites credits the Smogon community for custom sprites, [@DevMike123](https://github.com/DevMike123), [@JoseBaGra](https://github.com/JoseBaGra), and Pokétwo for custom shiny official artwork, [KingOfThe-X-Roads](https://www.deviantart.com/kingofthe-x-roads) for generation 9 front sprites, and [Kyle Dovey](https://github.com/kyledovey) for generation 9 back, shiny, and Z-A Mega sprites.
+- [PokéSprite](https://github.com/msikma/pokesprite) and [PokeAPI Sprites](https://github.com/PokeAPI/sprites) for sprite artwork and upstream sprite credits.
 - [OpenTUI](https://github.com/anomalyco/opentui) for the terminal UI runtime.
 - [Pokémon Database](https://pokemondb.net/) for external Pokédex links.
 
