@@ -2,6 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import type { QueryClient } from "@tanstack/react-query";
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
+import { match, P } from "ts-pattern";
 import { z } from "zod";
 import type { PokemonForm } from "./pokemon-detail";
 import { runtimeQueryCachePolicies } from "./query-cache";
@@ -80,6 +81,16 @@ type PokeSpriteSource =
   | "pokeapi-sprites"
   | "pokemon-sprites"
   | "scarlet-violet";
+type PokeSpriteAssetCandidate = PokeSpriteSource;
+
+type PokeSpriteRepresentation = {
+  candidates: readonly PokeSpriteAssetCandidate[];
+  form: PokemonForm | undefined;
+  formKey: string;
+  querySource: PokeSpriteSource;
+  shiny: boolean;
+  species: SpeciesIndexEntry;
+};
 
 export type PokeSpriteMetadataQueryKey = readonly [
   "pokesprite-metadata",
@@ -199,11 +210,13 @@ export function pokespriteRenderedSpriteQueryKey(
   form?: PokemonForm,
   renderOptions: RenderPngSpriteOptions = {},
 ): PokeSpriteRenderedSpriteQueryKey {
+  const representation = selectPokeSpriteRepresentation(species, form, shiny);
+
   return [
     "pokesprite-rendered-sprite",
-    pokeSpriteSourceForRequest(species, form),
+    representation.querySource,
     species.dexNumber,
-    form?.spriteFormKey ?? "$",
+    representation.formKey,
     shiny,
     renderOptions.maxWidth,
     renderOptions.maxHeight,
@@ -253,11 +266,13 @@ export function pokespriteCachedAssetQueryKey(
   shiny = false,
   form?: PokemonForm,
 ): PokeSpriteCachedAssetQueryKey {
+  const representation = selectPokeSpriteRepresentation(species, form, shiny);
+
   return [
     "pokesprite-cached-asset",
-    pokeSpriteSourceForRequest(species, form),
+    representation.querySource,
     species.dexNumber,
-    form?.spriteFormKey ?? "$",
+    representation.formKey,
     shiny,
   ];
 }
@@ -290,19 +305,15 @@ async function resolvePokemonFormPokeSpriteAssetForQuery(
   form?: PokemonForm,
   shiny = false,
 ): Promise<PokeSpriteAssetReference> {
-  if (pokeSpriteSourceForSpecies(species) === "scarlet-violet") {
-    return resolveScarletVioletSpriteAsset(
-      undefined,
-      species,
-      formKey(form),
-      shiny,
-    );
+  const representation = selectPokeSpriteRepresentation(species, form, shiny);
+  if (requiresPokeSpriteMetadata(representation) === false) {
+    return resolvePokeSpriteRepresentationAsset(undefined, representation);
   }
 
   const metadata = await queryClient.fetchQuery(
     pokespriteMetadataQueryOptions(),
   );
-  return resolvePokemonFormPokeSpriteAsset(metadata, species, form, shiny);
+  return resolvePokeSpriteRepresentationAsset(metadata, representation);
 }
 
 export function pokespriteRenderedSpritePlaceholderData(
@@ -314,7 +325,8 @@ export function pokespriteRenderedSpritePlaceholderData(
 ): RenderedSprite | undefined {
   if (
     previousQueryKey?.[0] !== "pokesprite-rendered-sprite" ||
-    previousQueryKey[1] !== pokeSpriteSourceForRequest(species, form) ||
+    previousQueryKey[1] !==
+      selectPokeSpriteRepresentation(species, form).querySource ||
     previousQueryKey[2] !== species.dexNumber ||
     previousQueryKey[3] !== (form?.spriteFormKey ?? "$") ||
     previousQueryKey[5] !== renderOptions.maxWidth ||
@@ -344,32 +356,10 @@ export function resolvePokemonFormPokeSpriteAsset(
   form?: PokemonForm,
   shiny = false,
 ): PokeSpriteAssetReference {
-  const key = formKey(form);
-  const pokemonSpritesFallback = resolvePokemonSpritesFormAsset(
+  return resolvePokeSpriteRepresentationAsset(
     metadata,
-    species,
-    form,
-    shiny,
+    selectPokeSpriteRepresentation(species, form, shiny),
   );
-  if (pokemonSpritesFallback !== undefined) {
-    return pokemonSpritesFallback;
-  }
-
-  const asset = resolveOptionalPokeSpriteAsset(metadata, species, key, shiny);
-  if (asset !== undefined) {
-    return asset;
-  }
-
-  const fallback = resolvePokeApiSpriteAsset(metadata, species, form, shiny);
-  if (fallback !== undefined) {
-    return fallback;
-  }
-
-  throw missingPokeSpriteFormError(metadata, species, key);
-}
-
-function formKey(form: PokemonForm | undefined): string {
-  return form?.spriteFormKey ?? "$";
 }
 
 export function resolvePokeSpriteAsset(
@@ -378,30 +368,87 @@ export function resolvePokeSpriteAsset(
   formKey: string,
   shiny = false,
 ): PokeSpriteAssetReference {
-  const asset = resolveOptionalPokeSpriteAsset(
+  return resolvePokeSpriteRepresentationAsset(
     metadata,
-    species,
-    formKey,
-    shiny,
+    selectPokeSpriteRepresentationForFormKey(species, formKey, shiny),
   );
-  if (asset !== undefined) {
-    return asset;
-  }
-
-  throw missingPokeSpriteFormError(metadata, species, formKey);
 }
 
-function resolveOptionalPokeSpriteAsset(
+function resolvePokeSpriteRepresentationAsset(
+  metadata: PokeSpriteMetadata | undefined,
+  representation: PokeSpriteRepresentation,
+): PokeSpriteAssetReference {
+  for (const candidate of representation.candidates) {
+    const asset = resolvePokeSpriteAssetCandidate(
+      metadata,
+      representation,
+      candidate,
+    );
+    if (asset !== undefined) {
+      return asset;
+    }
+  }
+
+  throw missingPokeSpriteFormError(
+    metadata ?? {},
+    representation.species,
+    representation.formKey,
+  );
+}
+
+function resolvePokeSpriteAssetCandidate(
+  metadata: PokeSpriteMetadata | undefined,
+  representation: PokeSpriteRepresentation,
+  candidate: PokeSpriteAssetCandidate,
+): PokeSpriteAssetReference | undefined {
+  return match(candidate)
+    .returnType<PokeSpriteAssetReference | undefined>()
+    .with("scarlet-violet", () =>
+      resolveScarletVioletSpriteAsset(
+        metadata?.[dexKey(representation.species.dexNumber)],
+        representation.species,
+        representation.formKey,
+        representation.shiny,
+      ),
+    )
+    .with("pokemon-sprites", () =>
+      resolvePokemonSpritesFormAsset(
+        metadata ?? {},
+        representation.species,
+        representation.form,
+        representation.shiny,
+      ),
+    )
+    .with("gen-8", () =>
+      metadata === undefined
+        ? undefined
+        : resolveGen8PokeSpriteAsset(
+            metadata,
+            representation.species,
+            representation.formKey,
+            representation.shiny,
+          ),
+    )
+    .with("pokeapi-sprites", () =>
+      metadata === undefined
+        ? undefined
+        : resolvePokeApiSpriteAsset(
+            metadata,
+            representation.species,
+            representation.form,
+            representation.shiny,
+          ),
+    )
+    .exhaustive();
+}
+
+function resolveGen8PokeSpriteAsset(
   metadata: PokeSpriteMetadata,
   species: SpeciesIndexEntry,
   formKey: string,
   shiny: boolean,
 ): PokeSpriteAssetReference | undefined {
   const entry = metadata[dexKey(species.dexNumber)];
-  if (pokeSpriteSourceForSpecies(species) === "scarlet-violet") {
-    return resolveScarletVioletSpriteAsset(entry, species, formKey, shiny);
-  }
-
   if (entry === undefined) {
     return undefined;
   }
@@ -605,22 +652,82 @@ function pokeSpriteSourceForSpecies(
     : "gen-8";
 }
 
-function pokeSpriteSourceForRequest(
+function selectPokeSpriteRepresentation(
   species: SpeciesIndexEntry,
-  form: PokemonForm | undefined,
-): PokeSpriteSource {
-  if (pokeSpriteSourceForSpecies(species) === "scarlet-violet") {
-    return "scarlet-violet";
-  }
+  form?: PokemonForm,
+  shiny = false,
+): PokeSpriteRepresentation {
+  const formKey = form?.spriteFormKey ?? "$";
 
-  if (
-    form !== undefined &&
-    pokemonSpritesFormFallbackNames.has(form.pokemonName)
-  ) {
-    return "pokemon-sprites";
-  }
+  return match({ form, source: pokeSpriteSourceForSpecies(species) })
+    .returnType<PokeSpriteRepresentation>()
+    .with({ source: "scarlet-violet" }, () => ({
+      candidates: ["scarlet-violet"],
+      form,
+      formKey,
+      querySource: "scarlet-violet",
+      shiny,
+      species,
+    }))
+    .with(
+      {
+        form: {
+          isDefault: false,
+          pokemonName: P.when((name) =>
+            pokemonSpritesFormFallbackNames.has(name),
+          ),
+        },
+      },
+      () => ({
+        candidates: ["pokemon-sprites", "gen-8", "pokeapi-sprites"],
+        form,
+        formKey,
+        querySource: "pokemon-sprites",
+        shiny,
+        species,
+      }),
+    )
+    .with({ form: { isDefault: false } }, () => ({
+      candidates: ["gen-8", "pokeapi-sprites"],
+      form,
+      formKey,
+      querySource: "gen-8",
+      shiny,
+      species,
+    }))
+    .otherwise(() => ({
+      candidates: ["gen-8"],
+      form,
+      formKey,
+      querySource: "gen-8",
+      shiny,
+      species,
+    }));
+}
 
-  return "gen-8";
+function selectPokeSpriteRepresentationForFormKey(
+  species: SpeciesIndexEntry,
+  formKey: string,
+  shiny: boolean,
+): PokeSpriteRepresentation {
+  const source = pokeSpriteSourceForSpecies(species);
+
+  return {
+    candidates: [source],
+    form: undefined,
+    formKey,
+    querySource: source,
+    shiny,
+    species,
+  };
+}
+
+function requiresPokeSpriteMetadata(
+  representation: PokeSpriteRepresentation,
+): boolean {
+  return representation.candidates.some(
+    (candidate) => candidate !== "scarlet-violet",
+  );
 }
 
 function spriteSlug(speciesSlug: string, formKey: string): string {
