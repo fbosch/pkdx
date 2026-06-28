@@ -49,7 +49,7 @@ export function SearchView({
         >
           <box style={{ flexDirection: "row", height: 1 }}>
             <input
-              cursorColor={colors.accent}
+              cursorColor={colors.keyboardCursor}
               focused
               placeholder="Search Pokemon species..."
               textColor={colors.keyHint}

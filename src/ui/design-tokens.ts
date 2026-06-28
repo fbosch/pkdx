@@ -9,6 +9,7 @@ export const colors = {
   indicatorGreen: RGBA.fromIndex(2),
   indicatorRed: RGBA.fromIndex(1),
   indicatorYellow: RGBA.fromIndex(3),
+  keyboardCursor: RGBA.fromHex("#60a5fa"),
   keyHint: RGBA.fromHex("#ffffff"),
   multiplierDoubleResist: RGBA.fromHex("#8b0000"),
   multiplierImmune: RGBA.fromHex("#4a4a4a"),
