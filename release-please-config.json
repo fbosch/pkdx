@@ -2,7 +2,7 @@
   "packages": {
     ".": {
       "package-name": "pkdx",
-      "release-type": "simple"
+      "release-type": "node"
     }
   }
 }

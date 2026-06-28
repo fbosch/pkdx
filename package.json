@@ -1,8 +1,12 @@
 {
   "name": "pkdx",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
-  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fbosch/pkdx.git"
+  },
   "imports": {
     "#src/*.ts": "./src/*.ts",
     "#src/*.tsx": "./src/*.tsx"
@@ -12,6 +16,10 @@
   ],
   "bin": {
     "pkdx": "./dist/pkdx"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "dev": "NODE_ENV=development bun run src/cli.tsx",
