@@ -2,8 +2,8 @@ import { match, P } from "ts-pattern";
 import {
   findExactSpecies,
   getSpeciesByDexDelta,
-  getSpeciesBySelection,
-  searchSpecies,
+  moveSearchSelection as moveSearchResultSelection,
+  searchSelection,
   type SpeciesIndexEntry,
 } from "./search";
 import type {
@@ -810,16 +810,20 @@ function isPrintableInputSequence(
 }
 
 function moveSearchSelection(state: SearchState, delta: number): SearchState {
-  const maxIndex = Math.max(0, searchSpecies(state.query).length - 1);
+  const selection = moveSearchResultSelection(
+    state.query,
+    state.selectedIndex,
+    delta,
+  );
 
   return {
     ...state,
-    selectedIndex: Math.min(maxIndex, Math.max(0, state.selectedIndex + delta)),
+    selectedIndex: selection.selectedIndex,
   };
 }
 
 function openSelectedSpecies(state: SearchState): AppState {
-  const species = getSpeciesBySelection(state.query, state.selectedIndex);
+  const { species } = searchSelection(state.query, state.selectedIndex);
   if (species === undefined) {
     return state;
   }

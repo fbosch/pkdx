@@ -2,6 +2,8 @@ import { expect, test } from "bun:test";
 import {
   findExactSpecies,
   minimumSearchQueryLength,
+  moveSearchSelection,
+  searchSelection,
   searchSpecies,
 } from "../src/search";
 
@@ -28,4 +30,24 @@ test("search starts after one input character", () => {
   expect(searchSpecies("")).toEqual([]);
   expect(searchSpecies("p").length).toBeGreaterThan(0);
   expect(searchSpecies("pik")[0]?.slug).toBe("pikachu");
+});
+
+test("resolves Search selection through ranked Pokemon Species results", () => {
+  expect(searchSelection("pika", 0)).toMatchObject({
+    resultCount: 1,
+    selectedIndex: 0,
+    species: { slug: "pikachu" },
+  });
+});
+
+test("clamps Search selection movement to available results", () => {
+  expect(moveSearchSelection("pika", 0, 1)).toMatchObject({
+    selectedIndex: 0,
+    species: { slug: "pikachu" },
+  });
+  expect(moveSearchSelection("", 4, -1)).toEqual({
+    resultCount: 0,
+    selectedIndex: 0,
+    species: undefined,
+  });
 });

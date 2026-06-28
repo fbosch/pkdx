@@ -14,6 +14,12 @@ export type SearchResult = SpeciesIndexEntry & {
   selected: boolean;
 };
 
+export type SearchSelection = {
+  resultCount: number;
+  selectedIndex: number;
+  species: SpeciesIndexEntry | undefined;
+};
+
 const fuseOptions = {
   includeScore: true,
   keys: [
@@ -90,11 +96,29 @@ export function findExactSpecies(query: string): SpeciesIndexEntry | undefined {
   return exactSpeciesByIdentity.get(normalizedQuery);
 }
 
-export function getSpeciesBySelection(
+export function searchSelection(
   query: string,
   selectedIndex: number,
-): SpeciesIndexEntry | undefined {
-  return searchSpecies(query)[selectedIndex];
+): SearchSelection {
+  const results = searchSpecies(query);
+  const clampedSelectedIndex = clampSearchSelectionIndex(
+    selectedIndex,
+    results.length,
+  );
+
+  return {
+    resultCount: results.length,
+    selectedIndex: clampedSelectedIndex,
+    species: results[clampedSelectedIndex],
+  };
+}
+
+export function moveSearchSelection(
+  query: string,
+  selectedIndex: number,
+  delta: number,
+): SearchSelection {
+  return searchSelection(query, selectedIndex + delta);
 }
 
 export function getSpeciesByDexDelta(
@@ -157,6 +181,10 @@ function cacheSearchResults(key: string, results: SpeciesIndexEntry[]): void {
   if (oldestKey !== undefined) {
     searchResultCache.delete(oldestKey);
   }
+}
+
+function clampSearchSelectionIndex(index: number, resultCount: number): number {
+  return Math.min(Math.max(0, resultCount - 1), Math.max(0, index));
 }
 
 function prefixMatchRank(
