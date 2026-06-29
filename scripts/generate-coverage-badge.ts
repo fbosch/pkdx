@@ -27,19 +27,7 @@ if (exitCode !== 0) {
   process.exit(exitCode);
 }
 
-const coverageOutput = `${stdout}\n${stderr}`;
-const coverageMatch = coverageOutput.match(
-  /^All files\s+\|\s+[\d.]+\s+\|\s+([\d.]+)\s+\|/m,
-);
-
-if (!coverageMatch) {
-  process.stderr.write(
-    "Could not read aggregate line coverage from Bun output.\n",
-  );
-  process.exit(1);
-}
-
-const lineCoverageText = coverageMatch[1];
+const lineCoverageText = readAggregateLineCoverage(`${stdout}\n${stderr}`);
 
 if (!lineCoverageText) {
   process.stderr.write(
@@ -73,6 +61,21 @@ function coverageColor(coverage: number) {
   return (
     coverageColors.find(({ minimum }) => coverage >= minimum)?.color ??
     "#e05d44"
+  );
+}
+
+function readAggregateLineCoverage(output: string): string | undefined {
+  const allFilesLine = stripAnsi(output)
+    .split("\n")
+    .find((line) => line.trimStart().startsWith("All files"));
+
+  return allFilesLine?.split("|")[2]?.trim();
+}
+
+function stripAnsi(value: string): string {
+  return value.replaceAll(
+    new RegExp(`${String.fromCharCode(27)}\\[[0-?]*[ -/]*[@-~]`, "g"),
+    "",
   );
 }
 

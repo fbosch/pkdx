@@ -3,6 +3,8 @@ import { createRoot } from "@opentui/react";
 import { expect, test } from "bun:test";
 import { QueryDebugPanelView } from "../src/ui/QueryDebugPanel";
 import { App } from "../src/ui/app";
+import { DamageTakenPanel } from "../src/ui/detail/DamageTakenPanel";
+import { DetailErrorModal } from "../src/ui/detail/DetailErrorModal";
 
 test("OpenTUI renderer draws the Search screen", async () => {
   const { renderer, captureCharFrame, renderOnce, resize } =
@@ -59,6 +61,66 @@ test("OpenTUI renderer draws the query debug panel", async () => {
     );
     expect(frame).toContain("Query Debug");
     expect(frame).toContain("detail pikachu default");
+  } finally {
+    root.unmount();
+    renderer.destroy();
+  }
+});
+
+test("OpenTUI renderer draws Damage Taken panel", async () => {
+  const { renderer, renderOnce, captureCharFrame } = await createTestRenderer({
+    height: 10,
+    width: 90,
+  });
+  const root = createRoot(renderer);
+
+  try {
+    root.render(
+      <DamageTakenPanel
+        damageTaken={{
+          resistances: [
+            { multiplier: 0.5, type: "Flying" },
+            { multiplier: 0.25, type: "Steel" },
+          ],
+          weaknesses: [
+            { multiplier: 2, type: "Ground" },
+            { multiplier: 4, type: "Rock" },
+          ],
+        }}
+      />,
+    );
+
+    const frame = await renderUntil(
+      renderOnce,
+      captureCharFrame,
+      "Damage Taken",
+    );
+    expect(frame).toContain("Damage Taken");
+    expect(frame).toContain("Weak");
+    expect(frame).toContain("Resist");
+  } finally {
+    root.unmount();
+    renderer.destroy();
+  }
+});
+
+test("OpenTUI renderer draws Detail error modal", async () => {
+  const { renderer, renderOnce, captureCharFrame } = await createTestRenderer({
+    height: 10,
+    width: 90,
+  });
+  const root = createRoot(renderer);
+
+  try {
+    root.render(<DetailErrorModal message={"Could not load\nTry again"} />);
+
+    const frame = await renderUntil(
+      renderOnce,
+      captureCharFrame,
+      "Detail Error",
+    );
+    expect(frame).toContain("Detail Error");
+    expect(frame).toContain("Could not load");
   } finally {
     root.unmount();
     renderer.destroy();
