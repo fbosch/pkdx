@@ -64,16 +64,22 @@ const results = benchmarks.map((benchmark) => {
 const temporaryDirectory = await mkdtemp(join(tmpdir(), "pkdx-sprite-bench-"));
 try {
   const realSprites = await loadRealSpriteBenchAssets(realSpriteAssetDirectory);
+  const eventLoopDelayResults = await benchmarkSpritePreparationEventLoopDelay(
+    temporaryDirectory,
+    realSprites,
+  );
   results.push(
     await benchmarkColdTerminalImagePreparation(temporaryDirectory),
     await benchmarkWarmTerminalImagePreparation(temporaryDirectory),
     ...(await benchmarkRealSprites(temporaryDirectory, realSprites)),
   );
+  console.table(results);
+  if (eventLoopDelayResults.length > 0) {
+    console.table(eventLoopDelayResults);
+  }
 } finally {
   await rm(temporaryDirectory, { force: true, recursive: true });
 }
-
-console.table(results);
 
 async function benchmarkColdTerminalImagePreparation(directory: string) {
   const filePaths = await Promise.all(
@@ -182,6 +188,104 @@ async function benchmarkRealSprites(
   }
 
   return results;
+}
+
+async function benchmarkSpritePreparationEventLoopDelay(
+  directory: string,
+  sprites: readonly RealSpriteBenchAsset[],
+) {
+  return await Promise.all([
+    measurePreparationEventLoopDelay(
+      "event-loop-delay-cold-synthetic-80x72",
+      directory,
+      paddedMediumSprite,
+    ),
+    ...sprites.map(async (sprite) =>
+      measurePreparationEventLoopDelay(
+        `event-loop-delay-cold-${sprite.kind}`,
+        directory,
+        await Bun.file(sprite.filePath).arrayBuffer(),
+      ),
+    ),
+  ]);
+}
+
+async function measurePreparationEventLoopDelay(
+  name: string,
+  directory: string,
+  source: ArrayBuffer,
+) {
+  const filePaths = await Promise.all(
+    Array.from({ length: coldIterations }, async (_, index) => {
+      const filePath = join(directory, `${name}-${index.toString()}.png`);
+      await Bun.write(filePath, source);
+      return filePath;
+    }),
+  );
+
+  const probe = startEventLoopDelayProbe();
+  let checksum = 0;
+  const start = Bun.nanoseconds();
+  for (const filePath of filePaths) {
+    checksum += await prepareTerminalImageChecksum(filePath);
+  }
+  const durationMs = Number(
+    ((Bun.nanoseconds() - start) / 1_000_000).toFixed(2),
+  );
+  const delay = await probe.stop();
+
+  return {
+    averageDelayMs: delay.averageDelayMs,
+    checksum,
+    durationMs,
+    iterations: coldIterations,
+    maxDelayMs: delay.maxDelayMs,
+    name,
+    samples: delay.samples,
+  };
+}
+
+function startEventLoopDelayProbe(intervalMs = 1) {
+  let active = true;
+  let expected = performance.now() + intervalMs;
+  let maxDelayMs = 0;
+  let sampleCount = 0;
+  let totalDelayMs = 0;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+
+  const tick = () => {
+    if (active === false) {
+      return;
+    }
+
+    const now = performance.now();
+    const delayMs = Math.max(0, now - expected);
+    maxDelayMs = Math.max(maxDelayMs, delayMs);
+    totalDelayMs += delayMs;
+    sampleCount += 1;
+    expected = now + intervalMs;
+    timeout = setTimeout(tick, intervalMs);
+  };
+
+  timeout = setTimeout(tick, intervalMs);
+
+  return {
+    async stop() {
+      await new Promise((resolve) => setTimeout(resolve, intervalMs));
+      active = false;
+      if (timeout !== undefined) {
+        clearTimeout(timeout);
+      }
+
+      return {
+        averageDelayMs: Number(
+          (sampleCount === 0 ? 0 : totalDelayMs / sampleCount).toFixed(2),
+        ),
+        maxDelayMs: Number(maxDelayMs.toFixed(2)),
+        samples: sampleCount,
+      };
+    },
+  };
 }
 
 async function prepareTerminalImageChecksum(filePath: string): Promise<number> {

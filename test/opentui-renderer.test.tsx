@@ -11,16 +11,18 @@ test("OpenTUI renderer draws the Search screen", async () => {
 
   try {
     root.render(<App initialQuery="pika" onExit={() => {}} />);
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    await renderOnce();
 
-    const initialFrame = captureCharFrame();
+    const initialFrame = await renderUntil(
+      renderOnce,
+      captureCharFrame,
+      "#025 Pikachu",
+    );
     expect(initialFrame).toContain("pika");
-    expect(initialFrame).toContain("#025 Pikachu");
 
     resize(60, 12);
-    await renderOnce();
-    expect(captureCharFrame()).toContain("#025 Pikachu");
+    expect(
+      await renderUntil(renderOnce, captureCharFrame, "#025 Pikachu"),
+    ).toContain("#025 Pikachu");
   } finally {
     root.unmount();
     renderer.destroy();
@@ -49,10 +51,12 @@ test("OpenTUI renderer draws the query debug panel", async () => {
         ]}
       />,
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    await renderOnce();
 
-    const frame = captureCharFrame();
+    const frame = await renderUntil(
+      renderOnce,
+      captureCharFrame,
+      "Query Debug",
+    );
     expect(frame).toContain("Query Debug");
     expect(frame).toContain("detail pikachu default");
   } finally {
@@ -60,3 +64,22 @@ test("OpenTUI renderer draws the query debug panel", async () => {
     renderer.destroy();
   }
 });
+
+async function renderUntil(
+  renderOnce: () => Promise<void>,
+  captureCharFrame: () => string,
+  expectedText: string,
+) {
+  let frame = "";
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await renderOnce();
+    frame = captureCharFrame();
+    if (frame.includes(expectedText)) {
+      return frame;
+    }
+  }
+
+  return frame;
+}
