@@ -53,6 +53,18 @@ Smoke-test the compiled binary:
 bun run smoke:binary
 ```
 
+## Release Packaging
+
+The npm package uses a Node launcher at `bin/pkdx.mjs` and ships release-named native binaries in `dist/pkdx-*`. Keep local development builds at `dist/pkdx`; the npm `files` allowlist excludes that path so a host-only development binary is not published by accident.
+
+Supported npm binaries are macOS arm64/x64, glibc Linux arm64/x64, and Windows x64. Alpine/musl Linux is not currently shipped.
+
+Before publishing, verify package contents with:
+
+```bash
+bun run verify:release-package
+```
+
 ## Validation
 
 Main local quality gate:

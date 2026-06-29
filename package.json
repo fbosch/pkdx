@@ -19,13 +19,18 @@
     "#src/*.tsx": "./src/*.tsx"
   },
   "files": [
-    "dist"
+    "bin/pkdx.mjs",
+    "dist/pkdx-*"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "bin": {
-    "pkdx": "dist/pkdx"
+    "pkdx": "bin/pkdx.mjs"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "dev": "NODE_ENV=development bun run src/cli.tsx",
@@ -47,6 +52,7 @@
     "lint-staged": "lint-staged",
     "hooks:install": "lefthook install",
     "smoke:binary": "bun run scripts/smoke-binary.ts",
+    "verify:release-package": "node scripts/verify-release-package.mjs",
     "check": "bun run format:check && bun run lint && bun run typecheck:native && bun test && bun run verify:index && bun run build && bun run fallow",
     "generate:index": "bun run scripts/generate-index.ts",
     "generate:pokeapi-types": "openapi-typescript https://raw.githubusercontent.com/PokeAPI/pokeapi/master/openapi.yml -o src/pokeapi/generated.ts && biome format --write src/pokeapi/generated.ts",
@@ -68,9 +74,7 @@
     "lint-staged": "^17.0.8",
     "msw": "^2.14.6",
     "openapi-typescript": "^7.13.0",
-    "typescript": "^6.0.3"
-  },
-  "dependencies": {
+    "typescript": "^6.0.3",
     "@opentui/core": "^0.4.2",
     "@opentui/react": "^0.4.2",
     "@tanstack/query-async-storage-persister": "^5.101.2",

@@ -13,6 +13,7 @@ A terminal Pokédex with fuzzy search, form selection, sprites, stats, abilities
 ## Requirements
 
 - macOS, Linux, WSL, Git Bash, or Windows PowerShell/CMD
+- Node.js 18 or newer when installing from npm or using `npx`
 - A Unicode terminal with 24-bit color support
 - Kitty graphics support for best sprite rendering, such as Kitty or WezTerm; other terminals fall back to block-rendered sprites
 - Internet access
@@ -22,6 +23,14 @@ A terminal Pokédex with fuzzy search, form selection, sprites, stats, abilities
 ```bash
 npm install -g @fbb.sh/pkdx
 ```
+
+or run without installing:
+
+```bash
+npx @fbb.sh/pkdx
+```
+
+The npm package includes native binaries for macOS arm64/x64, glibc Linux arm64/x64, and Windows x64.
 
 ## Run
 

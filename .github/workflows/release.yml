@@ -19,6 +19,9 @@ jobs:
   release-please:
     name: Release Please
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - name: Run release-please
         id: release
@@ -27,59 +30,99 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
+  build-binaries:
+    name: Build ${{ matrix.artifact }}
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: bun-linux-x64
+            artifact: pkdx-linux-x64
+          - os: ubuntu-24.04-arm
+            target: bun-linux-arm64
+            artifact: pkdx-linux-arm64
+          - os: macos-13
+            target: bun-darwin-x64
+            artifact: pkdx-darwin-x64
+          - os: macos-latest
+            target: bun-darwin-arm64
+            artifact: pkdx-darwin-arm64
+          - os: windows-latest
+            target: bun-windows-x64
+            artifact: pkdx-win32-x64.exe
+    steps:
       - name: Checkout
-        if: ${{ steps.release.outputs.release_created == 'true' }}
         uses: actions/checkout@v5
 
-      - name: Install Nix
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        uses: cachix/install-nix-action@v31
-
-      - name: Configure devenv cache
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        uses: cachix/cachix-action@v16
-        with:
-          name: devenv
-
-      - name: Install devenv
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        run: nix profile add nixpkgs#devenv
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        shell: devenv shell bash -- -e {0}
         run: bun install --frozen-lockfile
 
-      - name: Build release binary
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        shell: devenv shell bash -- -e {0}
-        run: bun run build
+      - name: Build binary
+        env:
+          DEV: "false"
+        run: bun build --compile --target=${{ matrix.target }} "--env=DEV*" --outfile=dist/${{ matrix.artifact }} src/cli.tsx
 
-      - name: Smoke-test release binary
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        shell: devenv shell bash -- -e {0}
-        run: bun run smoke:binary
+      - name: Smoke-test Unix binary
+        if: ${{ runner.os != 'Windows' }}
+        env:
+          PKDX_SMOKE_EXIT: "1"
+        run: ./dist/${{ matrix.artifact }} pikachu
+
+      - name: Smoke-test Windows binary
+        if: ${{ runner.os == 'Windows' }}
+        shell: pwsh
+        run: |
+          $env:PKDX_SMOKE_EXIT = "1"
+          ./dist/${{ matrix.artifact }} pikachu
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/${{ matrix.artifact }}
+          if-no-files-found: error
+
+  publish:
+    name: Publish release artifacts
+    needs:
+      - release-please
+      - build-binaries
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Download binary artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Prepare binary permissions
+        run: chmod +x dist/pkdx-*
 
       - name: Setup Node for npm publishing
-        if: ${{ steps.release.outputs.release_created == 'true' }}
         uses: actions/setup-node@v6
         with:
           node-version: 24
           package-manager-cache: false
           registry-url: https://registry.npmjs.org
 
+      - name: Verify npm package contents
+        run: node scripts/verify-release-package.mjs
+
       - name: Publish package to npm
-        if: ${{ steps.release.outputs.release_created == 'true' }}
         run: npm publish
 
-      - name: Package Linux binary artifact
-        if: ${{ steps.release.outputs.release_created == 'true' }}
-        run: |
-          cp dist/pkdx dist/pkdx-linux-x64
-          chmod +x dist/pkdx-linux-x64
-
-      - name: Upload Linux binary to GitHub Release
-        if: ${{ steps.release.outputs.release_created == 'true' }}
+      - name: Upload binaries to GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ steps.release.outputs.tag_name }}" dist/pkdx-linux-x64 --clobber
+        run: gh release upload "${{ needs.release-please.outputs.tag_name }}" dist/pkdx-* --clobber
