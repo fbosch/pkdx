@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.3.0...pkdx-v0.4.0) (2026-06-29)
+
+
+### Features
+
+* **release:** split pkdx binaries into platform npm packages ([dfbcd85](https://github.com/fbosch/pkdx/commit/dfbcd85d8700714643e90a10d89a79144ee473f7))
+
 ## [0.3.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.2.0...pkdx-v0.3.0) (2026-06-29)
 
 
