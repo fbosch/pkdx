@@ -5,6 +5,7 @@
     <a href="https://www.npmjs.com/package/@fbb.sh/pkdx"><img src="https://img.shields.io/npm/v/%40fbb.sh%2Fpkdx?logo=npm" alt="npm"></a>
     <a href="LICENSE"><img src="https://img.shields.io/npm/l/%40fbb.sh%2Fpkdx" alt="license"></a>
     <a href="docs/coverage.svg"><img src="docs/coverage.svg" alt="coverage"></a>
+    <a href="https://github.com/fallow-rs/fallow"><img src="docs/fallow.svg" alt="fallow health"></a>
   </p>
 </div>
 

@@ -47,6 +47,7 @@
     "lint": "biome lint .",
     "fallow": "fallow --summary",
     "fallow:audit": "fallow audit --quiet",
+    "fallow:badge": "bun run scripts/generate-fallow-badge.ts",
     "bench": "bun run scripts/run-benchmarks.ts",
     "commitlint": "commitlint",
     "lint-staged": "lint-staged",

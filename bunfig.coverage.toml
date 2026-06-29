@@ -1,2 +1,7 @@
 [test]
 coverage = true
+coveragePathIgnorePatterns = [
+  "src/pokeapi/generated.ts",
+  "test/benchmarks/*.ts",
+  "test/support/*.ts",
+]

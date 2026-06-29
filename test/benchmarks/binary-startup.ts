@@ -2,6 +2,7 @@ import { benchmarkResult } from "../support/benchmark";
 
 const iterations = Number(Bun.env.PKDX_BINARY_STARTUP_BENCH_ITERATIONS ?? 25);
 const binaryPath = process.platform === "win32" ? "dist/pkdx.exe" : "dist/pkdx";
+const binaryExists = await Bun.file(binaryPath).exists();
 
 type BinaryStartupBenchmark = {
   args: readonly string[];
@@ -11,16 +12,20 @@ type BinaryStartupBenchmark = {
 };
 
 const benchmarks = [
-  {
-    args: ["pikachu"],
-    expectedStdout: "Detail\n",
-    name: "compiled-smoke-detail",
-  },
-  {
-    args: ["pika"],
-    expectedStdout: "Search\n",
-    name: "compiled-smoke-search",
-  },
+  ...(binaryExists
+    ? [
+        {
+          args: ["pikachu"],
+          expectedStdout: "Detail\n",
+          name: "compiled-smoke-detail",
+        },
+        {
+          args: ["pika"],
+          expectedStdout: "Search\n",
+          name: "compiled-smoke-search",
+        },
+      ]
+    : []),
   {
     args: ["run", "src/cli.tsx", "pikachu"],
     command: "bun",

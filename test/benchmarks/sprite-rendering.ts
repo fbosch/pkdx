@@ -1,7 +1,7 @@
 import { deflateSync } from "node:zlib";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { renderPngSprite, xtermColorIndex } from "../../src/sprite-rendering";
 import { prepareTerminalSpriteImage } from "../../src/terminal-images";
 import { benchmarkResult } from "../support/benchmark";
@@ -10,6 +10,9 @@ const iterations = Number(Bun.env.PKDX_SPRITE_BENCH_ITERATIONS ?? 500);
 const coldIterations = Number(
   Bun.env.PKDX_SPRITE_BENCH_COLD_ITERATIONS ?? Math.min(iterations, 100),
 );
+const realSpriteAssetDirectory =
+  Bun.env.PKDX_SPRITE_BENCH_ASSET_DIR ??
+  join(Bun.env.HOME ?? ".", ".cache", "pkdx", "pokesprite-assets");
 const terminalImageCanvas = { height: 20, width: 40 };
 const transparent = [0, 0, 0, 0] satisfies Rgba;
 const red = [255, 0, 0, 255] satisfies Rgba;
@@ -60,9 +63,11 @@ const results = benchmarks.map((benchmark) => {
 
 const temporaryDirectory = await mkdtemp(join(tmpdir(), "pkdx-sprite-bench-"));
 try {
+  const realSprites = await loadRealSpriteBenchAssets(realSpriteAssetDirectory);
   results.push(
     await benchmarkColdTerminalImagePreparation(temporaryDirectory),
     await benchmarkWarmTerminalImagePreparation(temporaryDirectory),
+    ...(await benchmarkRealSprites(temporaryDirectory, realSprites)),
   );
 } finally {
   await rm(temporaryDirectory, { force: true, recursive: true });
@@ -112,12 +117,132 @@ async function benchmarkWarmTerminalImagePreparation(directory: string) {
   );
 }
 
+async function benchmarkRealSprites(
+  directory: string,
+  sprites: readonly RealSpriteBenchAsset[],
+) {
+  const results = [];
+
+  for (const sprite of sprites) {
+    const buffer = await Bun.file(sprite.filePath).arrayBuffer();
+    const asciiBenchmark = {
+      name: `real-ascii-render-${sprite.kind}`,
+      run: () => renderPngSprite(buffer).rows.length,
+    };
+
+    for (let index = 0; index < 100; index += 1) {
+      asciiBenchmark.run();
+    }
+
+    let checksum = 0;
+    let start = Bun.nanoseconds();
+    for (let index = 0; index < iterations; index += 1) {
+      checksum += asciiBenchmark.run();
+    }
+    results.push(
+      benchmarkResult(asciiBenchmark.name, iterations, start, checksum),
+    );
+
+    checksum = 0;
+    start = Bun.nanoseconds();
+    for (let index = 0; index < coldIterations; index += 1) {
+      const filePath = join(
+        directory,
+        `real-cold-${sprite.kind}-${index.toString()}.png`,
+      );
+      await Bun.write(filePath, buffer);
+      checksum += await prepareTerminalImageChecksum(filePath);
+    }
+    results.push(
+      benchmarkResult(
+        `real-image-prepare-cold-${sprite.kind}`,
+        coldIterations,
+        start,
+        checksum,
+      ),
+    );
+
+    const warmFilePath = join(directory, `real-warm-${sprite.kind}.png`);
+    await Bun.write(warmFilePath, buffer);
+    await prepareTerminalImageChecksum(warmFilePath);
+
+    checksum = 0;
+    start = Bun.nanoseconds();
+    for (let index = 0; index < iterations; index += 1) {
+      checksum += await prepareTerminalImageChecksum(warmFilePath);
+    }
+    results.push(
+      benchmarkResult(
+        `real-image-prepare-warm-${sprite.kind}`,
+        iterations,
+        start,
+        checksum,
+      ),
+    );
+  }
+
+  return results;
+}
+
 async function prepareTerminalImageChecksum(filePath: string): Promise<number> {
   const image = await prepareTerminalSpriteImage(filePath, terminalImageCanvas);
   return image.filePath.length + image.height + image.width;
 }
 
 type Rgba = readonly [red: number, green: number, blue: number, alpha: number];
+
+type RealSpriteBenchAsset = {
+  filePath: string;
+  kind: "gen8" | "modern";
+};
+
+async function loadRealSpriteBenchAssets(
+  directory: string,
+): Promise<RealSpriteBenchAsset[]> {
+  const filePaths = (await listPngFiles(directory).catch(() => [])).toSorted();
+
+  return [
+    selectRealSpriteAsset(filePaths, "gen8"),
+    selectRealSpriteAsset(filePaths, "modern"),
+  ].filter((asset) => asset !== undefined);
+}
+
+function selectRealSpriteAsset(
+  filePaths: readonly string[],
+  kind: RealSpriteBenchAsset["kind"],
+): RealSpriteBenchAsset | undefined {
+  const sourceMarker =
+    kind === "gen8"
+      ? "raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8"
+      : "raw.githubusercontent.com/fbosch/pokemon-sprites/main/pokemon";
+  const filePath = filePaths.find((candidate) => {
+    const decoded = decodeURIComponent(basename(candidate));
+    return decoded.includes(sourceMarker) && decoded.endsWith(".png");
+  });
+
+  return filePath === undefined ? undefined : { filePath, kind };
+}
+
+async function listPngFiles(directory: string): Promise<string[]> {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const filePaths: string[] = [];
+
+  for (const entry of entries) {
+    const filePath = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      filePaths.push(...(await listPngFiles(filePath)));
+      continue;
+    }
+
+    if (entry.isFile() && entry.name.endsWith(".png")) {
+      filePaths.push(filePath);
+    }
+  }
+
+  return filePaths.filter(
+    (filePath) => filePath.endsWith(".opaque.png") === false,
+  );
+}
 
 function createPatternPng(width: number, height: number): ArrayBuffer {
   const palette = [red, blue, green, yellow] as const;
