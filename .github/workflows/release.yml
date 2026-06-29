@@ -145,12 +145,12 @@ jobs:
 
       - name: Publish platform packages to npm
         run: |
-          for package_dir in dist/npm/*; do
+          for package_dir in dist/npm/platform/*; do
             npm publish "$package_dir"
           done
 
       - name: Publish package to npm
-        run: npm publish
+        run: npm publish dist/npm/root
 
       - name: Upload binaries to GitHub Release
         env:

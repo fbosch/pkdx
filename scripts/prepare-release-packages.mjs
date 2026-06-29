@@ -55,15 +55,39 @@ const optionalDependencies = Object.fromEntries(
   platformPackages.map(({ packageName }) => [packageName, rootPackage.version]),
 );
 
-rootPackage.optionalDependencies = optionalDependencies;
-writeFileSync("package.json", `${JSON.stringify(rootPackage, null, 2)}\n`);
-
 rmSync("dist/npm", { force: true, recursive: true });
+
+const wrapperRoot = join("dist", "npm", "root");
+mkdirSync(join(wrapperRoot, "bin"), { recursive: true });
+cpSync("bin/pkdx.mjs", join(wrapperRoot, "bin", "pkdx.mjs"));
+cpSync("README.md", join(wrapperRoot, "README.md"));
+cpSync("LICENSE", join(wrapperRoot, "LICENSE"));
+
+const wrapperPackageJson = {
+  name: rootPackage.name,
+  version: rootPackage.version,
+  description: rootPackage.description,
+  license: rootPackage.license,
+  keywords: rootPackage.keywords,
+  type: rootPackage.type,
+  repository: rootPackage.repository,
+  files: rootPackage.files,
+  engines: rootPackage.engines,
+  bin: rootPackage.bin,
+  publishConfig: rootPackage.publishConfig,
+  optionalDependencies,
+};
+
+writeFileSync(
+  join(wrapperRoot, "package.json"),
+  `${JSON.stringify(wrapperPackageJson, null, 2)}\n`,
+);
 
 for (const platformPackage of platformPackages) {
   const packageRoot = join(
     "dist",
     "npm",
+    "platform",
     platformPackage.packageName.replace("@", "").replace("/", "__"),
   );
   const binDir = join(packageRoot, "bin");
@@ -71,16 +95,18 @@ for (const platformPackage of platformPackages) {
 
   mkdirSync(binDir, { recursive: true });
   cpSync(join("dist", platformPackage.artifact), binaryPath);
+  cpSync("LICENSE", join(packageRoot, "LICENSE"));
   chmodSync(binaryPath, 0o755);
 
   const packageJson = {
     name: platformPackage.packageName,
     version: rootPackage.version,
+    description: `Native ${basename(platformPackage.artifact)} binary for pkdx.`,
     license: rootPackage.license,
     repository: rootPackage.repository,
     os: platformPackage.os,
     cpu: platformPackage.cpu,
-    files: ["bin"],
+    files: ["bin", "LICENSE", "README.md"],
     publishConfig: rootPackage.publishConfig,
   };
 
@@ -94,10 +120,10 @@ for (const platformPackage of platformPackages) {
   );
   writeFileSync(
     join(packageRoot, "README.md"),
-    `# ${platformPackage.packageName}\n\nNative ${basename(platformPackage.artifact)} binary for @fbb.sh/pkdx.\n`,
+    `# ${platformPackage.packageName}\n\nThis package contains the native ${basename(platformPackage.artifact)} binary used by [@fbb.sh/pkdx](https://www.npmjs.com/package/@fbb.sh/pkdx).\n\nIt is installed automatically as an optional dependency of the main \`@fbb.sh/pkdx\` package on supported ${platformPackage.os.join("/")} ${platformPackage.cpu.join("/")} systems. You normally should not install this package directly.\n\nSource code, release automation, and build instructions are available at https://github.com/fbosch/pkdx.\n\n## License\n\nMIT. See [LICENSE](LICENSE).\n`,
   );
 }
 
 console.log(
-  `Prepared ${platformPackages.length} platform packages for @fbb.sh/pkdx@${rootPackage.version}.`,
+  `Prepared wrapper package and ${platformPackages.length} platform packages for @fbb.sh/pkdx@${rootPackage.version}.`,
 );

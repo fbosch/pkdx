@@ -35,7 +35,12 @@ function assertSameSet(actual, expected, label) {
 }
 
 function packageDirectory(packageName) {
-  return join("dist", "npm", packageName.replace("@", "").replace("/", "__"));
+  return join(
+    "dist",
+    "npm",
+    "platform",
+    packageName.replace("@", "").replace("/", "__"),
+  );
 }
 
 function npmPackFiles(cwd) {
@@ -75,26 +80,58 @@ if ((launcherMode & 0o111) === 0) {
   fail("Launcher is not executable: bin/pkdx.mjs");
 }
 
+const wrapperRoot = join("dist", "npm", "root");
+
+if (!existsSync(wrapperRoot)) {
+  fail(`Wrapper package directory is missing: ${wrapperRoot}.`);
+}
+
+const wrapperPackage = JSON.parse(
+  readFileSync(join(wrapperRoot, "package.json"), "utf8"),
+);
+
+if (wrapperPackage.name !== rootPackage.name)
+  fail("Wrapper package has wrong name.");
+if (wrapperPackage.version !== rootPackage.version)
+  fail("Wrapper package has wrong version.");
+
 assertSameSet(
-  Object.keys(rootPackage.optionalDependencies ?? {}).sort(),
+  Object.keys(wrapperPackage.optionalDependencies ?? {}).sort(),
   expectedPackageNames,
   "Optional dependency names",
 );
 
 for (const packageName of expectedPackageNames) {
-  const version = rootPackage.optionalDependencies[packageName];
-  if (version !== rootPackage.version) {
+  const version = wrapperPackage.optionalDependencies[packageName];
+  if (version !== wrapperPackage.version) {
     fail(
-      `${packageName} version ${version} does not match ${rootPackage.version}.`,
+      `${packageName} version ${version} does not match ${wrapperPackage.version}.`,
     );
   }
 }
 
-const rootPackageFiles = npmPackFiles(process.cwd());
+const rootPackageFiles = npmPackFiles(wrapperRoot);
+
 assertNoEntries(
   rootPackageFiles.filter((file) => file.startsWith("dist/")),
   "Wrapper package includes dist files",
 );
+
+assertNoEntries(
+  rootPackageFiles.filter((file) => file.startsWith("scripts/")),
+  "Wrapper package includes scripts",
+);
+
+if (!rootPackageFiles.includes("package.json")) {
+  fail("Wrapper package is missing package.json.");
+}
+
+if ("scripts" in wrapperPackage) fail("Wrapper package includes scripts.");
+if ("devDependencies" in wrapperPackage)
+  fail("Wrapper package includes devDependencies.");
+if ("trustedDependencies" in wrapperPackage)
+  fail("Wrapper package includes trustedDependencies.");
+if ("imports" in wrapperPackage) fail("Wrapper package includes imports.");
 
 if (!rootPackageFiles.includes("bin/pkdx.mjs")) {
   fail("Wrapper package is missing bin/pkdx.mjs.");
@@ -121,7 +158,7 @@ for (const [packageName, , binary] of expectedPackages) {
 
   assertSameSet(
     npmPackFiles(packageRoot),
-    ["README.md", `bin/${binary}`, "package.json"],
+    ["LICENSE", "README.md", `bin/${binary}`, "package.json"],
     packageName,
   );
 }

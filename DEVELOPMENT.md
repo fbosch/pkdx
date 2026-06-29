@@ -55,7 +55,7 @@ bun run smoke:binary
 
 ## Release Packaging
 
-The npm wrapper package uses a Node launcher at `bin/pkdx.mjs` and lists platform binary packages as optional dependencies. Release builds create one npm package per binary under `dist/npm/`, then publish those platform packages before publishing the wrapper package.
+The npm wrapper package uses a Node launcher at `bin/pkdx.mjs` and lists platform binary packages as optional dependencies. Release builds create one npm package per binary under `dist/npm/platform/` and a sanitized wrapper package under `dist/npm/root/`, then publish the platform packages before publishing the wrapper package.
 
 Keep local development builds at `dist/pkdx`; the wrapper package `files` allowlist excludes `dist/` so a host-only development binary is not published by accident.
 
