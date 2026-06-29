@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.2.0...pkdx-v0.3.0) (2026-06-29)
+
+
+### Features
+
+* **detail:** hide evo hint when absent ([f8202f7](https://github.com/fbosch/pkdx/commit/f8202f7ef39db02d2aeab862b09e06d247cc8fd2))
+
 ## [0.2.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.1.0...pkdx-v0.2.0) (2026-06-28)
 
 
