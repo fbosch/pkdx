@@ -6,6 +6,12 @@
       "sourceType": "well-known",
       "computedHash": "df9cb592598c6726b77c9d5de846671d6a0b3acb9415a430722b0b3207a50d88"
     },
+    "fallow": {
+      "source": "fallow-rs/fallow-skills",
+      "sourceType": "github",
+      "skillPath": "fallow/skills/fallow/SKILL.md",
+      "computedHash": "35f0d66f941a12ddea97118d37bddfba4367dc495399cdb2b669c6a10e4aa3f2"
+    },
     "opentui": {
       "source": "anomalyco/opentui",
       "sourceType": "github",
