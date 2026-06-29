@@ -1,32 +1,35 @@
 #!/usr/bin/env node
 import { spawn } from "node:child_process";
-import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 
-const packageRoot = dirname(dirname(fileURLToPath(import.meta.url)));
+const require = createRequire(import.meta.url);
 
-const binaryByPlatform = new Map([
-  ["darwin:arm64", "pkdx-darwin-arm64"],
-  ["darwin:x64", "pkdx-darwin-x64"],
-  ["linux:arm64", "pkdx-linux-arm64"],
-  ["linux:x64", "pkdx-linux-x64"],
-  ["win32:x64", "pkdx-win32-x64.exe"],
+const packageByPlatform = new Map([
+  ["darwin:arm64", ["@fbb.sh/pkdx-darwin-arm64", "pkdx"]],
+  ["darwin:x64", ["@fbb.sh/pkdx-darwin-x64", "pkdx"]],
+  ["linux:arm64", ["@fbb.sh/pkdx-linux-arm64", "pkdx"]],
+  ["linux:x64", ["@fbb.sh/pkdx-linux-x64", "pkdx"]],
+  ["win32:x64", ["@fbb.sh/pkdx-win32-x64", "pkdx.exe"]],
 ]);
 
 const platformKey = `${process.platform}:${process.arch}`;
-const binaryName = binaryByPlatform.get(platformKey);
+const platformPackage = packageByPlatform.get(platformKey);
 
-if (binaryName === undefined) {
+if (platformPackage === undefined) {
   console.error(`pkdx does not ship a binary for ${platformKey}.`);
   process.exit(1);
 }
 
-const binaryPath = join(packageRoot, "dist", binaryName);
+const [packageName, binaryName] = platformPackage;
+let binaryPath;
 
-if (!existsSync(binaryPath)) {
+try {
+  const packageJsonPath = require.resolve(`${packageName}/package.json`);
+  binaryPath = join(dirname(packageJsonPath), "bin", binaryName);
+} catch {
   console.error(
-    `pkdx package is missing ${binaryName}. Reinstall @fbb.sh/pkdx and try again.`,
+    `pkdx package is missing ${packageName}. Reinstall @fbb.sh/pkdx without omitting optional dependencies.`,
   );
   process.exit(1);
 }

@@ -6,6 +6,12 @@
       "sourceType": "well-known",
       "computedHash": "df9cb592598c6726b77c9d5de846671d6a0b3acb9415a430722b0b3207a50d88"
     },
+    "opentui": {
+      "source": "anomalyco/opentui",
+      "sourceType": "github",
+      "skillPath": "packages/web/src/content/SKILL.md",
+      "computedHash": "8da376e9c7b9433d81180dff52dd08b6466008993d7c41ecc47d81197ea2f9f5"
+    },
     "tanstack-query-best-practices": {
       "source": "deckardger/tanstack-agent-skills",
       "sourceType": "github",

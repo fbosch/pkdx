@@ -55,13 +55,16 @@ bun run smoke:binary
 
 ## Release Packaging
 
-The npm package uses a Node launcher at `bin/pkdx.mjs` and ships release-named native binaries in `dist/pkdx-*`. Keep local development builds at `dist/pkdx`; the npm `files` allowlist excludes that path so a host-only development binary is not published by accident.
+The npm wrapper package uses a Node launcher at `bin/pkdx.mjs` and lists platform binary packages as optional dependencies. Release builds create one npm package per binary under `dist/npm/`, then publish those platform packages before publishing the wrapper package.
+
+Keep local development builds at `dist/pkdx`; the wrapper package `files` allowlist excludes `dist/` so a host-only development binary is not published by accident.
 
 Supported npm binaries are macOS arm64/x64, glibc Linux arm64/x64, and Windows x64. Alpine/musl Linux is not currently shipped.
 
 Before publishing, verify package contents with:
 
 ```bash
+bun run prepare:release-packages
 bun run verify:release-package
 ```
 

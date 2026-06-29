@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
-import { readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-const expectedBinaries = [
-  "pkdx-darwin-arm64",
-  "pkdx-darwin-x64",
-  "pkdx-linux-arm64",
-  "pkdx-linux-x64",
-  "pkdx-win32-x64.exe",
+const expectedPackages = [
+  ["@fbb.sh/pkdx-darwin-arm64", "pkdx-darwin-arm64", "pkdx"],
+  ["@fbb.sh/pkdx-darwin-x64", "pkdx-darwin-x64", "pkdx"],
+  ["@fbb.sh/pkdx-linux-arm64", "pkdx-linux-arm64", "pkdx"],
+  ["@fbb.sh/pkdx-linux-x64", "pkdx-linux-x64", "pkdx"],
+  ["@fbb.sh/pkdx-win32-x64", "pkdx-win32-x64.exe", "pkdx.exe"],
 ];
 
-const requiredPackageFiles = [
-  "bin/pkdx.mjs",
-  ...expectedBinaries.map((binary) => `dist/${binary}`),
-];
+const rootPackage = JSON.parse(readFileSync("package.json", "utf8"));
+const expectedPackageNames = expectedPackages
+  .map(([packageName]) => packageName)
+  .sort();
 
 function fail(message) {
   console.error(message);
@@ -34,16 +34,39 @@ function assertSameSet(actual, expected, label) {
   assertNoEntries(difference(actual, expected), `${label} extra entries`);
 }
 
+function packageDirectory(packageName) {
+  return join("dist", "npm", packageName.replace("@", "").replace("/", "__"));
+}
+
+function npmPackFiles(cwd) {
+  const pack = spawnSync("npm", ["pack", "--dry-run", "--json"], {
+    cwd,
+    encoding: "utf8",
+  });
+
+  if (pack.status !== 0) {
+    process.stderr.write(pack.stderr);
+    fail(`npm pack --dry-run failed in ${cwd}.`);
+  }
+
+  return JSON.parse(pack.stdout)[0]
+    .files.map((file) => file.path)
+    .sort();
+}
+
 const distEntries = readdirSync("dist")
   .filter((entry) => entry.startsWith("pkdx-"))
   .sort();
+const expectedArtifacts = expectedPackages
+  .map(([, artifact]) => artifact)
+  .sort();
 
-assertSameSet(distEntries, expectedBinaries, "Release binaries");
+assertSameSet(distEntries, expectedArtifacts, "Release binaries");
 
-for (const binary of expectedBinaries) {
-  const mode = statSync(join("dist", binary)).mode;
+for (const [, artifact] of expectedPackages) {
+  const mode = statSync(join("dist", artifact)).mode;
   if ((mode & 0o111) === 0) {
-    fail(`Release binary is not executable: dist/${binary}`);
+    fail(`Release binary is not executable: dist/${artifact}`);
   }
 }
 
@@ -52,29 +75,55 @@ if ((launcherMode & 0o111) === 0) {
   fail("Launcher is not executable: bin/pkdx.mjs");
 }
 
-const pack = spawnSync("npm", ["pack", "--dry-run", "--json"], {
-  encoding: "utf8",
-});
+assertSameSet(
+  Object.keys(rootPackage.optionalDependencies ?? {}).sort(),
+  expectedPackageNames,
+  "Optional dependency names",
+);
 
-if (pack.status !== 0) {
-  process.stderr.write(pack.stderr);
-  fail("npm pack --dry-run failed.");
-}
-
-const parsedPack = JSON.parse(pack.stdout);
-const packageFiles = parsedPack[0].files.map((file) => file.path).sort();
-
-for (const file of requiredPackageFiles) {
-  if (!packageFiles.includes(file)) {
-    fail(`npm package is missing ${file}.`);
+for (const packageName of expectedPackageNames) {
+  const version = rootPackage.optionalDependencies[packageName];
+  if (version !== rootPackage.version) {
+    fail(
+      `${packageName} version ${version} does not match ${rootPackage.version}.`,
+    );
   }
 }
 
-const packedDistFiles = packageFiles.filter((file) => file.startsWith("dist/"));
-assertSameSet(
-  packedDistFiles,
-  expectedBinaries.map((binary) => `dist/${binary}`),
-  "Packed dist files",
+const rootPackageFiles = npmPackFiles(process.cwd());
+assertNoEntries(
+  rootPackageFiles.filter((file) => file.startsWith("dist/")),
+  "Wrapper package includes dist files",
 );
+
+if (!rootPackageFiles.includes("bin/pkdx.mjs")) {
+  fail("Wrapper package is missing bin/pkdx.mjs.");
+}
+
+for (const [packageName, , binary] of expectedPackages) {
+  const packageRoot = packageDirectory(packageName);
+
+  if (!existsSync(packageRoot)) {
+    fail(`Platform package directory is missing: ${packageRoot}.`);
+  }
+
+  const packageJson = JSON.parse(
+    readFileSync(join(packageRoot, "package.json"), "utf8"),
+  );
+  if (packageJson.name !== packageName)
+    fail(`Unexpected package name in ${packageRoot}.`);
+  if (packageJson.version !== rootPackage.version)
+    fail(`${packageName} has wrong version.`);
+
+  const binaryPath = join(packageRoot, "bin", binary);
+  const mode = statSync(binaryPath).mode;
+  if ((mode & 0o111) === 0) fail(`${packageName} binary is not executable.`);
+
+  assertSameSet(
+    npmPackFiles(packageRoot),
+    ["README.md", `bin/${binary}`, "package.json"],
+    packageName,
+  );
+}
 
 console.log("Release package contents verified.");

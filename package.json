@@ -19,8 +19,7 @@
     "#src/*.tsx": "./src/*.tsx"
   },
   "files": [
-    "bin/pkdx.mjs",
-    "dist/pkdx-*"
+    "bin/pkdx.mjs"
   ],
   "engines": {
     "node": ">=18"
@@ -52,6 +51,7 @@
     "lint-staged": "lint-staged",
     "hooks:install": "lefthook install",
     "smoke:binary": "bun run scripts/smoke-binary.ts",
+    "prepare:release-packages": "node scripts/prepare-release-packages.mjs",
     "verify:release-package": "node scripts/verify-release-package.mjs",
     "check": "bun run format:check && bun run lint && bun run typecheck:native && bun test && bun run verify:index && bun run build && bun run fallow",
     "generate:index": "bun run scripts/generate-index.ts",

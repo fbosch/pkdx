@@ -30,7 +30,7 @@ or run without installing:
 npx @fbb.sh/pkdx
 ```
 
-The npm package includes native binaries for macOS arm64/x64, glibc Linux arm64/x64, and Windows x64.
+The npm package installs the native binary package for your platform. Supported npm binaries are macOS arm64/x64, glibc Linux arm64/x64, and Windows x64.
 
 ## Run
 
