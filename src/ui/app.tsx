@@ -281,6 +281,7 @@ function DetailView({
   });
   useAdjacentPokemonPrefetch({
     enabled: state.status !== "error",
+    prewarmSprites: state.status === "ready",
     shiny: state.shiny,
     species: detailTarget.species,
     terminalImagesEnabled,
@@ -650,11 +651,13 @@ function useAbilityDetailsPreload({
 
 function useAdjacentPokemonPrefetch({
   enabled,
+  prewarmSprites,
   shiny,
   species,
   terminalImagesEnabled,
 }: {
   enabled: boolean;
+  prewarmSprites: boolean;
   shiny: boolean;
   species: SpeciesIndexEntry;
   terminalImagesEnabled: boolean;
@@ -673,21 +676,31 @@ function useAdjacentPokemonPrefetch({
       queryClient,
       getSpeciesByDexDelta(species, -1),
       shiny,
+      prewarmSprites,
       terminalImageSupport !== undefined,
     );
     prefetchPokemonDetail(
       queryClient,
       getSpeciesByDexDelta(species, 1),
       shiny,
+      prewarmSprites,
       terminalImageSupport !== undefined,
     );
-  }, [enabled, queryClient, shiny, species, terminalImageSupport]);
+  }, [
+    enabled,
+    prewarmSprites,
+    queryClient,
+    shiny,
+    species,
+    terminalImageSupport,
+  ]);
 }
 
 function prefetchPokemonDetail(
   queryClient: ReturnType<typeof useQueryClient>,
   species: SpeciesIndexEntry | undefined,
   shiny: boolean,
+  prefetchSprite: boolean,
   terminalImagesEnabled: boolean,
 ) {
   if (species === undefined) {
@@ -697,6 +710,10 @@ function prefetchPokemonDetail(
   void queryClient.prefetchQuery(
     pokemonDetailQueryOptions(species, queryClient),
   );
+  if (prefetchSprite === false) {
+    return;
+  }
+
   if (terminalImagesEnabled) {
     void queryClient
       .fetchQuery(

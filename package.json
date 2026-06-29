@@ -48,6 +48,7 @@
     "fallow": "fallow --summary",
     "fallow:audit": "fallow audit --quiet",
     "fallow:badge": "bun run scripts/generate-fallow-badge.ts",
+    "badges:staged": "bun run scripts/update-staged-badges.ts",
     "bench": "bun run scripts/run-benchmarks.ts",
     "commitlint": "commitlint",
     "lint-staged": "lint-staged",
@@ -97,6 +98,10 @@
       "biome format --write",
       "biome lint"
     ],
-    "*.{ts,tsx}": "bun run test:related"
+    "*.{ts,tsx}": [
+      "bun run test:related",
+      "bun run badges:staged"
+    ],
+    "*.{js,jsx,json,jsonc,mjs,mts,cjs,cts,toml}": "bun run badges:staged"
   }
 }

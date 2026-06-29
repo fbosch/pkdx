@@ -68,6 +68,10 @@ try {
     temporaryDirectory,
     realSprites,
   );
+  const rapidNavigationResults = await benchmarkRapidNavigationSpritePrewarm(
+    temporaryDirectory,
+    realSprites,
+  );
   results.push(
     await benchmarkColdTerminalImagePreparation(temporaryDirectory),
     await benchmarkWarmTerminalImagePreparation(temporaryDirectory),
@@ -77,6 +81,7 @@ try {
   if (eventLoopDelayResults.length > 0) {
     console.table(eventLoopDelayResults);
   }
+  console.table(rapidNavigationResults);
 } finally {
   await rm(temporaryDirectory, { force: true, recursive: true });
 }
@@ -208,6 +213,85 @@ async function benchmarkSpritePreparationEventLoopDelay(
       ),
     ),
   ]);
+}
+
+async function benchmarkRapidNavigationSpritePrewarm(
+  directory: string,
+  sprites: readonly RealSpriteBenchAsset[],
+) {
+  const [previousSprite, nextSprite] = await loadAdjacentSpriteSources(sprites);
+  return [
+    await measureRapidNavigationSpritePrewarm(
+      "rapid-nav-old-eager-adjacent-sprite-prewarm",
+      directory,
+      [previousSprite, nextSprite],
+      true,
+    ),
+    await measureRapidNavigationSpritePrewarm(
+      "rapid-nav-new-loading-gated-adjacent-sprite-prewarm",
+      directory,
+      [previousSprite, nextSprite],
+      false,
+    ),
+  ];
+}
+
+async function loadAdjacentSpriteSources(
+  sprites: readonly RealSpriteBenchAsset[],
+): Promise<readonly [ArrayBuffer, ArrayBuffer]> {
+  const buffers = await Promise.all(
+    sprites
+      .slice(0, 2)
+      .map((sprite) => Bun.file(sprite.filePath).arrayBuffer()),
+  );
+  return [
+    buffers[0] ?? paddedMediumSprite,
+    buffers[1] ?? buffers[0] ?? paddedMediumSprite,
+  ];
+}
+
+async function measureRapidNavigationSpritePrewarm(
+  name: string,
+  directory: string,
+  sources: readonly [ArrayBuffer, ArrayBuffer],
+  prewarmAdjacentSprites: boolean,
+) {
+  const probe = startEventLoopDelayProbe();
+  let checksum = 0;
+  const start = Bun.nanoseconds();
+
+  for (let index = 0; index < coldIterations; index += 1) {
+    if (prewarmAdjacentSprites === false) {
+      continue;
+    }
+
+    const previousPath = join(
+      directory,
+      `${name}-previous-${index.toString()}.png`,
+    );
+    const nextPath = join(directory, `${name}-next-${index.toString()}.png`);
+    await Bun.write(previousPath, sources[0]);
+    await Bun.write(nextPath, sources[1]);
+    checksum += await prepareTerminalImageChecksum(previousPath);
+    checksum += await prepareTerminalImageChecksum(nextPath);
+  }
+
+  const durationMs = Number(
+    ((Bun.nanoseconds() - start) / 1_000_000).toFixed(2),
+  );
+  const delay = await probe.stop();
+
+  return {
+    averageDelayMs: delay.averageDelayMs,
+    checksum,
+    durationMs,
+    iterations: coldIterations,
+    maxDelayMs: delay.maxDelayMs,
+    name,
+    perNavigationMs: Number((durationMs / coldIterations).toFixed(2)),
+    prewarmCount: prewarmAdjacentSprites ? coldIterations * 2 : 0,
+    samples: delay.samples,
+  };
 }
 
 async function measurePreparationEventLoopDelay(
