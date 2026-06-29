@@ -17,6 +17,7 @@ concurrency:
 
 permissions:
   contents: write
+  id-token: write
   pull-requests: write
 
 jobs:
@@ -140,9 +141,7 @@ jobs:
         run: node scripts/verify-release-package.mjs
 
       - name: Publish package to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
+        run: npm publish
 
       - name: Upload binaries to GitHub Release
         env:

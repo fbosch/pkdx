@@ -29,7 +29,8 @@
     "pkdx": "bin/pkdx.mjs"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "dev": "NODE_ENV=development bun run src/cli.tsx",
