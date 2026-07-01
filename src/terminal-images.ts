@@ -27,6 +27,7 @@ type TerminalImageCapabilities = Pick<
 >;
 
 const kittyTerminalImageSupport: TerminalImageSupport = { protocol: "kitty" };
+const maxPreparedTerminalImageCacheEntries = 128;
 const preparedImagePromises = new Map<string, Promise<PreparedTerminalImage>>();
 const preparedImages = new Map<string, PreparedTerminalImage>();
 
@@ -77,12 +78,14 @@ export async function prepareTerminalSpriteImage(
   const cacheKey = terminalImageCacheKey(filePath, canvas);
   const cached = preparedImagePromises.get(cacheKey);
   if (Bun.env.NODE_ENV !== "development" && cached !== undefined) {
+    refreshCacheEntry(preparedImagePromises, cacheKey, cached);
     return cached;
   }
 
   const promise = prepareTerminalSpriteImageUncached(filePath, canvas)
     .then((image) => {
       preparedImages.set(cacheKey, image);
+      evictOldestEntries(preparedImages, maxPreparedTerminalImageCacheEntries);
       return image;
     })
     .catch((error: unknown) => {
@@ -91,6 +94,10 @@ export async function prepareTerminalSpriteImage(
       throw error;
     });
   preparedImagePromises.set(cacheKey, promise);
+  evictOldestEntries(
+    preparedImagePromises,
+    maxPreparedTerminalImageCacheEntries,
+  );
   return promise;
 }
 
@@ -102,7 +109,29 @@ export function getPreparedTerminalSpriteImage(
     return undefined;
   }
 
-  return preparedImages.get(terminalImageCacheKey(filePath, canvas));
+  const cacheKey = terminalImageCacheKey(filePath, canvas);
+  const cached = preparedImages.get(cacheKey);
+  if (cached !== undefined) {
+    refreshCacheEntry(preparedImages, cacheKey, cached);
+  }
+
+  return cached;
+}
+
+function refreshCacheEntry<T>(cache: Map<string, T>, key: string, value: T) {
+  cache.delete(key);
+  cache.set(key, value);
+}
+
+function evictOldestEntries<T>(cache: Map<string, T>, maxEntries: number) {
+  while (cache.size > maxEntries) {
+    const oldestKey = cache.keys().next().value;
+    if (oldestKey === undefined) {
+      return;
+    }
+
+    cache.delete(oldestKey);
+  }
 }
 
 function terminalImageCacheKey(
