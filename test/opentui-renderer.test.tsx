@@ -54,12 +54,8 @@ test("OpenTUI renderer draws the query debug panel", async () => {
       />,
     );
 
-    const frame = await renderUntil(
-      renderOnce,
-      captureCharFrame,
-      "Query Debug",
-    );
-    expect(frame).toContain("Query Debug");
+    const frame = await renderUntil(renderOnce, captureCharFrame, "all:1");
+    expect(frame).toContain("all:1");
     expect(frame).toContain("detail pikachu default");
   } finally {
     root.unmount();

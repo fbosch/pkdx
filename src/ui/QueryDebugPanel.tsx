@@ -1,6 +1,6 @@
 import { RGBA } from "@opentui/core";
 import { useQueryClient, type QueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState, useSyncExternalStore } from "react";
 import { colors, textStyles } from "./design-tokens";
 
 const maxDebugQueries = 5;
@@ -24,22 +24,47 @@ type QueryDebugEntry = {
   updated: string;
 };
 
+type QueryDebugFilter = QueryDebugStatus | "all";
+
 type QueryDebugStatus = "fetching" | "fresh" | "inactive" | "paused" | "stale";
 
 type QueryDebugSummary = Record<QueryDebugStatus, number>;
 
+const queryDebugFilters: readonly QueryDebugFilter[] = [
+  "all",
+  "fresh",
+  "fetching",
+  "paused",
+  "stale",
+  "inactive",
+];
+
 export function QueryDebugPanel() {
   const queryClient = useQueryClient();
   const entries = useQueryDebugEntries(queryClient);
+  const [filter, setFilter] = useState<QueryDebugFilter>("all");
 
-  return <QueryDebugPanelView entries={entries} />;
+  return (
+    <QueryDebugPanelView
+      entries={entries}
+      filter={filter}
+      onSelectFilter={setFilter}
+    />
+  );
 }
 
 export function QueryDebugPanelView({
   entries,
+  filter = "all",
+  onSelectFilter = () => undefined,
 }: {
   entries: readonly QueryDebugEntry[];
+  filter?: QueryDebugFilter;
+  onSelectFilter?: (filter: QueryDebugFilter) => void;
 }) {
+  const summary = queryDebugSummary(entries);
+  const displayedEntries = queryDebugVisibleEntries(entries, filter);
+
   return (
     <box
       backgroundColor={debugPanelBackground}
@@ -55,11 +80,13 @@ export function QueryDebugPanelView({
         zIndex: 250,
       }}
     >
-      <text fg={debugPanelTitle} attributes={textStyles.active}>
-        Query Debug
-      </text>
-      <QueryDebugSummaryLine summary={queryDebugSummary(entries)} />
-      {entries.map((entry) => (
+      <QueryDebugFilterLine
+        filter={filter}
+        onSelectFilter={onSelectFilter}
+        summary={summary}
+        total={entries.length}
+      />
+      {displayedEntries.map((entry) => (
         <text key={entry.id}>
           <span>{entry.observers.toString().padStart(2)}</span>
           <span> </span>
@@ -79,57 +106,94 @@ export function QueryDebugPanelView({
   );
 }
 
-function QueryDebugSummaryLine({ summary }: { summary: QueryDebugSummary }) {
+function QueryDebugFilterLine({
+  filter,
+  onSelectFilter,
+  summary,
+  total,
+}: {
+  filter: QueryDebugFilter;
+  onSelectFilter: (filter: QueryDebugFilter) => void;
+  summary: QueryDebugSummary;
+  total: number;
+}) {
   return (
-    <text>
-      <QueryDebugSummaryPart label="fresh" summary={summary} />
-      <QueryDebugSummaryPart label="fetching" summary={summary} />
-      <QueryDebugSummaryPart label="paused" summary={summary} />
-      <QueryDebugSummaryPart label="stale" summary={summary} />
-      <QueryDebugSummaryPart label="inactive" summary={summary} />
+    <box style={{ flexDirection: "row", height: 1 }}>
+      {queryDebugFilters.map((label) => (
+        <QueryDebugFilterTab
+          active={filter === label}
+          count={label === "all" ? total : summary[label]}
+          key={label}
+          label={label}
+          onSelect={() => onSelectFilter(label)}
+        />
+      ))}
+    </box>
+  );
+}
+
+function QueryDebugFilterTab({
+  active,
+  count,
+  label,
+  onSelect,
+}: {
+  active: boolean;
+  count: number;
+  label: QueryDebugFilter;
+  onSelect: () => void;
+}) {
+  const color = label === "all" ? debugPanelTitle : queryStatusColors[label];
+
+  return (
+    <text
+      attributes={active ? textStyles.active : textStyles.normal}
+      fg={active ? debugPanelTitle : color}
+      onMouseDown={onSelect}
+    >
+      {`${shortQueryFilterLabel(label)}:${count.toString()}`.padEnd(10)}
     </text>
   );
 }
 
-function QueryDebugSummaryPart({
-  label,
-  summary,
-}: {
-  label: QueryDebugStatus;
-  summary: QueryDebugSummary;
-}) {
-  return (
-    <span fg={queryStatusColors[label]}>
-      {`${shortQueryStatusLabel(label)}:${summary[label].toString()}`.padEnd(
-        11,
-      )}
-    </span>
-  );
-}
-
 function useQueryDebugEntries(queryClient: QueryClient): QueryDebugEntry[] {
-  const [revision, setRevision] = useState(0);
+  const snapshot = useRef<{
+    entries: QueryDebugEntry[];
+    queryClient: QueryClient;
+  }>(undefined);
+  const getSnapshot = useCallback(() => {
+    if (snapshot.current?.queryClient !== queryClient) {
+      snapshot.current = {
+        entries: queryDebugEntries(queryClient),
+        queryClient,
+      };
+    }
 
-  useEffect(() => {
-    return queryClient.getQueryCache().subscribe(() => {
-      setRevision((current) => current + 1);
-    });
+    return snapshot.current.entries;
   }, [queryClient]);
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      return queryClient.getQueryCache().subscribe(() => {
+        snapshot.current = {
+          entries: queryDebugEntries(queryClient),
+          queryClient,
+        };
+        onStoreChange();
+      });
+    },
+    [queryClient],
+  );
 
-  return queryDebugEntries(queryClient, revision);
+  return useSyncExternalStore(subscribe, getSnapshot);
 }
 
-function queryDebugEntries(
-  queryClient: QueryClient,
-  _revision: number,
-): QueryDebugEntry[] {
+function queryDebugEntries(queryClient: QueryClient): QueryDebugEntry[] {
   return queryClient
     .getQueryCache()
     .findAll()
     .toSorted(
       (left, right) => right.state.dataUpdatedAt - left.state.dataUpdatedAt,
     )
-    .slice(0, maxDebugQueries)
     .map((query) => {
       const observers = query.getObserversCount();
       return {
@@ -145,6 +209,19 @@ function queryDebugEntries(
         updated: formatUpdatedAt(query.state.dataUpdatedAt),
       };
     });
+}
+
+function queryDebugVisibleEntries(
+  entries: readonly QueryDebugEntry[],
+  filter: QueryDebugFilter,
+): readonly QueryDebugEntry[] {
+  if (filter === "all") {
+    return entries.slice(0, maxDebugQueries);
+  }
+
+  return entries
+    .filter((entry) => entry.status === filter)
+    .slice(0, maxDebugQueries);
 }
 
 function formatQueryKey(queryKey: readonly unknown[]): string {
@@ -245,6 +322,10 @@ function shortQueryStatusLabel(label: QueryDebugStatus): string {
   }
 
   return label;
+}
+
+function shortQueryFilterLabel(label: QueryDebugFilter): string {
+  return label === "all" ? "all" : shortQueryStatusLabel(label);
 }
 
 function formatUpdatedAt(updatedAt: number): string {
