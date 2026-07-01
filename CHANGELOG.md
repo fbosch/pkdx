@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.5.0...pkdx-v0.6.0) (2026-07-01)
+
+
+### Features
+
+* **cache:** add schema-based cache busting ([cf7da3f](https://github.com/fbosch/pkdx/commit/cf7da3ff72dfccb49dca7f20719d093d0f86abf1))
+* **ui:** add alias and evo shortcuts ([b2d2222](https://github.com/fbosch/pkdx/commit/b2d2222082ae471d10bb48e5f1ea0aa6172c4529))
+* **ui:** add query debug filters ([25f9c45](https://github.com/fbosch/pkdx/commit/25f9c45dc3fb4f5598808b420f1a32e2b0d51571))
+
+
+### Bug Fixes
+
+* **ui:** debounce cache stats refresh ([1f90bd9](https://github.com/fbosch/pkdx/commit/1f90bd96a88f822f2724632217ce5fdafc2e17c8))
+
+
+### Performance Improvements
+
+* **terminal:** bound image cache ([e05f1a8](https://github.com/fbosch/pkdx/commit/e05f1a87e8373b0a629dcc342b8daa2af5e66320))
+
 ## [0.5.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.4.0...pkdx-v0.5.0) (2026-06-29)
 
 
