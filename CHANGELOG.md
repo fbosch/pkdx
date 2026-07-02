@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.6.0...pkdx-v0.7.0) (2026-07-02)
+
+
+### Features
+
+* **detail:** format generation names ([e502ce9](https://github.com/fbosch/pkdx/commit/e502ce91ee7e0c5fa083821cf60aa95a7f32a42c))
+
 ## [0.6.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.5.0...pkdx-v0.6.0) (2026-07-01)
 
 
