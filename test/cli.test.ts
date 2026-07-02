@@ -87,7 +87,7 @@ const pikachuDetail: PokemonDetail = {
     },
   ],
   genderRatio: { femalePercent: 50, kind: "gendered", malePercent: 50 },
-  generation: "Generation I",
+  generation: "Generation I (Kanto)",
   growthRate: "Medium",
   heightMeters: 0.4,
   name: "Pikachu",

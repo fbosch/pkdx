@@ -336,7 +336,7 @@ export function buildPokemonDetail(
     form,
     forms: [...forms],
     genderRatio: formatGenderRatio(speciesResource.gender_rate),
-    generation: formatResourceName(speciesResource.generation.name),
+    generation: formatGenerationName(speciesResource.generation.name),
     growthRate: formatResourceName(speciesResource.growth_rate.name),
     heightMeters: pokemonResource.height / 10,
     name: form.isDefault
@@ -793,6 +793,22 @@ function formatResourceName(value: string): string {
     .join(" ");
   formattedResourceNames.set(value, formatted);
   return formatted;
+}
+
+function formatGenerationName(value: string): string {
+  const labels: Record<string, string> = {
+    "generation-i": "Generation I (Kanto)",
+    "generation-ii": "Generation II (Johto)",
+    "generation-iii": "Generation III (Hoenn)",
+    "generation-iv": "Generation IV (Sinnoh)",
+    "generation-v": "Generation V (Unova)",
+    "generation-vi": "Generation VI (Kalos)",
+    "generation-vii": "Generation VII (Alola)",
+    "generation-viii": "Generation VIII (Galar)",
+    "generation-ix": "Generation IX (Paldea)",
+  };
+
+  return labels[value] ?? formatResourceName(value);
 }
 
 function getPokemonFormDisplayName(

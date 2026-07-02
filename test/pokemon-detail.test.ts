@@ -164,7 +164,7 @@ test("builds Default Representative PokemonDetail from validated PokeAPI resourc
     form: defaultForm,
     forms,
     genderRatio: { femalePercent: 50, kind: "gendered", malePercent: 50 },
-    generation: "Generation I",
+    generation: "Generation I (Kanto)",
     growthRate: "Medium",
     heightMeters: 0.4,
     name: "Pikachu",
@@ -218,6 +218,32 @@ test("normalizes PokeAPI varieties into Pokemon Forms", () => {
     pokemonUrl: "https://pokeapi.co/api/v2/pokemon/pikachu-rock-star/",
     spriteFormKey: "rock-star",
   });
+});
+
+test("formats Pokemon generation with Roman numerals and region", () => {
+  const forms = buildPokemonForms(pikachuIndexEntry, pikachuSpecies);
+  const defaultForm = forms.find((form) => form.isDefault);
+
+  if (defaultForm === undefined) {
+    throw new Error("Missing default Pikachu form fixture");
+  }
+
+  expect(
+    buildPokemonDetail(
+      pikachuIndexEntry,
+      {
+        ...pikachuSpecies,
+        generation: {
+          name: "generation-iv",
+          url: "https://pokeapi.co/api/v2/generation/4/",
+        },
+      },
+      pikachuPokemon,
+      pikachuEvolutionChain,
+      forms,
+      defaultForm,
+    ).generation,
+  ).toBe("Generation IV (Sinnoh)");
 });
 
 test("includes every PokeAPI variety as selectable Pokemon Forms", () => {
