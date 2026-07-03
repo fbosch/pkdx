@@ -86,7 +86,7 @@ export type PokeApiEvolutionDetail = {
   needs_multiplayer?: boolean | null | undefined;
   needs_overworld_rain?: boolean | null | undefined;
   time_of_day?: string | undefined;
-  trade_species?: string | null | undefined;
+  trade_species?: { name: string; url: string } | null | undefined;
   trigger: { name: string; url: string };
   turn_upside_down?: boolean | null | undefined;
 };
@@ -223,7 +223,7 @@ const evolutionDetailSchema = z.object({
   needs_multiplayer: z.boolean().nullable().optional(),
   needs_overworld_rain: z.boolean().nullable().optional(),
   time_of_day: z.string().optional(),
-  trade_species: z.string().nullable().optional(),
+  trade_species: optionalNamedResourceSchema,
   trigger: namedResourceSchema,
   turn_upside_down: z.boolean().nullable().optional(),
 });

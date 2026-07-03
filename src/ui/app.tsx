@@ -1,14 +1,17 @@
 import type { KeyEvent } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import {
+  useQuery,
+  useQueryClient,
+  useQueryErrorResetBoundary,
+} from "@tanstack/react-query";
+import { startTransition, useEffect, useRef, useState } from "react";
 import type { CliImageMode } from "#src/cli.tsx";
 import {
   applyAppKey,
   createInitialAppState,
   detailAbilitiesLoadFailed,
   detailAbilitiesLoaded,
-  detailTargetsMatch,
   loadAdjacentDetailSpecies,
   loadDetailSpecies,
   type AppKeyContext,
@@ -119,16 +122,20 @@ export function App({
             );
           }}
           onStateChange={(next) => {
-            setState((current) =>
-              current.screen === "detail" ? next : current,
-            );
+            startTransition(() => {
+              setState((current) =>
+                current.screen === "detail" ? next : current,
+              );
+            });
           }}
           onNavigate={(delta, detail) => {
-            setState((current) =>
-              current.screen === "detail"
-                ? loadAdjacentDetailSpecies(current, delta, detail)
-                : current,
-            );
+            startTransition(() => {
+              setState((current) =>
+                current.screen === "detail"
+                  ? loadAdjacentDetailSpecies(current, delta, detail)
+                  : current,
+              );
+            });
           }}
           onSelectSpecies={(name, detail) => {
             const species = findSpeciesByIdentityOrAlias(name);
@@ -136,11 +143,13 @@ export function App({
               return;
             }
 
-            setState((current) =>
-              current.screen === "detail"
-                ? loadDetailSpecies(current, species, detail)
-                : current,
-            );
+            startTransition(() => {
+              setState((current) =>
+                current.screen === "detail"
+                  ? loadDetailSpecies(current, species, detail)
+                  : current,
+              );
+            });
           }}
           onRenderError={(error) => {
             if (debug) {
@@ -229,8 +238,11 @@ type DetailViewContentProps = Pick<
   detailError: unknown;
   status: DetailLoadStatus;
 };
-
-const detailQueryDebounceMs = 100;
+type DetailKeyboardProps = Pick<DetailViewProps, "onStateChange" | "state"> & {
+  detail?: LoadedDetail | undefined;
+  detailStatus: "loading" | "ready" | "error";
+  onResetError?: (() => void) | undefined;
+};
 
 function DetailView({
   debug,
@@ -244,20 +256,60 @@ function DetailView({
   state,
   terminalImagesEnabled,
 }: DetailViewProps) {
-  const { detail, detailStatus, detailTarget, loadedDetail } =
+  const { reset } = useQueryErrorResetBoundary();
+
+  return (
+    <DetailErrorBoundary
+      onError={onRenderError}
+      renderError={(error) => (
+        <DetailErrorFallback
+          error={error}
+          onResetError={reset}
+          onStateChange={onStateChange}
+          state={state}
+        />
+      )}
+      resetKey={detailErrorBoundaryResetKey(state)}
+    >
+      <DetailQueryView
+        debug={debug}
+        onAbilityDetailsLoadFailed={onAbilityDetailsLoadFailed}
+        onAbilityDetailsLoaded={onAbilityDetailsLoaded}
+        onCloseOverlay={onCloseOverlay}
+        onNavigate={onNavigate}
+        onResetError={reset}
+        onSelectSpecies={onSelectSpecies}
+        onStateChange={onStateChange}
+        state={state}
+        terminalImagesEnabled={terminalImagesEnabled}
+      />
+    </DetailErrorBoundary>
+  );
+}
+
+function DetailQueryView({
+  debug,
+  onAbilityDetailsLoadFailed,
+  onAbilityDetailsLoaded,
+  onCloseOverlay,
+  onStateChange,
+  onNavigate,
+  onResetError,
+  onSelectSpecies,
+  state,
+  terminalImagesEnabled,
+}: Omit<DetailViewProps, "onRenderError"> & {
+  onResetError: () => void;
+}) {
+  const { detailError, detailStatus, detailTarget, loadedDetail, refetch } =
     useLoadedDetailQuery(state);
 
-  useKeyboard((key: KeyEvent) => {
-    if (shouldOpenPokemonDbEntry(loadedDetail, state, key)) {
-      void openPokemonDbPokedexEntryInBrowser(loadedDetail.species);
-      return;
-    }
-
-    const context: AppKeyContext = {
-      detail: loadedDetail,
-      detailStatus,
-    };
-    onStateChange(applyAppKey(state, key, context));
+  useDetailKeyboard({
+    detail: loadedDetail,
+    detailStatus,
+    onResetError,
+    onStateChange,
+    state,
   });
 
   useEffect(() => {
@@ -265,29 +317,31 @@ function DetailView({
       return;
     }
 
-    void detail.refetch();
-  }, [detail.refetch, detailStatus, state.retryToken]);
+    void refetch();
+  }, [detailStatus, refetch, state.retryToken]);
 
   useEffect(() => {
-    if (debug && detail.isError && detail.error !== undefined) {
-      void appendDebugErrorLog(detail.error, {
-        event: "detail.loadFailed",
-        form: detailTarget.form?.pokemonName,
-        species: detailTarget.species.slug,
-      });
+    if (debug === false || detailStatus !== "error") {
+      return;
     }
-  }, [debug, detail.error, detail.isError, detailTarget]);
+
+    void appendDebugErrorLog(detailError, {
+      event: "detail.loadFailed",
+      form: detailTarget.form?.pokemonName,
+      species: detailTarget.species.slug,
+    });
+  }, [debug, detailError, detailStatus, detailTarget]);
 
   usePokemonSpritePrefetch({
-    enabled: detailStatus !== "error",
+    enabled: true,
     form: resolvedDetailTargetPokemonForm(loadedDetail, detailTarget),
     shiny: state.shiny,
     species: detailTarget.species,
     terminalImagesEnabled,
   });
   useAdjacentPokemonPrefetch({
-    enabled: detailStatus !== "error",
-    prewarmSprites: detailStatus === "ready",
+    enabled: true,
+    prewarmSprites: true,
     shiny: state.shiny,
     species: detailTarget.species,
     terminalImagesEnabled,
@@ -300,41 +354,31 @@ function DetailView({
   });
 
   return (
-    <DetailErrorBoundary
-      onError={onRenderError}
-      resetKey={detailErrorBoundaryResetKey(state)}
-    >
-      <DetailViewContent
-        onCloseOverlay={onCloseOverlay}
-        onNavigate={onNavigate}
-        onSelectSpecies={onSelectSpecies}
-        detail={loadedDetail}
-        detailError={detail.error}
-        status={detailStatus}
-        state={state}
-        terminalImagesEnabled={terminalImagesEnabled}
-      />
-    </DetailErrorBoundary>
+    <DetailViewContent
+      onCloseOverlay={onCloseOverlay}
+      onNavigate={onNavigate}
+      onSelectSpecies={onSelectSpecies}
+      detail={loadedDetail}
+      detailError={detailError}
+      status={detailStatus}
+      state={state}
+      terminalImagesEnabled={terminalImagesEnabled}
+    />
   );
 }
 
 function useLoadedDetailQuery(state: DetailState) {
   const queryClient = useQueryClient();
-  const detailTarget = useDebouncedDetailTarget(
-    state.species,
-    state.form,
-    detailQueryDebounceMs,
-  );
+  const previousLoadedDetail = useRef<LoadedDetail | undefined>(undefined);
+  const detailTarget = { form: state.form, species: state.species };
   const detail = useQuery({
     ...pokemonDetailQueryOptions(
       detailTarget.species,
       queryClient,
       detailTarget.form,
     ),
-    enabled: detailTargetsMatch(state, detailTarget),
   });
-  const detailStatus = detailLoadStatus(detail);
-  const loadedDetail =
+  const fetchedDetail =
     detail.data === undefined
       ? undefined
       : ({
@@ -343,7 +387,66 @@ function useLoadedDetailQuery(state: DetailState) {
           species: detailTarget.species,
         } satisfies LoadedDetail);
 
-  return { detail, detailStatus, detailTarget, loadedDetail };
+  useEffect(() => {
+    if (fetchedDetail !== undefined) {
+      previousLoadedDetail.current = fetchedDetail;
+    }
+  }, [fetchedDetail]);
+
+  const retainedDetail =
+    previousLoadedDetail.current?.species.slug === state.species.slug
+      ? previousLoadedDetail.current
+      : undefined;
+  const loadedDetail = fetchedDetail ?? retainedDetail;
+  const detailStatus = detailLoadStatus(detail, loadedDetail);
+
+  return {
+    detailError: detail.error,
+    detailStatus,
+    detailTarget,
+    loadedDetail,
+    refetch: detail.refetch,
+  };
+}
+
+function DetailErrorFallback({
+  error,
+  onResetError,
+  onStateChange,
+  state,
+}: Pick<DetailKeyboardProps, "onResetError" | "onStateChange" | "state"> & {
+  error: unknown;
+}) {
+  useDetailKeyboard({
+    detailStatus: "error",
+    onResetError,
+    onStateChange,
+    state,
+  });
+
+  return <DetailErrorView error={error} state={state} />;
+}
+
+function useDetailKeyboard({
+  detail,
+  detailStatus,
+  onResetError,
+  onStateChange,
+  state,
+}: DetailKeyboardProps) {
+  useKeyboard((key: KeyEvent) => {
+    if (shouldOpenPokemonDbEntry(detail, state, key)) {
+      void openPokemonDbPokedexEntryInBrowser(detail.species);
+      return;
+    }
+
+    if (key.name === "r" && detailStatus === "error") {
+      onResetError?.();
+    }
+
+    const context: AppKeyContext = { detail, detailStatus };
+    onStateChange(applyAppKey(state, key, context));
+  });
 }
 
 function DetailViewContent({
@@ -356,37 +459,37 @@ function DetailViewContent({
   state,
   terminalImagesEnabled,
 }: DetailViewContentProps) {
-  if (detail !== undefined) {
-    const descriptionIndex = clampedDescriptionIndex(
-      state.descriptionIndex,
-      detail.detail,
-    );
-    return (
-      <LoadedDetailView
-        abilityViewerOpen={state.detailOverlay === "abilities"}
-        detail={detail.detail}
-        descriptionIndex={descriptionIndex}
-        errorMessage={
-          status === "error" ? detailErrorMessage(detailError) : undefined
-        }
-        evolutionViewerOpen={state.detailOverlay === "evolutions"}
-        formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
-        loadedSpecies={detail.species}
-        navigationSpecies={state.species}
-        onCloseOverlay={onCloseOverlay}
-        onNavigate={(delta) => onNavigate(delta, detail)}
-        onSelectSpecies={(name) => onSelectSpecies(name, detail)}
-        shiny={state.shiny}
-        terminalImagesEnabled={terminalImagesEnabled}
-      />
+  if (detail === undefined) {
+    return status === "error" ? (
+      <DetailErrorView error={detailError} state={state} />
+    ) : (
+      <InitialDetailLoadingView species={state.species} />
     );
   }
 
-  if (status === "loading") {
-    return <InitialDetailLoadingView species={state.species} />;
-  }
-
-  return <DetailErrorView error={detailError} state={state} />;
+  const descriptionIndex = clampedDescriptionIndex(
+    state.descriptionIndex,
+    detail.detail,
+  );
+  return (
+    <LoadedDetailView
+      abilityViewerOpen={state.detailOverlay === "abilities"}
+      detail={detail.detail}
+      descriptionIndex={descriptionIndex}
+      errorMessage={
+        status === "error" ? detailErrorMessage(detailError) : undefined
+      }
+      evolutionViewerOpen={state.detailOverlay === "evolutions"}
+      formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
+      loadedSpecies={detail.species}
+      navigationSpecies={state.species}
+      onCloseOverlay={onCloseOverlay}
+      onNavigate={(delta) => onNavigate(delta, detail)}
+      onSelectSpecies={(name) => onSelectSpecies(name, detail)}
+      shiny={state.shiny}
+      terminalImagesEnabled={terminalImagesEnabled}
+    />
+  );
 }
 
 function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
@@ -432,17 +535,16 @@ function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
   );
 }
 
-function detailLoadStatus(query: {
-  data: unknown;
-  isError: boolean;
-  isPending: boolean;
-}): DetailLoadStatus {
-  if (query.data !== undefined) {
-    return "ready";
-  }
-
+function detailLoadStatus(
+  query: { data: unknown; isError: boolean; isPending: boolean },
+  loadedDetail: LoadedDetail | undefined,
+): DetailLoadStatus {
   if (query.isError) {
     return "error";
+  }
+
+  if (query.data !== undefined || loadedDetail !== undefined) {
+    return "ready";
   }
 
   return query.isPending ? "loading" : "loading";
@@ -472,36 +574,6 @@ function SkeletonPanel({ height, width }: { height: number; width: number }) {
       style={{ height, width }}
     />
   );
-}
-
-function useDebouncedDetailTarget(
-  species: SpeciesIndexEntry,
-  form: PokemonFormIntent | undefined,
-  delayMs: number,
-): DetailQueryTarget {
-  const [target, setTarget] = useState<DetailQueryTarget>(() => ({
-    form,
-    species,
-  }));
-
-  useEffect(() => {
-    if (
-      target.species.slug === species.slug &&
-      pokemonFormTargetKey(target.form) === pokemonFormTargetKey(form)
-    ) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      setTarget({ form, species });
-    }, delayMs);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [delayMs, form, species, target]);
-
-  return target;
 }
 
 function resolvedDetailTargetPokemonForm(

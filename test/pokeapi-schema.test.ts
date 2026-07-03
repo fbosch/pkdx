@@ -58,6 +58,10 @@ test("parses consumed Evolution Chain fields", () => {
             {
               gender: 1,
               min_level: 22,
+              trade_species: {
+                name: "karrablast",
+                url: "https://pokeapi.co/api/v2/pokemon-species/588/",
+              },
               trigger: {
                 name: "level-up",
                 url: "https://pokeapi.co/api/v2/evolution-trigger/1/",
@@ -81,6 +85,17 @@ test("parses consumed Evolution Chain fields", () => {
   expect(parseEvolutionChainResource(resource)).toMatchObject({
     id: 10,
     chain: {
+      evolves_to: [
+        {
+          evolution_details: [
+            {
+              trade_species: {
+                name: "karrablast",
+              },
+            },
+          ],
+        },
+      ],
       species: {
         name: "pikachu",
       },

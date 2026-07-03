@@ -745,16 +745,6 @@ export function pokemonFormsMatch(
     .otherwise(() => false);
 }
 
-export function detailTargetsMatch(
-  state: DetailState,
-  target: { form: PokemonFormIntent | undefined; species: SpeciesIndexEntry },
-): boolean {
-  return (
-    target.species.slug === state.species.slug &&
-    pokemonFormsMatch(target.form, state.form, { allowDefaultFallback: true })
-  );
-}
-
 function isUnresolvedCarryoverFormIntent(
   form: PokemonFormIntent | undefined,
 ): form is PokemonFormIntent {
