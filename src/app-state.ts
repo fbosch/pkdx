@@ -34,15 +34,12 @@ export type DetailState = {
   screen: "detail";
   previousQuery: string;
   previousSelectedIndex: number;
-  detail: LoadedDetail | undefined;
   detailOverlay: DetailOverlay | undefined;
   descriptionIndex: number;
-  errorMessage: string | undefined;
   form: PokemonFormIntent | undefined;
   retryToken: number;
   shiny: boolean;
   species: SpeciesIndexEntry;
-  status: "loading" | "ready" | "error";
   shouldExit: boolean;
 };
 
@@ -67,19 +64,19 @@ export type AppKey = {
 
 export type DetailNavigationDelta = -1 | 1;
 
+export type DetailLoadStatus = "loading" | "ready" | "error";
+
+export type AppKeyContext = {
+  detail?: LoadedDetail | undefined;
+  detailStatus?: DetailLoadStatus | undefined;
+};
+
 type AppEvent =
-  | { key: AppKey; type: "key" }
-  | { species: SpeciesIndexEntry; type: "detail.loadSpecies" }
+  | { context: AppKeyContext; key: AppKey; type: "key" }
   | {
-      detail: PokemonDetail;
+      detail?: LoadedDetail | undefined;
       species: SpeciesIndexEntry;
-      type: "detail.loadSucceeded";
-    }
-  | {
-      error: unknown;
-      form?: PokemonFormIntent;
-      species: SpeciesIndexEntry;
-      type: "detail.loadFailed";
+      type: "detail.loadSpecies";
     }
   | { type: "detail.abilitiesLoaded" }
   | { type: "detail.abilitiesLoadFailed" };
@@ -140,8 +137,12 @@ function transitionAppState(state: AppState, event: AppEvent): AppState {
   return appStateMachine.transition(state, event);
 }
 
-export function applyAppKey(state: AppState, key: AppKey): AppState {
-  return transitionAppState(state, { key, type: "key" });
+export function applyAppKey(
+  state: AppState,
+  key: AppKey,
+  context: AppKeyContext = {},
+): AppState {
+  return transitionAppState(state, { context, key, type: "key" });
 }
 
 const appStateMachine: AppStateMachine = {
@@ -176,14 +177,8 @@ const detailStateNode: DetailStateNode = {
   transition: (state, event) =>
     match(event)
       .returnType<DetailState | AppState>()
-      .with({ type: "detail.loadSpecies" }, ({ species }) =>
-        loadDetailSpeciesState(state, species),
-      )
-      .with({ type: "detail.loadSucceeded" }, ({ detail, species }) =>
-        detailLoadSucceededState(state, species, detail),
-      )
-      .with({ type: "detail.loadFailed" }, ({ error, form, species }) =>
-        detailLoadFailedState(state, species, error, form),
+      .with({ type: "detail.loadSpecies" }, ({ detail, species }) =>
+        loadDetailSpeciesState(state, species, detail),
       )
       .with({ type: "detail.abilitiesLoaded" }, () =>
         openLoadedAbilityOverlay(state),
@@ -191,7 +186,9 @@ const detailStateNode: DetailStateNode = {
       .with({ type: "detail.abilitiesLoadFailed" }, () =>
         closeDetailOverlay(state),
       )
-      .with({ type: "key" }, ({ key }) => applyDetailKey(state, key))
+      .with({ type: "key" }, ({ context, key }) =>
+        applyDetailKey(state, key, context),
+      )
       .exhaustive(),
 };
 
@@ -200,17 +197,14 @@ function createInitialState(query = ""): AppState {
   if (exactSpecies !== undefined) {
     return {
       screen: "detail",
-      detail: undefined,
       detailOverlay: undefined,
       descriptionIndex: 0,
-      errorMessage: undefined,
       form: undefined,
       previousQuery: "",
       previousSelectedIndex: 0,
       retryToken: 0,
       shiny: false,
       species: exactSpecies,
-      status: "loading",
       shouldExit: false,
     };
   }
@@ -239,13 +233,17 @@ function shouldExitFromState(state: AppState, key: AppKey): boolean {
   return isExitKey(key);
 }
 
-function applyDetailKey(state: DetailState, key: AppKey): AppState {
+function applyDetailKey(
+  state: DetailState,
+  key: AppKey,
+  context: AppKeyContext,
+): AppState {
   if (state.detailOverlay !== undefined && key.name === "escape") {
     return closeDetailOverlay(state);
   }
 
   if (state.detailOverlay !== undefined) {
-    return applyDetailOverlayKey(state, key);
+    return applyDetailOverlayKey(state, key, context.detail);
   }
 
   if (key.name === "/") {
@@ -257,20 +255,28 @@ function applyDetailKey(state: DetailState, key: AppKey): AppState {
     };
   }
 
-  return applyDetailActionKey(state, key);
+  return applyDetailActionKey(state, key, context);
 }
 
-function applyDetailActionKey(state: DetailState, key: AppKey): AppState {
-  const detailOverlay = getDetailOverlayAction(state, key);
+function applyDetailActionKey(
+  state: DetailState,
+  key: AppKey,
+  context: AppKeyContext,
+): AppState {
+  const detailOverlay = getDetailOverlayAction(key, context.detail);
   if (detailOverlay !== undefined) {
     return openDetailOverlay(state, detailOverlay);
   }
 
-  if (canCycleDetailDescription(state, key)) {
-    return cycleDetailDescription(state, key.shift === true ? -1 : 1);
+  if (canCycleDetailDescription(context.detail, key)) {
+    return cycleDetailDescription(
+      state,
+      context.detail,
+      key.shift === true ? -1 : 1,
+    );
   }
 
-  if (key.name === "r" && state.status === "error") {
+  if (key.name === "r" && context.detailStatus === "error") {
     return retryDetailLoad(state);
   }
 
@@ -278,38 +284,38 @@ function applyDetailActionKey(state: DetailState, key: AppKey): AppState {
     return toggleDetailShiny(state);
   }
 
-  if (canToggleSingleAlternateForm(state, key)) {
-    return toggleSingleAlternateForm(state);
+  if (canToggleSingleAlternateForm(context.detail, key)) {
+    return toggleSingleAlternateForm(state, context.detail);
   }
 
   const navigationDelta = getDetailNavigationDelta(key);
   if (navigationDelta !== undefined) {
-    return loadAdjacentDetailSpecies(state, navigationDelta);
+    return loadAdjacentDetailSpecies(state, navigationDelta, context.detail);
   }
 
   return state;
 }
 
 function getDetailOverlayAction(
-  state: DetailState,
   key: AppKey,
+  detail: LoadedDetail | undefined,
 ): DetailState["detailOverlay"] {
-  if (key.name === "a" && state.detail !== undefined) {
+  if (key.name === "a" && detail !== undefined) {
     return "abilities-loading";
   }
 
   if (
     key.name === "e" &&
-    state.detail !== undefined &&
-    hasPokemonEvolutionChain(state.detail.detail.evolutionChain)
+    detail !== undefined &&
+    hasPokemonEvolutionChain(detail.detail.evolutionChain)
   ) {
     return "evolutions";
   }
 
-  if (canOpenFormSelector(state, key)) {
+  if (canOpenFormSelector(detail, key)) {
     return {
       kind: "forms",
-      selectedIndex: getCurrentPokemonFormIndex(state),
+      selectedIndex: getCurrentPokemonFormIndex(detail),
     };
   }
 
@@ -330,30 +336,40 @@ function getDetailNavigationDelta(
   return undefined;
 }
 
-function canOpenFormSelector(state: DetailState, key: AppKey): boolean {
-  return (
-    key.name === "f" &&
-    state.detail !== undefined &&
-    getAlternatePokemonForms(state.detail.detail).length > 1
-  );
-}
-
-function canToggleSingleAlternateForm(
-  state: DetailState,
+function canOpenFormSelector(
+  detail: LoadedDetail | undefined,
   key: AppKey,
 ): boolean {
   return (
     key.name === "f" &&
-    state.detail !== undefined &&
-    getAlternatePokemonForms(state.detail.detail).length === 1
+    detail !== undefined &&
+    getAlternatePokemonForms(detail.detail).length > 1
   );
 }
 
-function canCycleDetailDescription(state: DetailState, key: AppKey): boolean {
-  return key.name === "d" && state.detail !== undefined;
+function canToggleSingleAlternateForm(
+  detail: LoadedDetail | undefined,
+  key: AppKey,
+): boolean {
+  return (
+    key.name === "f" &&
+    detail !== undefined &&
+    getAlternatePokemonForms(detail.detail).length === 1
+  );
 }
 
-function applyDetailOverlayKey(state: DetailState, key: AppKey): AppState {
+function canCycleDetailDescription(
+  detail: LoadedDetail | undefined,
+  key: AppKey,
+): boolean {
+  return key.name === "d" && detail !== undefined;
+}
+
+function applyDetailOverlayKey(
+  state: DetailState,
+  key: AppKey,
+  detail: LoadedDetail | undefined,
+): AppState {
   if (state.detailOverlay === "abilities") {
     return applyAbilityOverlayKey(state, key);
   }
@@ -363,10 +379,10 @@ function applyDetailOverlayKey(state: DetailState, key: AppKey): AppState {
   }
 
   if (state.detailOverlay === "evolutions") {
-    return applyEvolutionOverlayKey(state, key);
+    return applyEvolutionOverlayKey(state, key, detail);
   }
 
-  return applyFormOverlayKey(state, key);
+  return applyFormOverlayKey(state, key, detail);
 }
 
 function applyAbilityOverlayKey(state: DetailState, key: AppKey): AppState {
@@ -388,30 +404,34 @@ function applyAbilityLoadingOverlayKey(
   return state;
 }
 
-function applyEvolutionOverlayKey(state: DetailState, key: AppKey): AppState {
+function applyEvolutionOverlayKey(
+  state: DetailState,
+  key: AppKey,
+  detail: LoadedDetail | undefined,
+): AppState {
   if (key.name === "e") {
     return closeDetailOverlay(state);
   }
 
-  const selectedSpecies = evolutionShortcutSpecies(state, key);
+  const selectedSpecies = evolutionShortcutSpecies(detail, key);
   if (selectedSpecies !== undefined) {
-    return loadDetailSpecies(state, selectedSpecies);
+    return loadDetailSpecies(state, selectedSpecies, detail);
   }
 
   return state;
 }
 
 function evolutionShortcutSpecies(
-  state: DetailState,
+  detail: LoadedDetail | undefined,
   key: AppKey,
 ): SpeciesIndexEntry | undefined {
-  if (state.detail === undefined || /^[1-9]$/.test(key.name) === false) {
+  if (detail === undefined || /^[1-9]$/.test(key.name) === false) {
     return undefined;
   }
 
   const shortcutIndex = Number.parseInt(key.name, 10) - 1;
   const target = pokemonEvolutionShortcutTargets(
-    state.detail.detail.evolutionChain,
+    detail.detail.evolutionChain,
   ).at(shortcutIndex);
   if (target === undefined) {
     return undefined;
@@ -420,21 +440,25 @@ function evolutionShortcutSpecies(
   return findSpeciesByIdentityOrAlias(target.targetName);
 }
 
-function applyFormOverlayKey(state: DetailState, key: AppKey): AppState {
+function applyFormOverlayKey(
+  state: DetailState,
+  key: AppKey,
+  detail: LoadedDetail | undefined,
+): AppState {
   if (key.name === "f") {
     return closeDetailOverlay(state);
   }
 
   if (key.name === "enter" || key.name === "return") {
-    return loadSelectedDetailForm(state);
+    return loadSelectedDetailForm(state, detail);
   }
 
   if (key.name === "j" || key.name === "down") {
-    return moveDetailFormSelection(state, 1);
+    return moveDetailFormSelection(state, detail, 1);
   }
 
   if (key.name === "k" || key.name === "up") {
-    return moveDetailFormSelection(state, -1);
+    return moveDetailFormSelection(state, detail, -1);
   }
 
   return state;
@@ -442,17 +466,18 @@ function applyFormOverlayKey(state: DetailState, key: AppKey): AppState {
 
 function moveDetailFormSelection(
   state: DetailState,
+  detail: LoadedDetail | undefined,
   delta: number,
 ): DetailState {
   if (
-    state.detail === undefined ||
+    detail === undefined ||
     typeof state.detailOverlay !== "object" ||
     state.detailOverlay.kind !== "forms"
   ) {
     return state;
   }
 
-  const maxIndex = Math.max(0, state.detail.detail.forms.length - 1);
+  const maxIndex = Math.max(0, detail.detail.forms.length - 1);
 
   return {
     ...state,
@@ -466,33 +491,39 @@ function moveDetailFormSelection(
   };
 }
 
-function loadSelectedDetailForm(state: DetailState): DetailState {
+function loadSelectedDetailForm(
+  state: DetailState,
+  detail: LoadedDetail | undefined,
+): DetailState {
   if (
-    state.detail === undefined ||
+    detail === undefined ||
     typeof state.detailOverlay !== "object" ||
     state.detailOverlay.kind !== "forms"
   ) {
     return state;
   }
 
-  const form = state.detail.detail.forms[state.detailOverlay.selectedIndex];
+  const form = detail.detail.forms[state.detailOverlay.selectedIndex];
   if (form === undefined) {
     return state;
   }
 
-  if (pokemonFormTargetKey(state.detail.form) === pokemonFormTargetKey(form)) {
+  if (pokemonFormTargetKey(detail.form) === pokemonFormTargetKey(form)) {
     return closeDetailOverlay(state);
   }
 
   return loadDetailForm(state, form);
 }
 
-function toggleSingleAlternateForm(state: DetailState): DetailState {
-  const detail = state.detail?.detail;
-  if (detail === undefined) {
+function toggleSingleAlternateForm(
+  state: DetailState,
+  loadedDetail: LoadedDetail | undefined,
+): DetailState {
+  if (loadedDetail === undefined) {
     return state;
   }
 
+  const detail = loadedDetail.detail;
   const alternateForm = getAlternatePokemonForms(detail)[0];
   const defaultForm = detail.forms.find((form) => form.isDefault);
   const targetForm = detail.form.isDefault ? alternateForm : defaultForm;
@@ -512,9 +543,10 @@ function toggleDetailShiny(state: DetailState): DetailState {
 
 function cycleDetailDescription(
   state: DetailState,
+  detail: LoadedDetail | undefined,
   delta: number,
 ): DetailState {
-  const count = state.detail?.detail.flavorTexts.length ?? 0;
+  const count = detail?.detail.flavorTexts.length ?? 0;
   if (count <= 1) {
     return state;
   }
@@ -545,20 +577,26 @@ function closeDetailOverlay(state: DetailState): DetailState {
 export function loadDetailSpecies(
   state: DetailState,
   species: SpeciesIndexEntry,
+  detail?: LoadedDetail,
 ): DetailState {
-  return transitionDetailState(state, { species, type: "detail.loadSpecies" });
+  return transitionDetailState(state, {
+    detail,
+    species,
+    type: "detail.loadSpecies",
+  });
 }
 
 export function loadAdjacentDetailSpecies(
   state: DetailState,
   delta: DetailNavigationDelta,
+  detail?: LoadedDetail,
 ): DetailState {
   const species = getSpeciesByDexDelta(state.species, delta);
   if (species === undefined) {
     return state;
   }
 
-  return loadDetailSpecies(state, species);
+  return loadDetailSpecies(state, species, detail);
 }
 
 function loadDetailForm(state: DetailState, form: PokemonForm): DetailState {
@@ -566,39 +604,9 @@ function loadDetailForm(state: DetailState, form: PokemonForm): DetailState {
     ...state,
     detailOverlay: undefined,
     descriptionIndex: 0,
-    errorMessage: undefined,
     form: pokemonFormIntent(form),
     retryToken: 0,
-    status: "loading",
   };
-}
-
-export function detailLoadSucceeded(
-  state: DetailState,
-  species: SpeciesIndexEntry,
-  detail: PokemonDetail,
-): DetailState {
-  return transitionDetailState(state, {
-    detail,
-    species,
-    type: "detail.loadSucceeded",
-  });
-}
-
-export function detailLoadFailed(
-  state: DetailState,
-  species: SpeciesIndexEntry,
-  error: unknown,
-  form?: PokemonFormIntent,
-): DetailState {
-  const event: AppEvent = {
-    error,
-    species,
-    type: "detail.loadFailed",
-    ...(form === undefined ? {} : { form }),
-  };
-
-  return transitionDetailState(state, event);
 }
 
 export function detailAbilitiesLoaded(state: DetailState): DetailState {
@@ -620,62 +628,15 @@ function transitionDetailState(
 function loadDetailSpeciesState(
   state: DetailState,
   species: SpeciesIndexEntry,
+  detail?: LoadedDetail,
 ): DetailState {
   return {
     ...state,
     descriptionIndex: 0,
-    errorMessage: undefined,
     detailOverlay: undefined,
-    form: carryOverDetailForm(state, species),
+    form: carryOverDetailForm(state, species, detail),
     retryToken: 0,
     species,
-    status: "loading",
-  };
-}
-
-function detailLoadSucceededState(
-  state: DetailState,
-  species: SpeciesIndexEntry,
-  detail: PokemonDetail,
-): DetailState {
-  if (
-    state.species.slug !== species.slug ||
-    !pokemonFormsMatch(state.form, detail.form, { allowDefaultFallback: true })
-  ) {
-    return state;
-  }
-
-  return {
-    ...state,
-    descriptionIndex: Math.min(
-      state.descriptionIndex,
-      Math.max(0, detail.flavorTexts.length - 1),
-    ),
-    detail: { detail, form: detail.form, species },
-    detailOverlay: undefined,
-    errorMessage: undefined,
-    form: detail.form,
-    status: "ready",
-  };
-}
-
-function detailLoadFailedState(
-  state: DetailState,
-  species: SpeciesIndexEntry,
-  error: unknown,
-  form?: PokemonFormIntent,
-): DetailState {
-  if (
-    state.species.slug !== species.slug ||
-    !pokemonFormsMatch(state.form, form, { allowDefaultFallback: false })
-  ) {
-    return state;
-  }
-
-  return {
-    ...state,
-    errorMessage: getDetailErrorMessage(error),
-    status: "error",
   };
 }
 
@@ -693,13 +654,18 @@ function openLoadedAbilityOverlay(state: DetailState): DetailState {
 function carryOverDetailForm(
   state: DetailState,
   species: SpeciesIndexEntry,
+  detail: LoadedDetail | undefined,
 ): PokemonFormIntent | undefined {
-  const form = state.detail?.form;
+  if (detail === undefined) {
+    return undefined;
+  }
+
+  const form = detail?.form;
   if (form === undefined || isCarryoverEligiblePokemonForm(form) === false) {
     return undefined;
   }
 
-  return isDirectEvolutionSpecies(state, species)
+  return isDirectEvolutionSpecies(state, species, detail)
     ? pokemonFormCarryoverIntent(form)
     : undefined;
 }
@@ -714,14 +680,14 @@ function isCarryoverEligiblePokemonForm(form: PokemonForm): boolean {
 function isDirectEvolutionSpecies(
   state: DetailState,
   species: SpeciesIndexEntry,
+  detail: LoadedDetail,
 ): boolean {
-  const root = state.detail?.detail.evolutionChain.root;
   const current = state.species.name;
-  if (root === undefined) {
-    return false;
-  }
-
-  return evolutionChainIncludesDirectRelationship(root, current, species.name);
+  return evolutionChainIncludesDirectRelationship(
+    detail.detail.evolutionChain.root,
+    current,
+    species.name,
+  );
 }
 
 function evolutionChainIncludesDirectRelationship(
@@ -779,6 +745,16 @@ export function pokemonFormsMatch(
     .otherwise(() => false);
 }
 
+export function detailTargetsMatch(
+  state: DetailState,
+  target: { form: PokemonFormIntent | undefined; species: SpeciesIndexEntry },
+): boolean {
+  return (
+    target.species.slug === state.species.slug &&
+    pokemonFormsMatch(target.form, state.form, { allowDefaultFallback: true })
+  );
+}
+
 function isUnresolvedCarryoverFormIntent(
   form: PokemonFormIntent | undefined,
 ): form is PokemonFormIntent {
@@ -802,9 +778,7 @@ function pokemonFormsShareAlternateKey(
 function retryDetailLoad(state: DetailState): DetailState {
   return {
     ...state,
-    errorMessage: undefined,
     retryToken: state.retryToken + 1,
-    status: "loading",
   };
 }
 
@@ -887,28 +861,25 @@ function openSelectedSpecies(state: SearchState): AppState {
 
   return {
     screen: "detail",
-    detail: undefined,
     detailOverlay: undefined,
     descriptionIndex: 0,
-    errorMessage: undefined,
     form: undefined,
     previousQuery: state.query,
     previousSelectedIndex: state.selectedIndex,
     retryToken: 0,
     shiny: false,
     species,
-    status: "loading",
     shouldExit: false,
   };
 }
 
-function getCurrentPokemonFormIndex(state: DetailState): number {
-  if (state.detail === undefined) {
+function getCurrentPokemonFormIndex(detail: LoadedDetail | undefined): number {
+  if (detail === undefined) {
     return 0;
   }
 
-  const currentFormKey = pokemonFormTargetKey(state.detail.form);
-  const index = state.detail.detail.forms.findIndex(
+  const currentFormKey = pokemonFormTargetKey(detail.form);
+  const index = detail.detail.forms.findIndex(
     (form) => pokemonFormTargetKey(form) === currentFormKey,
   );
 
@@ -917,14 +888,6 @@ function getCurrentPokemonFormIndex(state: DetailState): number {
 
 function getAlternatePokemonForms(detail: PokemonDetail): PokemonForm[] {
   return detail.forms.filter((form) => form.isDefault === false);
-}
-
-function getDetailErrorMessage(error: unknown): string {
-  if (error instanceof Error && error.message.length > 0) {
-    return error.message;
-  }
-
-  return "Detail data is unavailable. If offline, this species is not cached yet.";
 }
 
 function updateSearchQuery(state: SearchState, query: string): SearchState {

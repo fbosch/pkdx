@@ -1,9 +1,9 @@
 import {
   applyAppKey,
   createInitialAppState,
-  detailLoadSucceeded,
   loadDetailSpecies,
   type DetailState,
+  type LoadedDetail,
 } from "../../src/app-state";
 import {
   buildPokemonDetail,
@@ -31,11 +31,12 @@ const detail = buildPokemonDetail(
   pikachuForms,
   pikachuDefault,
 );
-const loadedPikachu = detailLoadSucceeded(
-  createInitialAppState("pikachu") as DetailState,
-  pikachu,
+const loadedPikachu = createInitialAppState("pikachu") as DetailState;
+const loadedPikachuDetail: LoadedDetail = {
   detail,
-);
+  form: detail.form,
+  species: pikachu,
+};
 
 const benchmarks = [
   {
@@ -50,15 +51,25 @@ const benchmarks = [
   },
   {
     name: "detail-toggle-shiny",
-    run: () => applyAppKey(loadedPikachu, { name: "s" }),
+    run: () =>
+      applyAppKey(
+        loadedPikachu,
+        { name: "s" },
+        { detail: loadedPikachuDetail },
+      ),
   },
   {
     name: "detail-cycle-description",
-    run: () => applyAppKey(loadedPikachu, { name: "d" }),
+    run: () =>
+      applyAppKey(
+        loadedPikachu,
+        { name: "d" },
+        { detail: loadedPikachuDetail },
+      ),
   },
   {
     name: "detail-load-species-transition",
-    run: () => loadDetailSpecies(loadedPikachu, raichu),
+    run: () => loadDetailSpecies(loadedPikachu, raichu, loadedPikachuDetail),
   },
 ] as const;
 

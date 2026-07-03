@@ -7,11 +7,10 @@ import {
   applyAppKey,
   createInitialAppState,
   detailAbilitiesLoaded,
-  detailLoadFailed,
-  detailLoadSucceeded,
   loadDetailSpecies,
   pokemonFormsMatch,
   type DetailState,
+  type LoadedDetail,
 } from "../src/app-state";
 import {
   appExitSignals,
@@ -412,7 +411,6 @@ test("Search opens Detail on Enter", () => {
   expect(next).toMatchObject({
     screen: "detail",
     previousSelectedIndex: 0,
-    status: "loading",
     species: {
       slug: "pikachu",
     },
@@ -436,24 +434,18 @@ test("Search stores previous selection while opening Detail", () => {
 test("Detail starts in loading state before data is ready", () => {
   expect(createInitialAppState("pikachu")).toMatchObject({
     screen: "detail",
-    detail: undefined,
     retryToken: 0,
     shiny: false,
-    status: "loading",
   });
 });
 
 test("Detail toggles shiny Sprite presentation without changing identity", () => {
   const state = loadedPikachuDetailState();
-  const shiny = applyAppKey(state, { name: "s" });
-  const regular = applyAppKey(shiny, { name: "s" });
+  const shiny = applyLoadedDetailKey(state, { name: "s" });
+  const regular = applyLoadedDetailKey(shiny as DetailState, { name: "s" });
 
   expect(shiny).toMatchObject({
     screen: "detail",
-    detail: {
-      detail: pikachuDetail,
-      species: { slug: "pikachu" },
-    },
     shiny: true,
     species: { slug: "pikachu" },
   });
@@ -466,8 +458,11 @@ test("Detail toggles shiny Sprite presentation without changing identity", () =>
 
 test("Detail cycles descriptions with d and Shift-D", () => {
   const state = loadedPikachuDetailState();
-  const next = applyAppKey(state, { name: "d" });
-  const previous = applyAppKey(next, { name: "d", shift: true });
+  const next = applyLoadedDetailKey(state, { name: "d" });
+  const previous = applyLoadedDetailKey(next as DetailState, {
+    name: "d",
+    shift: true,
+  });
 
   expect(next).toMatchObject({
     screen: "detail",
@@ -481,57 +476,20 @@ test("Detail cycles descriptions with d and Shift-D", () => {
   });
 });
 
-test("Detail load success swaps the completed model atomically", () => {
-  const state = createInitialAppState("pikachu") as DetailState;
-  const next = detailLoadSucceeded(state, state.species, pikachuDetail);
-
-  expect(next).toMatchObject({
-    screen: "detail",
-    detail: {
-      detail: pikachuDetail,
-      species: { slug: "pikachu" },
-    },
-    status: "ready",
-  });
-});
-
-test("Detail keeps current model while loading a new species", () => {
-  const state = detailLoadSucceeded(
-    createInitialAppState("pikachu") as DetailState,
-    findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
-    pikachuDetail,
-  );
-  const bulbasaur =
-    findExactSpecies("bulbasaur") ?? throwMissingSpecies("bulbasaur");
-
-  const next = loadDetailSpecies(state, bulbasaur);
-
-  expect(next).toMatchObject({
-    detail: {
-      detail: pikachuDetail,
-      species: { slug: "pikachu" },
-    },
-    species: { slug: "bulbasaur" },
-    status: "loading",
-  });
-});
-
 test("Detail navigates previous and next species in National Dex order", () => {
   const state = loadedPikachuDetailState();
-  const previous = applyAppKey(state, { name: "h" });
-  const next = applyAppKey(previous, { name: "right" });
+  const previous = applyLoadedDetailKey(state, { name: "h" });
+  const next = applyLoadedDetailKey(previous as DetailState, { name: "right" });
 
   expect(previous).toMatchObject({
     screen: "detail",
     descriptionIndex: 0,
     form: undefined,
     species: { dexNumber: 24, slug: "arbok" },
-    status: "loading",
   });
   expect(next).toMatchObject({
     screen: "detail",
     species: { dexNumber: 25, slug: "pikachu" },
-    status: "loading",
   });
 });
 
@@ -541,27 +499,20 @@ test("Detail National Dex navigation stops at boundaries", () => {
   expect(applyAppKey(state, { name: "left" })).toBe(state);
 });
 
-test("Detail retry returns a recoverable error to loading", () => {
+test("Detail retry increments the retry signal", () => {
   const state = createInitialAppState("pikachu") as DetailState;
-  const failed = detailLoadFailed(state, state.species, new Error("offline"));
-  const retrying = applyAppKey(failed, { name: "r" });
+  const retrying = applyAppKey(state, { name: "r" }, { detailStatus: "error" });
 
-  expect(failed).toMatchObject({
-    errorMessage: "offline",
-    status: "error",
-  });
   expect(retrying).toMatchObject({
-    errorMessage: undefined,
     retryToken: 1,
-    status: "loading",
   });
 });
 
 test("Detail opens and closes ability viewer with a", () => {
   const state = loadedPikachuDetailState();
-  const loading = applyAppKey(state, { name: "a" });
+  const loading = applyLoadedDetailKey(state, { name: "a" });
   const opened = detailAbilitiesLoaded(loading as DetailState);
-  const closed = applyAppKey(opened, { name: "a" });
+  const closed = applyLoadedDetailKey(opened, { name: "a" });
 
   expect(loading).toMatchObject({
     screen: "detail",
@@ -580,9 +531,9 @@ test("Detail opens and closes ability viewer with a", () => {
 
 test("Detail ability viewer closes with Escape instead of exiting", () => {
   const state = loadedPikachuDetailState();
-  const loading = applyAppKey(state, { name: "a" });
+  const loading = applyLoadedDetailKey(state, { name: "a" });
   const opened = detailAbilitiesLoaded(loading as DetailState);
-  const closed = applyAppKey(opened, { name: "escape" });
+  const closed = applyLoadedDetailKey(opened, { name: "escape" });
 
   expect(closed).toMatchObject({
     screen: "detail",
@@ -593,8 +544,8 @@ test("Detail ability viewer closes with Escape instead of exiting", () => {
 
 test("Detail opens and closes evolution viewer with e", () => {
   const state = loadedPikachuDetailState();
-  const opened = applyAppKey(state, { name: "e" });
-  const closed = applyAppKey(opened, { name: "e" });
+  const opened = applyLoadedDetailKey(state, { name: "e" });
+  const closed = applyLoadedDetailKey(opened as DetailState, { name: "e" });
 
   expect(opened).toMatchObject({
     screen: "detail",
@@ -608,8 +559,8 @@ test("Detail opens and closes evolution viewer with e", () => {
 });
 
 test("Detail does not open evolution viewer without an evolution chain", () => {
-  const state = detailLoadSucceeded(
-    createInitialAppState("pikachu") as DetailState,
+  const state = createInitialAppState("pikachu") as DetailState;
+  const detail = loadedDetail(
     findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
     {
       ...pikachuDetail,
@@ -623,13 +574,15 @@ test("Detail does not open evolution viewer without an evolution chain", () => {
     },
   );
 
-  expect(applyAppKey(state, { name: "e" })).toBe(state);
+  expect(applyAppKey(state, { name: "e" }, { detail })).toBe(state);
 });
 
 test("Detail evolution viewer closes with Escape instead of exiting", () => {
   const state = loadedPikachuDetailState();
-  const opened = applyAppKey(state, { name: "e" });
-  const closed = applyAppKey(opened, { name: "escape" });
+  const opened = applyLoadedDetailKey(state, { name: "e" });
+  const closed = applyLoadedDetailKey(opened as DetailState, {
+    name: "escape",
+  });
 
   expect(closed).toMatchObject({
     screen: "detail",
@@ -640,36 +593,42 @@ test("Detail evolution viewer closes with Escape instead of exiting", () => {
 
 test("Detail evolution selection loads the selected species", () => {
   const state = loadedPikachuDetailState();
-  const opened = applyAppKey(state, { name: "e" });
+  const opened = applyLoadedDetailKey(state, { name: "e" });
   const raichu = findExactSpecies("Raichu") ?? throwMissingSpecies("raichu");
-  const selected = loadDetailSpecies(opened as DetailState, raichu);
+  const selected = loadDetailSpecies(
+    opened as DetailState,
+    raichu,
+    loadedDetail(
+      findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
+      pikachuDetail,
+    ),
+  );
 
   expect(selected).toMatchObject({
     screen: "detail",
     detailOverlay: undefined,
     species: { slug: "raichu" },
-    status: "loading",
   });
 });
 
 test("Detail evolution viewer loads numbered shortcut species", () => {
   const state = loadedPikachuDetailState();
-  const opened = applyAppKey(state, { name: "e" });
-  const selected = applyAppKey(opened, { name: "3" });
+  const opened = applyLoadedDetailKey(state, { name: "e" });
+  const selected = applyLoadedDetailKey(opened as DetailState, { name: "3" });
 
   expect(selected).toMatchObject({
     screen: "detail",
     detailOverlay: undefined,
     species: { slug: "raichu" },
-    status: "loading",
   });
 });
 
 test("Detail form selector opens, moves, and closes with Escape", () => {
   const state = loadedPikachuMultiFormDetailState();
-  const opened = applyAppKey(state, { name: "f" });
-  const moved = applyAppKey(opened, { name: "j" });
-  const closed = applyAppKey(moved, { name: "escape" });
+  const detail = loadedPikachuMultiFormDetail();
+  const opened = applyAppKey(state, { name: "f" }, { detail });
+  const moved = applyAppKey(opened, { name: "j" }, { detail });
+  const closed = applyAppKey(moved, { name: "escape" }, { detail });
 
   expect(opened).toMatchObject({
     screen: "detail",
@@ -687,23 +646,21 @@ test("Detail form selector opens, moves, and closes with Escape", () => {
 });
 
 test("Detail form selector does not open without alternate forms", () => {
-  const state = detailLoadSucceeded(
-    createInitialAppState("pikachu") as DetailState,
-    findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
-    {
-      ...pikachuDetail,
-      forms: [pikachuDetail.form],
-    },
-  );
+  const state = createInitialAppState("pikachu") as DetailState;
+  const detail = loadedDetail(state.species, {
+    ...pikachuDetail,
+    forms: [pikachuDetail.form],
+  });
 
-  expect(applyAppKey(state, { name: "f" })).toBe(state);
+  expect(applyAppKey(state, { name: "f" }, { detail })).toBe(state);
 });
 
 test("Detail form selector loads the selected form", () => {
   const state = loadedPikachuMultiFormDetailState();
-  const opened = applyAppKey(state, { name: "f" });
-  const moved = applyAppKey(opened, { name: "down" });
-  const selected = applyAppKey(moved, { name: "enter" });
+  const detail = loadedPikachuMultiFormDetail();
+  const opened = applyAppKey(state, { name: "f" }, { detail });
+  const moved = applyAppKey(opened, { name: "down" }, { detail });
+  const selected = applyAppKey(moved, { name: "enter" }, { detail });
 
   expect(selected).toMatchObject({
     screen: "detail",
@@ -713,128 +670,73 @@ test("Detail form selector loads the selected form", () => {
       spriteFormKey: "rock-star",
     },
     species: { slug: "pikachu" },
-    status: "loading",
   });
 });
 
 test("Detail form key toggles when there is one alternate form", () => {
   const state = loadedAlolanVulpixDetailState();
-  const toggled = applyAppKey(state, { name: "f" });
+  const toggled = applyLoadedDetailKey(state, { name: "f" });
 
   expect(toggled).toMatchObject({
     screen: "detail",
     detailOverlay: undefined,
     form: undefined,
     species: { slug: "vulpix" },
-    status: "loading",
   });
 });
 
 test("Detail next navigation carries Alolan form to Ninetales", () => {
   const state = loadedAlolanVulpixDetailState();
-  const next = applyAppKey(state, { name: "right" });
-  const loaded = detailLoadSucceeded(
-    next as DetailState,
-    findExactSpecies("ninetales") ?? throwMissingSpecies("ninetales"),
-    alolanNinetalesDetail,
-  );
+  const next = applyLoadedDetailKey(state, { name: "right" });
 
   expect(next).toMatchObject({
     screen: "detail",
     species: { slug: "ninetales" },
-    status: "loading",
   });
   if (next.screen !== "detail") {
     throw new Error("Expected Detail state");
   }
   expect(next.form).toEqual({ spriteFormKey: "alola" });
-  expectAlolanNinetalesLoaded(loaded);
 });
 
 test("Detail next navigation carries Galarian form to Rapidash", () => {
   const state = loadedGalarianPonytaDetailState();
-  const next = applyAppKey(state, { name: "right" });
-  const loaded = detailLoadSucceeded(
-    next as DetailState,
-    findExactSpecies("rapidash") ?? throwMissingSpecies("rapidash"),
-    galarianRapidashDetail,
-  );
+  const next = applyLoadedDetailKey(state, { name: "right" });
 
   expect(next).toMatchObject({
     screen: "detail",
     species: { slug: "rapidash" },
-    status: "loading",
   });
   if (next.screen !== "detail") {
     throw new Error("Expected Detail state");
   }
   expect(next.form).toEqual({ spriteFormKey: "galar" });
-  expect(loaded).toMatchObject({
-    screen: "detail",
-    detail: {
-      detail: {
-        form: {
-          pokemonName: "rapidash-galar",
-          spriteFormKey: "galar",
-        },
-        name: "Rapidash Galar",
-      },
-    },
-    form: {
-      pokemonName: "rapidash-galar",
-      spriteFormKey: "galar",
-    },
-    status: "ready",
-  });
 });
 
 test("Detail evolution selection carries Alolan form to Ninetales", () => {
   const state = loadedAlolanVulpixDetailState();
   const ninetales =
     findExactSpecies("ninetales") ?? throwMissingSpecies("ninetales");
-  const next = loadDetailSpecies(state, ninetales);
-  const loaded = detailLoadSucceeded(next, ninetales, alolanNinetalesDetail);
+  const next = loadDetailSpecies(state, ninetales, loadedDetailForState(state));
 
   expect(next).toMatchObject({
     screen: "detail",
     species: { slug: "ninetales" },
-    status: "loading",
   });
   expect(next.form).toEqual({ spriteFormKey: "alola" });
-  expectAlolanNinetalesLoaded(loaded);
 });
 
 test("Detail evolution selection accepts default when carried form is unavailable", () => {
   const state = loadedAlolanVulpixDetailState();
   const ninetales =
     findExactSpecies("ninetales") ?? throwMissingSpecies("ninetales");
-  const next = loadDetailSpecies(state, ninetales);
-  const loaded = detailLoadSucceeded(next, ninetales, defaultNinetalesDetail);
+  const next = loadDetailSpecies(state, ninetales, loadedDetailForState(state));
 
   expect(next).toMatchObject({
     screen: "detail",
     species: { slug: "ninetales" },
-    status: "loading",
   });
   expect(next.form).toEqual({ spriteFormKey: "alola" });
-  expect(loaded).toMatchObject({
-    screen: "detail",
-    detail: {
-      detail: {
-        form: {
-          isDefault: true,
-          pokemonName: "ninetales",
-          spriteFormKey: "$",
-        },
-      },
-    },
-    form: {
-      isDefault: true,
-      pokemonName: "ninetales",
-      spriteFormKey: "$",
-    },
-    status: "ready",
-  });
 });
 
 test("Detail form target matching accepts resolved carryover and default fallback", () => {
@@ -865,25 +767,23 @@ test("Detail exact selected forms do not accept default fallback", () => {
 
 test("Detail navigation does not carry cosmetic forms across evolutions", () => {
   const state = loadedPikachuLibreDetailState();
-  const next = applyAppKey(state, { name: "right" });
+  const next = applyLoadedDetailKey(state, { name: "right" });
 
   expect(next).toMatchObject({
     screen: "detail",
     form: undefined,
     species: { slug: "raichu" },
-    status: "loading",
   });
 });
 
 test("Detail dex navigation resets regional form outside evolution chain", () => {
   const state = loadedAlolanNinetalesDetailState();
-  const next = applyAppKey(state, { name: "right" });
+  const next = applyLoadedDetailKey(state, { name: "right" });
 
   expect(next).toMatchObject({
     screen: "detail",
     form: undefined,
     species: { slug: "jigglypuff" },
-    status: "loading",
   });
 });
 
@@ -901,8 +801,7 @@ test("Detail returns to cleared Search on slash", () => {
 
 test("Detail error can fall back to Search on slash", () => {
   const state = createInitialAppState("pikachu") as DetailState;
-  const failed = detailLoadFailed(state, state.species, new Error("offline"));
-  const next = applyAppKey(failed, { name: "/" });
+  const next = applyAppKey(state, { name: "/" }, { detailStatus: "error" });
 
   expect(next).toEqual({
     screen: "search",
@@ -1047,16 +946,15 @@ function throwMissingSpecies(slug: string): never {
 }
 
 function loadedPikachuDetailState(): DetailState {
-  return detailLoadSucceeded(
-    createInitialAppState("pikachu") as DetailState,
-    findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
-    pikachuDetail,
-  );
+  return createInitialAppState("pikachu") as DetailState;
 }
 
 function loadedPikachuMultiFormDetailState(): DetailState {
-  return detailLoadSucceeded(
-    createInitialAppState("pikachu") as DetailState,
+  return createInitialAppState("pikachu") as DetailState;
+}
+
+function loadedPikachuMultiFormDetail(): LoadedDetail {
+  return loadedDetail(
     findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu"),
     {
       ...pikachuDetail,
@@ -1066,42 +964,10 @@ function loadedPikachuMultiFormDetailState(): DetailState {
 }
 
 function loadedPikachuLibreDetailState(): DetailState {
-  const pikachu = findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu");
-  const loading = {
-    ...(createInitialAppState("pikachu") as DetailState),
+  return {
+    ...loadedPikachuDetailState(),
     form: pikachuLibreForm,
   };
-
-  return detailLoadSucceeded(
-    loading,
-    pikachu,
-    pokemonDetailWithForms(
-      "Pikachu Libre",
-      [pikachuDetail.form, pikachuLibreForm],
-      pikachuLibreForm,
-      pikachuDetail.evolutionChain,
-    ),
-  );
-}
-
-function expectAlolanNinetalesLoaded(state: DetailState) {
-  expect(state).toMatchObject({
-    screen: "detail",
-    detail: {
-      detail: {
-        form: {
-          pokemonName: "ninetales-alola",
-          spriteFormKey: "alola",
-        },
-        name: "Ninetales Alola",
-      },
-    },
-    form: {
-      pokemonName: "ninetales-alola",
-      spriteFormKey: "alola",
-    },
-    status: "ready",
-  });
 }
 
 const vulpixDefaultForm = pokemonForm("Vulpix (Default)", true, "vulpix", "$");
@@ -1134,18 +1000,6 @@ const galarianPonytaForm = pokemonForm(
   "Ponyta Galar",
   false,
   "ponyta-galar",
-  "galar",
-);
-const rapidashDefaultForm = pokemonForm(
-  "Rapidash (Default)",
-  true,
-  "rapidash",
-  "$",
-);
-const galarianRapidashForm = pokemonForm(
-  "Rapidash Galar",
-  false,
-  "rapidash-galar",
   "galar",
 );
 const vulpixEvolutionChain = {
@@ -1188,53 +1042,78 @@ const alolanNinetalesDetail = pokemonDetailWithForms(
   [ninetalesDefaultForm, alolanNinetalesForm],
   alolanNinetalesForm,
 );
-const defaultNinetalesDetail = pokemonDetailWithForms(
-  "Ninetales",
-  [ninetalesDefaultForm],
-  ninetalesDefaultForm,
-);
 const galarianPonytaDetail = pokemonDetailWithForms(
   "Ponyta Galar",
   [ponytaDefaultForm, galarianPonytaForm],
   galarianPonytaForm,
   ponytaEvolutionChain,
 );
-const galarianRapidashDetail = pokemonDetailWithForms(
-  "Rapidash Galar",
-  [rapidashDefaultForm, galarianRapidashForm],
-  galarianRapidashForm,
-  ponytaEvolutionChain,
-);
 
 function loadedAlolanVulpixDetailState(): DetailState {
-  const vulpix = findExactSpecies("vulpix") ?? throwMissingSpecies("vulpix");
-  const loading = {
+  return {
     ...(createInitialAppState("vulpix") as DetailState),
     form: alolanVulpixForm,
   };
-
-  return detailLoadSucceeded(loading, vulpix, alolanVulpixDetail);
 }
 
 function loadedAlolanNinetalesDetailState(): DetailState {
-  const ninetales =
-    findExactSpecies("ninetales") ?? throwMissingSpecies("ninetales");
-  const loading = {
+  return {
     ...(createInitialAppState("ninetales") as DetailState),
     form: alolanNinetalesForm,
   };
-
-  return detailLoadSucceeded(loading, ninetales, alolanNinetalesDetail);
 }
 
 function loadedGalarianPonytaDetailState(): DetailState {
-  const ponyta = findExactSpecies("ponyta") ?? throwMissingSpecies("ponyta");
-  const loading = {
+  return {
     ...(createInitialAppState("ponyta") as DetailState),
     form: galarianPonytaForm,
   };
+}
 
-  return detailLoadSucceeded(loading, ponyta, galarianPonytaDetail);
+function applyLoadedDetailKey(
+  state: DetailState,
+  key: Parameters<typeof applyAppKey>[1],
+) {
+  return applyAppKey(state, key, { detail: loadedDetailForState(state) });
+}
+
+function loadedDetailForState(state: DetailState): LoadedDetail {
+  if (state.species.slug === "vulpix") {
+    return loadedDetail(state.species, alolanVulpixDetail);
+  }
+
+  if (state.species.slug === "ninetales") {
+    return loadedDetail(state.species, alolanNinetalesDetail);
+  }
+
+  if (state.species.slug === "ponyta") {
+    return loadedDetail(state.species, galarianPonytaDetail);
+  }
+
+  if (state.form?.spriteFormKey === "libre") {
+    return loadedDetail(
+      state.species,
+      pokemonDetailWithForms(
+        "Pikachu Libre",
+        [pikachuDetail.form, pikachuLibreForm],
+        pikachuLibreForm,
+        pikachuDetail.evolutionChain,
+      ),
+    );
+  }
+
+  return loadedDetail(state.species, pikachuDetail);
+}
+
+function loadedDetail(
+  species: LoadedDetail["species"],
+  detail: PokemonDetail,
+): LoadedDetail {
+  return {
+    detail,
+    form: detail.form,
+    species,
+  };
 }
 
 function pokemonForm(

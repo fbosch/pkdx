@@ -1,27 +1,25 @@
 import type { KeyEvent } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { CliImageMode } from "#src/cli.tsx";
 import {
   applyAppKey,
   createInitialAppState,
   detailAbilitiesLoadFailed,
   detailAbilitiesLoaded,
-  detailLoadFailed,
-  detailLoadSucceeded,
+  detailTargetsMatch,
   loadAdjacentDetailSpecies,
   loadDetailSpecies,
-  pokemonFormsMatch,
+  type AppKeyContext,
+  type AppState,
   type DetailNavigationDelta,
+  type DetailLoadStatus,
   type DetailState,
+  type LoadedDetail,
 } from "#src/app-state.ts";
 import { appendDebugErrorLog } from "#src/error-log.ts";
-import type {
-  PokemonDetail,
-  PokemonForm,
-  PokemonFormIntent,
-} from "#src/pokemon-detail.ts";
+import type { PokemonForm, PokemonFormIntent } from "#src/pokemon-detail.ts";
 import {
   pokemonAbilityDetailsQueryOptions,
   pokemonDetailQueryOptions,
@@ -86,8 +84,7 @@ export function App({
   const [state, setState] = useState(() => createInitialAppState(initialQuery));
 
   useKeyboard((key: KeyEvent) => {
-    if (shouldOpenPokemonDbEntry(state, key)) {
-      void openPokemonDbPokedexEntryInBrowser(state.detail.species);
+    if (state.screen === "detail") {
       return;
     }
 
@@ -106,21 +103,7 @@ export function App({
     return (
       <>
         <DetailView
-          onLoadFailed={(species, form, error) => {
-            if (debug) {
-              void appendDebugErrorLog(error, {
-                event: "detail.loadFailed",
-                form: form?.pokemonName,
-                species: species.slug,
-              });
-            }
-
-            setState((current) =>
-              current.screen === "detail"
-                ? detailLoadFailed(current, species, error, form)
-                : current,
-            );
-          }}
+          debug={debug}
           onAbilityDetailsLoadFailed={() => {
             setState((current) =>
               current.screen === "detail"
@@ -135,21 +118,19 @@ export function App({
                 : current,
             );
           }}
-          onLoadSucceeded={(species, detail) => {
+          onStateChange={(next) => {
+            setState((current) =>
+              current.screen === "detail" ? next : current,
+            );
+          }}
+          onNavigate={(delta, detail) => {
             setState((current) =>
               current.screen === "detail"
-                ? detailLoadSucceeded(current, species, detail)
+                ? loadAdjacentDetailSpecies(current, delta, detail)
                 : current,
             );
           }}
-          onNavigate={(delta) => {
-            setState((current) =>
-              current.screen === "detail"
-                ? loadAdjacentDetailSpecies(current, delta)
-                : current,
-            );
-          }}
-          onSelectSpecies={(name) => {
+          onSelectSpecies={(name, detail) => {
             const species = findSpeciesByIdentityOrAlias(name);
             if (species === undefined) {
               return;
@@ -157,7 +138,7 @@ export function App({
 
             setState((current) =>
               current.screen === "detail"
-                ? loadDetailSpecies(current, species)
+                ? loadDetailSpecies(current, species, detail)
                 : current,
             );
           }}
@@ -204,49 +185,38 @@ async function openPokemonDbPokedexEntryInBrowser(species: SpeciesIndexEntry) {
 }
 
 function shouldOpenPokemonDbEntry(
-  state: ReturnType<typeof createInitialAppState>,
+  detail: LoadedDetail | undefined,
+  state: DetailState,
   key: KeyEvent,
-): state is DetailState & { detail: NonNullable<DetailState["detail"]> } {
+): detail is LoadedDetail {
   return (
     key.name === "o" &&
-    state.screen === "detail" &&
-    state.detail !== undefined &&
+    detail !== undefined &&
     state.detailOverlay === undefined
   );
 }
 
-type DetailViewProps = {
-  onAbilityDetailsLoadFailed: () => void;
-  onAbilityDetailsLoaded: () => void;
-  onCloseOverlay: () => void;
-  onLoadFailed: (
-    species: DetailState["species"],
-    form: DetailState["form"],
-    error: unknown,
-  ) => void;
-  onLoadSucceeded: (
-    species: DetailState["species"],
-    detail: PokemonDetail,
-  ) => void;
-  onNavigate: (delta: DetailNavigationDelta) => void;
-  onRenderError: (error: Error) => void;
-  onSelectSpecies: (name: string) => void;
-  state: DetailState;
-  terminalImagesEnabled: boolean;
-};
-
-type DetailLoadProps = Pick<
-  DetailViewProps,
-  "onLoadFailed" | "onLoadSucceeded" | "state"
-> & { target: DetailQueryTarget };
-type AbilityDetailsPreloadProps = Pick<
-  DetailViewProps,
-  "onAbilityDetailsLoadFailed" | "onAbilityDetailsLoaded" | "state"
->;
 type DetailQueryTarget = {
   form: PokemonFormIntent | undefined;
   species: SpeciesIndexEntry;
 };
+
+type DetailViewProps = {
+  debug: boolean;
+  onAbilityDetailsLoadFailed: () => void;
+  onAbilityDetailsLoaded: () => void;
+  onCloseOverlay: () => void;
+  onStateChange: (next: AppState) => void;
+  onNavigate: (delta: DetailNavigationDelta, detail?: LoadedDetail) => void;
+  onRenderError: (error: Error) => void;
+  onSelectSpecies: (name: string, detail?: LoadedDetail) => void;
+  state: DetailState;
+  terminalImagesEnabled: boolean;
+};
+type AbilityDetailsPreloadProps = Pick<
+  DetailViewProps,
+  "onAbilityDetailsLoadFailed" | "onAbilityDetailsLoaded" | "state"
+> & { detail: LoadedDetail | undefined };
 type DetailViewContentProps = Pick<
   DetailViewProps,
   | "onCloseOverlay"
@@ -254,49 +224,76 @@ type DetailViewContentProps = Pick<
   | "onSelectSpecies"
   | "state"
   | "terminalImagesEnabled"
->;
+> & {
+  detail: LoadedDetail | undefined;
+  detailError: unknown;
+  status: DetailLoadStatus;
+};
 
 const detailQueryDebounceMs = 100;
-export const detailLoadingPlaceholderDelayMs = 50;
 
 function DetailView({
+  debug,
   onAbilityDetailsLoadFailed,
   onAbilityDetailsLoaded,
   onCloseOverlay,
-  onLoadFailed,
-  onLoadSucceeded,
+  onStateChange,
   onNavigate,
   onRenderError,
   onSelectSpecies,
   state,
   terminalImagesEnabled,
 }: DetailViewProps) {
-  const detailTarget = useDebouncedDetailTarget(
-    state.species,
-    state.form,
-    detailQueryDebounceMs,
-  );
-  usePokemonDetailLoad({
-    onLoadFailed,
-    onLoadSucceeded,
-    state,
-    target: detailTarget,
+  const { detail, detailStatus, detailTarget, loadedDetail } =
+    useLoadedDetailQuery(state);
+
+  useKeyboard((key: KeyEvent) => {
+    if (shouldOpenPokemonDbEntry(loadedDetail, state, key)) {
+      void openPokemonDbPokedexEntryInBrowser(loadedDetail.species);
+      return;
+    }
+
+    const context: AppKeyContext = {
+      detail: loadedDetail,
+      detailStatus,
+    };
+    onStateChange(applyAppKey(state, key, context));
   });
+
+  useEffect(() => {
+    if (state.retryToken === 0 || detailStatus !== "error") {
+      return;
+    }
+
+    void detail.refetch();
+  }, [detail.refetch, detailStatus, state.retryToken]);
+
+  useEffect(() => {
+    if (debug && detail.isError && detail.error !== undefined) {
+      void appendDebugErrorLog(detail.error, {
+        event: "detail.loadFailed",
+        form: detailTarget.form?.pokemonName,
+        species: detailTarget.species.slug,
+      });
+    }
+  }, [debug, detail.error, detail.isError, detailTarget]);
+
   usePokemonSpritePrefetch({
-    enabled: state.status !== "error",
-    form: resolveDetailTargetPokemonForm(state, detailTarget),
+    enabled: detailStatus !== "error",
+    form: resolvedDetailTargetPokemonForm(loadedDetail, detailTarget),
     shiny: state.shiny,
     species: detailTarget.species,
     terminalImagesEnabled,
   });
   useAdjacentPokemonPrefetch({
-    enabled: state.status !== "error",
-    prewarmSprites: state.status === "ready",
+    enabled: detailStatus !== "error",
+    prewarmSprites: detailStatus === "ready",
     shiny: state.shiny,
     species: detailTarget.species,
     terminalImagesEnabled,
   });
   useAbilityDetailsPreload({
+    detail: loadedDetail,
     onAbilityDetailsLoadFailed,
     onAbilityDetailsLoaded,
     state,
@@ -311,6 +308,9 @@ function DetailView({
         onCloseOverlay={onCloseOverlay}
         onNavigate={onNavigate}
         onSelectSpecies={onSelectSpecies}
+        detail={loadedDetail}
+        detailError={detail.error}
+        status={detailStatus}
         state={state}
         terminalImagesEnabled={terminalImagesEnabled}
       />
@@ -318,79 +318,75 @@ function DetailView({
   );
 }
 
+function useLoadedDetailQuery(state: DetailState) {
+  const queryClient = useQueryClient();
+  const detailTarget = useDebouncedDetailTarget(
+    state.species,
+    state.form,
+    detailQueryDebounceMs,
+  );
+  const detail = useQuery({
+    ...pokemonDetailQueryOptions(
+      detailTarget.species,
+      queryClient,
+      detailTarget.form,
+    ),
+    enabled: detailTargetsMatch(state, detailTarget),
+  });
+  const detailStatus = detailLoadStatus(detail);
+  const loadedDetail =
+    detail.data === undefined
+      ? undefined
+      : ({
+          detail: detail.data,
+          form: detail.data.form,
+          species: detailTarget.species,
+        } satisfies LoadedDetail);
+
+  return { detail, detailStatus, detailTarget, loadedDetail };
+}
+
 function DetailViewContent({
+  detail,
+  detailError,
   onCloseOverlay,
   onNavigate,
   onSelectSpecies,
+  status,
   state,
   terminalImagesEnabled,
 }: DetailViewContentProps) {
-  const showPreviousSearch = usePreviousSearchDuringDetailLoad(state);
-
-  if (state.detail !== undefined) {
+  if (detail !== undefined) {
+    const descriptionIndex = clampedDescriptionIndex(
+      state.descriptionIndex,
+      detail.detail,
+    );
     return (
       <LoadedDetailView
         abilityViewerOpen={state.detailOverlay === "abilities"}
-        detail={state.detail.detail}
-        descriptionIndex={state.descriptionIndex}
-        errorMessage={state.status === "error" ? state.errorMessage : undefined}
+        detail={detail.detail}
+        descriptionIndex={descriptionIndex}
+        errorMessage={
+          status === "error" ? detailErrorMessage(detailError) : undefined
+        }
         evolutionViewerOpen={state.detailOverlay === "evolutions"}
         formSelectorSelectedIndex={getFormSelectorSelectedIndex(state)}
-        loadedSpecies={state.detail.species}
+        loadedSpecies={detail.species}
         navigationSpecies={state.species}
         onCloseOverlay={onCloseOverlay}
-        onNavigate={onNavigate}
-        onSelectSpecies={onSelectSpecies}
+        onNavigate={(delta) => onNavigate(delta, detail)}
+        onSelectSpecies={(name) => onSelectSpecies(name, detail)}
         shiny={state.shiny}
         terminalImagesEnabled={terminalImagesEnabled}
       />
     );
   }
 
-  if (state.status === "loading") {
-    return showPreviousSearch ? (
-      <SearchView
-        query={state.previousQuery}
-        selectedIndex={state.previousSelectedIndex}
-      />
-    ) : (
-      <InitialDetailLoadingView species={state.species} />
-    );
+  if (status === "loading") {
+    return <InitialDetailLoadingView species={state.species} />;
   }
 
-  return <DetailErrorView state={state} />;
-}
-
-function usePreviousSearchDuringDetailLoad(state: DetailState): boolean {
-  const shouldDelayPlaceholder =
-    shouldShowPreviousSearchDuringDetailLoad(state);
-  const [showPreviousSearch, setShowPreviousSearch] = useState(
-    () => shouldDelayPlaceholder,
-  );
-
-  useEffect(() => {
-    if (shouldDelayPlaceholder === false) {
-      setShowPreviousSearch(false);
-      return;
-    }
-
-    setShowPreviousSearch(true);
-    const timeout = setTimeout(() => {
-      setShowPreviousSearch(false);
-    }, detailLoadingPlaceholderDelayMs);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [shouldDelayPlaceholder]);
-
-  return showPreviousSearch;
-}
-
-export function shouldShowPreviousSearchDuringDetailLoad(
-  state: DetailState,
-): boolean {
-  return state.status === "loading" && state.previousQuery.length > 0;
+  return <DetailErrorView error={detailError} state={state} />;
 }
 
 function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
@@ -436,6 +432,37 @@ function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
   );
 }
 
+function detailLoadStatus(query: {
+  data: unknown;
+  isError: boolean;
+  isPending: boolean;
+}): DetailLoadStatus {
+  if (query.data !== undefined) {
+    return "ready";
+  }
+
+  if (query.isError) {
+    return "error";
+  }
+
+  return query.isPending ? "loading" : "loading";
+}
+
+function detailErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message.length > 0) {
+    return error.message;
+  }
+
+  return "Detail data is unavailable. If offline, this species is not cached yet.";
+}
+
+function clampedDescriptionIndex(
+  index: number,
+  detail: LoadedDetail["detail"],
+): number {
+  return Math.min(index, Math.max(0, detail.flavorTexts.length - 1));
+}
+
 function SkeletonPanel({ height, width }: { height: number; width: number }) {
   return (
     <box
@@ -445,74 +472,6 @@ function SkeletonPanel({ height, width }: { height: number; width: number }) {
       style={{ height, width }}
     />
   );
-}
-
-function usePokemonDetailLoad({
-  onLoadFailed,
-  onLoadSucceeded,
-  state,
-  target,
-}: DetailLoadProps) {
-  const queryClient = useQueryClient();
-  const retryErrorUpdatedAt = useRef<number | undefined>(undefined);
-  const targetIsCurrent = detailTargetsMatch(target, state.species, state.form);
-  const detail = useQuery({
-    ...pokemonDetailQueryOptions(target.species, queryClient, target.form),
-    enabled: state.status !== "error" && targetIsCurrent,
-  });
-
-  useEffect(() => {
-    if (
-      targetIsCurrent &&
-      detail.data !== undefined &&
-      state.status !== "ready"
-    ) {
-      retryErrorUpdatedAt.current = undefined;
-      onLoadSucceeded(target.species, detail.data);
-    }
-  }, [
-    detail.data,
-    onLoadSucceeded,
-    state.status,
-    target.species,
-    targetIsCurrent,
-  ]);
-
-  useEffect(() => {
-    if (targetIsCurrent && state.retryToken > 0 && state.status === "loading") {
-      retryErrorUpdatedAt.current = detail.errorUpdatedAt;
-      void detail.refetch();
-    }
-  }, [
-    detail.errorUpdatedAt,
-    detail.refetch,
-    state.retryToken,
-    state.status,
-    targetIsCurrent,
-  ]);
-
-  useEffect(() => {
-    if (
-      detail.isError &&
-      !detail.isFetching &&
-      targetIsCurrent &&
-      state.status !== "error" &&
-      retryErrorUpdatedAt.current !== detail.errorUpdatedAt
-    ) {
-      retryErrorUpdatedAt.current = undefined;
-      onLoadFailed(target.species, target.form, detail.error);
-    }
-  }, [
-    detail.error,
-    detail.errorUpdatedAt,
-    detail.isError,
-    detail.isFetching,
-    onLoadFailed,
-    state.status,
-    target.form,
-    target.species,
-    targetIsCurrent,
-  ]);
 }
 
 function useDebouncedDetailTarget(
@@ -526,7 +485,10 @@ function useDebouncedDetailTarget(
   }));
 
   useEffect(() => {
-    if (detailTargetsMatch(target, species, form)) {
+    if (
+      target.species.slug === species.slug &&
+      pokemonFormTargetKey(target.form) === pokemonFormTargetKey(form)
+    ) {
       return;
     }
 
@@ -542,31 +504,19 @@ function useDebouncedDetailTarget(
   return target;
 }
 
-function detailTargetsMatch(
-  target: DetailQueryTarget,
-  species: SpeciesIndexEntry,
-  form: PokemonFormIntent | undefined,
-): boolean {
-  return (
-    target.species.slug === species.slug &&
-    pokemonFormsMatch(target.form, form, { allowDefaultFallback: true })
-  );
-}
-
-function resolveDetailTargetPokemonForm(
-  state: DetailState,
+function resolvedDetailTargetPokemonForm(
+  detail: LoadedDetail | undefined,
   target: DetailQueryTarget,
 ): PokemonForm | undefined {
   if (
-    state.detail === undefined ||
-    state.detail.species.slug !== target.species.slug ||
-    detailTargetsMatch(target, state.detail.species, state.detail.form) ===
-      false
+    detail === undefined ||
+    detail.species.slug !== target.species.slug ||
+    pokemonFormTargetKey(detail.form) !== pokemonFormTargetKey(target.form)
   ) {
     return undefined;
   }
 
-  return state.detail.form;
+  return detail.form;
 }
 
 function detailErrorBoundaryResetKey(state: DetailState): string {
@@ -613,12 +563,13 @@ function usePokemonSpritePrefetch({
 }
 
 function useAbilityDetailsPreload({
+  detail,
   onAbilityDetailsLoadFailed,
   onAbilityDetailsLoaded,
   state,
 }: AbilityDetailsPreloadProps) {
   const queryClient = useQueryClient();
-  const abilities = state.detail?.detail.abilities;
+  const abilities = detail?.detail.abilities;
   const abilityDetails = useQuery({
     ...pokemonAbilityDetailsQueryOptions(abilities ?? [], queryClient),
     enabled:
@@ -741,14 +692,17 @@ function getFormSelectorSelectedIndex(state: DetailState): number | undefined {
     : undefined;
 }
 
-function DetailErrorView({ state }: { state: DetailState }) {
+function DetailErrorView({
+  error,
+  state,
+}: {
+  error: unknown;
+  state: DetailState;
+}) {
   return (
     <DetailScreen>
       <DetailErrorModal
-        message={
-          state.errorMessage ??
-          "Detail data is unavailable. If offline, this species is not cached yet."
-        }
+        message={detailErrorMessage(error)}
         title={`Could Not Load #${state.species.dexNumbers[1] ?? state.species.dexNumbers[0]} ${state.species.name}`}
       />
       <InstructionFooter>
