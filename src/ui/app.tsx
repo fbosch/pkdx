@@ -5,7 +5,7 @@ import {
   useQueryClient,
   useQueryErrorResetBoundary,
 } from "@tanstack/react-query";
-import { startTransition, useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import type { CliImageMode } from "#src/cli.tsx";
 import {
   applyAppKey,
@@ -369,7 +369,6 @@ function DetailQueryView({
 
 function useLoadedDetailQuery(state: DetailState) {
   const queryClient = useQueryClient();
-  const previousLoadedDetail = useRef<LoadedDetail | undefined>(undefined);
   const detailTarget = { form: state.form, species: state.species };
   const detail = useQuery({
     ...pokemonDetailQueryOptions(
@@ -377,34 +376,25 @@ function useLoadedDetailQuery(state: DetailState) {
       queryClient,
       detailTarget.form,
     ),
+    placeholderData: (previousData, previousQuery) =>
+      previousQuery?.queryKey[0] === "pokemon-detail" &&
+      previousQuery.queryKey[1] === detailTarget.species.slug
+        ? previousData
+        : undefined,
+    select: (data) =>
+      ({
+        detail: data,
+        form: data.form,
+        species: detailTarget.species,
+      }) satisfies LoadedDetail,
   });
-  const fetchedDetail =
-    detail.data === undefined
-      ? undefined
-      : ({
-          detail: detail.data,
-          form: detail.data.form,
-          species: detailTarget.species,
-        } satisfies LoadedDetail);
-
-  useEffect(() => {
-    if (fetchedDetail !== undefined) {
-      previousLoadedDetail.current = fetchedDetail;
-    }
-  }, [fetchedDetail]);
-
-  const retainedDetail =
-    previousLoadedDetail.current?.species.slug === state.species.slug
-      ? previousLoadedDetail.current
-      : undefined;
-  const loadedDetail = fetchedDetail ?? retainedDetail;
-  const detailStatus = detailLoadStatus(detail, loadedDetail);
+  const detailStatus = detailLoadStatus(detail);
 
   return {
     detailError: detail.error,
     detailStatus,
     detailTarget,
-    loadedDetail,
+    loadedDetail: detail.data,
     refetch: detail.refetch,
   };
 }
@@ -535,15 +525,16 @@ function InitialDetailLoadingView({ species }: { species: SpeciesIndexEntry }) {
   );
 }
 
-function detailLoadStatus(
-  query: { data: unknown; isError: boolean; isPending: boolean },
-  loadedDetail: LoadedDetail | undefined,
-): DetailLoadStatus {
+function detailLoadStatus(query: {
+  data: unknown;
+  isError: boolean;
+  isPending: boolean;
+}): DetailLoadStatus {
   if (query.isError) {
     return "error";
   }
 
-  if (query.data !== undefined || loadedDetail !== undefined) {
+  if (query.data !== undefined) {
     return "ready";
   }
 
