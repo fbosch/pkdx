@@ -121,6 +121,16 @@ type PokeSpriteCachedAssetQueryKey = readonly [
   formKey: string,
   shiny: boolean,
 ];
+type RenderedSpriteQueryKeyParts = {
+  dexNumber: number;
+  maxHeight: number | undefined;
+  maxWidth: number | undefined;
+  source: PokeSpriteSource;
+};
+type CachedAssetQueryKeyParts = {
+  dexNumber: number;
+  source: PokeSpriteSource;
+};
 
 export type PokeSpriteAssetReference = {
   formKey: string;
@@ -259,6 +269,13 @@ export function pokespriteCachedAssetQueryOptions(
         ),
       );
     },
+    placeholderData: (previousData, previousQuery) =>
+      pokespriteCachedAssetPlaceholderData(
+        previousData,
+        previousQuery?.queryKey,
+        species,
+        form,
+      ),
     ...runtimeQueryCachePolicies.pokespriteMetadata,
   });
 }
@@ -287,19 +304,91 @@ export function pokespriteRenderedSpritePlaceholderData(
   form?: PokemonForm,
   renderOptions: RenderPngSpriteOptions = {},
 ): RenderedSprite | undefined {
+  const previous = renderedSpriteQueryKeyParts(previousQueryKey);
+  const representation = selectPokeSpriteRepresentation(species, form);
   if (
-    previousQueryKey?.[0] !== "pokesprite-rendered-sprite" ||
-    previousQueryKey[1] !==
-      selectPokeSpriteRepresentation(species, form).querySource ||
-    previousQueryKey[2] !== species.dexNumber ||
-    previousQueryKey[3] !== (form?.spriteFormKey ?? "$") ||
-    previousQueryKey[5] !== renderOptions.maxWidth ||
-    previousQueryKey[6] !== renderOptions.maxHeight
+    previous === undefined ||
+    previous.source !== representation.querySource ||
+    previous.dexNumber !== species.dexNumber ||
+    previous.maxWidth !== renderOptions.maxWidth ||
+    previous.maxHeight !== renderOptions.maxHeight
   ) {
     return undefined;
   }
 
   return previousData;
+}
+
+export function pokespriteCachedAssetPlaceholderData(
+  previousData: CachedPokeSpriteAsset | undefined,
+  previousQueryKey: readonly unknown[] | undefined,
+  species: SpeciesIndexEntry,
+  form?: PokemonForm,
+): CachedPokeSpriteAsset | undefined {
+  const previous = cachedAssetQueryKeyParts(previousQueryKey);
+  const representation = selectPokeSpriteRepresentation(species, form);
+  if (
+    previous === undefined ||
+    previous.source !== representation.querySource ||
+    previous.dexNumber !== species.dexNumber
+  ) {
+    return undefined;
+  }
+
+  return previousData;
+}
+
+function renderedSpriteQueryKeyParts(
+  queryKey: readonly unknown[] | undefined,
+): RenderedSpriteQueryKeyParts | undefined {
+  return match(queryKey)
+    .returnType<RenderedSpriteQueryKeyParts | undefined>()
+    .with(
+      [
+        "pokesprite-rendered-sprite",
+        P.union(
+          "gen-8",
+          "pokeapi-sprites",
+          "pokemon-sprites",
+          "scarlet-violet",
+        ),
+        P.number,
+        P._,
+        P._,
+        P.union(P.number, P.nullish),
+        P.union(P.number, P.nullish),
+      ],
+      ([, source, dexNumber, , , maxWidth, maxHeight]) => ({
+        dexNumber,
+        maxHeight: maxHeight ?? undefined,
+        maxWidth: maxWidth ?? undefined,
+        source,
+      }),
+    )
+    .otherwise(() => undefined);
+}
+
+function cachedAssetQueryKeyParts(
+  queryKey: readonly unknown[] | undefined,
+): CachedAssetQueryKeyParts | undefined {
+  return match(queryKey)
+    .returnType<CachedAssetQueryKeyParts | undefined>()
+    .with(
+      [
+        "pokesprite-cached-asset",
+        P.union(
+          "gen-8",
+          "pokeapi-sprites",
+          "pokemon-sprites",
+          "scarlet-violet",
+        ),
+        P.number,
+        P._,
+        P._,
+      ],
+      ([, source, dexNumber]) => ({ dexNumber, source }),
+    )
+    .otherwise(() => undefined);
 }
 
 export function parsePokeSpriteMetadata(resource: unknown): PokeSpriteMetadata {

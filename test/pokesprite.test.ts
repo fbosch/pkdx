@@ -8,6 +8,7 @@ import {
   cachePokeSpriteAsset,
   parsePokeSpriteMetadata,
   PokeSpriteResourceError,
+  pokespriteCachedAssetPlaceholderData,
   pokespriteCachedAssetQueryOptions,
   pokespriteCachedAssetQueryKey,
   pokespriteMetadataQueryKey,
@@ -491,7 +492,18 @@ test("keeps previous rendered Sprite only across same-species presentation chang
   const pikachu = findExactSpecies("pikachu") ?? throwMissingSpecies("pikachu");
   const bulbasaur =
     findExactSpecies("bulbasaur") ?? throwMissingSpecies("bulbasaur");
+  const rockStar = {
+    displayName: "Pikachu Rock Star",
+    isDefault: false,
+    pokemonName: "pikachu-rock-star",
+    pokemonUrl: "https://pokeapi.co/api/v2/pokemon/pikachu-rock-star/",
+    spriteFormKey: "rock-star",
+  };
   const renderedSprite = { height: 0, rows: [], width: 0 };
+  const cachedAsset = {
+    ...pikachuDefaultSpriteAsset(),
+    filePath: "/tmp/pikachu.png",
+  };
 
   expect(
     pokespriteRenderedSpritePlaceholderData(
@@ -503,8 +515,32 @@ test("keeps previous rendered Sprite only across same-species presentation chang
   expect(
     pokespriteRenderedSpritePlaceholderData(
       renderedSprite,
+      pokespriteRenderedSpriteQueryKey(pikachu),
+      pikachu,
+      rockStar,
+    ),
+  ).toBe(renderedSprite);
+  expect(
+    pokespriteRenderedSpritePlaceholderData(
+      renderedSprite,
       pokespriteRenderedSpriteQueryKey(bulbasaur),
       pikachu,
+    ),
+  ).toBeUndefined();
+  expect(
+    pokespriteCachedAssetPlaceholderData(
+      cachedAsset,
+      pokespriteCachedAssetQueryKey(pikachu),
+      pikachu,
+      rockStar,
+    ),
+  ).toBe(cachedAsset);
+  expect(
+    pokespriteCachedAssetPlaceholderData(
+      cachedAsset,
+      pokespriteCachedAssetQueryKey(bulbasaur),
+      pikachu,
+      rockStar,
     ),
   ).toBeUndefined();
 });
