@@ -13,6 +13,7 @@ import {
   type LoadedDetail,
 } from "../src/app-state";
 import {
+  appVersion,
   appExitSignals,
   getInitialSearchQuery,
   main,
@@ -116,11 +117,13 @@ test("parses debug flag without treating it as Search input", () => {
     debug: true,
     imageMode: "builtin",
     initialQuery: "mr mime",
+    showVersion: false,
   });
   expect(parseCliOptions(["pikachu"])).toEqual({
     debug: false,
     imageMode: "builtin",
     initialQuery: "pikachu",
+    showVersion: false,
   });
 });
 
@@ -129,11 +132,22 @@ test("parses image mode flag without treating it as Search input", () => {
     debug: true,
     imageMode: "ascii",
     initialQuery: "clefable",
+    showVersion: false,
   });
   expect(parseCliOptions(["--images=builtin", "clefable"])).toEqual({
     debug: false,
     imageMode: "builtin",
     initialQuery: "clefable",
+    showVersion: false,
+  });
+});
+
+test("parses version flag without treating it as Search input", () => {
+  expect(parseCliOptions(["--version", "pikachu"])).toEqual({
+    debug: false,
+    imageMode: "builtin",
+    initialQuery: "pikachu",
+    showVersion: true,
   });
 });
 
@@ -156,6 +170,30 @@ test("main smoke mode prints the launch screen", async () => {
     await main(["pika"]);
 
     expect(writes).toEqual(["Detail\n", "Search\n"]);
+  } finally {
+    write.mockRestore();
+    if (originalSmokeExit === undefined) {
+      delete Bun.env.PKDX_SMOKE_EXIT;
+    } else {
+      Bun.env.PKDX_SMOKE_EXIT = originalSmokeExit;
+    }
+  }
+});
+
+test("main prints version and exits before launching", async () => {
+  const originalSmokeExit = Bun.env.PKDX_SMOKE_EXIT;
+  const writes: string[] = [];
+  const write = spyOn(process.stdout, "write").mockImplementation((chunk) => {
+    writes.push(chunk.toString());
+    return true;
+  });
+
+  try {
+    Bun.env.PKDX_SMOKE_EXIT = "1";
+
+    await main(["--version"]);
+
+    expect(writes).toEqual([`pkdx ${appVersion}\n`]);
   } finally {
     write.mockRestore();
     if (originalSmokeExit === undefined) {
