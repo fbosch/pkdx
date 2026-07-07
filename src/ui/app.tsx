@@ -22,7 +22,11 @@ import {
   type LoadedDetail,
 } from "#src/app-state.ts";
 import { appendDebugErrorLog } from "#src/error-log.ts";
-import type { PokemonForm, PokemonFormIntent } from "#src/pokemon-detail.ts";
+import type {
+  PokemonAbility,
+  PokemonForm,
+  PokemonFormIntent,
+} from "#src/pokemon-detail.ts";
 import {
   pokemonAbilityDetailsQueryOptions,
   pokemonDetailQueryOptions,
@@ -193,6 +197,11 @@ async function openPokemonDbPokedexEntryInBrowser(species: SpeciesIndexEntry) {
   await openPokemonDbPokedexEntry(species);
 }
 
+async function openPokemonDbAbilityInBrowser(ability: { name: string }) {
+  const { openPokemonDbAbility } = await import("../external-links");
+  await openPokemonDbAbility(ability);
+}
+
 function shouldOpenPokemonDbEntry(
   detail: LoadedDetail | undefined,
   state: DetailState,
@@ -203,6 +212,22 @@ function shouldOpenPokemonDbEntry(
     detail !== undefined &&
     state.detailOverlay === undefined
   );
+}
+
+function abilityShortcutTarget(
+  detail: LoadedDetail | undefined,
+  state: DetailState,
+  key: KeyEvent,
+): PokemonAbility | undefined {
+  if (
+    detail === undefined ||
+    state.detailOverlay !== "abilities" ||
+    /^[1-9]$/.test(key.name) === false
+  ) {
+    return undefined;
+  }
+
+  return detail.detail.abilities.at(Number.parseInt(key.name, 10) - 1);
 }
 
 type DetailQueryTarget = {
@@ -427,6 +452,12 @@ function useDetailKeyboard({
   useKeyboard((key: KeyEvent) => {
     if (shouldOpenPokemonDbEntry(detail, state, key)) {
       void openPokemonDbPokedexEntryInBrowser(detail.species);
+      return;
+    }
+
+    const selectedAbility = abilityShortcutTarget(detail, state, key);
+    if (selectedAbility !== undefined) {
+      void openPokemonDbAbilityInBrowser(selectedAbility);
       return;
     }
 

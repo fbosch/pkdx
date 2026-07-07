@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import type {
   PokemonAbilityDetail,
   PokemonDetail,
@@ -31,8 +32,12 @@ export function AbilityViewer({
           {abilityErrorMessage(abilityDetails.error)}
         </text>
       ) : null}
-      {abilityDetails.data?.map((ability) => (
-        <AbilityDescription key={ability.name} ability={ability} />
+      {abilityDetails.data?.map((ability, index) => (
+        <AbilityDescription
+          key={ability.name}
+          ability={ability}
+          shortcutNumber={index + 1}
+        />
       ))}
     </Modal>
   );
@@ -46,14 +51,58 @@ function abilityErrorMessage(error: unknown): string {
   return "Could not load ability descriptions. If offline, they may not be cached yet.";
 }
 
-function AbilityDescription({ ability }: { ability: PokemonAbilityDetail }) {
+function AbilityDescription({
+  ability,
+  shortcutNumber,
+}: {
+  ability: PokemonAbilityDetail;
+  shortcutNumber: number;
+}) {
   return (
     <box style={{ flexDirection: "column", marginBottom: 1 }}>
-      <text attributes={textStyles.active}>{ability.name}</text>
+      <ClickableAbilityTitle
+        ability={ability}
+        shortcutNumber={shortcutNumber}
+      />
       <text>{ability.shortEffect}</text>
       <text fg={colors.muted} attributes={textStyles.muted}>
         {ability.effect}
       </text>
     </box>
   );
+}
+
+function ClickableAbilityTitle({
+  ability,
+  shortcutNumber,
+}: {
+  ability: Pick<PokemonAbilityDetail, "name">;
+  shortcutNumber: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const hoverProps = hovered
+    ? { bg: colors.selected, fg: colors.selectedText }
+    : { fg: colors.keyHint };
+
+  return (
+    <text
+      attributes={textStyles.active}
+      onMouseDown={() => {
+        void openPokemonDbAbilityInBrowser(ability);
+      }}
+      onMouseOut={() => setHovered(false)}
+      onMouseOver={() => setHovered(true)}
+      {...hoverProps}
+    >
+      {ability.name}
+      <span fg={hovered ? colors.selectedText : colors.muted}>
+        {` [${shortcutNumber.toString()}]`}
+      </span>
+    </text>
+  );
+}
+
+async function openPokemonDbAbilityInBrowser(ability: { name: string }) {
+  const { openPokemonDbAbility } = await import("#src/external-links.ts");
+  await openPokemonDbAbility(ability);
 }

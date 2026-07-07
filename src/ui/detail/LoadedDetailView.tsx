@@ -360,16 +360,52 @@ function DexNavigationButtonLabel({
 
 function AbilityRows({ abilities }: { abilities: PokemonDetail["abilities"] }) {
   return padAbilities(abilities, 3).map((ability, index) => (
-    <FactRow
+    <AbilityFactRow
       key={ability?.name ?? `empty-ability-${index.toString()}`}
+      ability={ability}
       label={index === 0 ? "Ability" : ""}
-      value={
-        ability === undefined
-          ? ""
-          : `${ability.name}${ability.isHidden ? " (Hidden)" : ""}`
-      }
     />
   ));
+}
+
+function AbilityFactRow({
+  ability,
+  label,
+}: {
+  ability: PokemonDetail["abilities"][number] | undefined;
+  label: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  if (ability === undefined) {
+    return <FactRow label={label} value="" />;
+  }
+
+  const mouseProps = {
+    onMouseDown: () => {
+      void openPokemonDbAbilityInBrowser(ability);
+    },
+    onMouseOut: () => setHovered(false),
+    onMouseOver: () => setHovered(true),
+  };
+  const hoverProps = hovered
+    ? { bg: colors.selected, fg: colors.selectedText }
+    : { fg: colors.keyHint };
+
+  return (
+    <text {...mouseProps}>
+      <span fg={colors.muted}>{label.padEnd(11)}</span>
+      <span attributes={textStyles.active} {...hoverProps}>
+        {ability.name}
+        {ability.isHidden ? " (Hidden)" : ""}
+      </span>
+    </text>
+  );
+}
+
+async function openPokemonDbAbilityInBrowser(ability: { name: string }) {
+  const { openPokemonDbAbility } = await import("#src/external-links.ts");
+  await openPokemonDbAbility(ability);
 }
 
 function padAbilities(

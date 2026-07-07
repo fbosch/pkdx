@@ -9,10 +9,26 @@ export function pokemonDbPokedexUrl(
   return `https://pokemondb.net/pokedex/${species.slug}`;
 }
 
+export function pokemonDbAbilityUrl(ability: { name: string }): string {
+  return `https://pokemondb.net/ability/${pokemonDbSlug(ability.name)}`;
+}
+
 export function openPokemonDbPokedexEntry(
   species: Pick<SpeciesIndexEntry, "slug">,
 ): Promise<void> {
   return openExternalUrl(pokemonDbPokedexUrl(species));
+}
+
+export function openPokemonDbAbility(ability: { name: string }): Promise<void> {
+  return openExternalUrl(pokemonDbAbilityUrl(ability));
+}
+
+function pokemonDbSlug(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 function openExternalUrl(

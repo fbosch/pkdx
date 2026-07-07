@@ -268,9 +268,9 @@ function routePathRow(
     route.rootTargetName,
     shortcutNumbers,
   );
-  let text = `${rootIndicator}${route.root}`;
+  let text = `${route.root}${rootIndicator}`;
   const links: EvolutionChartLink[] = [
-    nameLink(route.root, route.rootTargetName, rootIndicator.length),
+    nameLink(route.root, route.rootTargetName, 0),
   ];
 
   for (const step of route.steps) {
@@ -279,10 +279,8 @@ function routePathRow(
       step.targetName,
       shortcutNumbers,
     );
-    links.push(
-      nameLink(step.name, step.targetName, text.length + indicator.length),
-    );
-    text = `${text}${indicator}${step.name}`;
+    links.push(nameLink(step.name, step.targetName, text.length));
+    text = `${text}${step.name}${indicator}`;
   }
 
   return { links, text };
@@ -303,7 +301,7 @@ function branchingRouteRows(
     rootTargetName,
     shortcutNumbers,
   );
-  const rootLabel = `${rootIndicator}${root}`;
+  const rootLabel = `${root}${rootIndicator}`;
   const rootWidth = rootLabel.length;
   const methodWidth = Math.max(
     ...routes.map((route) => route.steps[0]?.method.length ?? 0),
@@ -316,7 +314,7 @@ function branchingRouteRows(
     const branch = isFirst ? "┬" : isLast ? "└" : "├";
     let text = `${rootText} ${branch}`;
     const links: EvolutionChartLink[] = isFirst
-      ? [nameLink(root, rootTargetName, rootIndicator.length)]
+      ? [nameLink(root, rootTargetName, 0)]
       : [];
 
     route.steps.forEach((step, stepIndex) => {
@@ -327,10 +325,8 @@ function branchingRouteRows(
         step.targetName,
         shortcutNumbers,
       );
-      links.push(
-        nameLink(step.name, step.targetName, text.length + indicator.length),
-      );
-      text = `${text}${indicator}${step.name}`;
+      links.push(nameLink(step.name, step.targetName, text.length));
+      text = `${text}${step.name}${indicator}`;
       if (stepIndex < route.steps.length - 1) {
         text = `${text} `;
       }
@@ -348,7 +344,7 @@ function evolutionShortcutIndicator(
   shortcutNumbers: ReadonlyMap<string, number>,
 ): string {
   const shortcutNumber = shortcutNumbers.get(targetName);
-  return shortcutNumber === undefined ? "" : `[${shortcutNumber.toString()}]`;
+  return shortcutNumber === undefined ? "" : ` [${shortcutNumber.toString()}]`;
 }
 
 function evolutionMethodLabel(evolution: PokemonEvolution): string {
@@ -374,8 +370,8 @@ function pokemonNameRow(
 ): EvolutionChartRow {
   const indicator = evolutionShortcutIndicator(targetName, shortcutNumbers);
   return {
-    links: [nameLink(name, targetName, prefix.length + indicator.length)],
-    text: `${prefix}${indicator}${name}`,
+    links: [nameLink(name, targetName, prefix.length)],
+    text: `${prefix}${name}${indicator}`,
   };
 }
 

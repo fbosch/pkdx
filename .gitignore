@@ -4,3 +4,4 @@ dist/
 .direnv/
 .fallow/
 .docs/
+.serena/
