@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { Fragment, useState, type ReactNode } from "react";
 import type { DetailNavigationDelta } from "#src/app-state.ts";
 import {
   hasPokemonEvolutionChain,
@@ -151,7 +151,7 @@ export function LoadedDetailView({
               width={detailInfoPanelWidth}
             >
               <FactRow label="Species" value={detail.species} />
-              <FactRow label="Egg Group" value={detail.eggGroups.join(" / ")} />
+              <EggGroupRow eggGroups={detail.eggGroups} />
               <FactRow
                 label="Gender"
                 value={<GenderRatio ratio={detail.genderRatio} />}
@@ -366,6 +366,46 @@ function AbilityRows({ abilities }: { abilities: PokemonDetail["abilities"] }) {
       label={index === 0 ? "Ability" : ""}
     />
   ));
+}
+
+function EggGroupRow({ eggGroups }: { eggGroups: readonly string[] }) {
+  return (
+    <box style={{ flexDirection: "row" }}>
+      <text fg={colors.muted}>{"Egg Group".padEnd(11)}</text>
+      {eggGroups.map((eggGroup, index) => (
+        <Fragment key={eggGroup}>
+          {index === 0 ? null : <text fg={colors.muted}> / </text>}
+          <EggGroupLink eggGroup={eggGroup} />
+        </Fragment>
+      ))}
+    </box>
+  );
+}
+
+function EggGroupLink({ eggGroup }: { eggGroup: string }) {
+  const [hovered, setHovered] = useState(false);
+  const hoverProps = hovered
+    ? { bg: colors.selected, fg: colors.selectedText }
+    : { fg: colors.keyHint };
+
+  return (
+    <text
+      attributes={textStyles.active}
+      onMouseDown={() => {
+        void openPokemonDbEggGroupInBrowser(eggGroup);
+      }}
+      onMouseOut={() => setHovered(false)}
+      onMouseOver={() => setHovered(true)}
+      {...hoverProps}
+    >
+      {eggGroup}
+    </text>
+  );
+}
+
+async function openPokemonDbEggGroupInBrowser(name: string) {
+  const { openPokemonDbEggGroup } = await import("#src/external-links.ts");
+  await openPokemonDbEggGroup({ name });
 }
 
 function AbilityFactRow({

@@ -13,6 +13,10 @@ export function pokemonDbAbilityUrl(ability: { name: string }): string {
   return `https://pokemondb.net/ability/${pokemonDbSlug(ability.name)}`;
 }
 
+export function pokemonDbEggGroupUrl(eggGroup: { name: string }): string {
+  return `https://pokemondb.net/egg-group/${pokemonDbEggGroupSlug(eggGroup.name)}`;
+}
+
 export function openPokemonDbPokedexEntry(
   species: Pick<SpeciesIndexEntry, "slug">,
 ): Promise<void> {
@@ -21,6 +25,20 @@ export function openPokemonDbPokedexEntry(
 
 export function openPokemonDbAbility(ability: { name: string }): Promise<void> {
   return openExternalUrl(pokemonDbAbilityUrl(ability));
+}
+
+export function openPokemonDbEggGroup(eggGroup: {
+  name: string;
+}): Promise<void> {
+  return openExternalUrl(pokemonDbEggGroupUrl(eggGroup));
+}
+
+function pokemonDbEggGroupSlug(value: string): string {
+  if (value === "No Eggs") {
+    return "undiscovered";
+  }
+
+  return pokemonDbSlug(value);
 }
 
 function pokemonDbSlug(value: string): string {
