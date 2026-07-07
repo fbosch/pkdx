@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.7.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.6.0...pkdx-v0.7.0) (2026-07-07)
+
+
+### Features
+
+* **cli:** add version flag ([072dcd4](https://github.com/fbosch/pkdx/commit/072dcd4b2a45a0ee1fa12992dfdd56cb35afb82d))
+* **detail:** add ability links ([7a1cc59](https://github.com/fbosch/pkdx/commit/7a1cc59845e047c0a4c5f9d148e1f87ee61b8bf7))
+* **detail:** add egg group links ([9d446dc](https://github.com/fbosch/pkdx/commit/9d446dcf3b6a366a741ea8647e6289e24086d61f))
+* **detail:** add generation links ([59f1fe3](https://github.com/fbosch/pkdx/commit/59f1fe3f6638a59c79fe7ac41ee8be53c55e945a))
+* **detail:** format generation names ([e502ce9](https://github.com/fbosch/pkdx/commit/e502ce91ee7e0c5fa083821cf60aa95a7f32a42c))
+
+
+### Bug Fixes
+
+* **pokeapi:** accept named trade species ([a3fbe7c](https://github.com/fbosch/pkdx/commit/a3fbe7c4571ab1280516ff1a48bd701d3eeefca6))
+* **pokesprite:** preserve sprite placeholders ([7a3956a](https://github.com/fbosch/pkdx/commit/7a3956a52cde31a3465f592bba609c14d8c8d4fd))
+
 ## [0.6.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.5.0...pkdx-v0.6.0) (2026-07-01)
 
 
