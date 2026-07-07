@@ -164,7 +164,7 @@ export function LoadedDetailView({
                 label="Weight"
                 value={`${detail.weightKilograms.toFixed(1)} kg`}
               />
-              <FactRow label="Generation" value={detail.generation} />
+              <GenerationRow generation={detail.generation} />
               <FactRow label="Growth" value={detail.growthRate} />
               <FactRow label="Capture" value={detail.captureRate.toString()} />
               <FactRow label="EV Yield" value={formatEvYield(detail.evYield)} />
@@ -406,6 +406,33 @@ function EggGroupLink({ eggGroup }: { eggGroup: string }) {
 async function openPokemonDbEggGroupInBrowser(name: string) {
   const { openPokemonDbEggGroup } = await import("#src/external-links.ts");
   await openPokemonDbEggGroup({ name });
+}
+
+function GenerationRow({ generation }: { generation: string }) {
+  const [hovered, setHovered] = useState(false);
+  const hoverProps = hovered
+    ? { bg: colors.selected, fg: colors.selectedText }
+    : { fg: colors.keyHint };
+
+  return (
+    <text
+      onMouseDown={() => {
+        void openPokemonDbGenerationInBrowser(generation);
+      }}
+      onMouseOut={() => setHovered(false)}
+      onMouseOver={() => setHovered(true)}
+    >
+      <span fg={colors.muted}>{"Generation".padEnd(11)}</span>
+      <span attributes={textStyles.active} {...hoverProps}>
+        {generation}
+      </span>
+    </text>
+  );
+}
+
+async function openPokemonDbGenerationInBrowser(name: string) {
+  const { openPokemonDbGeneration } = await import("#src/external-links.ts");
+  await openPokemonDbGeneration({ name });
 }
 
 function AbilityFactRow({

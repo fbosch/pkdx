@@ -17,6 +17,10 @@ export function pokemonDbEggGroupUrl(eggGroup: { name: string }): string {
   return `https://pokemondb.net/egg-group/${pokemonDbEggGroupSlug(eggGroup.name)}`;
 }
 
+export function pokemonDbGenerationUrl(generation: { name: string }): string {
+  return `https://pokemondb.net/pokedex/national#gen-${pokemonDbGenerationNumber(generation.name).toString()}`;
+}
+
 export function openPokemonDbPokedexEntry(
   species: Pick<SpeciesIndexEntry, "slug">,
 ): Promise<void> {
@@ -31,6 +35,34 @@ export function openPokemonDbEggGroup(eggGroup: {
   name: string;
 }): Promise<void> {
   return openExternalUrl(pokemonDbEggGroupUrl(eggGroup));
+}
+
+export function openPokemonDbGeneration(generation: {
+  name: string;
+}): Promise<void> {
+  return openExternalUrl(pokemonDbGenerationUrl(generation));
+}
+
+function pokemonDbGenerationNumber(value: string): number {
+  const romanNumeral = /^Generation ([IVX]+)/.exec(value)?.[1];
+  const generations: Record<string, number> = {
+    I: 1,
+    II: 2,
+    III: 3,
+    IV: 4,
+    V: 5,
+    VI: 6,
+    VII: 7,
+    VIII: 8,
+    IX: 9,
+  };
+  const generation =
+    romanNumeral === undefined ? undefined : generations[romanNumeral];
+  if (generation === undefined) {
+    throw new Error(`Unsupported PokemonDB generation label: ${value}`);
+  }
+
+  return generation;
 }
 
 function pokemonDbEggGroupSlug(value: string): string {

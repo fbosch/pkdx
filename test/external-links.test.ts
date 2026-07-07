@@ -2,6 +2,7 @@ import { expect, test } from "bun:test";
 import {
   pokemonDbAbilityUrl,
   pokemonDbEggGroupUrl,
+  pokemonDbGenerationUrl,
   pokemonDbPokedexUrl,
 } from "../src/external-links";
 
@@ -32,5 +33,14 @@ test("builds PokemonDB egg group URLs from egg group names", () => {
   );
   expect(pokemonDbEggGroupUrl({ name: "No Eggs" })).toBe(
     "https://pokemondb.net/egg-group/undiscovered",
+  );
+});
+
+test("builds PokemonDB generation URLs from generation labels", () => {
+  expect(pokemonDbGenerationUrl({ name: "Generation I (Kanto)" })).toBe(
+    "https://pokemondb.net/pokedex/national#gen-1",
+  );
+  expect(pokemonDbGenerationUrl({ name: "Generation II (Johto)" })).toBe(
+    "https://pokemondb.net/pokedex/national#gen-2",
   );
 });
