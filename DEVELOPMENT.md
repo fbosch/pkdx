@@ -81,7 +81,6 @@ Other useful commands:
 ```bash
 bun test
 bun run typecheck
-bun run typecheck:native
 bun run format:check
 bun run lint
 bun run bench
