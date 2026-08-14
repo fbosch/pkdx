@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1](https://github.com/fbosch/pkdx/compare/pkdx-v0.7.0...pkdx-v0.7.1) (2026-08-14)
+
+
+### Bug Fixes
+
+* prevent macOS sprite rendering artifacts ([1f86081](https://github.com/fbosch/pkdx/commit/1f86081869ae4f7e0a17540a6b7ad67e2f8d7fa2))
+* sprite rendering on macos ([8aa46e8](https://github.com/fbosch/pkdx/commit/8aa46e8a273b52c2101113b60e8c4d364e53ad72))
+
 ## [0.7.0](https://github.com/fbosch/pkdx/compare/pkdx-v0.6.0...pkdx-v0.7.0) (2026-07-07)
 
 
