@@ -15,6 +15,7 @@ import {
 import {
   appVersion,
   appExitSignals,
+  cliRendererConfig,
   getInitialSearchQuery,
   main,
   parseCliOptions,
@@ -153,6 +154,13 @@ test("parses version flag without treating it as Search input", () => {
 
 test("lets app state own Ctrl-C instead of OpenTUI signal cleanup", () => {
   expect(appExitSignals).not.toContain("SIGINT");
+});
+
+test("serializes native frames when builtin terminal sprites can write ANSI", () => {
+  expect(cliRendererConfig("builtin", false)).toMatchObject({
+    useThread: false,
+  });
+  expect(cliRendererConfig("ascii", false)).not.toHaveProperty("useThread");
 });
 
 test("main smoke mode prints the launch screen", async () => {
