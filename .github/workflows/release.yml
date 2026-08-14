@@ -131,7 +131,7 @@ jobs:
         run: chmod +x dist/pkdx-*
 
       - name: Setup Node for npm publishing
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           package-manager-cache: false
