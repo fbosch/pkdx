@@ -16,6 +16,21 @@ export type CliOptions = {
   showVersion: boolean;
 };
 
+export function cliRendererConfig(
+  imageMode: CliImageMode,
+  debug: boolean,
+): CliRendererConfig {
+  return {
+    exitOnCtrlC: false,
+    exitSignals: appExitSignals,
+    openConsoleOnError: debug,
+    // Inline Kitty graphics sequences are emitted from React effects after a
+    // frame. Keep native frame writes synchronous so those sequences cannot
+    // interleave with a threaded native repaint on stdout.
+    ...(imageMode === "builtin" ? { useThread: false } : {}),
+  };
+}
+
 export const appExitSignals = [
   "SIGTERM",
   "SIGQUIT",
@@ -83,11 +98,7 @@ export async function main(args = Bun.argv.slice(2)): Promise<void> {
     return;
   }
 
-  const renderer = await createCliRenderer({
-    exitOnCtrlC: false,
-    exitSignals: appExitSignals,
-    openConsoleOnError: debug,
-  });
+  const renderer = await createCliRenderer(cliRendererConfig(imageMode, debug));
   if (debug) {
     renderer.toggleDebugOverlay();
   }
